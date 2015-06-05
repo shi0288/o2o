@@ -40,3 +40,45 @@
 2015-06-05 16:59:09 INFO [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] - Mapped URL path [/resources/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
 2015-06-05 16:59:09 INFO [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] - Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
 2015-06-05 16:59:09 INFO [org.springframework.web.servlet.DispatcherServlet] - FrameworkServlet 'mvc-dispatcher': initialization completed in 1075 ms
+2015-06-05 17:05:58 INFO [com.mcp.sv.cmbc.LotteryService] - id = 7196c140e0204eadbe67fda97d79a255
+cmd : CQ01
+body : {"gameCode":"T01"}
+2015-06-05 17:06:01 INFO [com.mcp.sv.cmbc.LotteryService] - 发起投注 null账户余额:0
+2015-06-05 17:06:01 INFO [com.mcp.sv.cmbc.LotteryService] - id = ff1bbad2ca8d40a7ab61691c5cde1a1d
+cmd : CT03
+body : {"cond":{"gameCode":"T05","status":1200},"sort":{},"skip":0,"limit":20}
+2015-06-05 17:06:01 INFO [com.mcp.sv.cmbc.LotteryService] - 收到的：  {"repCode":"0000","nowTime":"2015-06-05T17:06:01.270+0800"}
+2015-06-05 17:06:01 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户订单状态更新：null  3  状态：2000  outerId：null
+2015-06-05 17:06:01 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户彩币更新：null  1金额：0
+2015-06-05 17:06:01 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户订单状态更新：null  3  状态：3000  outerId：null
+2015-06-05 17:06:04 INFO [com.mcp.sv.cmbc.LotteryService] - id = a9fcb0bed1264e0f8b5211748d481743
+cmd : CQ01
+body : {"gameCode":"T01"}
+2015-06-05 17:06:11 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户彩币更新：shi0288  1金额：100
+2015-06-05 17:06:19 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户彩币更新：shi0288  1金额：100
+2015-06-05 17:06:23 INFO [com.mcp.sv.cmbc.LotteryService] - 发起投注 null账户余额:0
+2015-06-05 17:06:23 INFO [com.mcp.sv.cmbc.LotteryService] - id = ced8b0c0f1a940b2bed69f73ef9dc9ed
+cmd : CT03
+body : {"cond":{"gameCode":"T05","status":1200},"sort":{},"skip":0,"limit":20}
+2015-06-05 17:06:23 INFO [com.mcp.sv.cmbc.LotteryService] - 收到的：  {"repCode":"0000","nowTime":"2015-06-05T17:06:23.762+0800"}
+2015-06-05 17:06:23 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户订单状态更新：null  4  状态：2000  outerId：null
+2015-06-05 17:06:23 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户彩币更新：null  1金额：0
+2015-06-05 17:06:23 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户订单状态更新：null  4  状态：3000  outerId：null
+2015-06-05 17:06:25 INFO [com.mcp.sv.cmbc.LotteryService] - id = 37576d5568304b068d039b79bbe4c04d
+cmd : CQ01
+body : {"gameCode":"T01"}
+2015-06-05 17:06:27 INFO [com.mcp.sv.cmbc.LotteryService] - 发起投注 shi0288
+2015-06-05 17:06:40 INFO [com.mcp.sv.cmbc.LotteryService] - 发起投注 shi0288账户余额:11100
+2015-06-05 17:06:40 INFO [com.mcp.sv.cmbc.LotteryService] - 发起投注3 200
+2015-06-05 17:06:40 INFO [com.mcp.sv.cmbc.LotteryService] - true
+2015-06-05 17:06:40 INFO [com.mcp.sv.cmbc.LotteryService] - id = 8c8f104b19354d688e55c1828ea7dc9b
+cmd : CT03
+body : {"order":{"amount":200,"outerId":1.4334951883247927E12,"tickets":[{"gameCode":"T01","termCode":"15064","type":1,"amount":200,"bType":"00","pType":"00","number":"14,19,31,33,35|02,05","multiple":"1","presetTerminal":"36113","outerId":1.4334951884062646E12,"auditTime":"2015-06-05 17:06:27"}]}}
+2015-06-05 17:06:40 INFO [com.mcp.sv.cmbc.LotteryService] - 收到的：  {"order":{"id":52,"outerId":1.4334951883247927E12,"amount":200,"trueAmount":200,"tickets":[{"id":50,"outerId":1.4334951884062646E12,"amount":200,"repCode":"0000","description":"系统处理成功"}]},"repCode":"0000","nowTime":"2015-06-05T17:06:40.729+0800"}
+2015-06-05 17:06:40 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户订单状态更新：shi0288  1  状态：2000  outerId：1433495188324.7927
+2015-06-05 17:06:40 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户彩币更新：shi0288  1金额：-200
+2015-06-05 17:06:40 INFO [com.mcp.sv.cmbc.LotteryDao] - 用户订单状态更新：shi0288  1  状态：3000  outerId：1433495188324.7927
+2015-06-05 17:08:16 INFO [com.mcp.sv.cmbc.LotteryService] - id = 77262ac81a124113bc50317fc59db74e
+cmd : CQ01
+body : {"gameCode":"T01"}
+2015-06-05 17:08:20 INFO [com.mcp.sv.cmbc.LotteryService] - 发起投注 shi0288

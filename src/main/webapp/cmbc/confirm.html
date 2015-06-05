@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>支付订单</title>
+    <meta name="viewport"
+          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <link type="text/css" rel="stylesheet" href="css/reset.css"/>
+    <link type="text/css" rel="stylesheet" href="css/common.css"/>
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/confirm.js"></script>
+</head>
+<body>
+<div class="page-from-left index">
+    <div class="top fix">
+        <div class="top-relative clearfix">
+            <a href="acount.html" class="go-pre"></a>
+            <span class="title">支付订单</span>
+        </div>
+    </div>
+    <div class="cb"></div>
+    <!--顶部结束-->
+    <!--正文内容开始-->
+    <div class="content faxq pt10 pb10 pr5 pl5">
+        <div class="zhanghu-litt"></div>
+        <div class="fa-box1 clearfix">
+            <img class="gooddo" src="img/good_01.png"/>
+            <div class="fa-line clearfix pl10"><h4 class="fl"><span id="czfont"></span> <span id="czqi"></span>期</h4>
+                <span id="cztime" class="gretime" style=" margin-right:5px;"></span></div>
+            <div class="fl caizhong"><img id="czimg" src=""/></div>
+            <div class="touxiang-rightbox">
+                <p style="display:block; font-size:15px; color:#8B8B8B;">
+                    订单号：<font id="orderId"></font>
+                </p>
+
+                <p style="display:block; font-size:15px; color:#8B8B8B; padding-bottom:10px;" class="clearfix">
+                    <span>投注：￥<font id="amount"></font></span>
+                    <span id="state" style="float:right;min-width:65px;"></span>
+                </p>
+            </div>
+        </div>
+        <div class="comm-box clearfix mt10 pb10">
+            <p class="fa-tit">投注内容</p>
+
+            <div id="tzcot"></div>
+            <div class="fa-line"></div>
+            <p class="fa-tit">支付方式</p>
+            <div id="caibizhifu" class="fl"><span id="check-cb" ></span>彩币支付</div>
+            <div class="jj-k-check" class="fl"><span id="huodao" ></span>货到付款</div>
+            <div  id="addressInfo" style="display: none">
+                <div class="fa-line"></div>
+                <div class="box-item clearfix" style="-moz-box-shadow:0px 0px 0px #d1c7a4; -webkit-box-shadow:0px 0px 0px #d1c7a4; box-shadow:0px 0px 0px #d1c7a4;">
+                    <div class="bline ico-ren clearfix"><label style="width:80px;">地址：</label><span>石家庄市长安区广安街--<input id="address" class="no-boder" type="text" placeholder="请输入具体位置"></span></div>
+                    <div class="bline ico-suo clearfix"><label style="width:80px;">手机号：</label><span><input id="mobile"  class="no-boder" type="text" placeholder="请输入手机号"></span></div>
+                    <span><font color="red">提示：第一次录入地址后，我们将为您保存下来，下次将直接显示！</font></span>
+                </div>
+            </div>
+
+            <div style="margin:10px auto;" class="clearfix">
+                <a id="pay_btn"  class=" m-bigbtn-org mt30">确认支付</a>
+                <a href="ylzhifu.html" class=" m-bigbtn-org mt15">去充值</a>
+            </div>
+            <div class="clearfix pl10">
+            </div>
+        </div>
+    </div>
+</div>
+    <!--正文内容结束-->
+    <!--投注底部开始-->
+</body>
+</html>

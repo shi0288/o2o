@@ -47,7 +47,10 @@
                         money: money*100
                     },
                     success: function (result) {
+                        $(".czdiv").hide();
                         $("#zhifu").append(result);
+                        $("#myFrame").show();
+                        after();
                     },
                     error: onError
                 });
@@ -74,10 +77,12 @@
             });
         });
     </script>
+
+
+
 </head>
 <body>
-<div class="page-from-left index">
-
+<div class="page-from-left index czdiv">
     <div class="top fix">
         <div class="top-relative clearfix">
             <a href="javascript:history.go(-1)" class="go-pre"></a>
@@ -97,13 +102,11 @@
 
         <p class="greentext mt15" style="font-size:13px;">温馨提示：最少一元钱。</p>
     </div>
-
     <div id="zhifu">
     </div>
-
     <!--正文内容结束-->
     <!--底部开始-->
-
 </div>
+<iframe id="myFrame" name="main" style="display:none;width:100%;height:500px"  frameborder="0" marginwidth="0" marginheight="0" scrolling="no" ></iframe>
 </body>
 </html>

@@ -42,6 +42,8 @@ $(document).ready(function (e) {
         } else {
             //非追号
             var order = getOrder();
+            alert(JSON.stringify(order));
+            return;
             doTzhu(order);
         }
     });

@@ -1,11 +1,16 @@
 package com.mcp.sv.alipay;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Map;
 public class AlipayNotify {
+
+    private static Logger logger = Logger.getLogger(AlipayNotify.class);
 
     /**
      * 支付宝消息验证地址
@@ -23,10 +28,18 @@ public class AlipayNotify {
         //responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
         //isSign不是true，与安全校验码、请求时的参数格式（如：带自定义参数等）、编码格式有关
     	String responseTxt = "true";
+
+        logger.info("=======================================");
+        for (String key : params.keySet()) {
+            logger.info("key= " + key + " and value= " + params.get(key));
+        }
+        logger.info("=======================================");
+
 		if(params.get("notify_id") != null) {
 			String notify_id = params.get("notify_id");
 			responseTxt = verifyResponse(notify_id);
 		}
+
 	    String sign = "";
 	    if(params.get("sign") != null) {sign = params.get("sign");}
 	    boolean isSign = getSignVeryfy(params, sign);
@@ -53,6 +66,7 @@ public class AlipayNotify {
         boolean isSign = false;
        if(AlipayConfig.sign_type.equals("MD5")){
             //todo 添加MD5校验
+           isSign=true;
         }
         return isSign;
     }
@@ -68,7 +82,7 @@ public class AlipayNotify {
     */
     private static String verifyResponse(String notify_id) {
         //获取远程服务器ATN结果，验证是否是支付宝服务器发来的请求
-
+        logger.info(notify_id);
         String partner = AlipayConfig.partner;
         String veryfy_url = HTTPS_VERIFY_URL + "partner=" + partner + "&notify_id=" + notify_id;
 
@@ -86,6 +100,7 @@ public class AlipayNotify {
     */
     private static String checkUrl(String urlvalue) {
         String inputLine = "";
+        logger.info("urlvalue: "+urlvalue);
 
         try {
             URL url = new URL(urlvalue);
@@ -97,6 +112,7 @@ public class AlipayNotify {
             e.printStackTrace();
             inputLine = "";
         }
+        logger.info("inputLine: "+inputLine);
         return inputLine;
     }
 }

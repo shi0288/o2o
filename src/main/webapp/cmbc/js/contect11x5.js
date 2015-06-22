@@ -21,97 +21,6 @@ var browser = {
     language: (navigator.browserLanguage || navigator.language).toLowerCase()
 }
 
-var eventName = "";
-var eventCode = "0";
-var session = {};
-var _locked = false;
-function lock() {
-    if (_locked) {
-        return true;
-    }
-    _locked = true;
-    return false;
-}
-function unlock() {
-    _locked = false;
-}
-function getWebkitEventCode() {
-    return eventCode;
-}
-function getWebkitEvent() {
-    return eventName;
-}
-function getWebkitValues() {
-    return "";
-}
-function setWebkitValues(a) {
-}
-function clearEvent() {
-    eventCode = "0";
-    eventName = "";
-}
-function initWebkitTitleBar() {
-    clearEvent();
-    return {"title": "\u7cfb\u7edf\u6807\u9898", "leftButton": {"exist": false}, "rightButton": {"exist": true, "name": "", "func": "touchRightButton();"}};
-}
-function setWebkitSession(a) {
-    session = a;
-    clearEvent();
-}
-var _session_timeout = false;
-function showTimeOut() {
-    if (!_session_timeout) {
-        _session_timeout = true;
-        setWebitEvent("clearEvent()", "11");
-    }
-}
-var _mevents = new Array();
-function setWebitEvent(b, a) {
-
-    if (b == "") {
-        return;
-    }
-    if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
-        _mevents.push(JsonToStr({code: a, name: b}));
-    } else if (browser.versions.android) {
-        setAndroidWebitEvent(b, a);
-    } else {// other client
-    }
-}
-function getWebkitEventCode() {
-    return _mevents.length > 0 ? _mevents.shift() : "0";
-}
-function getWebkitEvent() {
-    return "";
-}
-function JsonToStr(o) {
-    var arr = [];
-    var fmt = function (s) {
-        if (typeof s == 'object' && s != null) return JsonToStr(s);
-        return /^(string|number)$/.test(typeof s) ? '"' + s + '"' : s;
-    }
-    for (var i in o)
-        arr.push('"' + i + '":' + fmt(o[i]));
-    return "{" + arr.join(',') + "}";
-}
-// ---------------android js调用------------------
-function setAndroidWebitEvent(param, evtCode) {
-//	if(evtName.indexOf("()")==-1){
-//		evtName += "()";
-//	}
-
-    switch (evtCode) {
-        case "LT01":
-            window.SysClientJs.goBack();
-            break;
-        case "LT02":  //code : "HY01":调用客户端登录接口,HY03:返回9宫格接口
-            window.SysClientJs.toLoginJGCP(param)
-            break;
-        case "LT03":// 瀚银调支付接口
-            window.SysClientJs.submitOrderJGCP(param)
-            break;
-    }
-}
 
 $(document).ready(function (e) {
     thisUrl = window.location.href;
@@ -157,43 +66,13 @@ $(document).ready(function (e) {
         } else {
             //非追号
             var order = getOrder();
+
+            alert(JSON.stringify(order));
+            return;
             doTzhu(order);
         }
     });
 });
-function onLogin() {
-    // window.SysClientJs.toLoginJGCP("http://mobilelottery.cn:8090/ezmcp/cmbc/index.jsp?type=1");
-    //setWebitEvent("http://mobilelottery.cn:8090/ezmcp/cmbc/index.jsp?type=1", "LT02");
-    setWebitEvent(thisUrl, "LT02");
-};
-function startLogin(name, password) {
-    var body = {
-        'name': name,
-        'password': password
-    };
-    $.ajax({
-        type: "POST",
-        url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
-        dataType: "json",
-        cache: false,
-        data: {
-            cmd: 'A04',
-            body: JSON.stringify(body)
-        },
-        success: function (result) {
-            var repCode = result.repCode;
-            if (repCode == '0000') {
-                sessionStorage.setItem("name", name);
-                $(".step2").click();
-                //登录成功
-            } else {
-                //未登录成功
-                // window.SysClientJs.toLoginJGCP("http://mobilelottery.cn:8090/ezmcp/cmbc/index.jsp?type=1");
-                setWebitEvent(thisUrl, "LT02");
-            }
-        }
-    });
-}
 //追号
 function doTzhuZh(body, issue) {
     var payType = 1;
@@ -395,9 +274,10 @@ function getTick() {
         }
         var zhu = $(this).attr("data-zs");
         zhu = parseInt(zhu);
+
         var ticket = {
 			'gameCode': $("#game").attr("data-game"),
-            'termCode': $("#termCode").html(),
+            'termCode': String($("#termCode").html()),
             'type': 1,
             'amount': multiple * zhu * evprice,
             'bType': betTypeCode,
@@ -407,7 +287,8 @@ function getTick() {
             "presetTerminal":"000000",
             "outerId":new Date().getTime()+Math.random()*(1000-390)+390,
             "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
-        }
+        };
+
         tickets.push(ticket);
     });
     return tickets;

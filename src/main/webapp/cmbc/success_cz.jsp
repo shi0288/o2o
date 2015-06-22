@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
 <head>
@@ -12,8 +12,11 @@
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="js/platform.js"></script>
 
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+    <%@ page import="java.util.*"%>
     <%@ page import="java.util.Map"%>
+    <%@ page import="com.mcp.sv.alipay.*"%>
+
     <%
     //获取支付宝GET过来反馈信息
     Map<String,String> params = new HashMap<String,String>();
@@ -40,13 +43,17 @@
 
     String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
 
-    //交易状态
+    String total_fee = new String(request.getParameter("total_fee").getBytes("ISO-8859-1"),"UTF-8");
+
+        //交易状态
     String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
 
     //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 
     //计算得出通知验证结果
-    boolean verify_result = true;//AlipayNotify.verify(params);
+    boolean verify_result = true;
+
+    AlipayNotify.verify(params);
 
     if(verify_result){//验证成功
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -89,11 +96,10 @@
         </p>
 
         <div style=" margin-top:20px; height:40px; border-top:1px solid #999;"></div>
-        <p class="text-center tz-success">充值金额<font class="orgtext ml5"></font>元</p>
+        <p class="text-center tz-success">充值金额<font class="orgtext ml5"><%=total_fee %></font>元</p>
 
-        <p class="text-center tz-success">账户余额<font class="orgtext ml5" id="recharge"></font>元</p>
-        <a href="ssq.jsp" class=" m-bigbtn-org mt30">试试手气</a>
-        <a href="index.jsp" class=" m-bigbtn-org mt15">返回大厅</a>
+        <a href="index.jsp" class=" m-bigbtn-org mt30">试试手气</a>
+        <a href="acount.html" class=" m-bigbtn-org mt15">返回账户</a>
 
     </div>
     <!--正文内容结束-->

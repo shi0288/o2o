@@ -13,7 +13,6 @@
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <jsp:include page="include/login.jsp" flush="true"/>
 </head>
 <body>
 <div class="page-from-left index">
@@ -30,7 +29,7 @@
     <!--正文内容开始-->
 
     <div class="content">
-        <div class="bar-tip"><span>第<font class="redtext" id="termCode"></font>期</span><span>截止时间：<font class="redtext"
+        <div class="bar-tip"><span>第<font class="redtext" id="termCode">14197</font>期</span><span>截止时间：<font class="redtext"
                                                                                                         id="lastime"></font></span><!--<span id="x115">距本期截止<font class="redtext minutes"></font>分<font class="redtext seconds"></font>秒</span>-->
         </div>
         <!--选球-->

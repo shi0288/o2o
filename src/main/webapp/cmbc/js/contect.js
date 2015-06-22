@@ -153,13 +153,13 @@ function getTick() {
         var ticket = {
             'gameCode': $("#game").attr("data-game"),
             'termCode': $("#termCode").html(),
-            'type': payType,
+            'type': 0,
             'amount': multiple * zhu * evprice,
             'bType': betTypeCode,
             'pType': playTypeCode,
             'number': numbers,
             'multiple': multiple,
-            "presetTerminal":"36113",
+            "presetTerminal":"0000",
             "outerId":new Date().getTime()+Math.random()*(1000-390)+390,
             "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
         }

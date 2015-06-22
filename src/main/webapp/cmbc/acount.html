@@ -63,7 +63,7 @@
                 }
             });
             var pageSize = 10;	//每页显示条数
-            getCaipiao($(".tab-content").eq(0), 1, pageSize, 1);//我的彩票
+            getCaipiao($(".tab-content").eq(0), 1, pageSize, 1);
             /*滚动加载*/
             $(window).scroll(function () {
                 $(".top").css("position", "fixed");
@@ -77,11 +77,9 @@
                             var curPage = parseInt(aPage.attr("data-page"));
                             var historyPage =parseInt(aPage.attr("cur-page"));
                             if(curPage==historyPage){
-                                console.log("不执行");
                                 return false;
                             }
-                            console.log("执行");
-                            getCaipiao($(".tab-content").eq(0), curPage, pageSize, 1);//我的彩票
+                            getCaipiao($(".tab-content").eq(0), curPage, pageSize, 1);
                         }
                     }
                 }
@@ -193,7 +191,7 @@
             <a href="index.jsp" class="go-pre"></a>
             <img style="float:right;" id="refresh" src="img/reflash.png" onClick="window.location.reload();"/>
             <span class="title"
-                  style="float:none; display:block; width:220px; text-align:center; margin:0px auto;">我的彩票</span>
+                  style="float:none; display:block; width:220px; text-align:center; margin:0px auto;">我的记录</span>
 
         </div>
     </div>
@@ -239,7 +237,7 @@
         </center>
         <div class="zhanghu-tab">
             <div class="nav-box clearfix">
-                <a class="tab-nav now" href="acount.html" style="width:50%">我的彩票</a><a class="tab-nav"
+                <a class="tab-nav now" href="acount.html" style="width:50%">我的记录</a><a class="tab-nav"
                                                                                        href="javascript:void(-1)"
                                                                                        style="width:50%"
                                                                                        id="my-zhuhao">我的追号</a>

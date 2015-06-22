@@ -1,5 +1,6 @@
-package com.mcp.sv.cmbc;
+package com.mcp.sv.util;
 
+import com.mcp.sv.cmbc.LotteryService;
 import org.apache.http.Consts;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -16,7 +17,6 @@ import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.MessageConstraints;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
@@ -159,7 +159,7 @@ public class HttpClientWrapper {
             head.put("userId", id); //TODO 加上userID  ，如果渠道的话，userID设为空。
             head.put("channelCode", CmbcConstant.CMBC_CODE);  //民生银行客户端。
             head.put("digestType", "md5");
-            head.put("digest", MD5.MD5Encode(body + head.get("timestamp") + st));//st
+            head.put("digest", com.mcp.sv.util.MD5.MD5Encode(body + head.get("timestamp") + st));//st
             cvRequest.put("head", head);
             cvRequest.put("body", body);
 
@@ -233,7 +233,7 @@ public class HttpClientWrapper {
             head.put("userId", CmbcConstant.MCP_CODE);
             head.put("userType", "CHANNEL");
             head.put("digestType", "md5");
-            head.put("digest", MD5.MD5Encode(body + head.get("timestamp") + CmbcConstant.MCP_KEY));//st
+            head.put("digest", com.mcp.sv.util.MD5.MD5Encode(body + head.get("timestamp") + CmbcConstant.MCP_KEY));//st
             cvRequest.put("head", head);
             cvRequest.put("body", body);
             HttpPost request = new HttpPost(mcp8Url);

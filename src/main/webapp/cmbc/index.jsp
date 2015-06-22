@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>中心线彩票店</title>
+    <title>中心线店</title>
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="0">
@@ -74,7 +74,7 @@
             <!-- <a href="javascript:void(-1)" onClick='setWebitEvent("return", "LT01");' class="go-pre"></a>-->
             <a class="msyh-login" id="yes-denglu" href="login.html">登录</a>
             <span class="title"
-                  style="float:none; display:block; width:220px; text-align:center; margin:0px auto;">中心线彩票店</span>
+                  style="float:none; display:block; width:220px; text-align:center; margin:0px auto;">中心线店</span>
         </div>
     </div>
     <div class="cb"></div>
@@ -111,8 +111,7 @@
         <ul id="more-ul" class="clearfix">
             <li><a class="ico-box" href="main.html"><img src="img/icoy_11.png"/>购彩大厅</a></li>
             <li><a class="ico-box" href="result.html"><img src="img/icoy_13.png"/>开奖公告</a></li>
-            <li><a id="my-caipiao" class="ico-box" href="javascript:void(-1)"><img src="img/icoy_12.png"/>我的彩票</a></li>
-            <!--<li><a class="ico-box" href="czdingzhi.html"><img src="img/icoy_14.png"  />彩票定制</a></li>-->
+            <li><a id="my-caipiao" class="ico-box" href="javascript:void(-1)"><img src="img/icoy_12.png"/>账号信息</a></li>
             <!-- <li><a class="ico-box" href="active.html"><img src="img/icoy_15.png" />活动中心</a></li>-->
             <li><a class="ico-box" href="gchelp.html"><img src="img/icoy_16.png"/>购彩帮助</a></li>
         </ul>

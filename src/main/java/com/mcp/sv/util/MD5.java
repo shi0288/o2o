@@ -1,14 +1,7 @@
-package com.mcp.sv.cmbc;
+package com.mcp.sv.util;
 
 import java.security.MessageDigest;
 
-/**MD5.java
- * description: MD5����
- * @author ������
- * version 1.0
- * Jan 11, 2008
- * History:
- */
 public class MD5 {
 
 	/**

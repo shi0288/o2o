@@ -3,8 +3,8 @@ package com.mcp.sv.intrefaceTest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mcp.core.util.StringUtil;
-import com.mcp.sv.cmbc.CmbcConstant;
-import com.mcp.sv.cmbc.HttpClientWrapper;
+import com.mcp.sv.util.CmbcConstant;
+import com.mcp.sv.util.HttpClientWrapper;
 
 /**
  * Created by ChubChen on 2015/6/3.

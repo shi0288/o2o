@@ -1,7 +1,7 @@
 package com.mcp.sv.dao;
 
 
-import com.mcp.sv.cmbc.CmbcConstant;
+import com.mcp.sv.util.CmbcConstant;
 import com.mcp.sv.cmbc.LotteryService;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static com.mcp.sv.cmbc.HttpClientWrapper.sendGet;
+import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 
 /**
  * Created by Administrator on 2015/6/4.

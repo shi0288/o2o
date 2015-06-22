@@ -1,5 +1,5 @@
-<%@ page import="com.mcp.sv.cmbc.CmbcConstant" %>
-<%@ page import="com.mcp.sv.cmbc.MD5" %>
+<%@ page import="com.mcp.sv.util.CmbcConstant" %>
+<%@ page import="com.mcp.sv.util.MD5" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="/cmbc/js/commontz.js"></script>
 <script type="text/javascript" src="/cmbc/js/platform.js"></script>

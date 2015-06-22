@@ -24,7 +24,7 @@
         info = "投注下单成功,请关注出票及开奖结果。";
     } else if ("tzsb".equals(flag)) {
         info = "投注下单失败。<br/>支付金额已经暂存，" +
-                "您可以重新选择相同金额的彩票投注。";
+                "您可以重新选择相同金额投注。";
     } else if ("czcg".equals(flag)) {
         info = "彩币充值成功。";
     } else if ("czsb".equals(flag)) {
@@ -49,7 +49,7 @@
                 class="greentext"><%=info%></span></p>
 
         <a href="xb_search.jsp"  class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>去挖奖</a>
-        <a href="acount.html" id="jrwdcp" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>进入我的彩票</a>
+        <a href="acount.html" id="jrwdcp" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>进入账户信息</a>
         <a href="main.html" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>返回购彩大厅</a>
     </div>
     <!--正文内容结束-->

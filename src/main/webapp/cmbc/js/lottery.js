@@ -416,7 +416,6 @@ function onLotteryStake(){
 }
 
 
-//我的彩票
 var myLoty_type = 0;
 
 var mylot_pageIndex = 0;

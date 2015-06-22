@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.mcp.sv.cmbc.LotteryDao;
+import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.message.resp.MessageResponse;
 import com.mcp.sv.robot.TulingApiProcess;
 import com.mcp.sv.util.MessageUtil;

@@ -1,26 +1,26 @@
 package com.mcp.sv.cmbc;
 
-
 import com.mcp.sv.dao.JcDao;
+import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.OldBean;
 import com.mcp.sv.util.*;
+import com.mcp.sv.util.CmbcConstant;
+import com.mcp.sv.util.HttpClientWrapper;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * REST Web Service
- *
- * @author Administrator
+ * Created by ChubChen on 2015/6/2.
  */
 
 @Controller
 @RequestMapping(value = "bankServices/LotteryService")
 public class LotteryService {
+
 
     private static Logger logger = Logger.getLogger(LotteryService.class);
     //private static RedisCilent redisCilent = new RedisCilent();
@@ -37,9 +37,9 @@ public class LotteryService {
         String outerId = oldBean.getOuterId();
         String body = oldBean.getBody();
         //判断用户权限
-        JSONObject res = new JSONObject();
+        org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
         try {
-            JSONObject userInfo = new JSONObject(LotteryDao.getUser(userName, passWord));
+            org.codehaus.jettison.json.JSONObject userInfo = new org.codehaus.jettison.json.JSONObject(LotteryDao.getUser(userName, passWord));
             logger.info("发起投注 " + userName);
         } catch (JSONException e) {
             try {
@@ -51,7 +51,7 @@ public class LotteryService {
             return res.toString();
         }
         //放入订单库
-        boolean orderInsertRes = LotteryDao.insertOrder(userName, outerId, CmbcConstant.ORDER_1000, body);
+        boolean orderInsertRes = LotteryDao.insertOrder(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_1000, body);
         if (!orderInsertRes) {
             try {
                 res.put("repCode", "9999");
@@ -74,14 +74,14 @@ public class LotteryService {
         String payType = oldBean.getPayType();
         String resMessage = "";
         int recharge = 0;
-        JSONObject res = new JSONObject();
+        org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
 
         if ("1".equals(payType)) {
             //校验用户权限
             try {
-                JSONObject userInfo = new JSONObject(LotteryDao.getUser(userName, passWord));
+                org.codehaus.jettison.json.JSONObject userInfo = new org.codehaus.jettison.json.JSONObject(LotteryDao.getUser(userName, passWord));
                 if (userInfo.has("acount")) {
-                    JSONObject acount = userInfo.getJSONObject("acount");
+                    org.codehaus.jettison.json.JSONObject acount = userInfo.getJSONObject("acount");
                     recharge = acount.getInt("recharge");
                 } else {
                     res.put("repCode", "1007");
@@ -100,13 +100,13 @@ public class LotteryService {
 
             //获取订单信息
             int amount = 0;
-            JSONObject body = null;
-            JSONObject rst = LotteryDao.getOrder(userName, outerId);
-            if (CmbcConstant.SUCCESS.equals(rst.get("repCode"))) {
-                JSONObject order = rst.getJSONObject("order");
+            org.codehaus.jettison.json.JSONObject body = null;
+            org.codehaus.jettison.json.JSONObject rst = LotteryDao.getOrder(userName, outerId);
+            if (com.mcp.sv.util.CmbcConstant.SUCCESS.equals(rst.get("repCode"))) {
+                org.codehaus.jettison.json.JSONObject order = rst.getJSONObject("order");
                 String bodyStr = order.getString("body");
-                body = new JSONObject(bodyStr);
-                JSONObject _order = body.getJSONObject("order");
+                body = new org.codehaus.jettison.json.JSONObject(bodyStr);
+                org.codehaus.jettison.json.JSONObject _order = body.getJSONObject("order");
                 amount = _order.getInt("amount");
             } else {
                 res.put("repCode", "9999");
@@ -128,22 +128,22 @@ public class LotteryService {
             //投注
             if (body != null) {
                 try {
-                    resMessage = HttpClientWrapper.mcpPost(CmbcConstant.MCP_CT03, body.toString());
+                    resMessage = com.mcp.sv.util.HttpClientWrapper.mcpPost(com.mcp.sv.util.CmbcConstant.MCP_CT03, body.toString());
                     logger.info("收到的：  " + resMessage);
-                    JSONObject transRes = new JSONObject(resMessage);
+                    org.codehaus.jettison.json.JSONObject transRes = new org.codehaus.jettison.json.JSONObject(resMessage);
                     String repCode = (String) transRes.get("repCode");
                     if ("0000".equals(repCode)) {
                         //插入消费记录
-                        boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, CmbcConstant.TRANSTYPE, userName, recharge, recharge - amount, amount, outerId);
+                        boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, com.mcp.sv.util.CmbcConstant.TRANSTYPE, userName, recharge, recharge - amount, amount, outerId);
                         //更新订单状态送达
-                        if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, CmbcConstant.ORDER_2000, null, null))) {
+                        if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000, null, null))) {
                             //订单更新送达状态未成功处理
                         }
                         if (is) {
                             //扣除账户金钱
                             String result = LotteryDao.recharge(userName, -amount);
                             if ("".equals(result)) {
-                                if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, CmbcConstant.ORDER_3000, null, null))) {
+                                if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000, null, null))) {
                                     //订单更新已支付状态未成功处理
                                 }
                                 return resMessage;
@@ -165,7 +165,7 @@ public class LotteryService {
         } else {
             //校验用户权限
             try {
-                JSONObject userInfo = new JSONObject(LotteryDao.getUser(userName, passWord));
+                org.codehaus.jettison.json.JSONObject userInfo = new org.codehaus.jettison.json.JSONObject(LotteryDao.getUser(userName, passWord));
                 logger.info("发起投注 " + userName + "账户余额:" + recharge);
             } catch (JSONException e) {
                 try {
@@ -181,24 +181,24 @@ public class LotteryService {
             if (!"".equals(address) && !"".equals(mobile)) {
                 logger.info(address + "   " + mobile);
                 if ("".equals(LotteryDao.updateUser(userName, passWord, address, mobile))) {
-                    JSONObject body = null;
-                    JSONObject rst = LotteryDao.getOrder(userName, outerId);
-                    if (CmbcConstant.SUCCESS.equals(rst.get("repCode"))) {
-                        JSONObject order = rst.getJSONObject("order");
+                    org.codehaus.jettison.json.JSONObject body = null;
+                    org.codehaus.jettison.json.JSONObject rst = LotteryDao.getOrder(userName, outerId);
+                    if (com.mcp.sv.util.CmbcConstant.SUCCESS.equals(rst.get("repCode"))) {
+                        org.codehaus.jettison.json.JSONObject order = rst.getJSONObject("order");
                         String bodyStr = order.getString("body");
-                        body = new JSONObject(bodyStr);
+                        body = new org.codehaus.jettison.json.JSONObject(bodyStr);
                         //投注
                         if (body != null) {
                             try {
-                                resMessage = HttpClientWrapper.mcpPost(CmbcConstant.MCP_CT03, body.toString());
+                                resMessage = com.mcp.sv.util.HttpClientWrapper.mcpPost(com.mcp.sv.util.CmbcConstant.MCP_CT03, body.toString());
                                 logger.info("收到的：  " + resMessage);
-                                JSONObject transRes = new JSONObject(resMessage);
+                                org.codehaus.jettison.json.JSONObject transRes = new org.codehaus.jettison.json.JSONObject(resMessage);
                                 String repCode = (String) transRes.get("repCode");
                                 if ("0000".equals(repCode)) {
                                     //插入消费记录
-                                    boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, CmbcConstant.TRANSTYPE, userName, recharge, 0, 0, outerId);
+                                    boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, com.mcp.sv.util.CmbcConstant.TRANSTYPE, userName, recharge, 0, 0, outerId);
                                     //更新订单状态送达
-                                    if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, CmbcConstant.ORDER_2000, address, mobile))) {
+                                    if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000, address, mobile))) {
                                         //订单更新送达状态未成功处理
                                     }
                                 } else {
@@ -236,11 +236,11 @@ public class LotteryService {
         String resMessage = "";
         //判断用户权限
         int recharge = 0;
-        JSONObject res = new JSONObject();
+        org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
         try {
-            JSONObject userInfo = new JSONObject(LotteryDao.getUser(userName, passWord));
+            org.codehaus.jettison.json.JSONObject userInfo = new org.codehaus.jettison.json.JSONObject(LotteryDao.getUser(userName, passWord));
             if (userInfo.has("acount")) {
-                JSONObject acount = userInfo.getJSONObject("acount");
+                org.codehaus.jettison.json.JSONObject acount = userInfo.getJSONObject("acount");
                 recharge = acount.getInt("recharge");
             } else {
                 recharge = 0;
@@ -256,7 +256,7 @@ public class LotteryService {
             return res.toString();
         }
         //放入订单库
-        boolean orderInsertRes = LotteryDao.insertOrder(userName, outerId, CmbcConstant.ORDER_1000, body);
+        boolean orderInsertRes = LotteryDao.insertOrder(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_1000, body);
         if (!orderInsertRes) {
             try {
                 res.put("repCode", "9999");
@@ -278,22 +278,22 @@ public class LotteryService {
         //投注
         if (body != null) {
             try {
-                resMessage = HttpClientWrapper.mcpPost(CmbcConstant.MCP_CT03, body);
+                resMessage = com.mcp.sv.util.HttpClientWrapper.mcpPost(com.mcp.sv.util.CmbcConstant.MCP_CT03, body);
                 logger.info("收到的：  " + resMessage);
-                JSONObject transRes = new JSONObject(resMessage);
+                org.codehaus.jettison.json.JSONObject transRes = new org.codehaus.jettison.json.JSONObject(resMessage);
                 String repCode = (String) transRes.get("repCode");
                 if ("0000".equals(repCode)) {
                     //插入消费记录
-                    boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, CmbcConstant.TRANSTYPE, userName, recharge, recharge - amount, amount, outerId);
+                    boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, com.mcp.sv.util.CmbcConstant.TRANSTYPE, userName, recharge, recharge - amount, amount, outerId);
                     //更新订单状态送达
-                    if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, CmbcConstant.ORDER_2000, null, null))) {
+                    if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000, null, null))) {
                         //订单更新送达状态未成功处理
                     }
                     if (is) {
                         //扣除账户金钱
                         String result = LotteryDao.recharge(userName, -amount);
                         if ("".equals(result)) {
-                            if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, CmbcConstant.ORDER_3000, null, null))) {
+                            if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000, null, null))) {
                                 //订单更新已支付状态未成功处理
                             }
                             return resMessage;
@@ -326,7 +326,7 @@ public class LotteryService {
         System.out.println(body);
         if (body != null) {
             try {
-                resMessage = HttpClientWrapper.mcpPost(CmbcConstant.MCP_CQ01, body);
+                resMessage = HttpClientWrapper.mcpPost(com.mcp.sv.util.CmbcConstant.MCP_CQ01, body);
                 System.out.println("收到的：  " + resMessage);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -458,7 +458,7 @@ public class LotteryService {
     }
 
     public String toResult(String description) {
-        JSONObject resMessage = new JSONObject();
+        org.codehaus.jettison.json.JSONObject resMessage = new org.codehaus.jettison.json.JSONObject();
         try {
             resMessage.put("description", description);
         } catch (JSONException e) {
@@ -470,8 +470,9 @@ public class LotteryService {
 
     public static void main(String[] args) throws JSONException {
 
-        System.out.println(MD5.MD5Encode("13834656673" + CmbcConstant.CMBC_SIGN_KEY));
+        System.out.println(com.mcp.sv.util.MD5.MD5Encode("13834656673" + CmbcConstant.CMBC_SIGN_KEY));
 
 
     }
+
 }

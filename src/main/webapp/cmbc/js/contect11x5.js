@@ -126,12 +126,13 @@ $(document).ready(function (e) {
             alert("至少选择1注");
             return false;
         }
-        //投注时未登陆则需要登陆。
-        /*var userId = sessionStorage.getItem("UserId");
-         if(userId==null||userId=="null"){
-         alert("您还未登录");
-         window.SysClientJs.toLoginJGCP("http://mobilelottery.cn:8090/ezmcp/cmbc/index.jsp?type=1");
-         }*/
+        var login = sessionStorage.getItem("login");
+        if (login == null) {
+            alert("您未登录，请登录",function(){
+                window.location.href="login.html";
+            })
+            return false;
+        }
 
         var gameCode = $("#game").attr("data-game");
         if(gameCode=="F01" || gameCode=="F02"|| gameCode=="F03"){
@@ -235,31 +236,34 @@ function doTzhu(order) {
     var body = {
         'order': order
     };
-    $.ajax({
+   $.ajax({
         type: "POST",
-        url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
+        url: "/bankServices/LotteryService/confirmOrders?timestamp=" + new Date().getTime(),
         dataType: "json",
         cache: false,
         data: {
-            cmd: 'CT03',
+            userName: sessionStorage.getItem("name"),
+            passWord: sessionStorage.getItem("passWord"),
+            amount:order.amount,
+            outerId:order.outerId,
             body: JSON.stringify(body)
         },
         success: function (result) {
             var repCode = result.repCode;
-            var cai_name = $(".top-relative").eq(0).find(".title").eq(0).html();
             if (repCode == '0000') {
-                    //彩币支付
-                    tzSuccess(cai_name, order, zhuss, result.order.id);
+                window.location.href="confirm.html#"+order.outerId;
+                after();
+                // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
-                after();//删除弹出层提示
                 alert("账户余额不足，请充值");
             } else {
-                after();//删除弹出层提示
-                alert(result.description);
+                alert("投注失败，请稍后重试。");
             }
+            after();
         }
     });
 }
+
 //投注成功非追号
 function tzSuccess(cai_name, order, zhuss, respondOrderId) {
     $.ajax({
@@ -274,7 +278,6 @@ function tzSuccess(cai_name, order, zhuss, respondOrderId) {
             var zjine = toDecimalMoney(order['amount'] / 100);
             var href = "fangan.html#" + respondOrderId;
             sessionStorage.setItem("orderId",respondOrderId);
-            initcishu();
             $("body").html(result);
             $("#caizhong").html(cai_name);
             $("#qihao").html(order['termCode']);
@@ -299,7 +302,6 @@ function tzSuccesszh(cai_name, zhuss, respondOrder) {
             var zjine = toDecimalMoney(respondOrder['amount'] / 100);
             var href = "fanganzh.html#" + respondOrder['id'];
             sessionStorage.setItem("orderId",respondOrder['id']);
-            initcishu();
             $("body").html(result);
             $("#caizhong").html(cai_name);
             $("#qihao").html("追" + respondOrder['orderCount'] + "期");
@@ -344,8 +346,8 @@ function getOrder() {
         'tickets': tick
     };
     return order;
-}
 //获取追号的getNumList
+}
 function getNumList() {
     var getNumList = "";
     $(".qiulist").each(function (index, element) {
@@ -394,14 +396,17 @@ function getTick() {
         var zhu = $(this).attr("data-zs");
         zhu = parseInt(zhu);
         var ticket = {
+			'gameCode': $("#game").attr("data-game"),
+            'termCode': $("#termCode").html(),
+            'type': 1,
             'amount': multiple * zhu * evprice,
             'bType': betTypeCode,
             'pType': playTypeCode,
             'number': numbers,
             'multiple': multiple,
-            'outerId':Math.random().toString(36).substr(2),
-            'gameCode': $("#game").attr("data-game"),
-            'termCode': $("#termCode").html(),
+            "presetTerminal":"000000",
+            "outerId":new Date().getTime()+Math.random()*(1000-390)+390,
+            "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
         }
         tickets.push(ticket);
     });
@@ -471,88 +476,50 @@ function InterTime() {
     }
 }
 function getData() {
-    //获取彩种名称
+   //获取彩种名称
     var cai_name = $(".top-relative").eq(0).find(".title").eq(0).html();
     var zhuss = 0;
     cai_name = $.base.noHtml(cai_name);
     //显示期号和截止日期
     var gameCode = $("#game").attr("data-game");
     var body = {
-        'cond': {"gameCode": gameCode,
-            "status":1200},
-        'sort':{},
-        'skip':0,
-        'limit':20
+        'gameCode':gameCode
     };
     $.ajax({
         type: "POST",
-        url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
+        url: "/bankServices/LotteryService/getTerms?timestamp=" + new Date().getTime(),
         dataType: "json",
         cache: false,
         data: {
-            cmd: 'CQ01',
             body: JSON.stringify(body)
         },
         success: function (result) {
-            var repCode = result.repCode;
-            if (repCode == '0000') {
-                if (!result['rst'][0]) {
-                    $(".bar-tip").eq(0).html("<span>未开售</span>");
-                } else {
-                    var termCode = result['rst'][0]['code'];
-                    var lastime = result['rst'][0]['closeTime'];
-                    var endTime = result['rst'][0]['closeTime'];
-                    lastime = lastime.substring(0, 16);
-                    lastime = lastime.replace("T", " ");
-                   // var now = result.nowTime;
-                   // now = stampTime(now);
-                    var now=new Date(endTime).getTime();
-                    getLastTime(endTime, now);
-                    $("#termCode").html(termCode);
-                    $("#lastime").html(lastime);
-                    $("#termCode").show();
-                    $("#lastime").show();
-                    //11选5倒计时
-                    /*if ($("#x115").length > 0) {
-                     $("#x115").show();
-                     var timer = null;
-                     timer = setInterval(InterTime, 1000);
-                     }*/
+            if (result.repCode=="0000") {
+                var termCode = result.termCode;
+                var lastime = result.closeTime;
+                var endTime = result.closeTime;
+                lastime = lastime.substring(0, 16);
+                lastime = lastime.replace("T", " ");
+                // var now = result.nowTime;
+                // now = stampTime(now);
+                var now=new Date(endTime).getTime();
+                getLastTime(endTime, now);
+                $("#termCode").html(termCode);
+                $("#lastime").html(lastime);
+                $("#termCode").show();
+                $("#lastime").show();
+                //11选5倒计时
+                if ($("#x115").length > 0) {
+                    $("#x115").show();
+                    var timer = null;
+                    timer = setInterval(InterTime, 1000);
                 }
-            } else {
-                //alert(result.description);
+            } else if(result.repCode=="-1"){
+                alert(result.description);
+            }
+            else {
+                $(".bar-tip").eq(0).html("<span>未开售</span>");
             }
         }
     });
-}
-
-
-function initcishu(){
-
-
-
-    $.ajax({
-
-        type: "POST",
-
-        url: "/openchest/main/initUserInfo.htm?timestamp=?timestamp=" + new Date().getTime(),
-
-        dataType: "json",
-
-        cache: false,
-
-        data: {
-
-            userId: sessionStorage.getItem("Id"),
-
-            userSt: sessionStorage.getItem("St"),
-
-            orderId:sessionStorage.getItem("orderId")
-
-        },
-        success: function (result) {
-        }
-
-    });
-
 }

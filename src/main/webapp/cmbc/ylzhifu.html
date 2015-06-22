@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <title>账户充值</title>
     <meta http-equiv="cache-control" content="no-cache">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <script charset="utf-8" src="js/jq.mobi.min.js"></script>
     <meta name="viewport"
           content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
@@ -42,19 +40,14 @@
                 before();
                 $.ajax({
                     type: "POST",
-                    url: "/bankServices/LotteryService/recharge?timestamp=" + new Date().getTime(),
+                    url: "/alipay/cz?timestamp=" + new Date().getTime(),
                     cache: false,
                     data: {
                         userName: sessionStorage.getItem("name"),
                         money: money*100
                     },
                     success: function (result) {
-                        after();
-                        if (!result.description) {
-                            alert("充值成功");
-                        } else {
-                            alert(result.description);
-                        }
+                        $("#zhifu").append(result);
                     },
                     error: onError
                 });
@@ -104,6 +97,10 @@
 
         <p class="greentext mt15" style="font-size:13px;">温馨提示：最少一元钱。</p>
     </div>
+
+    <div id="zhifu">
+    </div>
+
     <!--正文内容结束-->
     <!--底部开始-->
 

@@ -2,8 +2,8 @@ package com.mcp.sv.intrefaceTest;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mcp.sv.cmbc.CmbcConstant;
-import com.mcp.sv.cmbc.HttpClientWrapper;
+import com.mcp.sv.util.CmbcConstant;
+import com.mcp.sv.util.HttpClientWrapper;
 
 /**
  * Created by ChubChen on 2015/6/3.
@@ -40,33 +40,41 @@ public class MenuTest {
     private static final String URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
 
     public static void main(String[] args) throws Exception{
-        String token = "lHX-LynetrM6mK-jBgGUb7M_Eqchd9p4cVm6R95a8AoszdPctvc_g4KuG3TGV96S4xWoZNiJ-aA6AEip-3drJt8L7oo2sBwNpg1I_bcJdNM";
+        String token = "qD0WqCTNmun1gd_p7UsXO_KukuNSdmNosM7nyG02lZjTUoPYPOFV92TjY8EMiUeJXOFGIMO7tW6zbyR9SQ-8LpfpVdLplcWboDz5HCz3XRI";
 
         String url = URL+token;
 
         JSONArray button = new JSONArray();
 
             JSONObject buttonObj = new JSONObject();
-            buttonObj.put("name", "买彩票" );
+            buttonObj.put("name", "测试1" );
             JSONObject subObj = new JSONObject();
             subObj.put("type", "view");
-            subObj.put("name", "大乐透" );
-            subObj.put("url", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CmbcConstant.APPID+ "&redirect_uri=www.baidu.com&response_type=code&scope=snsapi_base&state=123456#wechat_redirect");
+            subObj.put("name", "日历" );
+            subObj.put("url", "http://stock1.sina.cn/dpool/stockv2/universal_calendar.php?vt=4");
+
             JSONObject subObj2 = new JSONObject();
             subObj2.put("type", "view");
-            subObj2.put("name", "排列3" );
-            subObj2.put("url", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CmbcConstant.APPID+ "&redirect_uri=www.baidu.com&response_type=code&scope=snsapi_base&state=123456#wechat_redirect");
+            subObj2.put("name", "测试3" );
+            subObj2.put("url", "http://mp.weixin.qq.com/mp/redirect?url=http://stock1.sina.cn/dpool/stockv2/universal_calendar.php?vt=4");
+
+        JSONObject subObj10 = new JSONObject();
+        subObj10.put("type", "view");
+        subObj10.put("name", "测试4" );
+        subObj10.put("url", "http://mp.weixin.qq.com/mp/redirect?url=http://stock1.sina.cn/dpool/stockv2/universal_calendar.php?vt=4");
+
             JSONArray subArray = new JSONArray();
             subArray.add(subObj);
             subArray.add(subObj2);
+            subArray.add(subObj10);
             buttonObj.put("sub_button", subArray);
             button.add(buttonObj);
 
         JSONObject buttonObj1 = new JSONObject();
-        buttonObj1.put("name", "开奖信息" );
+        buttonObj1.put("name", "测试4" );
         JSONObject subObj3 = new JSONObject();
         subObj3.put("type", "view");
-        subObj3.put("name", "大乐透");
+        subObj3.put("name", "测试5");
         subObj3.put("url", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CmbcConstant.APPID+ "&redirect_uri=www.baidu.com&response_type=code&scope=snsapi_base&state=123456#wechat_redirect");
         JSONArray subArray1 = new JSONArray();
         subArray1.add(subObj3);
@@ -77,7 +85,7 @@ public class MenuTest {
         buttonObj2.put("name", "信息" );
         JSONObject subObj4 = new JSONObject();
         subObj4.put("type", "view");
-        subObj4.put("name", "大乐透");
+        subObj4.put("name", "测试8");
         subObj4.put("url", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CmbcConstant.APPID+ "&redirect_uri=www.baidu.com&response_type=code&scope=snsapi_base&state=123456#wechat_redirect");
         JSONArray subArray2 = new JSONArray();
         subArray2.add(subObj4);

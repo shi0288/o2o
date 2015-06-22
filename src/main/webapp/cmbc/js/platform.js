@@ -22,14 +22,6 @@ $(document).ready(function (e) {
         }(),
         language: (navigator.browserLanguage || navigator.language).toLowerCase()
     }
-//    if (browser.versions.android) {
-//        var hh1 = $(".top").height();
-//        var hh2 = $(".footer-tz").height();
-//        var hh = $(window).height() - hh1 - hh2;
-//        $(".content").css({"max-height": hh + "px", "overflow-y": "scroll", "margin-bottom": "0px"});
-//        $(".top").css("position", "absolute");
-//        $("body").css({"min-height": "100%"});
-//    }
     if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
         $("<link>").attr({ rel: "stylesheet",
             type: "text/css",

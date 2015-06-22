@@ -37,9 +37,9 @@
             </div>
             <div class="tab-content p10" id="putong" style="display:block" data-red="1" data-blue="0" data-ttpp="zhiy" data-des="前一直选">
             	<p class="gerytext pl10">玩法提示：从11个号码中任选1个号码。1/11的中奖机会，奖金13元。</p>
-                <span class="tz-tit-left">至少选2个号码</span>
-                <span class="tz-tit-right1 red" id="jx-hq">2个</span>
-                <span class="tz-tit-right2 red" onClick="selqiu($('#putong').find('.redball'),2)">机选号码</span>
+                <span class="tz-tit-left">至少选1个号码</span>
+                <span class="tz-tit-right1 red" id="jx-hq">1个</span>
+                <span class="tz-tit-right2 red" onClick="selqiu($('#putong').find('.redball'),1)">机选号码</span>
                 <div class="cb"></div>
                 <span class="redball">01</span>
                 <span class="redball">02</span><span class="redball">03</span><span class="redball">04</span><span class="redball">05</span>

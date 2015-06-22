@@ -1,4 +1,4 @@
-package com.mcp.sv.cmbc;
+package com.mcp.sv.util;
 
 /**
  * Created by yeeson on 14-3-16.
@@ -11,8 +11,7 @@ public class CmbcConstant {
     public static final String MCP_VERSION="1.0.00";
     public static final String MCP_CODE = "Q0001";
     public static final String MCP_KEY = "135790";
-    public static final String MCP_INTERFACE_URL = "http://218.30.107.19:9088/mcp-filter/main/interface.htm";
-
+    public static final String MCP_INTERFACE_URL = "http://101.200.232.194:9088/mcp-filter/main/interface.htm";
 
     //命令
     public static final String MCP_CQ01="CQ01";  //查询期次

@@ -4,7 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mcp.sv.model.WeChat;
 import com.mcp.sv.service.CoreService;
-import com.mcp.sv.util.SignUtil;
+import com.mcp.sv.util.*;
+import com.mcp.sv.util.CmbcConstant;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +57,7 @@ public class WeiXinController {
         return new String(respMessage.getBytes("utf-8"),"ISO8859_1");
     }
 
-    @RequestMapping(value="/callback",method = RequestMethod.POST)
+    @RequestMapping(value="/callback",method = {RequestMethod.POST,RequestMethod.GET})
     public String getWeiXinCallback(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
         //第一步微信 登陆认证回掉地址
@@ -66,12 +67,15 @@ public class WeiXinController {
         logger.info("state:" + state);
         //doer不根据 webCode 获webtoken  并获取用户的 openId
 
-        String webTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + CmbcConstant.APPID + "&secret=" +CmbcConstant.APPSECRET+ "&code="+webcode+"&grant_type=authorization_code";
-        String result = HttpClientWrapper.getUrl(webTokenUrl);
+        String webTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + com.mcp.sv.util.CmbcConstant.APPID + "&secret=" + CmbcConstant.APPSECRET+ "&code="+webcode+"&grant_type=authorization_code";
+        String result = com.mcp.sv.util.HttpClientWrapper.getUrl(webTokenUrl);
         System.out.println(result);
         JSONObject jsonObject = JSON.parseObject(result);
         jsonObject.get("openId");
         //根据参数 state 可以跳转到不同菜单的页面
-        return "/dlt";
+        return "forward:/cmbc/start.html";
     }
+
+
+
 }

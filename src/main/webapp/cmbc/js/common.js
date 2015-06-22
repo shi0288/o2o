@@ -591,7 +591,7 @@ function getZhuhaoStatus(status){
     }
 
 }
-//获取彩票状态
+//获取状态
 function getOrderStatus(status) {
     switch (status) {
         case 1000:

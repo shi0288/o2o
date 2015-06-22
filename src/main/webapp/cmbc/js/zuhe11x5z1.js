@@ -105,8 +105,8 @@ $(document).ready(function() {
 		 return false;
 	});
 	$(".step1").die().live("click",function(){
-		if($(".redball.on").length<2){
-			alert("至少选择2个号码");
+		if($(".redball.on").length<1){
+			alert("至少选择1个号码");
 			return false;	
 		}
 		stepOne(this);	

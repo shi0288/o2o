@@ -1,6 +1,7 @@
 apply plugin: 'java'
+apply plugin: 'war'
 sourceCompatibility = 1.7
-version = '0.0.1-SNAPSHOT'
+version = 'ROOT'
 group = 'com.mcp'
 tasks.withType(JavaCompile){ options.encoding = "UTF-8"}
 dependencies {

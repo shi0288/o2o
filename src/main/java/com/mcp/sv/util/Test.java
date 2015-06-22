@@ -1,10 +1,8 @@
 package com.mcp.sv.util;
 
-import com.mcp.sv.cmbc.HttpClientWrapper;
 import com.mongodb.*;
 import com.mongodb.util.JSON;
 import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 /**
  * Created by Administrator on 2015/5/20.

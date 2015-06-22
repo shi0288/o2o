@@ -9,8 +9,6 @@
 <META HTTP-EQUIV="Expires" CONTENT="0"> 
 <meta name="format-detection" content="telephone=no">
 <meta http-equiv="cache-control" content="no-cache">
-<meta content="yes" name="apple-mobile-web-app-capable">
-<meta content="black" name="apple-mobile-web-app-status-bar-style">
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 <link type="text/css" rel="stylesheet" href="css/reset.css" />
 <link type="text/css" rel="stylesheet" href="css/common.css" />

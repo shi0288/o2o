@@ -2,7 +2,6 @@
 <%@ page import="com.mcp.sv.util.MD5" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="/cmbc/js/commontz.js"></script>
-<script type="text/javascript" src="/cmbc/js/platform.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         /*登录  */

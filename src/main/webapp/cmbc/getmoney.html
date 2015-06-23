@@ -16,10 +16,6 @@
 <script type="text/javascript" src="js/pcasunzip.js" charset="gb2312"></script>
 <script type="text/javascript">
 $(document).ready(function(e) {
-	var identityId=sessionStorage.getItem("identityId");
-	var realName=sessionStorage.getItem("realName");
-	var cardNumber=sessionStorage.getItem("cardNumber");
-	var bankNo=sessionStorage.getItem("bankNo");
     var recharge=sessionStorage.getItem("recharge");//彩金
 	var prize=sessionStorage.getItem("prize");//奖金
 	var jiangjin=prize/100;
@@ -73,27 +69,27 @@ $(document).ready(function(e) {
 				'stationId' : "24fb88b47c694ec4880ce36d3293e647",
 				'amount' : txjin*100
 			};
-		$.ajax({           
-			type : "POST",          
-			url  : "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
-			dataType: "json",
-			cache : false,            
-			data: {
-				cmd: 'C03',
-                Id: sessionStorage.getItem("Id"),
-                St: sessionStorage.getItem("St"),
-				body: JSON.stringify(body)
-			},             
-			success : function(result) {
-				var repCode = result.repCode;
-				if(repCode=='0000'){
-					//提现申请成功
-					window.location.href="success_tx.html";
-				}else{
-					alert(result.description);		
-				}
-			}
-		});
+//		$.ajax({
+//			type : "POST",
+//			url  : "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
+//			dataType: "json",
+//			cache : false,
+//			data: {
+//				cmd: 'C03',
+//                Id: sessionStorage.getItem("Id"),
+//                St: sessionStorage.getItem("St"),
+//				body: JSON.stringify(body)
+//			},
+//			success : function(result) {
+//				var repCode = result.repCode;
+//				if(repCode=='0000'){
+//					//提现申请成功
+//					window.location.href="success_tx.html";
+//				}else{
+//					alert(result.description);
+//				}
+//			}
+//		});
 	});
 	
 	$("#jzc").click(function(){

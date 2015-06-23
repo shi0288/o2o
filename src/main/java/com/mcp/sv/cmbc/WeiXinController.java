@@ -24,9 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 public class WeiXinController {
 
     private static Logger logger = Logger.getLogger(SignUtil.class);
-    @RequestMapping(value="/api",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/api", method = RequestMethod.GET)
     @ResponseBody
-    public String xxtInterface(WeChat wc){
+    public String xxtInterface(WeChat wc) {
         System.out.println("/api");
         String signature = wc.getSignature(); // 微信加密签名
         String timestamp = wc.getTimestamp(); // 时间戳
@@ -42,10 +43,9 @@ public class WeiXinController {
         }
     }
 
-    @RequestMapping(value="/api",method = RequestMethod.POST)
-      @ResponseBody
-      public String getWeiXinMessage(HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+    @RequestMapping(value = "/api", method = RequestMethod.POST)
+    @ResponseBody
+    public String getWeiXinMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
         request.setCharacterEncoding("UTF-8");  //微信服务器POST消息时用的是UTF-8编码，在接收时也要用同样的编码，否则中文会乱码；
         response.setCharacterEncoding("UTF-8"); //在响应消息（回复消息给用户）时，也将编码方式设置为UTF-8，原理同上；
@@ -55,12 +55,11 @@ public class WeiXinController {
         // 响应消息
         //调用response.getWriter().write()方法将消息的处理结果返回给用户
 
-        return new String(respMessage.getBytes("utf-8"),"ISO8859_1");
+        return new String(respMessage.getBytes("utf-8"), "ISO8859_1");
     }
 
-    @RequestMapping(value="/callback",method = {RequestMethod.POST,RequestMethod.GET})
-    public String getWeiXinCallback(HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+    @RequestMapping(value = "/callback", method = {RequestMethod.POST, RequestMethod.GET})
+    public String getWeiXinCallback(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //第一步微信 登陆认证回掉地址
         String webcode = request.getParameter("code");
         String state = request.getParameter("state");
@@ -91,7 +90,6 @@ public class WeiXinController {
         //根据参数 state 可以跳转到不同菜单的页面
         return "forward:/cmbc/" + state;
     }
-
 
 
 }

@@ -217,6 +217,9 @@ public class LotteryDao {
             param.put("recharge", money);
             int res = MongoUtil.save(MongoConst.MONGO_ACOUNT, param);
             if (res == 0) {
+                if(forign){
+                    LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, CmbcConstant.RECHARGETYPE, userName, 0, money, money, outerId);
+                }
                 return "";
             } else {
                 return "彩币更新失败";
@@ -318,7 +321,7 @@ public class LotteryDao {
                     logger.error("开始充值");
                     String userName = (String) czOrder.get("userName");
                     int money = Integer.parseInt((String) czOrder.get("money"));
-                    LotteryDao.recharge(userName, money,true,out_trade_no);
+                    LotteryDao.recharge(userName, money*100,true,out_trade_no);
                     return true;
                 } else {
                     logger.error("出现问题："+out_trade_no+" 数据库操作出错");

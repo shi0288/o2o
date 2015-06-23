@@ -14,15 +14,11 @@
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript">
-        if(top.location != location){
-            top.location.href= location.href;
-        }
         $(document).ready(function () {
             //判断是否一级页面
             /*判断登陆  */
-            var login = sessionStorage.getItem("login");
-            if (!login) {
-                window.location.href = "login.html";
+            if(top.location != location){
+                top.location.href= location.href;
                 return;
             }
             /*判断登陆  end */

@@ -35,11 +35,9 @@
         $(document).ready(function(e) {
 
             //判断是否一级页面
-            try{
-                $(window.parent.frames["myFrame"].document);
-                window.parent.location.href="index.jsp";
+            if(top.location != location){
+                top.location.href= location.href;
                 return;
-            }catch(err){
             }
 
 

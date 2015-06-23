@@ -53,7 +53,7 @@
                         var name = sessionStorage.getItem("name");
                         var recharge = sessionStorage.getItem("recharge");
                         var prize = sessionStorage.getItem("prize");
-                        $('#user_name').html(name);
+                        $('#user_name').html(name.substr(0,11));
                         $('#recharge').html(toDecimalMoney(recharge / 100));
                         $('#bonus').html(toDecimalMoney(prize / 100));
                         after();//删除加载动画

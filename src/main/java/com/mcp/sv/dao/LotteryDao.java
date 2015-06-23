@@ -329,7 +329,6 @@ public class LotteryDao {
                 }
             }else if(status==1200){
                 //已经操作过
-                logger.info(out_trade_no+" 已经充值过");
                 return false;
             }
 
@@ -345,7 +344,7 @@ public class LotteryDao {
 
 
     //更改订单状态
-    public static String updateOrderStatus(String userName, String outerId, int status,String address,String mobile) {
+    public static String updateOrderStatus(String userName, String outerId, int status) {
         //查询库中是否有此记录
         Map param = new HashMap();
         param.put("userName", userName);
@@ -357,12 +356,6 @@ public class LotteryDao {
             String orderStr = JSON.serialize(order);
             DBObject newOrder = (DBObject) JSON.parse(orderStr);
             newOrder.put("status", status);
-            if(address!=null){
-                newOrder.put("address", address);
-            }
-            if(mobile!=null){
-                newOrder.put("mobile", mobile);
-            }
             int res = MongoUtil.update(MongoConst.MONGO_TORDER, order, newOrder);
             if (res == 1) {
                 return "";

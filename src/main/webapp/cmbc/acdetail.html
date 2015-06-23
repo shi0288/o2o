@@ -20,8 +20,6 @@
             getMoneyData(userName,passWord);
             //登录END
             var pageSize = 8;
-            var entityIds = [];
-            // entityIds.push(accountId);
             //点击加载
             $("#load0").die().live("click", function () {
                 var aPage = $(".tab-content").eq(0).find(".page");
@@ -35,21 +33,21 @@
                 var ipage = aPage.attr("data-page");
                 var actype = aPage.attr("data-type");
                 ipage = parseInt(ipage);
-                cjAjax(entityIds, ipage, pagesize, actype, $(".tab-content").eq(1));
+                cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(1));
             });
             $("#load2").die().live("click", function () {
                 var aPage = $(".tab-content").eq(2).find(".page");
                 var ipage = aPage.attr("data-page");
                 var actype = aPage.attr("data-type");
                 ipage = parseInt(ipage);
-                cjAjax(entityIds, ipage, pagesize, actype, $(".tab-content").eq(2));
+                cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(2));
             });
             $("#load3").die().live("click", function () {
                 var aPage = $(".tab-content").eq(3).find(".page");
                 var ipage = aPage.attr("data-page");
                 var actype = aPage.attr("data-type");
                 ipage = parseInt(ipage);
-                cjAjax(entityIds, ipage, pagesize, actype, $(".tab-content").eq(3));
+                cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(4));
             });
             /*滚动加载*/
             /*$(window).scroll(function(){
@@ -161,6 +159,11 @@
                     type[1] = "img/ico_gwc.png";
                     return type;
                     break;
+                case 2:
+                    type[0] = "充值";
+                    type[1] = "img/ico_qian.png";
+                    return type;
+                    break;
             }
         }
         function getLocalTime(Stamp) {
@@ -221,11 +224,11 @@
             </div>
             <!-- 奖金-->
             <div class="tab-content">
-                <span class="page" data-type="1" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="2" data-page="0" style="width:0px; height:0px;"></span>
             </div>
             <!--充值-->
             <div class="tab-content">
-                <span class="page" data-type="2" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="1" data-page="0" style="width:0px; height:0px;"></span>
             </div>
             <!--提款-->
             <div class="tab-content">

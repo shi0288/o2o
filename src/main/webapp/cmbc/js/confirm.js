@@ -77,21 +77,9 @@ $(document).ready(function (e) {
             return;
         }
         var payType = "1";
-        var mobile="";
-        var address="";
-        if (!$("#check-cb").hasClass("now")) {
 
+        if (!$("#check-cb").hasClass("now")) {
             payType = "2";
-            address = $("#address").val();
-            mobile = $("#mobile").val();
-            if(address==""){
-                alert("地址不能为空");
-                return;
-            }
-            if(mobile==""){
-                alert("手机为空");
-                return;
-            }
         }
 
         $.ajax({
@@ -103,9 +91,7 @@ $(document).ready(function (e) {
                 userName: sessionStorage.getItem("name"),
                 passWord: sessionStorage.getItem("passWord"),
                 outerId: outerId,
-                payType: payType,
-                address:address,
-                mobile:mobile
+                payType: payType
             },
             success: function (result) {
                 console.log(result);
@@ -116,7 +102,7 @@ $(document).ready(function (e) {
                 } else if (repCode == '1007') {
                     alert("账户余额不足，请充值");
                 } else {
-                    alert("投注失败，请稍后重试。");
+                    alert(result.description);
                 }
                 after();
             },

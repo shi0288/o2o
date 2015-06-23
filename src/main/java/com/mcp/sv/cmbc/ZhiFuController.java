@@ -81,7 +81,6 @@ public class ZhiFuController {
     }
 
 
-
     @RequestMapping(value="/dealRecharge.htm",method = {RequestMethod.POST,RequestMethod.GET})
     public void getWeiXinCallback(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
@@ -119,14 +118,14 @@ public class ZhiFuController {
             if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
                 boolean rst =LotteryDao.alipayRecharge(out_trade_no);
                 if(rst){
-                    logger.info(out_trade_no+"支付成功");
+                    logger.info(out_trade_no + "  支付成功");
                 }else{
-                    logger.info(out_trade_no+"已经支付，不再处理");
+                    logger.info(out_trade_no + "  已经支付，不再处理");
                 }
             }
         }else{
             //验证失败
-            logger.error("支付失败");
+            logger.error(out_trade_no+"   支付失败");
         }
     }
 

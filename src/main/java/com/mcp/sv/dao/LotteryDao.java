@@ -304,7 +304,7 @@ public class LotteryDao {
     public static boolean  alipayRecharge(String out_trade_no) {
         //查询库中是否有此记录
         Map param = new HashMap();
-        param.put("out_trade_no", out_trade_no);
+        param.put("czId", out_trade_no);
         List datas = MongoUtil.query(MongoConst.MONGO_ALIPAY, param);
         if (datas.size() == 1) {
             DBObject czOrder = (DBObject) datas.get(0);

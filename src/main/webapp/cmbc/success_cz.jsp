@@ -91,7 +91,7 @@
 
         <div style=" margin-top:20px; height:40px; border-top:1px solid #999;"></div>
         <p class="text-center tz-success">充值金额<font class="orgtext ml5"><%=total_fee %></font>元</p>
-        <p class="text-center tz-success">状态<font class="orgtext ml5"><%=total_fee %></font>元</p>
+        <p class="text-center tz-success">状态<font class="orgtext ml5"><%=rstInfo %></font></p>
 
         <a href="index.jsp" class=" m-bigbtn-org mt30">试试手气</a>
         <a href="acount.html" class=" m-bigbtn-org mt15">返回账户</a>

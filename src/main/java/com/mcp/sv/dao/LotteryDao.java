@@ -79,19 +79,18 @@ public class LotteryDao {
                 //登录成功
                 returnObject = new JSONObject(user.toMap());
                 returnObject.put("repCode","0000");
-                return returnObject;
 
             } else {
                 returnObject.put("repCode", "1007");
                 returnObject.put("description","密码错误");
-                return returnObject;
             }
-        }else{
+        }else if(datas.size() == 0){
             returnObject.put("repCode", "1009");
             returnObject.put("description", "重新注册");
+        }else{
+            returnObject.put("repCode", "9999");
+            returnObject.put("description", "登录异常");
         }
-        returnObject.put("repCode", "9999");
-        returnObject.put("description", "登陆异常");
         return returnObject;
     }
 

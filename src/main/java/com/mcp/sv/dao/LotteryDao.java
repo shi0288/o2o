@@ -314,11 +314,10 @@ public class LotteryDao {
                 DBObject newCzOrder = (DBObject) JSON.parse(czOrderStr);
                 newCzOrder.put("status", 1200);
                 int res = MongoUtil.update(MongoConst.MONGO_ALIPAY, czOrder, newCzOrder);
-                logger.error("res:"+res);
                 if (res == 1) {
+                    logger.error("开始充值");
                     String userName = (String) czOrder.get("userName");
-                    int money = (int) czOrder.get("money");
-                    logger.error("进入开始充值");
+                    int money = Integer.parseInt((String) czOrder.get("money"));
                     LotteryDao.recharge(userName, money,true,out_trade_no);
                     return true;
                 } else {

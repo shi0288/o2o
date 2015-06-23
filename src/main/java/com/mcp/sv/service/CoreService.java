@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.message.resp.MessageResponse;
 import com.mcp.sv.robot.TulingApiProcess;
+import com.mcp.sv.util.CmbcConstant;
 import com.mcp.sv.util.MessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public class CoreService {
 				if(content!=null){
 					respContent = TulingApiProcess.getTulingResult(content);
 					if(respContent==""||null==respContent){
-						MessageResponse.getTextMessage(fromUserName , toUserName , "1233abcddd服务号暂时无法回复");
+						MessageResponse.getTextMessage(fromUserName , toUserName , "服务号暂时无法回复");
 					}
 					return MessageResponse.getTextMessage(fromUserName , toUserName , respContent);
 				}
@@ -62,7 +63,8 @@ public class CoreService {
 				if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {// 订阅
 					respContent = " 您好。欢迎您访问运彩公众号";
 					//注册用户到数据库
-					LotteryDao.register(fromUserName, fromUserName+"123456",  fromUserName+"123456");
+					LotteryDao.register(fromUserName, fromUserName+ CmbcConstant.CMBC_SIGN_KEY,  fromUserName+CmbcConstant.CMBC_SIGN_KEY);
+					logger.info(fromUserName+CmbcConstant.CMBC_SIGN_KEY);
 					return MessageResponse.getTextMessage(fromUserName, toUserName, respContent);
 				} else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {// 取消订阅
 					//删除用户或者 修改状态

@@ -7,6 +7,7 @@ import com.mcp.sv.model.WeChat;
 import com.mcp.sv.service.CoreService;
 import com.mcp.sv.util.*;
 import com.mcp.sv.util.CmbcConstant;
+import com.mcp.sv.util.MD5;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,25 +71,32 @@ public class WeiXinController {
         String result = com.mcp.sv.util.HttpClientWrapper.getUrl(webTokenUrl);
         System.out.println(result);
         JSONObject jsonObject = JSON.parseObject(result);
-        String username = jsonObject.getString("openId");
-        String passWord = username+"123456";
+        String username = jsonObject.getString("openid");
+        String passWord = username + CmbcConstant.CMBC_SIGN_KEY;
+        logger.info(passWord);
         org.codehaus.jettison.json.JSONObject userJson = null;
         try{
              userJson = LotteryDao.login2(username, passWord);
+
         }catch (Exception e){
             e.printStackTrace();
             result = com.mcp.sv.util.HttpClientWrapper.getUrl(webTokenUrl);
             jsonObject = JSON.parseObject(result);
-            username = jsonObject.getString("openId");
-            passWord = username+"123456";
+            username = jsonObject.getString("openid");
+            passWord = username + CmbcConstant.CMBC_SIGN_KEY;
+            logger.info(passWord);
             userJson =  LotteryDao.login2(username, passWord);
         }
         if(userJson.get("repCode").equals("0000"))
         {
+            logger.info("session存放登陆状态");
+            request.getSession().setAttribute("userInfo", userJson.toString());
             request.setAttribute("userInfo", userJson.toString());
         }
+        logger.info("微信打开的链接。登陆用户信息是： " + userJson.toString());
+        logger.info("跳转页面是： /cmbc/" + state+".jsp");
         //根据参数 state 可以跳转到不同菜单的页面
-        return "forward:/cmbc/" + state;
+        return "redirect:/cmbc/" + state + ".jsp";
     }
 
 

@@ -6,28 +6,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
         /*登录  */
-
-        var Id = sessionStorage.getItem("Id");
-        var clientUserId = <%=request.getParameter("userId")%>;
-        if (Id == null && clientUserId != null) {//尚未登陆，需要处理登陆。
-            <%
-            String userId = request.getParameter("userId");
-            if (userId != null) {
-                String sign = request.getParameter("sign");
-                String signStr =MD5.MD5Encode(userId + CmbcConstant.CMBC_SIGN_KEY);
-                if (signStr.equals(sign)) {
-            %>
-            //startLogin("<%=userId%>", "<%=signStr%>");
-            <%
-               }else{
-               %>
-            window.alert("登陆验证失败");
-            <%
-               }
-            }
-            %>
+        var flag = sessionStorage.getItem("login");
+        var userInfo = <%=request.getParameter("userInfo")%>;
+        if ( flag == null && userInfo != null) {//尚未登陆，需要处理登陆。
+            var jsonUser = null;
+            try{
+                jsonUser = JSON.parse(userInfo);
+            }catch (err){}
+            sessionStorage.setItem("login", "login");
+            sessionStorage.setItem("name", jsonUser["userName"]);
+            sessionStorage.setItem("passWord", jsonUser["userName"]+"123456");
+            sessionStorage.setItem("address", userInfo.address);
+            sessionStorage.setItem("mobile", userInfo.mobile);
         }
-        Id = "123";
-        ajustButton(Id);
     });
 </script>

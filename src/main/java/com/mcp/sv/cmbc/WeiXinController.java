@@ -2,6 +2,7 @@ package com.mcp.sv.cmbc;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.WeChat;
 import com.mcp.sv.service.CoreService;
 import com.mcp.sv.util.*;
@@ -65,15 +66,30 @@ public class WeiXinController {
         String state = request.getParameter("state");
         logger.info("webCode:" + webcode);
         logger.info("state:" + state);
-        //doer不根据 webCode 获webtoken  并获取用户的 openId
-
+        //根据 webCode 获webtoken  并获取用户的 openId
         String webTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + com.mcp.sv.util.CmbcConstant.APPID + "&secret=" + CmbcConstant.APPSECRET+ "&code="+webcode+"&grant_type=authorization_code";
         String result = com.mcp.sv.util.HttpClientWrapper.getUrl(webTokenUrl);
         System.out.println(result);
         JSONObject jsonObject = JSON.parseObject(result);
-        jsonObject.get("openId");
+        String username = jsonObject.getString("openId");
+        String passWord = username+"123456";
+        org.codehaus.jettison.json.JSONObject userJson = null;
+        try{
+             userJson = LotteryDao.login2(username, passWord);
+        }catch (Exception e){
+            e.printStackTrace();
+            result = com.mcp.sv.util.HttpClientWrapper.getUrl(webTokenUrl);
+            jsonObject = JSON.parseObject(result);
+            username = jsonObject.getString("openId");
+            passWord = username+"123456";
+            userJson =  LotteryDao.login2(username, passWord);
+        }
+        if(userJson.get("repCode").equals("0000"))
+        {
+            request.setAttribute("userInfo", userJson.toString());
+        }
         //根据参数 state 可以跳转到不同菜单的页面
-        return "forward:/cmbc/start.html";
+        return "forward:/cmbc/" + state;
     }
 
 

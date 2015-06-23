@@ -66,6 +66,31 @@ public class LotteryDao {
         return "登陆异常";
     }
 
+    public static JSONObject login2(String userName, String passWord) throws Exception{
+        //查询库中是否有此记录
+        JSONObject returnObject = new JSONObject();
+        Map param = new HashMap();
+        param.put("userName", userName);
+        List datas = MongoUtil.query(MongoConst.MONGO_USERS, param);
+        if (datas.size() == 1) {
+            DBObject user = (DBObject) datas.get(0);
+            String dbPassWord = (String) user.get("passWord");
+            if (MD5.MD5Encode(passWord).equals(dbPassWord)) {
+                //登录成功
+                returnObject = new JSONObject(user.toMap());
+                returnObject.put("repCode","0000");
+                return returnObject;
+
+            } else {
+                returnObject.put("repCode", "1007");
+                returnObject.put("description","密码错误");
+                return returnObject;
+            }
+        }
+        returnObject.put("repCode", "9999");
+        returnObject.put("description","登陆异常");
+        return returnObject;
+    }
 
     public static String getUser(String userName, String passWord) throws JSONException {
         //查询库中是否有此记录

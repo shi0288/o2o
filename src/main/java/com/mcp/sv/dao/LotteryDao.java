@@ -86,6 +86,9 @@ public class LotteryDao {
                 returnObject.put("description","密码错误");
                 return returnObject;
             }
+        }else{
+            returnObject.put("repCode", "1009");
+            returnObject.put("description", "重新注册");
         }
         returnObject.put("repCode", "9999");
         returnObject.put("description", "登陆异常");

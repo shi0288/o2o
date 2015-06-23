@@ -92,6 +92,9 @@ public class WeiXinController {
             logger.info("session存放登陆状态");
             request.getSession().setAttribute("userInfo", userJson.toString());
             request.setAttribute("userInfo", userJson.toString());
+        }else if(userJson.get("repCode").equals("1009")){
+            LotteryDao.register(username, username+ CmbcConstant.CMBC_SIGN_KEY,  username+CmbcConstant.CMBC_SIGN_KEY);
+            userJson = LotteryDao.login2(username, passWord);
         }
         logger.info("微信打开的链接。登陆用户信息是： " + userJson.toString());
         logger.info("跳转页面是： /cmbc/" + state+".jsp");

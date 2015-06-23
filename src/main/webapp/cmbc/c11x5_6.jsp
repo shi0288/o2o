@@ -8,6 +8,7 @@
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0"> 
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+<meta name="format-detection" content="telephone=no" />
 <link type="text/css" rel="stylesheet" href="css/reset.css" />
 <link type="text/css" rel="stylesheet" href="css/common.css" />
 <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>

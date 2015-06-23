@@ -3,6 +3,7 @@ package com.mcp.sv.cmbc;
 import com.mcp.sv.alipay.AlipayConfig;
 import com.mcp.sv.alipay.AlipayNotify;
 import com.mcp.sv.alipay.AlipaySubmit;
+import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.OldBean;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,7 @@ public class ZhiFuController {
         //商户订单号
         String out_trade_no = UUID.randomUUID().toString().replace("-", "");
         //订单名称
-        String subject = "充值_"+UUID.randomUUID().toString().replace("-", "");
+        String subject = "充值";
         //付款金额
         String total_fee = String.valueOf(oldBean.getMoney()/100);
         //必填
@@ -73,6 +74,9 @@ public class ZhiFuController {
         //sParaTemp.put("extern_token", extern_token);
         //建立请求
         rst = AlipaySubmit.buildRequest(sParaTemp, "get", "确认");
+        logger.info("产生充值订单: "+out_trade_no+"  金额："+total_fee);
+        //充值暂存
+        LotteryDao.insertCzOrder(oldBean.getUserName(),out_trade_no,total_fee,1100);  //1100  未支付
         return rst;
     }
 
@@ -112,33 +116,17 @@ public class ZhiFuController {
         //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 
         if(AlipayNotify.verify(params)){//验证成功
-            //请在这里加上商户的业务逻辑程序代码
-
-            //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
-
-            if(trade_status.equals("TRADE_FINISHED")){
-                //判断该笔订单是否在商户网站中已经做过处理
-                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                //如果有做过处理，不执行商户的业务程序
-
-                //注意：
-                //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
-            } else if (trade_status.equals("TRADE_SUCCESS")){
-                //判断该笔订单是否在商户网站中已经做过处理
-                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                //如果有做过处理，不执行商户的业务程序
-
-                //注意：
-                //付款完成后，支付宝系统发送该交易状态通知
+            if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
+                boolean rst =LotteryDao.alipayRecharge(out_trade_no);
+                if(rst){
+                    logger.info(out_trade_no+"支付成功");
+                }else{
+                    logger.info(out_trade_no+"已经支付，不再处理");
+                }
             }
-
-            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-
-            logger.info("支付成功");	//请不要修改或删除
-
         }else{
             //验证失败
-            logger.info("支付失败");
+            logger.error("支付失败");
         }
     }
 

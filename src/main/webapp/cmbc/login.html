@@ -67,8 +67,6 @@ function login(name,password){
 					sessionStorage.setItem("login", "login");
 					sessionStorage.setItem("name", name);
 					sessionStorage.setItem("passWord", password);
-					sessionStorage.setItem("address", userInfo.address);
-					sessionStorage.setItem("mobile", userInfo.mobile);
 					window.location.href="acount.html";
 				}else{
 					alert(result.description);

@@ -25,6 +25,8 @@ public class CmbcConstant {
 
     //记录类别
     public static final int TRANSTYPE=0;
+    public static final int RECHARGETYPE=1;
+
 
     //订单状态
     public static final int ORDER_1000=1000;  //未支付

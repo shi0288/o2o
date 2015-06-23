@@ -35,7 +35,6 @@ $(document).ready(function (e) {
                 status = getOrderStatus(status);
                 var outerId = objectOrder.outerId;
                 $("#state").html(status);
-                //如果中奖显示中奖图片
                 $("#czqi").html(termCode);
                 $("#cztime").html(time);
                 $("#orderId").html(outerId);
@@ -70,17 +69,18 @@ $(document).ready(function (e) {
     $("#pay_btn").click(function () {
 
         if ($("#check-cb").hasClass("now") && $("#huodao").hasClass("now")) {
-            alert("不能同时选择两种支付类型,^_^");
+            alert("不能同时选择两种支付类型");
             return;
         }
         if (!$("#check-cb").hasClass("now") && !$("#huodao").hasClass("now")) {
-            alert("请选择一种支付方式,要吃霸王餐么，^_^");
+            alert("请选择一种支付方式");
             return;
         }
         var payType = "1";
         var mobile="";
         var address="";
         if (!$("#check-cb").hasClass("now")) {
+
             payType = "2";
             address = $("#address").val();
             mobile = $("#mobile").val();

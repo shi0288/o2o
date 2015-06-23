@@ -73,14 +73,10 @@ $(document).ready(function() {
     $("#huodao").click(function(){
         if($(this).hasClass("now")){
             $(this).removeClass("now");
-            $("#addressInfo").hide();
-
         }else{
             $(this).addClass("now");
-            $("#addressInfo").show();
         }
     });
-
 
     $(".selmore").click(function(e){
         $('.cover').show();

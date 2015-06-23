@@ -122,9 +122,6 @@ public class LotteryService {
                 }
                 return res.toString();
             }
-            logger.info("发起投注3 " + amount);
-            logger.info(body != null);
-
             //投注
             if (body != null) {
                 try {
@@ -141,7 +138,7 @@ public class LotteryService {
                         }
                         if (is) {
                             //扣除账户金钱
-                            String result = LotteryDao.recharge(userName, -amount);
+                            String result = LotteryDao.recharge(userName, -amount,false,null);
                             if ("".equals(result)) {
                                 if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000, null, null))) {
                                     //订单更新已支付状态未成功处理
@@ -291,7 +288,7 @@ public class LotteryService {
                     }
                     if (is) {
                         //扣除账户金钱
-                        String result = LotteryDao.recharge(userName, -amount);
+                        String result = LotteryDao.recharge(userName, -amount,false,null);
                         if ("".equals(result)) {
                             if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000, null, null))) {
                                 //订单更新已支付状态未成功处理
@@ -392,7 +389,7 @@ public class LotteryService {
     public String recharge(OldBean oldBean) {
         int money = oldBean.getMoney();
         String username = oldBean.getUserName();
-        String description = LotteryDao.recharge(username, money);
+        String description = LotteryDao.recharge(username, money,false,null);
         return toResult(description);
     }
 

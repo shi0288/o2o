@@ -68,7 +68,7 @@ $(document).ready(function (e) {
             var order = getOrder();
 
             alert(JSON.stringify(order));
-            return;
+            //return;
             doTzhu(order);
         }
     });

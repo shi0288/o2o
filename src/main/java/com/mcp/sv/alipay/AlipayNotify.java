@@ -29,11 +29,11 @@ public class AlipayNotify {
         //isSign不是true，与安全校验码、请求时的参数格式（如：带自定义参数等）、编码格式有关
     	String responseTxt = "true";
 
-        logger.info("=======================================");
-        for (String key : params.keySet()) {
-            logger.info("key= " + key + " and value= " + params.get(key));
-        }
-        logger.info("=======================================");
+//        logger.info("=======================================");
+//        for (String key : params.keySet()) {
+//            logger.info("key= " + key + " and value= " + params.get(key));
+//        }
+//        logger.info("=======================================");
 
 		if(params.get("notify_id") != null) {
 			String notify_id = params.get("notify_id");

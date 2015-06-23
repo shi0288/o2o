@@ -3,11 +3,12 @@ package com.mcp.sv.cmbc;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mcp.sv.dao.LotteryDao;
+import com.mcp.sv.dao.WeiXinDao;
 import com.mcp.sv.model.WeChat;
 import com.mcp.sv.service.CoreService;
-import com.mcp.sv.util.*;
 import com.mcp.sv.util.CmbcConstant;
 import com.mcp.sv.util.MD5;
+import com.mcp.sv.util.SignUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by ChubChen on 2015/6/2.
@@ -50,6 +53,16 @@ public class WeiXinController {
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
         request.setCharacterEncoding("UTF-8");  //微信服务器POST消息时用的是UTF-8编码，在接收时也要用同样的编码，否则中文会乱码；
         response.setCharacterEncoding("UTF-8"); //在响应消息（回复消息给用户）时，也将编码方式设置为UTF-8，原理同上；
+        //判断token的缓存情况 ， 更新缓存
+        Map token = WeiXinDao.findToken();
+        long updateTime = (Long)token.get("updateTime");
+        if (new Date().getTime() - updateTime > 1000*60*100 ){//大于1小时40分钟 更新token
+            String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
+            JSONObject jsonObject = JSON.parseObject(result);
+            String access_token =  jsonObject.get("access_token").toString();
+            String expires_in =   jsonObject.get("expires_in").toString();
+            WeiXinDao.updateToken(access_token);
+        }
         //初始化配置文件
         String respMessage = CoreService.processRequest(request);//调用CoreService类的processRequest方法接收、处理消息，并得到处理结果；
 

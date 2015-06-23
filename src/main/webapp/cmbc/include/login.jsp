@@ -14,7 +14,6 @@
                 sessionStorage.setItem("name", userInfo["userName"]);
                 var password =  userInfo["userName"]+ key;
                 sessionStorage.setItem("passWord",password);
-                alert(password);
             }else{
                 alert("未登录成功");
             }

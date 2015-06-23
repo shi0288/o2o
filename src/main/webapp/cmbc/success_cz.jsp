@@ -55,18 +55,19 @@
 
     boolean verify_result = AlipayNotify.verify(params);
 
+    String rstInfo="";
     if(verify_result){//验证成功
         if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
             boolean rst = LotteryDao.alipayRecharge(out_trade_no);
             if(rst){
-                logger.info(out_trade_no+"支付成功");
+                rstInfo="支付成功";
             }else{
-                logger.info(out_trade_no+"已经支付，不再处理");
+                rstInfo="已经支付";
             }
         }
     }else{
     //该页面可做页面美工编辑
-    out.println("验证失败");
+        rstInfo="验证失败";
     }
     %>
 
@@ -90,6 +91,7 @@
 
         <div style=" margin-top:20px; height:40px; border-top:1px solid #999;"></div>
         <p class="text-center tz-success">充值金额<font class="orgtext ml5"><%=total_fee %></font>元</p>
+        <p class="text-center tz-success">状态<font class="orgtext ml5"><%=total_fee %></font>元</p>
 
         <a href="index.jsp" class=" m-bigbtn-org mt30">试试手气</a>
         <a href="acount.html" class=" m-bigbtn-org mt15">返回账户</a>

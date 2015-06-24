@@ -60,18 +60,25 @@ $(document).ready(function () {
             alert("每单不能超过2万元");
             return false;
         }
+        var login = sessionStorage.getItem("login");
+        if (login == null) {//尚未登陆，需要处理登陆。
+            alert("您未登录，请登录",function(){
+                window.location.href="login.html";
+            })
+            return false;
+        }
         before();
         submitJc(); //提交订单
     });
 });
 //提交竞彩订单
 function submitJc() {
-    var userName = sessionStorage.getItem("name");
-    var passWord = sessionStorage.getItem("passWord");
-    if(userName == "" || userName == undefined || userName == null){
-        alert("请先登录在进行提交");
-        //return;
-    }
+    //var userName = sessionStorage.getItem("name");
+    //var passWord = sessionStorage.getItem("passWord");
+    //if(userName == "" || userName == undefined || userName == null){
+    //    alert("请先登录在进行提交");
+    //    //return;
+    //}
     var amount = $("#qianshu").html();
     amount = parseInt(amount) * 100;
     var betType = $("#chuanguan").attr("data-chuan");

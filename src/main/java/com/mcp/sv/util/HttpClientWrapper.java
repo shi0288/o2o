@@ -38,7 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HttpClientWrapper {
-    private static final Logger logger = LoggerFactory.getLogger(LotteryService.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpClientWrapper.class);
 
     private static String mcp8Url = CmbcConstant.MCP_INTERFACE_URL;
 
@@ -251,10 +251,12 @@ public class HttpClientWrapper {
                     logger.error(retString);
                     logger.error("==================");
                     JSONObject obj = new JSONObject(retString);
+                    JSONObject rstHead=obj.getJSONObject("head");
+
                     String bodyStr=obj.getString("body");
                     if(!"".equals(bodyStr)){
                         JSONObject retBody = new JSONObject(obj.getString("body"));
-                        retBody.put("repCode", "0000");
+                        retBody.put("repCode", rstHead.get("repCode"));
                         retBody.put("nowTime", obj.getJSONObject("head").getString("timestamp"));
                         return retBody.toString();
                     }else{

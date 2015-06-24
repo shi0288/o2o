@@ -62,6 +62,8 @@ public class LotteryDao {
             } else {
                 return "密码输入错误";
             }
+        }else if(datas.size() == 0){
+            return "没有这个用户";
         }
         return "登陆异常";
     }
@@ -79,16 +81,18 @@ public class LotteryDao {
                 //登录成功
                 returnObject = new JSONObject(user.toMap());
                 returnObject.put("repCode","0000");
-                return returnObject;
 
             } else {
                 returnObject.put("repCode", "1007");
                 returnObject.put("description","密码错误");
-                return returnObject;
             }
+        }else if(datas.size() == 0){
+            returnObject.put("repCode", "1009");
+            returnObject.put("description", "重新注册");
+        }else{
+            returnObject.put("repCode", "9999");
+            returnObject.put("description", "登录异常");
         }
-        returnObject.put("repCode", "9999");
-        returnObject.put("description","登陆异常");
         return returnObject;
     }
 
@@ -188,7 +192,7 @@ public class LotteryDao {
 
 
 
-    public static String recharge(String userName, int money) {
+    public static String recharge(String userName, int money,boolean forign,String outerId) {
         //查询库中是否有此记录
         Map param = new HashMap();
         param.put("userName", userName);
@@ -203,6 +207,9 @@ public class LotteryDao {
             newAcount.put("recharge", money);
             int res = MongoUtil.update(MongoConst.MONGO_ACOUNT, acount, newAcount);
             if (res == 1) {
+                if(forign){
+                    LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, CmbcConstant.RECHARGETYPE, userName, recharge, money, money-recharge, outerId);
+                }
                 return "";
             } else {
                 return "彩币更新失败";
@@ -211,6 +218,9 @@ public class LotteryDao {
             param.put("recharge", money);
             int res = MongoUtil.save(MongoConst.MONGO_ACOUNT, param);
             if (res == 0) {
+                if(forign){
+                    LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, CmbcConstant.RECHARGETYPE, userName, 0, money, money, outerId);
+                }
                 return "";
             } else {
                 return "彩币更新失败";
@@ -278,8 +288,64 @@ public class LotteryDao {
         return false;
     }
 
+    //存储充值订单
+    public static boolean insertCzOrder(String userName,String out_trade_no, String total_fee, int status) {
+        //查询库中是否有此记录
+        Map param = new HashMap();
+        param.put("userName", userName);
+        param.put("czId", out_trade_no);
+        param.put("money", total_fee);
+        param.put("status", status);  //未支付
+        param.put("createTime", LotteryDao.getTime());
+        int res = MongoUtil.save(MongoConst.MONGO_ALIPAY, param);
+        if (res == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    //存储订单
+    public static boolean  alipayRecharge(String out_trade_no) {
+        //查询库中是否有此记录
+        Map param = new HashMap();
+        param.put("czId", out_trade_no);
+        List datas = MongoUtil.query(MongoConst.MONGO_ALIPAY, param);
+        if (datas.size() == 1) {
+            DBObject czOrder = (DBObject) datas.get(0);
+            int status = (int) czOrder.get("status");
+            if(status==1100){
+                String czOrderStr = JSON.serialize(czOrder);
+                DBObject newCzOrder = (DBObject) JSON.parse(czOrderStr);
+                newCzOrder.put("status", 1200);
+                int res = MongoUtil.update(MongoConst.MONGO_ALIPAY, czOrder, newCzOrder);
+                if (res == 1) {
+                    logger.error("开始充值");
+                    String userName = (String) czOrder.get("userName");
+                    int money = Integer.parseInt((String) czOrder.get("money"));
+                    LotteryDao.recharge(userName, money*100,true,out_trade_no);
+                    return true;
+                } else {
+                    logger.error("出现问题："+out_trade_no+" 数据库操作出错");
+                    return false;
+                }
+            }else if(status==1200){
+                //已经操作过
+                return false;
+            }
+
+        } else if (datas.size() == 0) {
+            logger.error("出现问题："+out_trade_no+" 无此充值订单号");
+            return false;
+        }
+        return false;
+    }
+
+
+
+
+
     //更改订单状态
-    public static String updateOrderStatus(String userName, String outerId, int status,String address,String mobile) {
+    public static String updateOrderStatus(String userName, String outerId, int status) {
         //查询库中是否有此记录
         Map param = new HashMap();
         param.put("userName", userName);
@@ -291,12 +357,6 @@ public class LotteryDao {
             String orderStr = JSON.serialize(order);
             DBObject newOrder = (DBObject) JSON.parse(orderStr);
             newOrder.put("status", status);
-            if(address!=null){
-                newOrder.put("address", address);
-            }
-            if(mobile!=null){
-                newOrder.put("mobile", mobile);
-            }
             int res = MongoUtil.update(MongoConst.MONGO_TORDER, order, newOrder);
             if (res == 1) {
                 return "";
@@ -309,6 +369,11 @@ public class LotteryDao {
         return "用户订单状态更新异常";
     }
 
+    public static long getWealthList(long recharge){
+        DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_ACOUNT);
+        long count = collection.count(new BasicDBObject("recharge", new BasicDBObject("$gte", recharge)));
+        return count;
+    }
 
     public static String getTime() {
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";

@@ -16,6 +16,7 @@
     <%@ page import="java.util.*"%>
     <%@ page import="java.util.Map"%>
     <%@ page import="com.mcp.sv.alipay.*"%>
+    <%@ page import="com.mcp.sv.dao.LotteryDao" %>
 
     <%
     //获取支付宝GET过来反馈信息
@@ -51,29 +52,22 @@
     //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 
     //计算得出通知验证结果
-    boolean verify_result = true;
 
-    AlipayNotify.verify(params);
+    boolean verify_result = AlipayNotify.verify(params);
 
+    String rstInfo="";
     if(verify_result){//验证成功
-    //////////////////////////////////////////////////////////////////////////////////////////
-    //请在这里加上商户的业务逻辑程序代码
-
-    //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
-    if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
-    //判断该笔订单是否在商户网站中已经做过处理
-    //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-    //如果有做过处理，不执行商户的业务程序
-    }
-
-    //该页面可做页面美工编辑
-    out.println("验证成功<br />");
-    //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-
-    //////////////////////////////////////////////////////////////////////////////////////////
+        if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
+            boolean rst = LotteryDao.alipayRecharge(out_trade_no);
+            if(rst){
+                rstInfo="支付成功";
+            }else{
+                rstInfo="已经支付";
+            }
+        }
     }else{
     //该页面可做页面美工编辑
-    out.println("验证失败");
+        rstInfo="验证失败";
     }
     %>
 
@@ -82,7 +76,7 @@
 <div class="page-from-left index">
     <div class="top fix">
         <div class="top-relative clearfix">
-            <a href="main.html" class="go-pre"></a>
+            <a href="main.jsp" class="go-pre"></a>
             <a href="javascript:xuanqiuShow()" class="go-pre" style="display:none"></a>
             <span class="title"><span class="pt2">充值成功</span></span>
         </div>
@@ -97,6 +91,7 @@
 
         <div style=" margin-top:20px; height:40px; border-top:1px solid #999;"></div>
         <p class="text-center tz-success">充值金额<font class="orgtext ml5"><%=total_fee %></font>元</p>
+        <p class="text-center tz-success">状态<font class="orgtext ml5"><%=rstInfo %></font></p>
 
         <a href="index.jsp" class=" m-bigbtn-org mt30">试试手气</a>
         <a href="acount.html" class=" m-bigbtn-org mt15">返回账户</a>

@@ -3,9 +3,6 @@ $(document).ready(function (e) {
     outerId = outerId.split("#")[1];
     var ticketQuan;
     before();
-    $("#address").val(sessionStorage.getItem("address"));
-    $("#mobile").val(sessionStorage.getItem("mobile"));
-
     $.ajax({
         type: "POST",
         url: "/bankServices/LotteryService/getOrder?timestamp=" + new Date().getTime(),
@@ -35,7 +32,6 @@ $(document).ready(function (e) {
                 status = getOrderStatus(status);
                 var outerId = objectOrder.outerId;
                 $("#state").html(status);
-                //如果中奖显示中奖图片
                 $("#czqi").html(termCode);
                 $("#cztime").html(time);
                 $("#orderId").html(outerId);
@@ -70,28 +66,17 @@ $(document).ready(function (e) {
     $("#pay_btn").click(function () {
 
         if ($("#check-cb").hasClass("now") && $("#huodao").hasClass("now")) {
-            alert("不能同时选择两种支付类型,^_^");
+            alert("不能同时选择两种支付类型");
             return;
         }
         if (!$("#check-cb").hasClass("now") && !$("#huodao").hasClass("now")) {
-            alert("请选择一种支付方式,要吃霸王餐么，^_^");
+            alert("请选择一种支付方式");
             return;
         }
         var payType = "1";
-        var mobile="";
-        var address="";
+
         if (!$("#check-cb").hasClass("now")) {
             payType = "2";
-            address = $("#address").val();
-            mobile = $("#mobile").val();
-            if(address==""){
-                alert("地址不能为空");
-                return;
-            }
-            if(mobile==""){
-                alert("手机为空");
-                return;
-            }
         }
 
         $.ajax({
@@ -103,9 +88,7 @@ $(document).ready(function (e) {
                 userName: sessionStorage.getItem("name"),
                 passWord: sessionStorage.getItem("passWord"),
                 outerId: outerId,
-                payType: payType,
-                address:address,
-                mobile:mobile
+                payType: payType
             },
             success: function (result) {
                 console.log(result);
@@ -116,7 +99,7 @@ $(document).ready(function (e) {
                 } else if (repCode == '1007') {
                     alert("账户余额不足，请充值");
                 } else {
-                    alert("投注失败，请稍后重试。");
+                    alert(result.description);
                 }
                 after();
             },

@@ -5,18 +5,20 @@
 <script type="text/javascript">
     $(document).ready(function () {
         /*登录  */
-        var flag = sessionStorage.getItem("login");
-        var userInfo = <%=request.getParameter("userInfo")%>;
+        var flag = sessionStorage.getItem("name");
+        var userInfo = <%=session.getAttribute("userInfo")%>;
         if ( flag == null && userInfo != null) {//尚未登陆，需要处理登陆。
-            var jsonUser = null;
-            try{
-                jsonUser = JSON.parse(userInfo);
-            }catch (err){}
-            sessionStorage.setItem("login", "login");
-            sessionStorage.setItem("name", jsonUser["userName"]);
-            sessionStorage.setItem("passWord", jsonUser["userName"]+"123456");
-            sessionStorage.setItem("address", userInfo.address);
-            sessionStorage.setItem("mobile", userInfo.mobile);
+            var key = "<%=CmbcConstant.CMBC_SIGN_KEY %>";
+            if(userInfo != null){
+                sessionStorage.setItem("login", "login");
+                sessionStorage.setItem("name", userInfo["userName"]);
+                var password =  userInfo["userName"]+ key;
+                sessionStorage.setItem("passWord",password);
+            }else{
+                alert("未登录成功");
+            }
+        }else{
+
         }
     });
 </script>

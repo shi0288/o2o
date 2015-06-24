@@ -42,8 +42,6 @@ $(document).ready(function (e) {
         } else {
             //非追号
             var order = getOrder();
-            alert(JSON.stringify(order));
-            return;
             doTzhu(order);
         }
     });
@@ -80,7 +78,10 @@ function doTzhu(order) {
                 // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
                 alert("账户余额不足，请充值");
-            } else {
+            } else if (repCode == '1001') {
+                alert("用户权限校验未通过");
+            }
+            else {
                 alert("投注失败，请稍后重试。");
             }
             after();
@@ -125,10 +126,6 @@ function getOrder() {
     var order = {
         'amount': amount,
         'outerId':new Date().getTime()+Math.random()*(1000-390)+390,
-        //'gameCode': $("#game").attr("data-game"),
-        //'termCode': $("#termCode").html(),
-        //'type': payType,
-        //'multiple': $("#beishu").html(),
         'tickets': tick
     };
     return order;

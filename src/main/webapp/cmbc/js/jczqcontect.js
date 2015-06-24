@@ -197,7 +197,7 @@ function submitJc() {
 
     console.log(betType);
     var numbers = getJcNums();
-    console.log(numbers);
+    //console.log(numbers);
 
     var playType = $("#game").attr("data-play");
 
@@ -216,7 +216,7 @@ function submitJc() {
         "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
     }
     tickets.push(ticket);
-    console.log(tickets.toString());
+   // console.log(tickets.toString());
 
     var order = {
         'amount': amount,

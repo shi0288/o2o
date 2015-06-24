@@ -17,6 +17,7 @@ public class MongoConst {
     public static final String MONGO_WEIXINCONF="weixinconf";
     public static final String MONGO_RECHARGE_LOG="rechargeLog";
     public static final String MONGO_ALIPAY="alipay";
+    public static final String MONGO_TICKET="tticket";
 
 
 

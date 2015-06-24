@@ -49,7 +49,7 @@
                 class="greentext"><%=info%></span></p>
 
         <a href="xb_search.jsp"  class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>去挖奖</a>
-        <a href="acount.html" id="jrwdcp" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>进入账户信息</a>
+        <a href="acount.jsp" id="jrwdcp" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>进入账户信息</a>
         <a href="main.jsp" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>返回购彩大厅</a>
     </div>
     <!--正文内容结束-->

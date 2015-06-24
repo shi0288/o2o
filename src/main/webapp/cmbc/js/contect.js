@@ -78,7 +78,9 @@ function doTzhu(order) {
                 // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
                 alert("账户余额不足，请充值");
-            } else if (repCode == '1001') {
+            }  else if (repCode == '1008') {
+                alert("此订单已经支付");
+            }  else if (repCode == '1001') {
                 alert("用户权限校验未通过");
             }
             else {
@@ -125,7 +127,7 @@ function getOrder() {
     amount = parseFloat(amount) * 100;
     var order = {
         'amount': amount,
-        'outerId':new Date().getTime()+Math.random()*(1000-390)+390,
+        'outerId':new Date().getTime()+Math.random().toString(36).substr(8),
         'tickets': tick
     };
     return order;
@@ -159,7 +161,7 @@ function getTick() {
             'number': numbers,
             'multiple': multiple,
             "presetTerminal":"0000",
-            "outerId":new Date().getTime()+Math.random()*(1000-390)+390,
+            "outerId":new Date().getTime()+Math.random().toString(36).substr(8),
             "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
         }
         tickets.push(ticket);

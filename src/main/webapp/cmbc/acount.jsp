@@ -239,7 +239,7 @@
         </center>
         <div class="zhanghu-tab">
             <div class="nav-box clearfix">
-                <a class="tab-nav now" href="acount.html" style="width:50%">我的记录</a>
+                <a class="tab-nav now" href="acount.jsp" style="width:50%">我的记录</a>
                 <!-- <a class="tab-nav" href="javascript:void(-1)" style="width:50%" id="my-zhuhao">我的追号</a>-->
                 <!-- <a class="tab-nav" href="javascript:void(-1)">我的合买</a><a class="tab-nav" href="javascript:void(-1)">我的跟单</a>-->
             </div>

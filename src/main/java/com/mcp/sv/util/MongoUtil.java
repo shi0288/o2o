@@ -44,7 +44,10 @@ public class MongoUtil {
         return cur.toArray();
     }
 
-
+    public static int insert(String table,DBObject dbObject){
+        DBCollection collection = MongoUtil.getDb().getCollection(table);
+        return collection.save(dbObject).getN();
+    }
 
 
     public static int save(String table,Map<String,Object> map){

@@ -139,6 +139,8 @@ public class LotteryDao {
 
 
 
+
+
     public static String getOrder(String userName, String passWord, int curPage, int pageSize, String outerId) throws JSONException {
         //查询库中是否有此记录
         JSONObject res = new JSONObject();
@@ -270,6 +272,7 @@ public class LotteryDao {
         }
         return false;
     }
+
 
 
     //存储订单

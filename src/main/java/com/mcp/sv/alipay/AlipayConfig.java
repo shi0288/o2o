@@ -29,7 +29,7 @@ public class AlipayConfig {
 
 	public static String return_url="http://www.mcp8.net/cmbc/success_cz.jsp";
 
-	public static String show_url="http://www.mcp8.net/cmbc/acount.html";
+	public static String show_url="http://www.mcp8.net/cmbc/acount.jsp";
 
 
 

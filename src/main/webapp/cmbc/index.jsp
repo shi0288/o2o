@@ -61,7 +61,7 @@
                         window.location.href="login.html";
                     })
                 }else{
-                    window.location.href="acount.html";
+                    window.location.href="acount.jsp";
                 }
             })
         });

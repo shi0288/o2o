@@ -6,6 +6,8 @@ import com.mcp.sv.model.OldBean;
 import com.mcp.sv.util.*;
 import com.mcp.sv.util.CmbcConstant;
 import com.mcp.sv.util.HttpClientWrapper;
+import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -66,10 +68,22 @@ public class LotteryService {
                 e.printStackTrace();
             }
         }
+        //票据分开储存
+        JSONObject orderBody=new JSONObject(body);
+        JSONObject order=orderBody.getJSONObject("order");
+        String orderOuterId =order.getString("outerId");
+        JSONArray tickets=order.getJSONArray("tickets");
+        for(int i = 0;i<tickets.length();i++){
+            JSONObject ticket=tickets.getJSONObject(i);
+            ticket.put("userName",userName);
+            ticket.put("orderOuterId",orderOuterId);
+            String ticketStr = ticket.toString();
+            DBObject newTicket = (DBObject) JSON.parse(ticketStr);
+            MongoUtil.insert(MongoConst.MONGO_TICKET,newTicket);
+        }
         res.put("repCode", "0000");
         return res.toString();
     }
-
 
     @RequestMapping(value = "commitOrders", method = RequestMethod.POST)
     @ResponseBody
@@ -81,6 +95,8 @@ public class LotteryService {
         String resMessage = "";
         int recharge = 0;
         org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
+
+        //彩币支付
         if ("1".equals(payType)) {
             //校验用户权限
             try {
@@ -112,12 +128,17 @@ public class LotteryService {
                 String bodyStr = order.getString("body");
                 body = new org.codehaus.jettison.json.JSONObject(bodyStr);
                 org.codehaus.jettison.json.JSONObject _order = body.getJSONObject("order");
+                //判断是否已经支付过
+                int orderStatus=_order.getInt("status");
+                if(CmbcConstant.ORDER_1000 != orderStatus){
+                    res.put("repCode", "1008");  //已经支付过
+                    return res.toString();
+                }
                 amount = _order.getInt("amount");
             } else {
                 res.put("repCode", "9999");
                 return res.toString();
             }
-
             //判断余额
             if (recharge - amount < 0) {
                 try {
@@ -423,7 +444,20 @@ public class LotteryService {
 
     public static void main(String[] args) throws JSONException {
 
-        System.out.println(com.mcp.sv.util.MD5.MD5Encode("13834656673" + CmbcConstant.CMBC_SIGN_KEY));
+        String body="{\"order\":{\"amount\":600,\"outerId\":\"14351287813950ptjcbx1or\",\"tickets\":[{\"gameCode\":\"T01\",\"termCode\":\"15072\",\"type\":0,\"amount\":200,\"bType\":\"00\",\"pType\":\"00\",\"number\":\"18,23,26,31,33|07,11\",\"multiple\":\"1\",\"presetTerminal\":\"0000\",\"outerId\":\"1435128781396p86p4d9529\",\"auditTime\":\"2015-06-24 14:53:01\"},{\"gameCode\":\"T01\",\"termCode\":\"15072\",\"type\":0,\"amount\":200,\"bType\":\"00\",\"pType\":\"00\",\"number\":\"15,16,20,26,30|01,08\",\"multiple\":\"1\",\"presetTerminal\":\"0000\",\"outerId\":\"1435128781397zbf02dfgvi\",\"auditTime\":\"2015-06-24 14:53:01\"},{\"gameCode\":\"T01\",\"termCode\":\"15072\",\"type\":0,\"amount\":200,\"bType\":\"00\",\"pType\":\"00\",\"number\":\"01,16,28,30,32|02,06\",\"multiple\":\"1\",\"presetTerminal\":\"0000\",\"outerId\":\"1435128781398zmdrall3di\",\"auditTime\":\"2015-06-24 14:53:01\"}]}}";
+        JSONObject orderBody=new JSONObject(body);
+        JSONObject order=orderBody.getJSONObject("order");
+        String outerId =order.getString("outerId");
+        JSONArray tickets=order.getJSONArray("tickets");
+        for(int i = 0;i<tickets.length();i++){
+            JSONObject ticket=tickets.getJSONObject(i);
+            ticket.put("userName","shi0288");
+            ticket.put("outerId",outerId);
+            String ticketStr = ticket.toString();
+            DBObject newTicket = (DBObject) JSON.parse(ticketStr);
+            MongoUtil.insert(MongoConst.MONGO_TICKET,newTicket);
+        }
+
 
 
     }

@@ -94,7 +94,7 @@
         <p class="text-center tz-success">状态<font class="orgtext ml5"><%=rstInfo %></font></p>
 
         <a href="index.jsp" class=" m-bigbtn-org mt30">试试手气</a>
-        <a href="acount.html" class=" m-bigbtn-org mt15">返回账户</a>
+        <a href="acount.jsp" class=" m-bigbtn-org mt15">返回账户</a>
 
     </div>
     <!--正文内容结束-->

@@ -66,9 +66,6 @@ $(document).ready(function (e) {
         } else {
             //非追号
             var order = getOrder();
-
-            alert(JSON.stringify(order));
-            //return;
             doTzhu(order);
         }
     });
@@ -220,7 +217,7 @@ function getOrder() {
     var amount = $("#qianshu").html();
     amount = parseFloat(amount) * 100;
     var order = {
-        'outerId':Math.random().toString(36).substr(2),
+        'outerId':new Date().getTime()+Math.random().toString(36).substr(8),
         'amount': amount,
         'tickets': tick
     };
@@ -284,8 +281,8 @@ function getTick() {
             'pType': playTypeCode,
             'number': numbers,
             'multiple': multiple,
-            "presetTerminal":"000000",
-            "outerId":new Date().getTime()+Math.random()*(1000-390)+390,
+            "presetTerminal":"0000",
+            "outerId":new Date().getTime()+Math.random().toString(36).substr(8),
             "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
         };
 

@@ -620,7 +620,7 @@ function getOrderStatus(status) {
         case 1800:
             return "未中奖";
             break;
-        case 1810:
+        case 5000:
             return "已中奖";
             break;
         case 1900:

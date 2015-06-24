@@ -156,9 +156,9 @@
                                 funstr = "window.location.href='fanganzh.html#" + order['id'] + "'";
                                 state = getZhuhaoStatus(order['status']);
                             }
-                            if (order['bonus'] != 0 && order['bonus'] != undefined) {
+                            if (state=='已中奖') {
                                 var bonus = toDecimalMoney(order['bonus'] / 100);
-                                var stateHtml = '<span class="zhongjiang">' + bonus + '元</span>'
+                                var stateHtml = '<span class="zhongjiang">中奖啦</span>'
                             } else {
                                 var stateHtml = '<span class="meizj">' + state + '</span>'
                             }

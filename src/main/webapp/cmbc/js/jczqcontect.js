@@ -116,7 +116,7 @@ $(document).ready(function () {
     var thisUrl = window.location.href;
     getJcData();//获取竞彩数据
     //getJcDatatest();
-   // getUserData();
+    // getUserData();
     //筛选联赛
     $("#jc-ls-ok").click(function () {
         var arrJcl = [];
@@ -179,42 +179,43 @@ function submitJc() {
     var amount = $("#qianshu").html();
     amount = parseInt(amount) * 100;
     var betType = $("#chuanguan").attr("data-chuan");
-	console.log(betType);
-	if(betType==undefined){
-		betType='11';
-		amount=200;
-	}else{
-		betType = betType.replace(/[a-z]/g, "");
-	}
-    
-	console.log(betType);
+    console.log(betType);
+    if(betType==undefined){
+        betType='11';
+        amount=200;
+    }else{
+        betType = betType.replace(/[a-z]/g, "");
+    }
+
+    console.log(betType);
     var numbers = getJcNums();
-	console.log(numbers);
-	
-	var playType = $("#game").attr("data-play");
-	
-	var tickets = [];
-	var ticket = {
-            'amount': amount,
-            'bType': betType,
-            'pType': playType,
-            'number': numbers,
-            'multiple': $("#beishu").val(),
-            'outerId':Math.random().toString(36).substr(2),
-            'gameCode': $("#game").attr("data-game")
-        }
+    console.log(numbers);
+
+    var playType = $("#game").attr("data-play");
+
+    var tickets = [];
+    var ticket = {
+        'amount': amount,
+        'bType': betType,
+        'pType': playType,
+        'number': numbers,
+        'multiple': $("#beishu").val(),
+        'outerId':Math.random().toString(36).substr(2),
+        'gameCode': $("#game").attr("data-game")
+    }
     tickets.push(ticket);
-	
-	 var order = {
+    console.log(tickets.toString());
+
+    var order = {
         'outerId':Math.random().toString(36).substr(2),
         'amount': amount,
         'tickets': tickets
     };
-	
+
     var body = {
         'order':order
-        };
-		console.log(body);
+    };
+    console.log(body);
     $.ajax({
         type: "POST",
         url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
@@ -227,7 +228,7 @@ function submitJc() {
         success: function (result) {
             var repCode = result.repCode;
             if (repCode == '0000') {
-				after();
+                after();
                 var vmout = amount / 100;
                 jcTzSuccess(result['order'], vmout);
             } else if (repCode == '1013') {
@@ -257,7 +258,7 @@ function jcTzSuccess(order, amount) {
             $(".jc-bg").append(result);
             $(".succ-amount").html(amount);
             $(".succ-link").attr("href", href);
-            
+
         }
     });
 }
@@ -265,25 +266,47 @@ function jcTzSuccess(order, amount) {
 function getJcNums() {
     var playType = $("#game").attr("data-play");
     var arrNum = [];
-    $(".jc-list-item").each(function (index, element) {
-        var str = "";
-        if ($(this).find(".jc-list-item-dan").hasClass("on")) {
-            str += "$";
-        }
-        str += playType + "|" + $(this).attr("data-cc") + "|";
-        var strNum = "";
-        $(this).find(".jc-list-item-dw.on").each(function (i, val) {
-            if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
-                strNum += $(this).attr("data-dit").substring(1, 2);
-            } else {
-                strNum += $(this).attr("data-dit").substring(1, 2) + ",";
+    if(playType == '01'||playType == '02'){//让球胜平负（01）胜平负（02）
+        $(".jc-list-item").each(function (index, element) {
+            var str = "";
+            if ($(this).find(".jc-list-item-dan").hasClass("on")) {
+                str += "$";
             }
+            str += playType + "|" + $(this).attr("data-cc") + "|";
+            var strNum = "";
+            $(this).find(".jc-list-item-dw.on").each(function (i, val) {
+                if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
+                    strNum += $(this).attr("data-dit").substring(1, 2);
+                } else {
+                    strNum += $(this).attr("data-dit").substring(1, 2) + ",";
+                }
 
+            });
+            str += strNum;
+            arrNum.push(str);
         });
-        str += strNum;
-        arrNum.push(str);
-    });
-    arrNum = arrNum.join(";");
+        arrNum = arrNum.join(";");
+    }else{
+        $(".jc-list-item").each(function (index, element) {
+            var str = "";
+            if ($(this).find(".jc-list-item-dan").hasClass("on")) {
+                str += "$";
+            }
+            str += playType + "|" + $(this).attr("data-cc") + "|";
+            var strNum = "";
+            $(this).find(".jc-list-item-dw.on").each(function (i, val) {
+                if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
+                    strNum += $(this).attr("data-dit").substring(1, 3);
+                } else {
+                    strNum += $(this).attr("data-dit").substring(1, 3) + ",";
+                }
+
+            });
+            str += strNum;
+            arrNum.push(str);
+        });
+        arrNum = arrNum.join(";");
+    }
     return arrNum;
 }
 function getJcDatatest() {
@@ -301,12 +324,12 @@ function getJcDatatest() {
 }
 //获取竞彩数据
 function getJcData() {
-	var pathName= window.location.pathname;
-	console.log(pathName);
-	var st=1;
-	if('/cmbc/jczq.jsp'==pathName){
-		st=2;
-	}
+    var pathName= window.location.pathname;
+    console.log(pathName);
+    var st=1;
+    if('/cmbc/jczq.jsp'==pathName){
+        st=2;
+    }
     //if('/cmbc/jczq_rf.jsp'==pathName){
     //    st=2;
     //}
@@ -436,9 +459,9 @@ function getMatchInfo(obj,st){
                         rqspfdata_three = '<td width="24%" data-dit="v0" onclick="seleMatch(this)">负' + rqspfdata[2] + '</td>';
                     }
                 } else {
-                        rqspfdata_one = '<td width="24%" class="false" data-dit="v3">胜--</td>';
-                        rqspfdata_two = '<td width="24%" class="false" data-dit="v1">平--</td>';
-                        rqspfdata_three = '<td width="24%" class="false" data-dit="v0">负--</td>';
+                    rqspfdata_one = '<td width="24%" class="false" data-dit="v3">胜--</td>';
+                    rqspfdata_two = '<td width="24%" class="false" data-dit="v1">平--</td>';
+                    rqspfdata_three = '<td width="24%" class="false" data-dit="v0">负--</td>';
                 }
                 oodsTag='<tr data-wf="rf" class="jc-table-b rf-dd">' + rqspfdata_one + rqspfdata_two + rqspfdata_three + '</tr>'
                 changciHtml =
@@ -465,9 +488,9 @@ function getMatchInfo(obj,st){
                         spfdata_three = '<td width="24%" data-dit="v0" onclick="seleMatch(this)">负' + spfdata[2] + '</td>';
                     }
                 } else {
-                        spfdata_one = '<td width="24%" class="false" data-dit="v3">胜--</td>';
-                        spfdata_two = '<td width="24%" class="false" data-dit="v1">平--</td>';
-                        spfdata_three = '<td width="24%" class="false" data-dit="v0">负--</td>';
+                    spfdata_one = '<td width="24%" class="false" data-dit="v3">胜--</td>';
+                    spfdata_two = '<td width="24%" class="false" data-dit="v1">平--</td>';
+                    spfdata_three = '<td width="24%" class="false" data-dit="v0">负--</td>';
                 }
                 oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + spfdata_three + '</tr>' ;
                 changciHtml =
@@ -484,55 +507,53 @@ function getMatchInfo(obj,st){
                 if (spfdata) {
                     spfdata = spfdata.split("|");
                     var spfdata_zero = '<td data-dit="v01" width="5.14%" >胜</td>';
-                    var spfdata_one = '<td data-dit="v02" width="5.1%" onclick="seleMatch(this)">' + spfdata[0] + '</td>';
-                    var spfdata_two = '<td data-dit="v03" width="5.1%" onclick="seleMatch(this)">' + spfdata[1] + '</td>';
-                    var spfdata_three = '<td data-dit="v04" width="5.1%" onclick="seleMatch(this)">' + spfdata[2] + '</td>';
-                    var spfdata_four = '<td data-dit="v05" width="5.1%" onclick="seleMatch(this)">' + spfdata[3] + '</td>';
-                    var spfdata_five = '<td data-dit="v06" width="5.1%" onclick="seleMatch(this)">' + spfdata[4] + '</td>';
-                    var spfdata_six = '<td data-dit="v07" width="5.1%" onclick="seleMatch(this)">' + spfdata[5] + '</td>';
-                    var spfdata_seven = '<td data-dit="v08" width="5.1%" onclick="seleMatch(this)">' + spfdata[6] + '</td>';
-                    var spfdata_eight = '<td data-dit="v09" width="5.1%" onclick="seleMatch(this)">' + spfdata[7] + '</td>';
-                    var spfdata_nine = '<td data-dit="v010" width="5.1%" onclick="seleMatch(this)">' + spfdata[8] + '</td>';
-                    var spfdata_ten = '<td data-dit="v011" width="5.1%" onclick="seleMatch(this)">' + spfdata[9] + '</td>';
-                    var spfdata_eleven = '<td data-dit="v012" width="5.1%" onclick="seleMatch(this)">' + spfdata[10] + '</td>';
-                    var spfdata_twelve = '<td data-dit="v013" width="5.1%" onclick="seleMatch(this)">' + spfdata[11] + '</td>';
-                    var spfdata_thirteen = '<td data-dit="v014" width="5.1%" onclick="seleMatch(this)">' + spfdata[12] + '</td>';
+                    var spfdata_one = '<td data-dit="v10" width="5.1%" onclick="seleMatch(this)"><p>1:0</p><p>' + spfdata[0] + '</p></td>';
+                    var spfdata_two = '<td data-dit="v20" width="5.1%" onclick="seleMatch(this)"><p>2:0</p><p>' + spfdata[1] + '</p></td>';
+                    var spfdata_three = '<td data-dit="v21" width="5.1%" onclick="seleMatch(this)"><p>2:1</p><p>' + spfdata[2] + '</p></td>';
+                    var spfdata_four = '<td data-dit="v30" width="5.1%" onclick="seleMatch(this)"><p>3:0</p><p>' + spfdata[3] + '</p></td>';
+                    var spfdata_five = '<td data-dit="v31" width="5.1%" onclick="seleMatch(this)"><p>3:1</p><p>' + spfdata[4] + '</p></td>';
+                    var spfdata_six = '<td data-dit="v32" width="5.1%" onclick="seleMatch(this)"><p>3:2</p><p>' + spfdata[5] + '</p></td>';
+                    var spfdata_seven = '<td data-dit="v40" width="5.1%" onclick="seleMatch(this)"><p>4:0</p><p>' + spfdata[6] + '</p></td>';
+                    var spfdata_eight = '<td data-dit="v41" width="5.1%" onclick="seleMatch(this)"><p>4:1</p><p>' + spfdata[7] + '</p></td>';
+                    var spfdata_nine = '<td data-dit="v42" width="5.1%" onclick="seleMatch(this)"><p>4:2</p><p>' + spfdata[8] + '</p></td>';
+                    var spfdata_ten = '<td data-dit="v50" width="5.1%" onclick="seleMatch(this)"><p>5:0</p><p>' + spfdata[9] + '</p></td>';
+                    var spfdata_eleven = '<td data-dit="v51" width="5.1%" onclick="seleMatch(this)"><p>5:1</p><p>' + spfdata[10] + '</p></td>';
+                    var spfdata_twelve = '<td data-dit="v52" width="5.1%" onclick="seleMatch(this)"><p>5:2</p><p>' + spfdata[11] + '</p></td>';
+                    var spfdata_thirteen = '<td data-dit="v90" width="5.1%" onclick="seleMatch(this)"><p>胜其他</p><p>' + spfdata[12] + '</p></td>';
 
 
 
                     oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_zero + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
                     var spfdata_zero2 = '<td data-dit="v11" width="5.14%" >平</td>';
-                    var spfdata_one2 = '<td data-dit="v12" width="5.1%" onclick="seleMatch(this)">' + spfdata[13] + '</td>';
-                    var spfdata_two2 = '<td data-dit="v13" width="5.1%" onclick="seleMatch(this)">' + spfdata[14] + '</td>';
-                    var spfdata_three2 = '<td data-dit="v14" width="5.1%" onclick="seleMatch(this)">' + spfdata[15] + '</td>';
-                    var spfdata_four2 = '<td data-dit="v15" width="5.1%" onclick="seleMatch(this)">' + spfdata[16] + '</td>';
-                    var spfdata_five2 = '<td data-dit="v16" width="5.1%" onclick="seleMatch(this)">' + spfdata[17] + '</td>';
+                    var spfdata_one2 = '<td data-dit="v00" width="5.1%" onclick="seleMatch(this)"><p>0:0</p><p>' + spfdata[13] + '</p></td>';
+                    var spfdata_two2 = '<td data-dit="v11" width="5.1%" onclick="seleMatch(this)"><p>1:1</p><p>' + spfdata[14] + '</p></td>';
+                    var spfdata_three2 = '<td data-dit="v22" width="5.1%" onclick="seleMatch(this)"><p>2:2</p><p>' + spfdata[15] + '</p></td>';
+                    var spfdata_four2 = '<td data-dit="v33" width="5.1%" onclick="seleMatch(this)"><p>3:3</p><p>' + spfdata[16] + '</p></td>';
+                    var spfdata_five2 = '<td data-dit="v99" width="5.1%" onclick="seleMatch(this)"><p>平其他</p><p>' + spfdata[17] + '</p></td>';
 
                     var oddTag2 = '<tr data-wf="spf" class="jc-table-b spf-dd">'+spfdata_zero2 +spfdata_one2+spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
 
                     var spfdata_zero3 = '<td data-dit="v21" width="5.14%" >负</td>';
-                    var spfdata_one3 = '<td data-dit="v22" width="5.1%" onclick="seleMatch(this)">' + spfdata[18] + '</td>';
-                    var spfdata_two3 = '<td data-dit="v23" width="5.1%" onclick="seleMatch(this)">' + spfdata[19] + '</td>';
-                    var spfdata_three3 = '<td data-dit="v24" width="5.1%" onclick="seleMatch(this)">' + spfdata[20] + '</td>';
-                    var spfdata_four3 = '<td data-dit="v25" width="5.1%" onclick="seleMatch(this)">' + spfdata[21] + '</td>';
-                    var spfdata_five3 = '<td data-dit="v26" width="5.1%" onclick="seleMatch(this)">' + spfdata[22] + '</td>';
-                    var spfdata_six3 = '<td data-dit="v27" width="5.1%" onclick="seleMatch(this)">' + spfdata[23] + '</td>';
-                    var spfdata_seven3 = '<td data-dit="v28" width="5.1%" onclick="seleMatch(this)">' + spfdata[24] + '</td>';
-                    var spfdata_eight3 = '<td data-dit="v29" width="5.1%" onclick="seleMatch(this)">' + spfdata[25] + '</td>';
-                    var spfdata_nine3 = '<td data-dit="v210" width="5.1%" onclick="seleMatch(this)">' + spfdata[26] + '</td>';
-                    var spfdata_ten3 = '<td data-dit="v211" width="5.1%" onclick="seleMatch(this)">' + spfdata[27] + '</td>';
-                    var spfdata_eleven3 = '<td data-dit="v212" width="5.1%" onclick="seleMatch(this)">' + spfdata[28] + '</td>';
-                    var spfdata_twelve3 = '<td data-dit="v213" width="5.1%" onclick="seleMatch(this)">' + spfdata[29] + '</td>';
-                    var spfdata_thirteen3 = '<td data-dit="v214" width="5.1%" onclick="seleMatch(this)">' + spfdata[30] + '</td>';
+                    var spfdata_one3 = '<td data-dit="v01" width="5.1%" onclick="seleMatch(this)"><p>0:1</p><p>' + spfdata[18] + '</p></td>';
+                    var spfdata_two3 = '<td data-dit="v02" width="5.1%" onclick="seleMatch(this)"><p>0:2</p><p>' + spfdata[19] + '</p></td>';
+                    var spfdata_three3 = '<td data-dit="v12" width="5.1%" onclick="seleMatch(this)"><p>1:2</p><p>' + spfdata[20] + '</p></td>';
+                    var spfdata_four3 = '<td data-dit="v03" width="5.1%" onclick="seleMatch(this)"><p>0:3</p><p>' + spfdata[21] + '</p></td>';
+                    var spfdata_five3 = '<td data-dit="v13" width="5.1%" onclick="seleMatch(this)"><p>1:3</p><p>' + spfdata[22] + '</p></td>';
+                    var spfdata_six3 = '<td data-dit="v23" width="5.1%" onclick="seleMatch(this)"><p>2:3</p><p>' + spfdata[23] + '</p></td>';
+                    var spfdata_seven3 = '<td data-dit="v04" width="5.1%" onclick="seleMatch(this)"><p>0:4</p><p>' + spfdata[24] + '</p></td>';
+                    var spfdata_eight3 = '<td data-dit="v14" width="5.1%" onclick="seleMatch(this)"><p>1:4</p><p>' + spfdata[25] + '</p></td>';
+                    var spfdata_nine3 = '<td data-dit="v24" width="5.1%" onclick="seleMatch(this)"><p>2:4</p><p>' + spfdata[26] + '</p></td>';
+                    var spfdata_ten3 = '<td data-dit="v05" width="5.1%" onclick="seleMatch(this)"><p>0:5</p><p>' + spfdata[27] + '</p></td>';
+                    var spfdata_eleven3 = '<td data-dit="v15" width="5.1%" onclick="seleMatch(this)"><p>1:5</p><p>' + spfdata[28] + '</p></td>';
+                    var spfdata_twelve3 = '<td data-dit="v25" width="5.1%" onclick="seleMatch(this)"><p>2:5</p><p>' + spfdata[29] + '</p></td>';
+                    var spfdata_thirteen3 = '<td data-dit="v09" width="5.1%" onclick="seleMatch(this)"><p>负其他</p><p>' + spfdata[30] + '</p></td>';
 
                     var oddTag3 = '<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_zero3 + spfdata_one3 + spfdata_two3 + spfdata_three3 + spfdata_four3 + spfdata_five3 + spfdata_six3 + spfdata_seven3 + spfdata_eight3 + spfdata_nine3 + spfdata_ten3 + spfdata_eleven3 + spfdata_twelve3 + spfdata_thirteen3 +'</tr>' ;
 
                     oodsTag = oodsTag + oddTag2 + oddTag3;
 
                 } else {
-                    var spfdata_one = '<td class="false" data-dit="v3">胜--</td>';
-                    var spfdata_two = '<td class="false" data-dit="v1">平--</td>';
-                    var spfdata_three = '<td class="false" data-dit="v0">负--</td>';
+
                 }
                 changciHtml =
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
@@ -547,20 +568,18 @@ function getMatchInfo(obj,st){
                 var spfdata = match.oddsInfo;
                 if (spfdata) {
                     spfdata = spfdata.split("|");
-                    var spfdata_one = '<td data-dit="v2" width="9%" onclick="seleMatch(this)">' + spfdata[0] + '</td>';
-                    var spfdata_two = '<td data-dit="v3" width="9%" onclick="seleMatch(this)">' + spfdata[1] + '</td>';
-                    var spfdata_three = '<td data-dit="v4" width="9%" onclick="seleMatch(this)">' + spfdata[2] + '</td>';
-                    var spfdata_four = '<td data-dit="v5" width="9%" onclick="seleMatch(this)">' + spfdata[3] + '</td>';
-                    var spfdata_five = '<td data-dit="v6" width="9%" onclick="seleMatch(this)">' + spfdata[4] + '</td>';
-                    var spfdata_six = '<td data-dit="v7" width="9%" onclick="seleMatch(this)">' + spfdata[5] + '</td>';
-                    var spfdata_seven = '<td data-dit="v8" width="9%" onclick="seleMatch(this)">' + spfdata[6] + '</td>';
-                    var spfdata_eight = '<td data-dit="v9" width="9%" onclick="seleMatch(this)">' + spfdata[7] + '</td>';
+                    var spfdata_one = '<td data-dit="v0" width="9%" onclick="seleMatch(this)">' + spfdata[0] + '</td>';
+                    var spfdata_two = '<td data-dit="v1" width="9%" onclick="seleMatch(this)">' + spfdata[1] + '</td>';
+                    var spfdata_three = '<td data-dit="v2" width="9%" onclick="seleMatch(this)">' + spfdata[2] + '</td>';
+                    var spfdata_four = '<td data-dit="v3" width="9%" onclick="seleMatch(this)">' + spfdata[3] + '</td>';
+                    var spfdata_five = '<td data-dit="v4" width="9%" onclick="seleMatch(this)">' + spfdata[4] + '</td>';
+                    var spfdata_six = '<td data-dit="v5" width="9%" onclick="seleMatch(this)">' + spfdata[5] + '</td>';
+                    var spfdata_seven = '<td data-dit="v6" width="9%" onclick="seleMatch(this)">' + spfdata[6] + '</td>';
+                    var spfdata_eight = '<td data-dit="v7" width="9%" onclick="seleMatch(this)">' + spfdata[7] + '</td>';
 
                     oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + '</tr>' ;
                 } else {
-                    var spfdata_one = '<td class="false" data-dit="v3">胜--</td>';
-                    var spfdata_two = '<td class="false" data-dit="v1">平--</td>';
-                    var spfdata_three = '<td class="false" data-dit="v0">负--</td>';
+
                 }
                 changciHtml =
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
@@ -575,21 +594,19 @@ function getMatchInfo(obj,st){
                 var spfdata = match.oddsInfo;
                 if (spfdata) {
                     spfdata = spfdata.split("|");
-                    var spfdata_one = '<td data-dit="v2" width="8%" onclick="seleMatch(this)">' + spfdata[0] + '</td>';
-                    var spfdata_two = '<td data-dit="v3" width="8%" onclick="seleMatch(this)">' + spfdata[1] + '</td>';
-                    var spfdata_three = '<td data-dit="v4" width="8%" onclick="seleMatch(this)">' + spfdata[2] + '</td>';
-                    var spfdata_four = '<td data-dit="v5" width="8%" onclick="seleMatch(this)">' + spfdata[3] + '</td>';
-                    var spfdata_five = '<td data-dit="v6" width="8%" onclick="seleMatch(this)">' + spfdata[4] + '</td>';
-                    var spfdata_six = '<td data-dit="v7" width="8%" onclick="seleMatch(this)">' + spfdata[5] + '</td>';
-                    var spfdata_seven = '<td data-dit="v8" width="8%" onclick="seleMatch(this)">' + spfdata[6] + '</td>';
-                    var spfdata_eight = '<td data-dit="v9" width="8%" onclick="seleMatch(this)">' + spfdata[7] + '</td>';
-                    var spfdata_nine = '<td data-dit="v10" width="8%" onclick="seleMatch(this)">' + spfdata[8] + '</td>';
+                    var spfdata_one = '<td data-dit="v33" width="8%" onclick="seleMatch(this)">' + spfdata[0] + '</td>';
+                    var spfdata_two = '<td data-dit="v31" width="8%" onclick="seleMatch(this)">' + spfdata[1] + '</td>';
+                    var spfdata_three = '<td data-dit="v30" width="8%" onclick="seleMatch(this)">' + spfdata[2] + '</td>';
+                    var spfdata_four = '<td data-dit="v13" width="8%" onclick="seleMatch(this)">' + spfdata[3] + '</td>';
+                    var spfdata_five = '<td data-dit="v11" width="8%" onclick="seleMatch(this)">' + spfdata[4] + '</td>';
+                    var spfdata_six = '<td data-dit="v10" width="8%" onclick="seleMatch(this)">' + spfdata[5] + '</td>';
+                    var spfdata_seven = '<td data-dit="v03" width="8%" onclick="seleMatch(this)">' + spfdata[6] + '</td>';
+                    var spfdata_eight = '<td data-dit="v01" width="8%" onclick="seleMatch(this)">' + spfdata[7] + '</td>';
+                    var spfdata_nine = '<td data-dit="v00" width="8%" onclick="seleMatch(this)">' + spfdata[8] + '</td>';
 
                     oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + '</tr>' ;
                 } else {
-                    var spfdata_one = '<td class="false" data-dit="v3">胜--</td>';
-                    var spfdata_two = '<td class="false" data-dit="v1">平--</td>';
-                    var spfdata_three = '<td class="false" data-dit="v0">负--</td>';
+
                 }
                 changciHtml =
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +

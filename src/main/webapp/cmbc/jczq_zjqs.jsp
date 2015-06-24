@@ -26,6 +26,23 @@
         	<span class="title" style="margin-left:-12px;">竞彩足球<a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">总进球数<img src="img/down_wite.png"/></a></span>
             <a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>
         </div>
+        <div class="jc-tz-item" id="jc-one-zjqs">
+            <table width="100%" class="jc-table">
+                <tbody>
+                <tr class="jc-table-tbb">
+                    <td width="28%" class="jc-table-rb">赛事</td>
+                    <td width="9%" class="jc-table-rb">0球</td>
+                    <td width="9%" class="jc-table-rb">1球</td>
+                    <td width="9%" class="jc-table-rb">2球</td>
+                    <td width="9%" class="jc-table-rb">3球</td>
+                    <td width="9%" class="jc-table-rb">4球</td>
+                    <td width="9%" class="jc-table-rb">5球</td>
+                    <td width="9%" class="jc-table-rb">6球</td>
+                    <td width="9%" class="jc-table-rb">7+球</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="cb"></div>
 <!--顶部结束-->
@@ -33,23 +50,6 @@
 	<!--第一步页面-->
     <div class="content jc-step1" id="jc-match">
     	 <!--<ul class="jc-nav clearfix"><li class="now">购彩</li><li>定制跟单</li><li>合买大厅</li><li>玩法帮助</li></ul>  -->
-        <div class="jc-tz-item" id="s_">
-           <table width="100%" class="jc-table">
-             <tbody>
-               <tr class="jc-table-tbb">
-                   <td width="28%" class="jc-table-rb">赛事</td>
-                   <td width="9%" class="jc-table-rb">0球</td>
-                   <td width="9%" class="jc-table-rb">1球</td>
-                   <td width="9%" class="jc-table-rb">2球</td>
-                   <td width="9%" class="jc-table-rb">3球</td>
-                   <td width="9%" class="jc-table-rb">4球</td>
-                   <td width="9%" class="jc-table-rb">5球</td>
-                   <td width="9%" class="jc-table-rb">6球</td>
-                   <td width="9%" class="jc-table-rb">7+球</td>
-               </tr>
-             </tbody>
-           </table>
-        </div>
          <img src="img/009.gif" id="login-img"/>                                     
     </div>
     <!--第一步页面结束-->
@@ -75,7 +75,7 @@
      <script type="text/javascript" src="js/mcn.js"></script>
     <script type="text/javascript" src="js/jc.js"></script>
     <script type="text/javascript" src="js/jczq_zjqs.js"></script>
-    <div id="game" data-play="02" data-game="T51" style="display:none"></div>
+    <div id="game" data-play="04" data-game="T51" style="display:none"></div>
 <!--正文内容结束-->   
 </div>
 <!--底部开始-->

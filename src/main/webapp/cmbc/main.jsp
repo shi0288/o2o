@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html>
 <head>
@@ -12,7 +12,7 @@
     <jsp:include page="include/login.jsp" flush="true"/>
     <script type="text/javascript">
         $(document).ready(function () {
-           // getData();
+            //getData();
         });
         function InterTime() {
             var oSec = $("#x115").find(".seconds").eq(0);
@@ -398,7 +398,7 @@
         <!--正文内容结束-->
         <!--底部开始-->
         <div class="footer">
-            <a class="footer-nav nav-gc now" href="main.jsp">购彩</a> <a class="footer-nav nav-zh"
+            <a class="footer-nav nav-gc now" href="main.html">购彩</a> <a class="footer-nav nav-zh"
                                                                         href="acount.html">账户</a><a
                 class="footer-nav nav-kj" href="result.html">开奖</a>
             <a class="footer-nav nav-xx" href="caiyuan.html">财园</a><a class="footer-nav nav-sz" href="more.html">更多</a>

@@ -29,5 +29,6 @@ public class QueryToken {
 //        String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="+token+"&openid=o0LrFuAlDa3g0QG-SPTsIyJDUrc4&lang=zh_CN";
 //        String result = HttpClientWrapper.getUrl(url);
 //        System.out.println(result);
+
     }
 }

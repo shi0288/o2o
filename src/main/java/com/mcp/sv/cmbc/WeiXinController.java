@@ -49,19 +49,34 @@ public class WeiXinController {
 
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     @ResponseBody
-    public String getWeiXinMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String getWeiXinMessage(HttpServletRequest request, HttpServletResponse response)throws Exception{
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
         request.setCharacterEncoding("UTF-8");  //微信服务器POST消息时用的是UTF-8编码，在接收时也要用同样的编码，否则中文会乱码；
         response.setCharacterEncoding("UTF-8"); //在响应消息（回复消息给用户）时，也将编码方式设置为UTF-8，原理同上；
+        logger.info("微信消息推送");
         //判断token的缓存情况 ， 更新缓存
-        Map token = WeiXinDao.findToken();
-        long updateTime = (Long)token.get("updateTime");
-        if (new Date().getTime() - updateTime > 1000*60*100 ){//大于1小时40分钟 更新token
-            String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
-            JSONObject jsonObject = JSON.parseObject(result);
-            String access_token =  jsonObject.get("access_token").toString();
-            String expires_in =   jsonObject.get("expires_in").toString();
-            WeiXinDao.updateToken(access_token);
+        try{
+            Map token = WeiXinDao.findToken();
+            if (token.containsKey("updateTime")){
+                long updateTime = (Long)token.get("updateTime");
+                if (new Date().getTime() - updateTime > 1000*60*100 ){//大于1小时40分钟 更新token
+                    String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
+                    logger.info("查询到的token，并更新" + result);
+                    JSONObject jsonObject = JSON.parseObject(result);
+                    String access_token =  jsonObject.get("access_token").toString();
+                    String expires_in =   jsonObject.get("expires_in").toString();
+                    WeiXinDao.updateToken(access_token);
+                }
+            }else{
+                String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
+                logger.info("查询到的token，并更新" + result);
+                JSONObject jsonObject = JSON.parseObject(result);
+                String access_token =  jsonObject.get("access_token").toString();
+                String expires_in =   jsonObject.get("expires_in").toString();
+                WeiXinDao.updateToken(access_token);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         //初始化配置文件
         String respMessage = CoreService.processRequest(request);//调用CoreService类的processRequest方法接收、处理消息，并得到处理结果；

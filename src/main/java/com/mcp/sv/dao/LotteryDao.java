@@ -369,6 +369,11 @@ public class LotteryDao {
         return "用户订单状态更新异常";
     }
 
+    public static long getWealthList(long recharge){
+        DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_ACOUNT);
+        long count = collection.count(new BasicDBObject("recharge", new BasicDBObject("$gte", recharge)));
+        return count;
+    }
 
     public static String getTime() {
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";

@@ -1,11 +1,14 @@
 apply plugin: 'java'
 apply plugin: 'war'
 sourceCompatibility = 1.7
-version = 'ROOT'
 group = 'com.mcp'
 tasks.withType(JavaCompile){ options.encoding = "UTF-8"}
 dependencies {
     compile fileTree(dir: 'lib', include: '*.jar')
+}
+
+war{
+    baseName ="ROOT"
 }
 
 project.libsDirName = 'artifacts/WEB-INF/lib/'

@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.awt.*;
+import java.util.*;
+
 /**
  * Created by ChubChen on 2015/6/2.
  */
@@ -367,7 +370,7 @@ public class LotteryService {
     public String recharge(OldBean oldBean) {
         int money = oldBean.getMoney();
         String username = oldBean.getUserName();
-        String description = LotteryDao.recharge(username, money,false,null);
+        String description = LotteryDao.recharge(username, money, false, null);
         return toResult(description);
     }
 
@@ -408,6 +411,31 @@ public class LotteryService {
             e.printStackTrace();
         }
         return description;
+    }
+
+
+    /**
+     * 票据信息
+     */
+    @RequestMapping(value = "getTickets", method = RequestMethod.POST)
+    @ResponseBody
+    public String getTickets(OldBean oldBean) {
+        String username = oldBean.getUserName();
+        String outerId = oldBean.getOuterId();
+        java.util.List tickets= LotteryDao.getTickets(username, outerId);
+        JSONArray jsonArray = new JSONArray();
+        JSONObject res = new JSONObject();
+        try {
+        for(int i=0;i < tickets.size();i++){
+                jsonArray.put(i,tickets.get(i));
+        }
+            res.put("rst", jsonArray);
+            res.put("repCode", CmbcConstant.SUCCESS);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return res.toString();
     }
 
 

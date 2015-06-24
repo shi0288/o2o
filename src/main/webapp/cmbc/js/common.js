@@ -602,35 +602,37 @@ function getOrderStatus(status) {
         case 4000:
             return "出票完成";
             break;
-        case 1210:
+        case 5000:
+            return "已中奖";
+            break;
+        default:
+            return "订单完成";
+    }
+}
+
+//获取状态
+function getTicketStatus(status) {
+    switch (status) {
+        case 4000:
+            return "出票成功";
+            break;
+        case 4001:
             return "出票失败";
             break;
-        case 1220:
-            return "已退款";
-            break;
-        case 1300:
-            return "出票部分成功";
-            break;
-        case 1400:
-            return "交易失败";
-            break;
-        case 1500:
-            return "交易取消";
-            break;
-        case 1800:
-            return "未中奖";
+        case 4002:
+            return "需退款";
             break;
         case 5000:
             return "已中奖";
             break;
-        case 1900:
-            return "已返奖";
+        case 5001:
+            return "未中奖";
             break;
-        case 2100:
-            return "等待返奖";
-            break;
+        default:
+            return "等待出票";
     }
 }
+
 
 //获取彩种名称
 function getGame(obj){
@@ -705,10 +707,10 @@ function encode64(input) {
         }
 
         output = output +
-            keyStr.charAt(enc1) +
-            keyStr.charAt(enc2) +
-            keyStr.charAt(enc3) +
-            keyStr.charAt(enc4);
+        keyStr.charAt(enc1) +
+        keyStr.charAt(enc2) +
+        keyStr.charAt(enc3) +
+        keyStr.charAt(enc4);
         chr1 = chr2 = chr3 = "";
         enc1 = enc2 = enc3 = enc4 = "";
     } while (i < input.length);
@@ -731,8 +733,8 @@ function decode64(input) {
     var base64test = /[^A-Za-z0-9\+\/\=]/g;
     if (base64test.exec(input)) {
         alert("There were invalid base64 characters in the input text.\n" +
-            "Valid base64 characters are A-Z, a-z, 0-9, '+', '/', and '='\n" +
-            "Expect errors in decoding.");
+        "Valid base64 characters are A-Z, a-z, 0-9, '+', '/', and '='\n" +
+        "Expect errors in decoding.");
     }
     input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
 

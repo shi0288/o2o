@@ -11,12 +11,13 @@
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript">
         $(document).ready(function (e) {
-            var outerId = window.location.href;
-            outerId = outerId.split("#")[1];
+            var str = window.location.href;
+            outerId = str.split("#")[1];
+            orderStatus= str.split("#")[2];
             before();
             $.ajax({
                 type: "POST",
-                url: "/bankServices/LotteryService/getOrder?timestamp=" + new Date().getTime(),
+                url: "/bankServices/LotteryService/getTickets?timestamp=" + new Date().getTime(),
                 dataType: "json",
                 cache: false,
                 data: {
@@ -24,42 +25,21 @@
                     passWord: sessionStorage.getItem("passWord"),
                     outerId:outerId
                 },
-                success: function (result) {                    var repCode = result.repCode;
+                success: function (result) {
+                    var repCode = result.repCode;
                     if (repCode == '0000') {
-                        var objectOrder = JSON.parse(result.rst[0]);
-                        var body =JSON.parse(objectOrder.body);
-                        var order = body.order;
-                        var firTick = order.tickets[0];
+                        var firTick =  JSON.parse(result.rst[0]);
                         var termCode = firTick['termCode'];
-                        var time = objectOrder['createTime'];
-                        var amount = order['amount'];
-                        var status = objectOrder['status'];
+                        var time = firTick['auditTime'];
                         gameD(firTick);
-                        amount = toDecimalMoney(amount / 100);
-                        time = time.substring(0, 19);
-                        time = time.replace("T", " ");
-                        status = getOrderStatus(status);
-                        var outerId = objectOrder.outerId;
+                        status = getOrderStatus(orderStatus);
                         $("#state").html(status);
                         //如果中奖显示中奖图片
-                        if (order['bonus'] != 0&& order['bonus'] !=undefined) {
-                            $("#state").addClass("redtext");
-                            $(".content").eq(0).addClass("zj-content");
-                            $(".gooddo").show();
-                            $(".xiangyun").show();
-                            var bonus = result['rst'][0]['bonus'];
-                            bouns = toDecimalMoney(bonus / 100);
-                            var bounsHtml = "中奖:" + bouns + "元&nbsp;&nbsp;";
-                            $("#state").html(bounsHtml);
-                        }
                         $("#czqi").html(termCode);
                         $("#cztime").html(time);
                         $("#orderId").html(outerId);
-                        $("#amount").html(amount);
                         var gameCode = firTick['gameCode'];
-                        //var kjarr=getZjNum(gameCode,result['rst'][0]['termCode']);
-                        var kjnum = result['rst'][0]['dNumber'];
-                        //var kjstatu=getOrderStatus(kjarr['status']);
+                        var kjnum =firTick['dNumber']
                         if (kjnum == null) {
                             $(".kj-num").html("等待开奖");
                         } else {
@@ -70,24 +50,40 @@
                             var kjhtml = getKJnum(kjnum, ntype);//开奖号码解析在common.js
                             $(".kj-num").html(kjhtml);
                         }
-
-                        $.each(order.tickets, function (index, val) {
-                            var numbers = val['number'];
-                            console.log(val);
-                            var tzhu = val['amount'] / 200;
-                            tzhu = tzhu / val['multiple'];
-                            var bei = val['multiple'];
-                            var zhu = val['amount'];
-                            var t1 = val['pType'];
-                            var t2 = val['bType'];
-                            console.log(t1);
+                        var amount=0;
+                        var bonus=0;
+                        $.each(result.rst, function (index, val) {
+                            var tick=JSON.parse(val);
+                            var numbers = tick['number'];
+                            var tzhu = tick['amount'] / 200;
+                            tzhu = tzhu / tick['multiple'];
+                            var bei = tick['multiple'];
+                            var zhu = tick['amount'];
+                            amount+=zhu;
+                            var tickBonus=tick['bonus'];
+                            if(tickBonus!=undefined){
+                                bonus+=tickBonus;
+                            }
+                            var t1 = tick['pType'];
+                            var t2 = tick['bType'];
                             var ty = getType(t1, t2);
-                            /*if(val['gameCode']=='T01' && val['playTypeCode']=='05'){
-                             tzhu+="[追加]";
-                             }*/
-                            var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '</p></div><p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
+
+                            var tickStatus = tick['status'];
+                            tickStatus = getTicketStatus(tickStatus);
+
+                            var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '<font color="red">'+tickStatus+'</font></p></div><p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
                             $("#tzcot").append(cotHtml);
                         });
+                        amount = toDecimalMoney(amount / 100);
+                        $("#amount").html(amount);
+                        if (bonus > 0) {
+                            $("#state").addClass("redtext");
+                            $(".content").eq(0).addClass("zj-content");
+                            $(".gooddo").show();
+                            bouns = toDecimalMoney(bonus / 100);
+                            var bounsHtml = "中奖:" + bouns + "元&nbsp;&nbsp;";
+                            $("#state").html(bounsHtml);
+                        }
                         after();
                     } else {
                         after();

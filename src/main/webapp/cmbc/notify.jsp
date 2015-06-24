@@ -36,7 +36,7 @@
 <div class="page-from-left index">
     <div class="top fix">
         <div class="top-relative clearfix">
-            <a href="main.html" class="go-pre"></a>
+            <a href="main.jsp" class="go-pre"></a>
             <a href="javascript:xuanqiuShow()" class="go-pre" style="display:none"></a>
             <span class="title"><span class="pt2">操作结果</span></span>
         </div>
@@ -50,7 +50,7 @@
 
         <a href="xb_search.jsp"  class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>去挖奖</a>
         <a href="acount.html" id="jrwdcp" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>进入账户信息</a>
-        <a href="main.html" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>返回购彩大厅</a>
+        <a href="main.jsp" class="m-bigbtn-light mt10"><img class="zhuce-head" src="img/ico_head.png"/>返回购彩大厅</a>
     </div>
     <!--正文内容结束-->
 </div>

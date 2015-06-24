@@ -13,7 +13,7 @@ public class MenuTest {
     private static final String URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
 
     public static void main(String[] args) throws Exception{
-        String token = "dtWqCF7UI5El3BFpUZSVEub8rIN_NdltSX3v8E2aeukfNfqQwJ8Qqyp-u1khHecpMPnA7PPHmnnMG90aHVBZzS3ePp58co_xC-eLgcbQJaM";
+        String token = "gdASRmerVzgYve-P2fCyyY-jNNVsHlQWrhxCMzJkyZxag547dy4fogpY4X71BNMUeqERmnoM5camZy6apnDw5zNckrp9trWm0oVQnogQagc";
 
         String url = URL+token;
         String pageUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CmbcConstant.APPID+ "&redirect_uri=http://www.mcp8.net/weixin/callback&response_type=code&scope=snsapi_base&state=";
@@ -21,35 +21,17 @@ public class MenuTest {
         JSONArray button = new JSONArray();
 
         JSONObject buttonObj = new JSONObject();
-        buttonObj.put("name", "购彩大厅" );
+        buttonObj.put("name", "娱乐大厅" );
         buttonObj.put("type", "view" );
         buttonObj.put("url", pageUrl + "index#wechat_redirect" );
         button.add(buttonObj);
 
-        JSONObject buttonObj1 = new JSONObject();
-        buttonObj1.put("name", "推荐游戏" );
-        JSONObject subObj3 = new JSONObject();
-        subObj3.put("type", "view");
-        subObj3.put("name", "竞彩足球");
-        subObj3.put("url", pageUrl+ "jczq#wechat_redirect");
-
-        JSONObject subObj6 = new JSONObject();
-        subObj6.put("type", "view");
-        subObj6.put("name", "大乐透");
-        subObj6.put("url", pageUrl+ "dlt#wechat_redirect");
 
         JSONObject subObj7 = new JSONObject();
         subObj7.put("type", "view");
-        subObj7.put("name", "七星彩");
-        subObj7.put("url", pageUrl+ "qxc#wechat_redirect");
-
-        JSONArray subArray1 = new JSONArray();
-        subArray1.add(subObj3);
-        subArray1.add(subObj6);
-        subArray1.add(subObj7);
-        buttonObj1.put("sub_button", subArray1);
-        button.add(buttonObj1);
-
+        subObj7.put("name", "开奖查询");
+        subObj7.put("url", pageUrl+ "main#wechat_redirect");
+        button.add(subObj7);
         JSONObject buttonObj2 = new JSONObject();
         buttonObj2.put("name", "信息" );
         JSONObject subObj4 = new JSONObject();

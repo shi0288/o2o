@@ -3,9 +3,6 @@ $(document).ready(function (e) {
     outerId = outerId.split("#")[1];
     var ticketQuan;
     before();
-    $("#address").val(sessionStorage.getItem("address"));
-    $("#mobile").val(sessionStorage.getItem("mobile"));
-
     $.ajax({
         type: "POST",
         url: "/bankServices/LotteryService/getOrder?timestamp=" + new Date().getTime(),

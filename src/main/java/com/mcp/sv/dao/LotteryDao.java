@@ -62,6 +62,8 @@ public class LotteryDao {
             } else {
                 return "密码输入错误";
             }
+        }else if(datas.size() == 0){
+            return "没有这个用户";
         }
         return "登陆异常";
     }

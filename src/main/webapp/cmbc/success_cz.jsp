@@ -76,7 +76,7 @@
 <div class="page-from-left index">
     <div class="top fix">
         <div class="top-relative clearfix">
-            <a href="main.html" class="go-pre"></a>
+            <a href="main.jsp" class="go-pre"></a>
             <a href="javascript:xuanqiuShow()" class="go-pre" style="display:none"></a>
             <span class="title"><span class="pt2">充值成功</span></span>
         </div>

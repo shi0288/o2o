@@ -82,10 +82,8 @@ public class AlipayNotify {
     */
     private static String verifyResponse(String notify_id) {
         //获取远程服务器ATN结果，验证是否是支付宝服务器发来的请求
-        logger.info(notify_id);
         String partner = AlipayConfig.partner;
         String veryfy_url = HTTPS_VERIFY_URL + "partner=" + partner + "&notify_id=" + notify_id;
-
         return checkUrl(veryfy_url);
     }
 
@@ -100,8 +98,6 @@ public class AlipayNotify {
     */
     private static String checkUrl(String urlvalue) {
         String inputLine = "";
-        logger.info("urlvalue: "+urlvalue);
-
         try {
             URL url = new URL(urlvalue);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

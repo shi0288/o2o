@@ -27,7 +27,7 @@ import java.util.Map;
 @RequestMapping(value = "weixin")
 public class WeiXinController {
 
-    private static Logger logger = Logger.getLogger(SignUtil.class);
+    private static Logger logger = Logger.getLogger(WeiXinController.class);
 
     @RequestMapping(value = "/api", method = RequestMethod.GET)
     @ResponseBody
@@ -82,11 +82,9 @@ public class WeiXinController {
         //根据 webCode 获webtoken  并获取用户的 openId
         String webTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + com.mcp.sv.util.CmbcConstant.APPID + "&secret=" + CmbcConstant.APPSECRET+ "&code="+webcode+"&grant_type=authorization_code";
         String result = com.mcp.sv.util.HttpClientWrapper.getUrl(webTokenUrl);
-        System.out.println(result);
         JSONObject jsonObject = JSON.parseObject(result);
         String username = jsonObject.getString("openid");
         String passWord = username + CmbcConstant.CMBC_SIGN_KEY;
-        logger.info(passWord);
         org.codehaus.jettison.json.JSONObject userJson = null;
         try{
              userJson = LotteryDao.login2(username, passWord);
@@ -108,9 +106,11 @@ public class WeiXinController {
         }else if(userJson.get("repCode").equals("1009")){
             LotteryDao.register(username, username+ CmbcConstant.CMBC_SIGN_KEY,  username+CmbcConstant.CMBC_SIGN_KEY);
             userJson = LotteryDao.login2(username, passWord);
+            logger.info("session存放登陆状态");
+            request.getSession().setAttribute("userInfo", userJson.toString());
+            request.setAttribute("userInfo", userJson.toString());
         }
         logger.info("微信打开的链接。登陆用户信息是： " + userJson.toString());
-        logger.info("跳转页面是： /cmbc/" + state+".jsp");
         //根据参数 state 可以跳转到不同菜单的页面
         return "redirect:/cmbc/" + state + ".jsp";
     }

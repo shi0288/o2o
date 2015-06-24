@@ -473,20 +473,24 @@ public class JcDao {
                 st = CmbcConstant.SPF;
             }
             String last_updated = (String) map.get(st);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-            Date last = format.parse(last_updated);
-            Date nowt = new Date();
-            long now1 = nowt.getTime();
-            long last1 = last.getTime();
-            long l = now1 - last1;
-            long day=l/(24*60*60*1000);
-            long hour=(l/(60*60*1000)-day*24);
-            long min=((l/(60*1000))-day*24*60-hour*60);
-
-            if(min <= 30){
-                sign = true;
-            }else {
+            if(last_updated == null || "".equals(last_updated)){
                 sign = false;
+            }else{
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+                Date last = format.parse(last_updated);
+                Date nowt = new Date();
+                long now1 = nowt.getTime();
+                long last1 = last.getTime();
+                long l = now1 - last1;
+                long day=l/(24*60*60*1000);
+                long hour=(l/(60*60*1000)-day*24);
+                long min=((l/(60*1000))-day*24*60-hour*60);
+
+                if(min <= 30){
+                    sign = true;
+                }else {
+                    sign = false;
+                }
             }
         }catch (Exception e) {
             e.printStackTrace();

@@ -2,6 +2,7 @@
 /*彩币支付提交以后，走正常流程。第三方支付提交以后，走支付接口，调用setWebitEvent("11111111", "LT03");
  */
 var thisUrl = window.location.href;
+var termCode = "";
 var browser = {
     versions: function () {
         var u = navigator.userAgent, app = navigator.appVersion;
@@ -203,7 +204,7 @@ function submitJc() {
     var tickets = [];
     var ticket = {
         'gameCode': $("#game").attr("data-game"),
-        'termCode': new Date().getTime(),
+        'termCode': termCode,
         'type': 0,
         'amount': amount,
         'bType': betType,
@@ -273,19 +274,21 @@ function jcTzSuccess(order, amount) {
 function getJcNums() {
     var playType = $("#game").attr("data-play");
     var arrNum = [];
-    if(playType == '01'||playType == '02'){//让球胜平负（01）胜平负（02）
         $(".jc-list-item").each(function (index, element) {
             var str = "";
             if ($(this).find(".jc-list-item-dan").hasClass("on")) {
                 str += "$";
             }
             str += playType + "|" + $(this).attr("data-cc") + "|";
+            if (index ==  $(".jc-list-item").length - 1) {
+                termCode = $(this).attr("data-cc");
+            }
             var strNum = "";
             $(this).find(".jc-list-item-dw.on").each(function (i, val) {
                 if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
-                    strNum += $(this).attr("data-dit").substring(1, 2);
+                    strNum += $(this).attr("data-dit").substring(1);
                 } else {
-                    strNum += $(this).attr("data-dit").substring(1, 2) + ",";
+                    strNum += $(this).attr("data-dit").substring(1) + ",";
                 }
 
             });
@@ -293,27 +296,6 @@ function getJcNums() {
             arrNum.push(str);
         });
         arrNum = arrNum.join(";");
-    }else{
-        $(".jc-list-item").each(function (index, element) {
-            var str = "";
-            if ($(this).find(".jc-list-item-dan").hasClass("on")) {
-                str += "$";
-            }
-            str += playType + "|" + $(this).attr("data-cc") + "|";
-            var strNum = "";
-            $(this).find(".jc-list-item-dw.on").each(function (i, val) {
-                if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
-                    strNum += $(this).attr("data-dit").substring(1, 3);
-                } else {
-                    strNum += $(this).attr("data-dit").substring(1, 3) + ",";
-                }
-
-            });
-            str += strNum;
-            arrNum.push(str);
-        });
-        arrNum = arrNum.join(";");
-    }
     return arrNum;
 }
 

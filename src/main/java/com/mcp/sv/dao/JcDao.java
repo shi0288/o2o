@@ -1,6 +1,7 @@
 package com.mcp.sv.dao;
 
 
+import com.mcp.sv.cmbc.HttpClientWrapper;
 import com.mcp.sv.util.CmbcConstant;
 import com.mcp.sv.cmbc.LotteryService;
 import org.codehaus.jettison.json.JSONArray;
@@ -105,7 +106,7 @@ public class JcDao {
                 String HHGG = (String) map.get(st);
                 logger.info("HHGG::::::::::"+HHGG);
                 if(HHGG==null){
-                    str = sendGet(CmbcConstant.HHGG_URL);
+                    str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(CmbcConstant.HHGG_URL);
                     res = createHhggFormat(st, str);
                 }else{
                     boolean update = getTask(HHGG,st);

@@ -262,4 +262,21 @@ public class HttpClientWrapper {
         return result;
     }
 
+    public static String getGbkUrl(String url){
+        HttpGet request = new HttpGet(url);
+        //添加timeout属性
+        RequestConfig.Builder rcBuilder = RequestConfig.copy(RequestConfig.DEFAULT);
+        rcBuilder.setConnectTimeout(90000);
+        rcBuilder.setSocketTimeout(90000);
+        request.setConfig(rcBuilder.build());
+        String res = "";
+        try {
+            CloseableHttpResponse response = getHttpClient().execute(request);
+            res = EntityUtils.toString(response.getEntity());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
 }

@@ -203,7 +203,7 @@ function submitJc() {
     var tickets = [];
     var ticket = {
         'gameCode': $("#game").attr("data-game"),
-        'termCode': $("#termCode").html(),
+        'termCode': new Date().getTime(),
         'type': 0,
         'amount': amount,
         'bType': betType,
@@ -443,7 +443,7 @@ function getMatchInfo(obj,st){
                 var rqspfdata = match.oddsInfo;
                 if (rqspfdata) {
                     rqspfdata = rqspfdata.split("|");
-                    var rqspfdata_one,rqspfdata_two,rqspfdata_two
+                    var rqspfdata_one,rqspfdata_two,rqspfdata_three
                     if(rqspfdata[0]=='--'){
                         rqspfdata_one = '<td width="24%" class="false" data-dit="v3" >胜' + rqspfdata[0] + '</td>';
                         rqspfdata_two = '<td width="24%" class="false" data-dit="v1" >平' + rqspfdata[1] + '</td>';

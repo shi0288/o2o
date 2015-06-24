@@ -21,19 +21,12 @@
 <div class="page-from-left index">    
     <div class="top fix">
     	<div class="top-relative clearfix">
-        	<a href="index.jsp" id="jc-one"  class="go-pre"></a>
+        	<a href="jczq.jsp" id="jc-one"  class="go-pre"></a>
             <a href="javascript:jcone()" id="jc-two" class="go-pre" style="display:none"></a>
         	<span class="title" style="margin-left:-12px;">竞彩足球<a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">半全场胜平负<img src="img/down_wite.png"/></a></span>
             <a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>
         </div>
-    </div>
-    <div class="cb"></div>
-<!--顶部结束-->
-<!--正文内容开始-->
-	<!--第一步页面-->
-    <div class="content jc-step1" id="jc-match">
-    	 <!--<ul class="jc-nav clearfix"><li class="now">购彩</li><li>定制跟单</li><li>合买大厅</li><li>玩法帮助</li></ul>  -->
-        <div class="jc-tz-item" id="s_">
+        <div class="jc-tz-item" id="jc-one-bqc">
             <table width="100%" class="jc-table">
                 <tbody>
                 <tr class="jc-table-tbb">
@@ -51,6 +44,13 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="cb"></div>
+<!--顶部结束-->
+<!--正文内容开始-->
+	<!--第一步页面-->
+    <div class="content jc-step1" id="jc-match">
+    	 <!--<ul class="jc-nav clearfix"><li class="now">购彩</li><li>定制跟单</li><li>合买大厅</li><li>玩法帮助</li></ul>  -->
          <img src="img/009.gif" id="login-img"/>                                     
     </div>
     <!--第一步页面结束-->
@@ -76,7 +76,7 @@
      <script type="text/javascript" src="js/mcn.js"></script>
     <script type="text/javascript" src="js/jc.js"></script>
     <script type="text/javascript" src="js/jczq_bqc.js"></script>
-    <div id="game" data-play="02" data-game="T51" style="display:none"></div>
+    <div id="game" data-play="05" data-game="T51" style="display:none"></div>
 <!--正文内容结束-->   
 </div>
 <!--底部开始-->

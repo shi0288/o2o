@@ -404,6 +404,11 @@ function getMatchInfo(obj,st){
         console.log(matchTime);
         $.each(teamname, function (index, match) {
             var matchName=match.matchName;
+            var oddsSingle=match.oddsSingle;
+            var style="";
+            if(oddsSingle=='1'){
+                style="background-image:url(./img/single.gif);background-repeat:no-repeat;background-position:left top;";
+            }
             matchName = matchName.split("|");
             var oodsCode = match.oddsCode;
             var oodsTag;
@@ -445,7 +450,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="3"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="3" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -474,7 +479,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="3"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="3" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -538,7 +543,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="14"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="14"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="14" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -566,7 +571,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="8"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="8"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="8" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -595,7 +600,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="9"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="9"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="9" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +

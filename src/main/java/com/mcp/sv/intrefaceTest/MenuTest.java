@@ -13,7 +13,7 @@ public class MenuTest {
     private static final String URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
 
     public static void main(String[] args) throws Exception{
-        String token = "dtWqCF7UI5El3BFpUZSVEub8rIN_NdltSX3v8E2aeukfNfqQwJ8Qqyp-u1khHecpMPnA7PPHmnnMG90aHVBZzS3ePp58co_xC-eLgcbQJaM";
+        String token = "J_JD9O7_upUq7B2JVVKthADGAm7o5clXJBNMe5tlaOQluzA-HAQsZ5slfP6ftC8LpWXUz9TjDbfo9kJCz2OefYYtkLfM3QlDIq4iZcOOY0g";
 
         String url = URL+token;
         String pageUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CmbcConstant.APPID+ "&redirect_uri=http://www.mcp8.net/weixin/callback&response_type=code&scope=snsapi_base&state=";
@@ -53,14 +53,14 @@ public class MenuTest {
         JSONObject buttonObj2 = new JSONObject();
         buttonObj2.put("name", "信息" );
         JSONObject subObj4 = new JSONObject();
-        subObj4.put("type", "view");
+        subObj4.put("type", "click");
         subObj4.put("name", "账户余额");
-        subObj4.put("url", pageUrl+ "account#wechat_redirect");
+        subObj4.put("key", "recharge");
 
         JSONObject subObj5 = new JSONObject();
-        subObj5.put("type", "view");
+        subObj5.put("type", "click");
         subObj5.put("name", "推荐号码");
-        subObj5.put("url", pageUrl+ "tuijian#wechat_redirect");
+        subObj5.put("key", "tuijian");
         JSONArray subArray2 = new JSONArray();
         subArray2.add(subObj4);
         subArray2.add(subObj5);
@@ -69,6 +69,7 @@ public class MenuTest {
 
         JSONObject object = new JSONObject();
         object.put("button", button);
+
         String jsonString = object.toJSONString();
         System.out.println(jsonString);
        String result = HttpClientWrapper.postJson(url, jsonString);

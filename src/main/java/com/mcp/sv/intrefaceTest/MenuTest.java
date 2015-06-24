@@ -13,7 +13,7 @@ public class MenuTest {
     private static final String URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
 
     public static void main(String[] args) throws Exception{
-        String token = "J_JD9O7_upUq7B2JVVKthADGAm7o5clXJBNMe5tlaOQluzA-HAQsZ5slfP6ftC8LpWXUz9TjDbfo9kJCz2OefYYtkLfM3QlDIq4iZcOOY0g";
+        String token = "ezu-O7p0BnRo0-S7TA7jQnrSkwOuu_OkrFfugxmKciJNRiFVDue91OO7a8X58StcxfTO6YWpQMTUJi_3sa6PPkYT2pxp0yCPG5a7BOfTxqM";
 
         String url = URL+token;
         String pageUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CmbcConstant.APPID+ "&redirect_uri=http://www.mcp8.net/weixin/callback&response_type=code&scope=snsapi_base&state=";
@@ -21,13 +21,13 @@ public class MenuTest {
         JSONArray button = new JSONArray();
 
         JSONObject buttonObj = new JSONObject();
-        buttonObj.put("name", "娱乐场" );
+        buttonObj.put("name", "娱乐大厅" );
         buttonObj.put("type", "view" );
         buttonObj.put("url", pageUrl + "index#wechat_redirect" );
         button.add(buttonObj);
 
-        JSONObject buttonObj1 = new JSONObject();
-        buttonObj1.put("name", "推荐游戏" );
+     /*   JSONObject buttonObj1 = new JSONObject();
+        buttonObj1.put("name", "" );
         JSONObject subObj3 = new JSONObject();
         subObj3.put("type", "view");
         subObj3.put("name", "竞彩：足球");
@@ -43,12 +43,17 @@ public class MenuTest {
         subObj7.put("name", "七：星：彩");
         subObj7.put("url", pageUrl+ "qxc#wechat_redirect");
 
-        JSONArray subArray1 = new JSONArray();
+       JSONArray subArray1 = new JSONArray();
         subArray1.add(subObj3);
         subArray1.add(subObj6);
         subArray1.add(subObj7);
         buttonObj1.put("sub_button", subArray1);
-        button.add(buttonObj1);
+        button.add(buttonObj1);*/
+        JSONObject button1 = new JSONObject();
+        button1.put("name", "娱乐大厅" );
+        button1.put("type", "view" );
+        button1.put("url", pageUrl + "main#wechat_redirect" );
+        button.add(button1);
 
         JSONObject buttonObj2 = new JSONObject();
         buttonObj2.put("name", "更多服务" );

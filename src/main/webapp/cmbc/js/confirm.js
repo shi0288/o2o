@@ -98,7 +98,10 @@ $(document).ready(function (e) {
                     tzSuccess();
                 } else if (repCode == '1007') {
                     alert("账户余额不足，请充值");
-                } else {
+                } else if (repCode == '1008') {
+                    alert("此订单已经支付");
+                }
+                else {
                     alert(result.description);
                 }
                 after();

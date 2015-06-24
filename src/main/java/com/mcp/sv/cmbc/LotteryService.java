@@ -129,8 +129,9 @@ public class LotteryService {
                 body = new org.codehaus.jettison.json.JSONObject(bodyStr);
                 org.codehaus.jettison.json.JSONObject _order = body.getJSONObject("order");
                 //判断是否已经支付过
-                int orderStatus=_order.getInt("status");
+                int orderStatus=order.getInt("status");
                 if(CmbcConstant.ORDER_1000 != orderStatus){
+                    logger.error("订单已经支付过，不再处理：  "+outerId);
                     res.put("repCode", "1008");  //已经支付过
                     return res.toString();
                 }

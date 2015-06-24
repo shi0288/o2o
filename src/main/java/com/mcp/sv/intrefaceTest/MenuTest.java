@@ -21,7 +21,7 @@ public class MenuTest {
         JSONArray button = new JSONArray();
 
         JSONObject buttonObj = new JSONObject();
-        buttonObj.put("name", "购彩大厅" );
+        buttonObj.put("name", "娱乐场" );
         buttonObj.put("type", "view" );
         buttonObj.put("url", pageUrl + "index#wechat_redirect" );
         button.add(buttonObj);
@@ -30,17 +30,17 @@ public class MenuTest {
         buttonObj1.put("name", "推荐游戏" );
         JSONObject subObj3 = new JSONObject();
         subObj3.put("type", "view");
-        subObj3.put("name", "竞彩足球");
+        subObj3.put("name", "竞彩：足球");
         subObj3.put("url", pageUrl+ "jczq#wechat_redirect");
 
         JSONObject subObj6 = new JSONObject();
         subObj6.put("type", "view");
-        subObj6.put("name", "大乐透");
+        subObj6.put("name", "大：乐：透");
         subObj6.put("url", pageUrl+ "dlt#wechat_redirect");
 
         JSONObject subObj7 = new JSONObject();
         subObj7.put("type", "view");
-        subObj7.put("name", "七星彩");
+        subObj7.put("name", "七：星：彩");
         subObj7.put("url", pageUrl+ "qxc#wechat_redirect");
 
         JSONArray subArray1 = new JSONArray();
@@ -51,7 +51,7 @@ public class MenuTest {
         button.add(buttonObj1);
 
         JSONObject buttonObj2 = new JSONObject();
-        buttonObj2.put("name", "信息" );
+        buttonObj2.put("name", "更多服务" );
         JSONObject subObj4 = new JSONObject();
         subObj4.put("type", "click");
         subObj4.put("name", "账户余额");

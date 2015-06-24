@@ -43,7 +43,7 @@ public class MenuClickService {
 				log.info("user;  "+ userJson);
 				JSONObject user = JSON.parseObject(userJson);
 
-				if (user!= null && user.containsKey("account")){
+				if (user!= null && user.containsKey("acount")){
 					JSONObject account = user.getJSONObject("acount");
 					long recharge = account.getLong("recharge");
 					long count = LotteryDao.getWealthList(recharge);

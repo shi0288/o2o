@@ -160,14 +160,14 @@ public class LotteryService {
                         //插入消费记录
                         boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, com.mcp.sv.util.CmbcConstant.TRANSTYPE, userName, recharge, recharge - amount, amount, outerId);
                         //更新订单状态送达
-                        if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000))) {
+                        if (!"".equals(LotteryDao.updateOrderStatus(outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000))) {
                             //订单更新送达状态未成功处理
                         }
                         if (is) {
                             //扣除账户金钱
                             String result = LotteryDao.recharge(userName, -amount,false,null);
                             if ("".equals(result)) {
-                                if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000))) {
+                                if (!"".equals(LotteryDao.updateOrderStatus(outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000))) {
                                     //订单更新已支付状态未成功处理
                                 }
                                 return resMessage;
@@ -260,14 +260,14 @@ public class LotteryService {
                     //插入消费记录
                     boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, com.mcp.sv.util.CmbcConstant.TRANSTYPE, userName, recharge, recharge - amount, amount, outerId);
                     //更新订单状态送达
-                    if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000))) {
+                    if (!"".equals(LotteryDao.updateOrderStatus( outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000))) {
                         //订单更新送达状态未成功处理
                     }
                     if (is) {
                         //扣除账户金钱
                         String result = LotteryDao.recharge(userName, -amount,false,null);
                         if ("".equals(result)) {
-                            if (!"".equals(LotteryDao.updateOrderStatus(userName, outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000))) {
+                            if (!"".equals(LotteryDao.updateOrderStatus(outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000))) {
                                 //订单更新已支付状态未成功处理
                             }
                             return resMessage;

@@ -244,7 +244,7 @@ function stopZhuiHao(schemeId){
 		success : function(result) {
 			var repCode = result.repCode;
 			if(repCode=='0000'){
-				message(result.description);
+				dataObject(result.description);
 				setTimeout(function(){window.location.reload();},1000);
 			}else{
 				alert(result.description);		

@@ -333,6 +333,7 @@ public class LotteryDao {
                 }
             }else if(status==1200){
                 //已经操作过
+                logger.error("已处理过："+out_trade_no);
                 return false;
             }
 
@@ -345,16 +346,13 @@ public class LotteryDao {
 
 
 
-
-
     //更改订单状态
-    public static String updateOrderStatus(String userName, String outerId, int status) {
+    public static String updateOrderStatus(String outerId, int status) {
         //查询库中是否有此记录
         Map param = new HashMap();
-        param.put("userName", userName);
         param.put("outerId", outerId);
         List datas = MongoUtil.query(MongoConst.MONGO_TORDER, param);
-        logger.info("用户订单状态更新：" + userName + "  " + datas.size() + "  " + "状态：" + status + "  " + "outerId：" + outerId);
+        logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + status + "  " + "outerId：" + outerId);
         if (datas.size() == 1) {
             DBObject order = (DBObject) datas.get(0);
             String orderStr = JSON.serialize(order);
@@ -371,6 +369,35 @@ public class LotteryDao {
         }
         return "用户订单状态更新异常";
     }
+
+    //更改彩票状态
+    public static String updateTicketStatus(String outerId, int status,int bonus) {
+        //查询库中是否有此记录
+        Map param = new HashMap();
+        param.put("outerId", outerId);
+        List datas = MongoUtil.query(MongoConst.MONGO_TICKET, param);
+        logger.info("彩票状态更新：" + datas.size() + "  " + "状态：" + status + "  " + "outerId：" + outerId);
+        if (datas.size() == 1) {
+            DBObject order = (DBObject) datas.get(0);
+            String orderStr = JSON.serialize(order);
+            DBObject newOrder = (DBObject) JSON.parse(orderStr);
+            newOrder.put("status", status);
+            if(bonus>0){
+                newOrder.put("bonus", bonus);
+            }
+            int res = MongoUtil.update(MongoConst.MONGO_TICKET, order, newOrder);
+            if (res == 1) {
+                return "";
+            } else {
+                return "彩票状态更新失败 "+outerId;
+            }
+        } else if (datas.size() == 0) {
+            return "找不到此彩票：" + outerId;
+        }
+        return "彩票状态更新异常 "+outerId;
+    }
+
+
 
     public static long getWealthList(long recharge){
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_ACOUNT);

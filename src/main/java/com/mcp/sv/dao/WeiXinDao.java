@@ -22,14 +22,14 @@ public class WeiXinDao {
     private static final String TOKENID = "TOKEN";
     private static final Logger logger  = Logger.getLogger(WeiXinDao.class);
 
-    public static  void updateToken (String token){
+    public static void updateToken (String token){
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_WEIXINCONF);
         DBObject find = new BasicDBObject(); //mongodb bean
         find.put("id",TOKENID);
         DBObject set = new BasicDBObject(); //mongodb bean
         set.put("value", token);
         set.put("updateTime", new Date().getTime());
-        collection.findAndModify(find, null, null,false, set, true, true);
+        collection.findAndModify(find, null, null, false, set, true, true);
     }
 
     public static Map findToken (){

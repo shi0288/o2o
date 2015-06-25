@@ -1,3 +1,4 @@
+<%@ page language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html>
 <head>
@@ -5,11 +6,13 @@
     <title>中期彩</title>
     <meta name="viewport"
           content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="format-detection" content="telephone=no" />
+
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="/cmbc/js/platform.js"></script>
+    <jsp:include page="include/login.jsp" flush="true"/>
     <script type="text/javascript">
         $(document).ready(function () {
             before();

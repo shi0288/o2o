@@ -1,7 +1,6 @@
 package com.mcp.sv.cmbc;
 
 import com.mcp.sv.dao.JcDao;
-import com.mcp.sv.dao.JcLqDao;
 import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.OldBean;
 import com.mcp.sv.util.*;
@@ -18,10 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
-import java.util.*;
 import java.util.List;
 
 /**

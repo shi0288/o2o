@@ -13,7 +13,7 @@
 <style type="text/css">.jc-step2{ display:none;}.spf-dd{ display:none;}</style>
 <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="js/jcqcontect.js"></script>l
+<script type="text/javascript" src="js/jclqcontect.js"></script>
 <jsp:include page="include/login.jsp" flush="true"/>
 
 </head>

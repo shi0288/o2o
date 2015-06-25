@@ -446,7 +446,7 @@ function getMatchInfo(obj){
                     spfdata_one = '<td width="36%" class="false" data-dit="v1">胜--</td>';
                     spfdata_two = '<td width="36%" class="false" data-dit="v2">负--</td>';
                 }
-                oodsTag='<tr data-wf="rf" class="jc-table-b rf-dd">' + spfdata_one + spfdata_two + '</tr>' ;
+                oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + '</tr>' ;
                 changciHtml =
                     '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
@@ -460,22 +460,22 @@ function getMatchInfo(obj){
                 var spfdata = item.wnm;
                 if (spfdata) {
                     var home_cn = '<td width="10%" class="false" data-dit="v1">主胜</td>';
-                    var home1 = '<td width="10%" data-dit="v01" onclick="seleMatch(this)">' + spfdata["hostWin1"] + '</td>';
-                    var home2 = '<td width="10%" data-dit="v02" onclick="seleMatch(this)">' + spfdata["hostWin2"] + '</td>';
-                    var home3 = '<td width="10%" data-dit="v03" onclick="seleMatch(this)">' + spfdata["hostWin3"] + '</td>';
-                    var home4 = '<td width="10%" data-dit="v04" onclick="seleMatch(this)">' + spfdata["hostWin4"] + '</td>';
-                    var home5 = '<td width="10%" data-dit="v05" onclick="seleMatch(this)">' + spfdata["hostWin5"] + '</td>';
-                    var home6 = '<td width="10%" data-dit="v06" onclick="seleMatch(this)">' + spfdata["hostWin6"] + '</td>';
+                    var home1 = '<td width="10%" data-dit="v01" onclick="seleMatch(this)">(1-5)' + spfdata["hostWin1"] + '</td>';
+                    var home2 = '<td width="10%" data-dit="v02" onclick="seleMatch(this)">(6-10)' + spfdata["hostWin2"] + '</td>';
+                    var home3 = '<td width="10%" data-dit="v03" onclick="seleMatch(this)">(11-15)' + spfdata["hostWin3"] + '</td>';
+                    var home4 = '<td width="10%" data-dit="v04" onclick="seleMatch(this)">(16-20)' + spfdata["hostWin4"] + '</td>';
+                    var home5 = '<td width="10%" data-dit="v05" onclick="seleMatch(this)">(20-15)' + spfdata["hostWin5"] + '</td>';
+                    var home6 = '<td width="10%" data-dit="v06" onclick="seleMatch(this)">(26+)' + spfdata["hostWin6"] + '</td>';
 
                     oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">'+ home_cn + home1 + home2 + home3 + home4 + home5 + home6 +'</tr>' ;
 
                     var guest_cn = '<td width="10%" class="false" data-dit="v1">客胜</td>';
-                    var guest1 = '<td width="10%" data-dit="v11" onclick="seleMatch(this)">' + spfdata["guestWin1"] + '</td>';
-                    var guest2 = '<td width="10%" data-dit="v12" onclick="seleMatch(this)">' + spfdata["guestWin2"] + '</td>';
-                    var guest3 = '<td width="10%" data-dit="v13" onclick="seleMatch(this)">' + spfdata["guestWin3"] + '</td>';
-                    var guest4 = '<td width="10%" data-dit="v14" onclick="seleMatch(this)">' + spfdata["guestWin4"] + '</td>';
-                    var guest5 = '<td width="10%" data-dit="v15" onclick="seleMatch(this)">' + spfdata["guestWin5"] + '</td>';
-                    var guest6 = '<td width="10%" data-dit="v16" onclick="seleMatch(this)">' + spfdata["guestWin6"] + '</td>';
+                    var guest1 = '<td width="10%" data-dit="v11" onclick="seleMatch(this)">(1-5)' + spfdata["guestWin1"] + '</td>';
+                    var guest2 = '<td width="10%" data-dit="v12" onclick="seleMatch(this)">(6-10)' + spfdata["guestWin2"] + '</td>';
+                    var guest3 = '<td width="10%" data-dit="v13" onclick="seleMatch(this)">(11-15)' + spfdata["guestWin3"] + '</td>';
+                    var guest4 = '<td width="10%" data-dit="v14" onclick="seleMatch(this)">(16-20)' + spfdata["guestWin4"] + '</td>';
+                    var guest5 = '<td width="10%" data-dit="v15" onclick="seleMatch(this)">(21-25)' + spfdata["guestWin5"] + '</td>';
+                    var guest6 = '<td width="10%" data-dit="v16" onclick="seleMatch(this)">(26+)' + spfdata["guestWin6"] + '</td>';
 
                     var oddTag2 = '<tr data-wf="spf" class="jc-table-b spf-dd">'+ guest_cn + guest1 + guest2 + guest3 + guest4 + guest5 + guest6  +'</tr>' ;
 
@@ -494,9 +494,9 @@ function getMatchInfo(obj){
             }else if(playType = '04' && item.hilo){//大小分
                 var spfdata = item.hilo ;
                 if (spfdata) {
-                    var spfdata_one = '<td data-dit="v1" width="24%" onclick="seleMatch(this)">' + spfdata["big"] + '</td>';
-                    var spfdata_two = '<td data-dit="v0" width="24%"  class="false" >' + spfdata["fixedodds"] + '</td>';
-                    var spfdata_three = '<td data-dit="v2" width="24%" onclick="seleMatch(this)">' + spfdata["small"] + '</td>';
+                    var spfdata_one = '<td data-dit="v1" width="24%" onclick="seleMatch(this)">大' + spfdata["big"] + '</td>';
+                    var spfdata_two = '<td data-dit="v0" width="24%"  class="false" >预设总分' + spfdata["fixedodds"] + '</td>';
+                    var spfdata_three = '<td data-dit="v2" width="24%" onclick="seleMatch(this)">小' + spfdata["small"] + '</td>';
 
                     oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + spfdata_three  + '</tr>' ;
                 } else {

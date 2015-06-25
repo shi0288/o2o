@@ -185,15 +185,17 @@ function submitJc() {
     }
     var amount = $("#qianshu").html();
     amount = parseInt(amount) * 100;
+    if(amount <= 0 ){
+        alert("金额错误");
+        return;
+    }
     var betType = $("#chuanguan").attr("data-chuan");
     console.log(betType);
-    if(betType==undefined){
-        betType='11';
-        amount=200;
-    }else{
-        betType = betType.replace(/[a-z]/g, "");
+    betType = betType.replace(/[a-z]/g, "");
+    if(betType == undefined){
+        alert("错误的玩法");
+        return;
     }
-
     console.log(betType);
     var numbers = getJcNums();
     console.log(numbers);
@@ -402,7 +404,6 @@ function getMatchInfo(obj){
         matchTime = matchTime.substring(0, 10);
         console.log(matchTime);
         if(playType == "02" && item.mnl){
-
             var rqspfdata = item.mnl;
             if (rqspfdata) {
                 var rqspfdata_one,rqspfdata_two,rqspfdata_three
@@ -418,7 +419,7 @@ function getMatchInfo(obj){
                 rqspfdata_two = '<td width="36%" class="false" data-dit="v2">负--</td>';
             }
             var classSingle = "";
-            if(item.single == '1'){
+            if(item.mnl.single == '1'){
                 classSingle="single";
             }
             oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + rqspfdata_one + rqspfdata_two + '</tr>'
@@ -426,7 +427,7 @@ function getMatchInfo(obj){
                 '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
                 '<tbody><tr class="jc-table-tbb">' +
                 '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                '<td width="72%" colspan="2" style='+classSingle+'><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
+                '<td width="72%" colspan="2" class='+classSingle+'><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
                 '</tr>' +
                 oodsTag +
                 '</tbody>' +
@@ -447,17 +448,25 @@ function getMatchInfo(obj){
                     spfdata_two = '<td width="36%" class="false" data-dit="v2">负--</td>';
                 }
                 oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + '</tr>' ;
+                var classSingle = "";
+                if(item.hdc.single == '1'){
+                    classSingle="single";
+                }
                 changciHtml =
                     '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="2"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
+                    '<td width="72%" colspan="2" class='+classSingle+'><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
                     '</table>';
             }else if(playType== '03' && item.wnm){//比分
                 var spfdata = item.wnm;
+                var classSingle = "";
+                if(item.wnm.single == '1'){
+                    classSingle="single";
+                }
                 if (spfdata) {
                     var home_cn = '<td width="10%" class="false" data-dit="v1">主胜</td>';
                     var home1 = '<td width="10%" data-dit="v01" onclick="seleMatch(this)">(1-5)' + spfdata["hostWin1"] + '</td>';
@@ -486,13 +495,17 @@ function getMatchInfo(obj){
                     '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="30%" class="jc-table-rb" rowspan="4"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="70%" colspan="7"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' +item.guest_cn + '</span></td>' +
+                    '<td width="70%" colspan="7" class="'+ classSingle+'"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' +item.guest_cn + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
                     '</table>';
             }else if(playType = '04' && item.hilo){//大小分
                 var spfdata = item.hilo ;
+                var classSingle = "";
+                if(item.hilo.single == '1'){
+                    classSingle="single";
+                }
                 if (spfdata) {
                     var spfdata_one = '<td data-dit="v1" width="24%" onclick="seleMatch(this)">大' + spfdata["big"] + '</td>';
                     var spfdata_two = '<td data-dit="v0" width="24%"  class="false" >预设总分' + spfdata["fixedodds"] + '</td>';
@@ -508,7 +521,7 @@ function getMatchInfo(obj){
                     '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' +item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="3"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' +item.guest_cn + '</span></td>' +
+                    '<td width="72%" colspan="3" class="'+ classSingle+'"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' +item.guest_cn + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +

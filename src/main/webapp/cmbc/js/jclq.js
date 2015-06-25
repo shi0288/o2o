@@ -84,7 +84,19 @@ $(document).ready(function() {
 		$("#qianshu").html(bei*zhu*2);	
 	});
 	$(".jc-ok").eq(0).click(function(){
-		if($(".jc-table.on").length>=2){
+		var flag = true;
+		if($(".jc-table.on").length == 1){
+			//判断是否支持单关固定
+			$(".jc-table.on").each(function(index) {
+				if($(this).find(".single").length  <= 0 ){
+					flag = false;
+					alert("所选择场次不支持单关");
+					return;
+				}
+			});
+		}
+		if(flag)
+		if($(".jc-table.on").length >= 1){
 			jcList();
 			chuanChange();
 			//算注数
@@ -92,7 +104,7 @@ $(document).ready(function() {
 			jctwo();
 			$("html,body").animate({'scrollTop':0}, 50);	
 		}else{
-			alert("请至少选择2场比赛");	
+			alert("请至少选择1场比赛");
 		}	
 	});
 	$(".jc-xchuan").click(function(e){
@@ -185,10 +197,8 @@ function seleMatch(evel){
 			$(evel).parents("table").addClass("on");	
 		}
 		var cs=getChangshu();
-		if(cs>=2){
+		if(cs >= 1){
 			$("#jc-cs").html("您选择了"+cs+"场比赛");
-		}else{
-			$("#jc-cs").html("至少选2场比赛");	
 		}
 	}
 //最多可以设胆的数量
@@ -312,11 +322,11 @@ function jcList(){
 function chuanChange(){
 	var changs=$(".jc-list-item-cot").length;
 	if(changs>8){
-		changs=8;	
+		changs=8;
 	}
 	if(changs>=2){
-		chuanList();	
-		var datachuan="r"+changs+"c1";	
+		chuanList();
+		var datachuan="r"+changs+"c1";
 		var htmlchuan=changs+"串1";
 		$("#chuanguan").attr("data-chuan",datachuan);
 		$("#chuanguan").html(htmlchuan);
@@ -324,16 +334,19 @@ function chuanChange(){
 		$("#xchuan").find(".chuan-item").removeClass("on");
 		$("#xchuan").find(".chuan-item").removeAttr("data-class");
 		thischuan.addClass("on");
-		thischuan.attr("data-class","on");	
+		thischuan.attr("data-class","on");
+	}else if(changs == 1){
+		$("#chuanguan").html("单场固定");
+		$("#chuanguan").attr("data-chuan","r"+changs+"c1");
 	}else{
 		$("#chuanguan").html("过关方式");
 		$("#chuanguan").removeAttr("data-chuan");
-	}	
+	}
 	var len=maxDan();
-	if(changs<=len+1){		
-		$(".jc-list-item-dan").addClass("no");	
+	if(changs<=len+1){
+		$(".jc-list-item-dan").addClass("no");
 	}else{
-		$(".jc-list-item-dan").removeClass("no");		
+		$(".jc-list-item-dan").removeClass("no");
 	}
 }
 //列出对应的串关
@@ -346,7 +359,12 @@ function chuanList(){
 		if(item.charAt(1)<=n){
 			var len=item.length;
 			var chuanm=item.split(/[a-z]/);
-			var chuanstr=chuanm[1]+"串"+chuanm[2];
+			var chuanstr = "";
+			if(chuanm[1] == "1"){
+				chuanstr = "单场固定";
+			}else{
+				chuanstr=chuanm[1]+"串"+chuanm[2];
+			}
 			var chuanHtml='<span class="chuan-item" data-chuan="'+item+'" onClick="togOn(this)">'+chuanstr+'</span>';
 			if(chuanm[2]=="1"){
 				//自由过关
@@ -389,7 +407,7 @@ function jcSum(){
 		$("#qianshu").html(0);
 		return false;
 	}
-	if($(".jc-list-item").length<2){
+	if($(".jc-list-item").length < 1){
 		$("#zhushu").html(0);
 		$("#qianshu").html(0);
 		return false;		

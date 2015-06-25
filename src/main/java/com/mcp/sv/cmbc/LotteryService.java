@@ -1,6 +1,7 @@
 package com.mcp.sv.cmbc;
 
 import com.mcp.sv.dao.JcDao;
+import com.mcp.sv.dao.JcLqDao;
 import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.OldBean;
 import com.mcp.sv.util.*;
@@ -325,6 +326,28 @@ public class LotteryService {
         if (head != null) {
             try {
                 resMessage = JcDao.getFormat(head, body);
+                System.out.println("收到的竞彩信息：  " + resMessage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return resMessage;
+    }
+
+
+    /**
+     * 获取竞彩期次信息
+     */
+    @RequestMapping(value = "getJcLqInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public String getJcLqInfo(OldBean oldBean) {
+        String resMessage = "";
+        String body = oldBean.getBody();
+        //取期次
+        logger.error(body);
+        if (body != null) {
+            try {
+                resMessage = JcLqDao.getFormat(body);
                 System.out.println("收到的竞彩信息：  " + resMessage);
             } catch (Exception e) {
                 e.printStackTrace();

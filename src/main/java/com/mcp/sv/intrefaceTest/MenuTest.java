@@ -14,7 +14,7 @@ public class MenuTest {
 
     public static void main(String[] args) throws Exception{
 
-        String token = "gdASRmerVzgYve-P2fCyyY-jNNVsHlQWrhxCMzJkyZxag547dy4fogpY4X71BNMUeqERmnoM5camZy6apnDw5zNckrp9trWm0oVQnogQagc";
+        String token = "dY78dNTyYtym2wqmUeE6d-dfME4qJycqfuaF6XrWjafuf9_knjHn0rsEhFHMEZ8sZx2lUcnYPTz1MzQ1aGO2wb3lis3Z-fXlZDO-ensDYko";
 
 
         String url = URL+token;
@@ -30,9 +30,9 @@ public class MenuTest {
 
 
         JSONObject subObj7 = new JSONObject();
-        subObj7.put("type", "view");
         subObj7.put("name", "开奖查询");
-        subObj7.put("url", pageUrl+ "main#wechat_redirect");
+        subObj7.put("type", "view");
+        subObj7.put("url", pageUrl+ "result#wechat_redirect");
         button.add(subObj7);
 
         JSONObject buttonObj2 = new JSONObject();

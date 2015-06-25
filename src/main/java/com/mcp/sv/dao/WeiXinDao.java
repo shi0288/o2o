@@ -25,17 +25,27 @@ public class WeiXinDao {
     public static void updateToken (String token){
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_WEIXINCONF);
         DBObject find = new BasicDBObject(); //mongodb bean
-        find.put("id",TOKENID);
+        find.put("_id",TOKENID);
         DBObject set = new BasicDBObject(); //mongodb bean
+        set.put("_id", TOKENID);
         set.put("value", token);
         set.put("updateTime", new Date().getTime());
         collection.findAndModify(find, null, null, false, set, true, true);
     }
 
+    public static void saveToken (String token){
+        DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_WEIXINCONF);
+        DBObject tokenObj = new BasicDBObject();
+        tokenObj.put("_id", TOKENID);
+        tokenObj.put("value", token);
+        tokenObj.put("update", new Date().getTime());
+        collection.save(tokenObj);
+    }
+
     public static Map findToken (){
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_WEIXINCONF);
         DBObject find = new BasicDBObject(); //mongodb bean
-        find.put("id",TOKENID);
+        find.put("_id",TOKENID);
         DBObject token = collection.findOne(find);
         if (token != null){
             return  token.toMap();

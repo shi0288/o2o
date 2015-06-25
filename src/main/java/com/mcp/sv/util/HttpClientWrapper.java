@@ -182,6 +182,7 @@ public class HttpClientWrapper {
                     if(!"".equals(bodyStr)){
                         JSONObject retBody = new JSONObject(obj.getString("body"));
                         retBody.put("repCode", rstHead.get("repCode"));
+                        retBody.put("description", rstHead.get("description"));
                         retBody.put("nowTime", obj.getJSONObject("head").getString("timestamp"));
                         return retBody.toString();
                     }else{

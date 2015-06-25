@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>竞彩足球</title>
+<title>竞彩篮球</title>
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0"> 
@@ -58,7 +58,7 @@
 	<script type="text/javascript" src="js/commontz.js"></script>
      <script type="text/javascript" src="js/mcn.js"></script>
     <script type="text/javascript" src="js/jc.js"></script>
-    <script type="text/javascript" src="js/jczq.js"></script> 
+    <script type="text/javascript" src="js/jclq.js"></script>
     <div id="game" data-play="02" data-game="T52" style="display:none"></div>
 <!--正文内容结束-->   
 </div>
@@ -88,7 +88,7 @@
 <!-- 弹出层开始-->
 <div class="cover"></div>
 <div class="mt-fix" id="jc-gg-pop">
-    	<a href="jclq.jsp">胜负</a><a href="jclq_rf.jsp">让球胜负</a><a href="jclq_rf.jsp">大小分</a><a href="jclq_rf.jsp">胜分差</a><a href="jclq_ht.jsp">混合过关</a>
+    	<a href="jclq.jsp">胜负</a><a href="jclq_rf.jsp">让球胜负</a><a href="jclq_dxf.jsp">大小分</a><a href="jclq_sfc.jsp">胜分差</a><a href="jclq_ht.jsp">混合过关</a>
         <div class="cb"></div>
 </div>
 <div class="mmt-fix" id="jc-ss-pop">

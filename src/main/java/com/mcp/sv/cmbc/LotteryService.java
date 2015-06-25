@@ -1,6 +1,7 @@
 package com.mcp.sv.cmbc;
 
 import com.mcp.sv.dao.JcDao;
+import com.mcp.sv.dao.JcLqDao;
 import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.OldBean;
 import com.mcp.sv.util.*;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -341,6 +344,24 @@ public class LotteryService {
             }
         }
         return resMessage;
+    }
+
+
+    //非投注请求 之姐发送向平台
+    @RequestMapping(value = "commonTransQuery", method = RequestMethod.POST)
+    @ResponseBody
+    public String commonTransQuery(OldBean oldBean) {
+        String cmd = oldBean.getCmd();
+        String body = oldBean.getBody();
+        String resMessage = "";
+        //先调用投注接口。
+        try {
+            resMessage = HttpClientWrapper.mcpPost(cmd, body);
+            logger.info(resMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  resMessage;
     }
 
 

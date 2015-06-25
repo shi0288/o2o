@@ -73,7 +73,7 @@ public class WeiXinController {
                 JSONObject jsonObject = JSON.parseObject(result);
                 String access_token =  jsonObject.get("access_token").toString();
                 String expires_in =   jsonObject.get("expires_in").toString();
-                WeiXinDao.updateToken(access_token);
+                WeiXinDao.saveToken(access_token);
             }
         }catch (Exception e){
             e.printStackTrace();

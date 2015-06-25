@@ -33,6 +33,16 @@ public class OldBean {
 
     private String mobile;
 
+    private String cmd;
+
+    public String getCmd() {
+        return cmd;
+    }
+
+    public void setCmd(String cmd) {
+        this.cmd = cmd;
+    }
+
     public String getHead() {
         return head;
     }

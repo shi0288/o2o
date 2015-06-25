@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.util.*;
 
@@ -338,25 +340,21 @@ public class LotteryService {
     }
 
 
-    /**
-     * 获取竞彩期次信息
-     */
-    @RequestMapping(value = "getJcLqInfo", method = RequestMethod.POST)
+    //非投注请求 之姐发送向平台
+    @RequestMapping(value = "commonTransQuery", method = RequestMethod.POST)
     @ResponseBody
-    public String getJcLqInfo(OldBean oldBean) {
-        String resMessage = "";
+    public String commonTransQuery(OldBean oldBean) {
+        String cmd = oldBean.getCmd();
         String body = oldBean.getBody();
-        //取期次
-        logger.error(body);
-        if (body != null) {
-            try {
-                resMessage = JcLqDao.getFormat(body);
-                System.out.println("收到的竞彩信息：  " + resMessage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        String resMessage = "";
+        //先调用投注接口。
+        try {
+            resMessage = HttpClientWrapper.mcpPost(cmd, body);
+            logger.info(resMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return resMessage;
+        return  resMessage;
     }
 
 

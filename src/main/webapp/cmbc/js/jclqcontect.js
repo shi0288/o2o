@@ -320,6 +320,9 @@ function getJcNums() {
 //获取竞彩数据
 function getJcData() {
     var playType = $("#game").attr("data-play");
+    if(playType == "05"){
+        playType = ["01", "02", "03", "04"];
+    }
     var body = {
         "gameCode":"T52",
         "pType":playType
@@ -327,18 +330,19 @@ function getJcData() {
     $.ajax({
         type: "POST",
         //url: "/bankServices/LotteryService/getInfo?timestamp=" + new Date().getTime(),
-        url: "/bankServices/LotteryService/getJCLQInfo?timestamp=" + new Date().getTime(),
+        url: "/bankServices/LotteryService/commonTransQuery?timestamp=" + new Date().getTime(),
         dataType: "json",
         cache: false,
         data: {
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
+            cmd:"CQ22"
         },
         success: function (result) {
             after();
-            var repCode = result.head.repCode;
+            var obj = eval(result.body);
+            var repCode = obj.repCode;
             if (repCode == '0000') {
-                var obj = eval(result.body);
-                getMatchInfo(obj,st);
+                getMatchInfo(obj);
             } else {
                 after();
                 alert(result.head.repCode);
@@ -347,25 +351,26 @@ function getJcData() {
         error: onError
     });
 }
-function getMatchInfo(obj,st){
+function getMatchInfo(obj){
+    var playType = $("#game").attr("data-play");
     var Screen = [];//场次
-    var arrls = [];//联赛
+    //var arrls = [];//联赛
     $.each(obj, function (key, item) {
         //console.log(item);
         var code = item.code;
         code = code.substring(0, 8);
         Screen.push(code);
-        var liansai = item.matchInfo;
+       /* var liansai = item.matchInfo;
         $.each(liansai, function (index, match) {
             arrls.push(match.matchName);
-        });
+        });*/
     });
     //联赛去重
-    arrls = unique(arrls);
+   /* arrls = unique(arrls);
     $.each(arrls, function (i, val) {
         var lsHtml = '<span class="on" onclick="toogle(this)">' + val + '</span>';
         $("#jc-liansai").append(lsHtml);
-    });
+    });*/
     //type(st);
     //场次去重
     var arrcounti = {};
@@ -392,66 +397,45 @@ function getMatchInfo(obj,st){
         code = code.substring(0, 8);
         arrcounti[code] += 1;
         var changci = formNumber(arrcounti[code]);
-        var teamname = item.matchInfo;
         var matchTime = item.closeTime;
         matchTime = matchTime.substring(0, 10);
         console.log(matchTime);
-        $.each(teamname, function (index, match) {
-            var matchName=match.matchName;
-            matchName = matchName.split("|");
-            var oodsCode = match.oddsCode;
-            var oodsTag;
-
-
-            if(st==1){
-                if(oodsCode=='cn02'){
-                    return;
+        if(playType == "01"){
+            var rqspfdata = item.mnl;
+            if (rqspfdata) {
+                var rqspfdata_one,rqspfdata_two,rqspfdata_three
+                if(rqspfdata.win == '--'){
+                    rqspfdata_one = '<td width="36%" class="false" data-dit="v1" >胜' + rqspfdata.win + '</td>';
+                    rqspfdata_two = '<td width="36%" class="false" data-dit="v2" >负' + rqspfdata.lose + '</td>';
+                }else{
+                    rqspfdata_one = '<td width="36%" data-dit="v1" onclick="seleMatch(this)">胜' + rqspfdata["win"] + '</td>';
+                    rqspfdata_two = '<td width="36%" data-dit="v2" onclick="seleMatch(this)">负' + rqspfdata["lose"] + '</td>';
                 }
-            }else{
-                if(oodsCode=='cn01'){
-                    return;
-                }
-
+            } else {
+                rqspfdata_one = '<td width="36%" class="false" data-dit="v1">胜--</td>';
+                rqspfdata_two = '<td width="36%" class="false" data-dit="v2">负--</td>';
             }
-            var changciHtml = "";
-            console.log("oodsCode:"+oodsCode);
-            if(oodsCode=='cn01'){
-                var rqspfdata = match.oddsInfo;
-                if (rqspfdata) {
-                    rqspfdata = rqspfdata.split("|");
-                    var rqspfdata_one,rqspfdata_two,rqspfdata_three
-                    if(rqspfdata[0]=='--'){
-                        rqspfdata_one = '<td width="36%" class="false" data-dit="v1" >胜' + rqspfdata[0] + '</td>';
-                        rqspfdata_two = '<td width="36%" class="false" data-dit="v2" >负' + rqspfdata[2] + '</td>';
-                    }else{
-                        rqspfdata_one = '<td width="36%" data-dit="v1" onclick="seleMatch(this)">胜' + rqspfdata[0] + '</td>';
-                        rqspfdata_two = '<td width="36%" data-dit="v2" onclick="seleMatch(this)">负' + rqspfdata[2] + '</td>';
-                    }
-                } else {
-                    rqspfdata_one = '<td width="36%" class="false" data-dit="v1">胜--</td>';
-                    rqspfdata_two = '<td width="36%" class="false" data-dit="v2">负--</td>';
-                }
-                oodsTag='<tr data-wf="rf" class="jc-table-b rf-dd">' + rqspfdata_one + rqspfdata_two + '</tr>'
-                changciHtml =
-                    '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
-                    '<tbody><tr class="jc-table-tbb">' +
-                    '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="3"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
-                    '</tr>' +
-                    oodsTag +
-                    '</tbody>' +
-                    '</table>';
-            }else if(oodsCode=='cn02'){
-                var spfdata = match.oddsInfo;
+            oodsTag='<tr data-wf="rf" class="jc-table-b rf-dd">' + rqspfdata_one + rqspfdata_two + '</tr>'
+            changciHtml =
+                '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
+                '<tbody><tr class="jc-table-tbb">' +
+                '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
+                '<td width="72%" colspan="3"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
+                '</tr>' +
+                oodsTag +
+                '</tbody>' +
+                '</table>';
+            }else if(playType== '02'){
+                var spfdata = item.hdc;
                 if (spfdata) {
                     spfdata = spfdata.split("|");
                     var spfdata_one,spfdata_two,spfdata_three;
                     if( spfdata[0]=='--'){
-                        spfdata_one = '<td width="36%" class="false" data-dit="v1">胜' + spfdata[0] + '</td>';
-                        spfdata_two = '<td width="36%" class="false" data-dit="v2">负' + spfdata[2] + '</td>';
+                        spfdata_one = '<td width="36%" class="false" data-dit="v1">胜' + spfdata["win"] + '</td>';
+                        spfdata_two = '<td width="36%" class="false" data-dit="v2">负' + spfdata["lose"] + '</td>';
                     }else{
-                        spfdata_one = '<td width="36%" data-dit="v1" onclick="seleMatch(this)">胜' + spfdata[0] + '</td>';
-                        spfdata_two = '<td width="36%" data-dit="v2" onclick="seleMatch(this)">负' + spfdata[2] + '</td>';
+                        spfdata_one = '<td width="36%" data-dit="v1" onclick="seleMatch(this)">胜' + spfdata["win"] + '</td>';
+                        spfdata_two = '<td width="36%" data-dit="v2" onclick="seleMatch(this)">负' + spfdata["lose"] + '</td>';
                     }
                 } else {
                     spfdata_one = '<td width="36%" class="false" data-dit="v1">胜--</td>';
@@ -459,10 +443,10 @@ function getMatchInfo(obj,st){
                 }
                 oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + '</tr>' ;
                 changciHtml =
-                    '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
+                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="3"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="3"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -592,7 +576,6 @@ function getMatchInfo(obj,st){
 
             $("#s_" + code).append(changciHtml);
         });
-    });
     $(".jc-tz-item").each(function () {
         var screennum = $(this).find(".jc-table").length;
         $(this).find(".screen-num").html(screennum);

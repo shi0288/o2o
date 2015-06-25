@@ -11,7 +11,7 @@
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="/cmbc/js/platform.js"></script>
     <script type="text/javascript">
-        var i = 0;
+        var i = 1;
         $(document).ready(function () {
             getResult(i, 10);
             //点击加载
@@ -31,12 +31,6 @@
         function getResult(startIndex, size) {
             var url = window.location.href;
             url = url.split("#");
-            var body = {
-                'type': 3,
-                'gameCode': url[1],
-                'startIndex': startIndex,
-                'size': size
-            };
             var caizhong = "";
             var type = 1;
             switch (url[1]) {
@@ -82,15 +76,18 @@
                     break;
 
             }
+            console.log(startIndex);
+            console.log(size);
             $.ajax({
                 type: "POST",
-                url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
+                url: "/bankServices/LotteryService/getGameWinNum?timestamp=" + new Date().getTime(),
                 dataType: "json",
                 cache: false,
                 async: false,
                 data: {
-                    cmd: 'Q01',
-                    body: JSON.stringify(body)
+                    'gameCode': url[1],
+                    'curPage': startIndex,
+                    'pageSize': size
                 },
                 success: function (result) {
                     var repCode = result.repCode;
@@ -103,18 +100,21 @@
                     if (result.rst.length <= 0) {
                         return false;
                     }
-                    i = i + 1;
+
+                    //i = i + 1;
                     $.each(result.rst, function (key, val) {
-                        var schar = val['winningNumber'];
+                        var winObj=JSON.parse(val);
+                        var schar = winObj['wNum'];
                         var qiuhtml = "";
                         if (schar) {
                             qiuhtml = getKJnum(schar, type);
                         }
-                        var endTime = val['endTime'];
+                        var endTime = winObj['createTime'];
+                        console.log(endTime);
                         endTime = endTime.substring(0, 10);
-                        var surl = "resultmit.html#" + url[1] + "#" + val.code;
-                        var html = '<div class="list-item clearfix" onClick="window.location.href=\'' + surl + '\'">' +
-                                '<p><span>' + caizhong + '</span><span class="middle-span">' + val.name + '</span><span>' + endTime + '</span></p>' +
+                        var surl = "resultmit.html#" + url[1] + "#" + winObj.termCode;
+                        var html = '<div class="list-item clearfix">' +
+                                '<p><span>' + caizhong + '</span><span class="middle-span">' + winObj.termCode + '</span><span>' + endTime + '</span></p>' +
                                 '<div>' + qiuhtml +
                                 '</div>' +
                                 '</div>'

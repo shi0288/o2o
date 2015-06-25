@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by ChubChen on 2015/6/2.
@@ -47,7 +48,7 @@ public class LotteryService {
         org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
         try {
             org.codehaus.jettison.json.JSONObject userInfo = new org.codehaus.jettison.json.JSONObject(LotteryDao.getUser(userName, passWord));
-            if(userInfo==null){
+            if (userInfo == null) {
                 res.put("repCode", "1001"); //用户权限校验未通过
                 return res.toString();
             }
@@ -72,17 +73,17 @@ public class LotteryService {
             }
         }
         //票据分开储存
-        JSONObject orderBody=new JSONObject(body);
-        JSONObject order=orderBody.getJSONObject("order");
-        String orderOuterId =order.getString("outerId");
-        JSONArray tickets=order.getJSONArray("tickets");
-        for(int i = 0;i<tickets.length();i++){
-            JSONObject ticket=tickets.getJSONObject(i);
-            ticket.put("userName",userName);
-            ticket.put("orderOuterId",orderOuterId);
+        JSONObject orderBody = new JSONObject(body);
+        JSONObject order = orderBody.getJSONObject("order");
+        String orderOuterId = order.getString("outerId");
+        JSONArray tickets = order.getJSONArray("tickets");
+        for (int i = 0; i < tickets.length(); i++) {
+            JSONObject ticket = tickets.getJSONObject(i);
+            ticket.put("userName", userName);
+            ticket.put("orderOuterId", orderOuterId);
             String ticketStr = ticket.toString();
             DBObject newTicket = (DBObject) JSON.parse(ticketStr);
-            MongoUtil.insert(MongoConst.MONGO_TICKET,newTicket);
+            MongoUtil.insert(MongoConst.MONGO_TICKET, newTicket);
         }
         res.put("repCode", "0000");
         return res.toString();
@@ -132,9 +133,9 @@ public class LotteryService {
                 body = new org.codehaus.jettison.json.JSONObject(bodyStr);
                 org.codehaus.jettison.json.JSONObject _order = body.getJSONObject("order");
                 //判断是否已经支付过
-                int orderStatus=order.getInt("status");
-                if(CmbcConstant.ORDER_1000 != orderStatus){
-                    logger.error("订单已经支付过，不再处理：  "+outerId);
+                int orderStatus = order.getInt("status");
+                if (CmbcConstant.ORDER_1000 != orderStatus) {
+                    logger.error("订单已经支付过，不再处理：  " + outerId);
                     res.put("repCode", "1008");  //已经支付过
                     return res.toString();
                 }
@@ -168,7 +169,7 @@ public class LotteryService {
                         }
                         if (is) {
                             //扣除账户金钱
-                            String result = LotteryDao.recharge(userName, -amount,false,null);
+                            String result = LotteryDao.recharge(userName, -amount, false, null);
                             if ("".equals(result)) {
                                 if (!"".equals(LotteryDao.updateOrderStatus(outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000))) {
                                     //订单更新已支付状态未成功处理
@@ -182,10 +183,10 @@ public class LotteryService {
                         }
                     } else {
                         //投注出错处理
-                        JSONObject errRst=new JSONObject();
-                        errRst.put("repCode",repCode);
-                        JSONArray tickets=transRes.getJSONObject("order").getJSONArray("tickets");
-                        JSONObject ticket=tickets.getJSONObject(0);
+                        JSONObject errRst = new JSONObject();
+                        errRst.put("repCode", repCode);
+                        JSONArray tickets = transRes.getJSONObject("order").getJSONArray("tickets");
+                        JSONObject ticket = tickets.getJSONObject(0);
                         errRst.put("description", ticket.getString("description"));
                         logger.error(errRst.toString());
                         return errRst.toString();
@@ -209,11 +210,19 @@ public class LotteryService {
         String outerId = oldBean.getOuterId();
         String body = oldBean.getBody();
         int amount = oldBean.getAmount();
+        JSONObject res = new JSONObject();
 
+        if(outerId==null){
+            try {
+                res.put("repCode", "9999");
+                return res.toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         String resMessage = "";
         //判断用户权限
         int recharge = 0;
-        org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
         try {
             org.codehaus.jettison.json.JSONObject userInfo = new org.codehaus.jettison.json.JSONObject(LotteryDao.getUser(userName, passWord));
             if (userInfo.has("acount")) {
@@ -242,7 +251,6 @@ public class LotteryService {
                 e.printStackTrace();
             }
         }
-
         //判断余额
         if (recharge - amount < 0) {
             try {
@@ -263,12 +271,12 @@ public class LotteryService {
                     //插入消费记录
                     boolean is = LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, com.mcp.sv.util.CmbcConstant.TRANSTYPE, userName, recharge, recharge - amount, amount, outerId);
                     //更新订单状态送达
-                    if (!"".equals(LotteryDao.updateOrderStatus( outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000))) {
+                    if (!"".equals(LotteryDao.updateOrderStatus(outerId, com.mcp.sv.util.CmbcConstant.ORDER_2000))) {
                         //订单更新送达状态未成功处理
                     }
                     if (is) {
                         //扣除账户金钱
-                        String result = LotteryDao.recharge(userName, -amount,false,null);
+                        String result = LotteryDao.recharge(userName, -amount, false, null);
                         if ("".equals(result)) {
                             if (!"".equals(LotteryDao.updateOrderStatus(outerId, com.mcp.sv.util.CmbcConstant.ORDER_3000))) {
                                 //订单更新已支付状态未成功处理
@@ -281,12 +289,11 @@ public class LotteryService {
                         //未插入消费记录处理
                     }
                 } else {
-                    JSONObject errRst=new JSONObject();
-                    errRst.put("repCode",repCode);
-                    errRst.put("description",(String) transRes.get("description"));
+                    JSONObject errRst = new JSONObject();
+                    errRst.put("repCode", repCode);
+                    errRst.put("description", (String) transRes.get("description"));
                     return errRst.toString();
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -382,7 +389,6 @@ public class LotteryService {
     public String getUser(OldBean oldBean) {
         String username = oldBean.getUserName();
         String passWord = oldBean.getPassWord();
-
         String description = null;
         try {
             description = LotteryDao.getUser(username, passWord);
@@ -403,13 +409,51 @@ public class LotteryService {
         String passWord = oldBean.getPassWord();
         int pageSize = oldBean.getPageSize();
         String outerId = oldBean.getOuterId();
-
         String description = null;
         try {
             description = LotteryDao.getOrder(username, passWord, curPage, pageSize, outerId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return description;
+    }
+
+
+    /**
+     * 开奖信息
+     */
+    @RequestMapping(value = "getWinNum", method = RequestMethod.POST)
+    @ResponseBody
+    public String geWinNum(OldBean oldBean) {
+        JSONObject res = new JSONObject();
+        try {
+            res.put("repCode", CmbcConstant.SUCCESS);
+            JSONArray results = new JSONArray();
+            for (int i = 0; i < CmbcConstant.GAMECODE.length; i++) {
+                String gameCode = CmbcConstant.GAMECODE[i];
+                List list = LotteryDao.getWinNum(1, 1, gameCode);
+                if (list.size()==1) {
+                    results.put(list.get(0));
+                }
+            }
+            res.put("rst", results);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return res.toString();
+    }
+
+    /**
+     * 开奖信息
+     */
+    @RequestMapping(value = "getGameWinNum", method = RequestMethod.POST)
+    @ResponseBody
+    public String getGameWinNum(OldBean oldBean) {
+        String gameCode = oldBean.getGameCode();
+        int curPage = oldBean.getCurPage();
+        int pageSize = oldBean.getPageSize();
+        String description = null;
+        description = LotteryDao.getGameWinNum(curPage, pageSize, gameCode);
         return description;
     }
 
@@ -422,13 +466,13 @@ public class LotteryService {
     public String getTickets(OldBean oldBean) {
         String username = oldBean.getUserName();
         String outerId = oldBean.getOuterId();
-        java.util.List tickets= LotteryDao.getTickets(username, outerId);
+        java.util.List tickets = LotteryDao.getTickets(username, outerId);
         JSONArray jsonArray = new JSONArray();
         JSONObject res = new JSONObject();
         try {
-        for(int i=0;i < tickets.size();i++){
-                jsonArray.put(i,tickets.get(i));
-        }
+            for (int i = 0; i < tickets.size(); i++) {
+                jsonArray.put(i, tickets.get(i));
+            }
             res.put("rst", jsonArray);
             res.put("repCode", CmbcConstant.SUCCESS);
 
@@ -472,21 +516,6 @@ public class LotteryService {
 
 
     public static void main(String[] args) throws JSONException {
-
-        String body="{\"order\":{\"amount\":600,\"outerId\":\"14351287813950ptjcbx1or\",\"tickets\":[{\"gameCode\":\"T01\",\"termCode\":\"15072\",\"type\":0,\"amount\":200,\"bType\":\"00\",\"pType\":\"00\",\"number\":\"18,23,26,31,33|07,11\",\"multiple\":\"1\",\"presetTerminal\":\"0000\",\"outerId\":\"1435128781396p86p4d9529\",\"auditTime\":\"2015-06-24 14:53:01\"},{\"gameCode\":\"T01\",\"termCode\":\"15072\",\"type\":0,\"amount\":200,\"bType\":\"00\",\"pType\":\"00\",\"number\":\"15,16,20,26,30|01,08\",\"multiple\":\"1\",\"presetTerminal\":\"0000\",\"outerId\":\"1435128781397zbf02dfgvi\",\"auditTime\":\"2015-06-24 14:53:01\"},{\"gameCode\":\"T01\",\"termCode\":\"15072\",\"type\":0,\"amount\":200,\"bType\":\"00\",\"pType\":\"00\",\"number\":\"01,16,28,30,32|02,06\",\"multiple\":\"1\",\"presetTerminal\":\"0000\",\"outerId\":\"1435128781398zmdrall3di\",\"auditTime\":\"2015-06-24 14:53:01\"}]}}";
-        JSONObject orderBody=new JSONObject(body);
-        JSONObject order=orderBody.getJSONObject("order");
-        String outerId =order.getString("outerId");
-        JSONArray tickets=order.getJSONArray("tickets");
-        for(int i = 0;i<tickets.length();i++){
-            JSONObject ticket=tickets.getJSONObject(i);
-            ticket.put("userName","shi0288");
-            ticket.put("outerId",outerId);
-            String ticketStr = ticket.toString();
-            DBObject newTicket = (DBObject) JSON.parse(ticketStr);
-            MongoUtil.insert(MongoConst.MONGO_TICKET,newTicket);
-        }
-
 
 
     }

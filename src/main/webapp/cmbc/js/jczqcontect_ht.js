@@ -222,6 +222,7 @@ function getJcData() {
                 getMatchHhggInfo(obj,st);
             } else {
                 after();
+                alert("请尝试刷新页面！");
             }
         },
         error: onError

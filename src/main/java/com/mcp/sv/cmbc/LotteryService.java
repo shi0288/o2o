@@ -325,7 +325,7 @@ public class LotteryService {
         if (head != null) {
             try {
                 resMessage = JcDao.getFormat(head, body);
-                System.out.println("收到的竞彩信息：  " + resMessage);
+                //System.out.println("收到的竞彩信息：  " + resMessage);
             } catch (Exception e) {
                 e.printStackTrace();
             }

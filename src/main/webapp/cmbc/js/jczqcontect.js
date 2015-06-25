@@ -187,7 +187,7 @@ function submitJc() {
     var amount = $("#qianshu").html();
     amount = parseInt(amount) * 100;
     var betType = $("#chuanguan").attr("data-chuan");
-    console.log(betType);
+    //console.log(betType);
     if(betType==undefined){
         betType='11';
         amount=200;
@@ -195,7 +195,7 @@ function submitJc() {
         betType = betType.replace(/[a-z]/g, "");
     }
 
-    console.log(betType);
+    //console.log(betType);
     var numbers = getJcNums();
     //console.log(numbers);
 
@@ -227,7 +227,7 @@ function submitJc() {
     var body = {
         'order':order
     };
-    console.log(body);
+
     $.ajax({
         type: "POST",
         url: "/bankServices/LotteryService/confirmOrders?timestamp=" + new Date().getTime(),
@@ -302,8 +302,9 @@ function getJcNums() {
 //获取竞彩数据
 function getJcData() {
     var pathName= window.location.pathname;
-    console.log(pathName);
+    //console.log(pathName);
     var st=1;
+
     if('/cmbc/jczq.jsp'==pathName){
         st=2;
     }
@@ -347,7 +348,7 @@ function getJcData() {
                 getMatchInfo(obj,st);
             } else {
                 after();
-                alert(result.head.repCode);
+                alert("请尝试刷新页面！");
             }
         },
         error: onError
@@ -401,7 +402,7 @@ function getMatchInfo(obj,st){
         var teamname = item.matchInfo;
         var matchTime = item.closeTime;
         matchTime = matchTime.substring(0, 10);
-        console.log(matchTime);
+       // console.log(matchTime);
         $.each(teamname, function (index, match) {
             var matchName=match.matchName;
             var oddsSingle=match.oddsSingle;
@@ -425,7 +426,7 @@ function getMatchInfo(obj,st){
 
             }
             var changciHtml = "";
-            console.log("oodsCode:"+oodsCode);
+            //console.log("oodsCode:"+oodsCode);
             if(oodsCode=='cn01'){
                 var rqspfdata = match.oddsInfo;
                 if (rqspfdata) {

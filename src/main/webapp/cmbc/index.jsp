@@ -33,6 +33,14 @@
     <script type="text/javascript">
         //判断是否是ios客户端
         $(document).ready(function(e) {
+
+            /*判断登陆  */
+            if (top.location != location) {
+                top.location.href = location.href;
+                return;
+            }
+
+
             var browser={
                 versions:function(){
                     var u = navigator.userAgent, app = navigator.appVersion;
@@ -110,7 +118,7 @@
         </ul>
         <ul id="more-ul" class="clearfix">
             <li><a class="ico-box" href="main.jsp"><img src="img/icoy_11.png"/>购彩大厅</a></li>
-            <li><a class="ico-box" href="result.html"><img src="img/icoy_13.png"/>开奖公告</a></li>
+            <li><a class="ico-box" href="result.jsp"><img src="img/icoy_13.png"/>开奖公告</a></li>
             <li><a id="my-caipiao" class="ico-box" href="javascript:void(-1)"><img src="img/icoy_12.png"/>账号信息</a></li>
             <!-- <li><a class="ico-box" href="active.html"><img src="img/icoy_15.png" />活动中心</a></li>-->
             <li><a class="ico-box" href="gchelp.html"><img src="img/icoy_16.png"/>购彩帮助</a></li>

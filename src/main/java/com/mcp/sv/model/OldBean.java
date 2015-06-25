@@ -33,6 +33,25 @@ public class OldBean {
 
     private String mobile;
 
+    private String gameCode;
+
+    private String cmd;
+
+    public String getCmd() {
+        return cmd;
+    }
+
+    public void setCmd(String cmd) {
+        this.cmd = cmd;
+    }
+    public String getGameCode() {
+        return gameCode;
+    }
+
+    public void setGameCode(String gameCode) {
+        this.gameCode = gameCode;
+    }
+
     public String getHead() {
         return head;
     }

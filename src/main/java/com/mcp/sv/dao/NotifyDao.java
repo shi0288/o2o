@@ -34,17 +34,18 @@ public class NotifyDao {
                 int printStatus = ticket.getInt("printStatus");
                 //出票成功
                 if (printStatus == 1300) {
-                    String rstInfo =LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4000, 0);
+                    String rstInfo = LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4000, 0, null);
                     logger.info(rstInfo);
                 }
                 //出票失败
                 else if (status > 1500) {
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4001, 0);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4001, 0, null);
                 } else {
                     logger.error(outerId + "   未知状态: " + printStatus);
                 }
             } else {
                 //中奖通知
+                String dNumber = ticket.getString("dNumber");
                 if (status == 1200) {
                     //已中奖
                     int bonus = ticket.getInt("bonus");
@@ -53,16 +54,16 @@ public class NotifyDao {
                     List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
-                    logger.info("************已中奖更新订单");
+                    logger.info("************ 第一步已中奖更新订单");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5000);
-                    logger.info("************已中奖更新彩票");
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5000, bonus);
+                    logger.info("************ 第一步已中奖更新彩票");
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5000, bonus, dNumber);
                 } else if (status == 1300) {
                     //未中奖
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0, dNumber);
                 } else {
                     //已退款
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, dNumber);
                 }
             }
         }
@@ -76,6 +77,7 @@ public class NotifyDao {
         termInfo.put("gameCode", gameCode);
         termInfo.put("termCode", termCode);
         termInfo.put("wNum", wNum);
+        termInfo.put("createTime", LotteryDao.getTime());
         MongoUtil.insert(MongoConst.MONGO_TERM, termInfo);
     }
 

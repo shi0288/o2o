@@ -8,6 +8,7 @@ function typeArr(){
 }
 function mcnArr(){
 	arr_C={};
+	arr_C['r1c1']="10000000";
 	arr_C['r2c1']="01000000";
 	arr_C['r3c1']="00100000";
 	arr_C['r4c1']="00010000";

@@ -10,6 +10,7 @@
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="0">
     <meta http-equiv="cache-control" content="no-cache">
+    <meta name="format-detection" content="telephone=no" />
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
@@ -27,6 +28,7 @@
             before();
             getUseData();
         });
+
         function getUseData() {
             //获取账户信息
             $.ajax({
@@ -58,14 +60,14 @@
                         $('#user_name').html(name.substr(0,11));
                         $('#recharge').html(toDecimalMoney(recharge / 100));
                         $('#bonus').html(toDecimalMoney(prize / 100));
-                        after();//删除加载动画
+                        var pageSize = 10;	//每页显示条数
+                        getCaipiao($(".tab-content").eq(0), 1, pageSize, 1);
                     } else {
                         alert("获取用户信息失败");
                     }
                 }
             });
-            var pageSize = 10;	//每页显示条数
-            getCaipiao($(".tab-content").eq(0), 1, pageSize, 1);
+
             /*滚动加载*/
             $(window).scroll(function () {
                 $(".top").css("position", "fixed");
@@ -87,6 +89,23 @@
                 }
             });
             /*end 滚动加载*/
+        }
+
+        //获取状态
+        function getOrderStatus(status) {
+            switch (status) {
+                case 1000:
+                    return "等待支付";
+                    break;
+                case 4000:
+                    return "出票完成";
+                    break;
+                case 5000:
+                    return "已中奖";
+                    break;
+                default:
+                    return "订单完成";
+            }
         }
         function getCaipiao(obj, curPage, pageSize, type) {
             $.ajax({
@@ -122,6 +141,7 @@
                             var caizhong = getGame(firTick);
                             var price = toDecimalMoney(order['amount'] / 100);
                             var tip = "";
+
                             var endTime = objectOrder['createTime'];
                             var tztime = endTime.substring(0, 10);
                             endTime = Date.parse(endTime);
@@ -136,46 +156,48 @@
                             } else {
                                 tip = '<span class="zhanghu-list-tit">' + tztime + '</span>';
                             }
-                            var state = getOrderStatus(objectOrder['status']);
+                            var _orderStatus=objectOrder['status'];
+                            _orderStatus=parseInt(_orderStatus);
+                            var state = getOrderStatus(_orderStatus);
                             var game = caizhong;
                             var funstr = "";
                             var termHtml = "";
                             if (game == "竞彩足球") {
-                                funstr = "window.location.href='fanganjc.html#" + order['id'] + "'";
-                                termHtml = order.termCode;
-                                termHtml = firTick.substring(0, 8);
+                                funstr = "window.location.href='fanganjc.html#" +  objectOrder['outerId'] + "'";
+                                termHtml = firTick.termCode;
                             } else {
-                                funstr = "window.location.href='fangan.html#" + objectOrder['outerId'] + "'";
+                                funstr = "window.location.href='fangan.html#" + objectOrder['outerId'] + "#"+objectOrder['status']+"'";
                                 if (objectOrder['status'] == 1000) {
                                     funstr = "window.location.href='confirm.html#" + objectOrder['outerId'] + "'";
                                 }
                                 termHtml = firTick.termCode + '期'; //+ '&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp下单时间：';
                                 //termHtml += objectOrder['createTime'];
                             }
-                            if (type == 2) {
-                                funstr = "window.location.href='fanganzh.html#" + order['id'] + "'";
-                                state = getZhuhaoStatus(order['status']);
+                            var stateHtml="";
+                            if(state==undefined){
+                                alert(objectOrder['status']);
+                                alert( getOrderStatus(objectOrder['status']));
                             }
                             if (state=='已中奖') {
-                                var bonus = toDecimalMoney(order['bonus'] / 100);
-                                var stateHtml = '<span class="zhongjiang">中奖啦</span>'
+                                stateHtml = '<span class="zhongjiang">中奖啦</span>'
                             } else {
-                                var stateHtml = '<span class="meizj">' + state + '</span>'
+                                stateHtml = '<span class="meizj">' + state + '</span>'
                             }
+
                             var html = '<div class="zhanghu-list  clearfix">' +
                                     tip +
                                     '<div class="zhanghu-list-cot clearfix" onclick="' + funstr + '">' +
                                     '<span class="fl">' +
-                                    '<h1>' + game + '<span class="acount-qi">' + termHtml + '</span>' + '<span class="acount-zhui">追' + val.orderCount + '期</span>' + '</h1>' +
+                                    '<h1>' + game + '<span class="acount-qi">' + termHtml + '</span>' + '</h1>' +
                                     '<p>' + price + '元</p>' +
-                                    '</span>' +
-                                    ' <a class="litt-go" href="#"></a>' + stateHtml +
+                                    '</span>' + stateHtml +
                                     '</div>' +
                                     '</div>';
                             obj.append(html);
                             obj.find(".zhanghu-list").eq(0).addClass("fist");
                         });
                         obj.find(".page").eq(0).attr("data-page", curPage + 1);
+                        after();
                     } else {
                         //alert(result.description);
                     }
@@ -245,11 +267,9 @@
             </div>
             <input type="hidden" id="typetogo" value="1"/>
 
-            <div class="tab-content" style="display:block;"><span style="width:100%;height:0px;" class="page"
-                                                                  data-page="0"></span></div>
+            <div class="tab-content" style="display:block;"><span style="width:100%;height:0px;" class="page"  data-page="0"></span></div>
 
-            <div class="tab-content" id="zhuihao"><span style="width:100%;height:0px;" class="page"
-                                                        data-page="1" cur-page="0"></span></div>
+            <div class="tab-content" id="zhuihao"><span style="width:100%;height:0px;" class="page" data-page="1" cur-page="0"></span></div>
 
             <div class="clearfix zhanghu-dian"><span class="tab-dot now"></span><span class="tab-dot"></span></div>
         </div>

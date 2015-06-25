@@ -33,6 +33,14 @@
     <script type="text/javascript">
         //判断是否是ios客户端
         $(document).ready(function(e) {
+
+            /*判断登陆  */
+            if (top.location != location) {
+                top.location.href = location.href;
+                return;
+            }
+
+
             var browser={
                 versions:function(){
                     var u = navigator.userAgent, app = navigator.appVersion;

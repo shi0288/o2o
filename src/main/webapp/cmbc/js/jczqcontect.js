@@ -2,6 +2,7 @@
 /*彩币支付提交以后，走正常流程。第三方支付提交以后，走支付接口，调用setWebitEvent("11111111", "LT03");
  */
 var thisUrl = window.location.href;
+var termCode = "";
 var browser = {
     versions: function () {
         var u = navigator.userAgent, app = navigator.appVersion;
@@ -196,14 +197,14 @@ function submitJc() {
 
     console.log(betType);
     var numbers = getJcNums();
-    console.log(numbers);
+    //console.log(numbers);
 
     var playType = $("#game").attr("data-play");
 
     var tickets = [];
     var ticket = {
         'gameCode': $("#game").attr("data-game"),
-        'termCode': new Date().getTime(),
+        'termCode': termCode,
         'type': 0,
         'amount': amount,
         'bType': betType,
@@ -215,7 +216,7 @@ function submitJc() {
         "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
     }
     tickets.push(ticket);
-    console.log(tickets.toString());
+   // console.log(tickets.toString());
 
     var order = {
         'amount': amount,
@@ -273,19 +274,21 @@ function jcTzSuccess(order, amount) {
 function getJcNums() {
     var playType = $("#game").attr("data-play");
     var arrNum = [];
-    if(playType == '01'||playType == '02'){//让球胜平负（01）胜平负（02）
         $(".jc-list-item").each(function (index, element) {
             var str = "";
             if ($(this).find(".jc-list-item-dan").hasClass("on")) {
                 str += "$";
             }
             str += playType + "|" + $(this).attr("data-cc") + "|";
+            if (index ==  $(".jc-list-item").length - 1) {
+                termCode = $(this).attr("data-cc");
+            }
             var strNum = "";
             $(this).find(".jc-list-item-dw.on").each(function (i, val) {
                 if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
-                    strNum += $(this).attr("data-dit").substring(1, 2);
+                    strNum += $(this).attr("data-dit").substring(1);
                 } else {
-                    strNum += $(this).attr("data-dit").substring(1, 2) + ",";
+                    strNum += $(this).attr("data-dit").substring(1) + ",";
                 }
 
             });
@@ -293,27 +296,6 @@ function getJcNums() {
             arrNum.push(str);
         });
         arrNum = arrNum.join(";");
-    }else{
-        $(".jc-list-item").each(function (index, element) {
-            var str = "";
-            if ($(this).find(".jc-list-item-dan").hasClass("on")) {
-                str += "$";
-            }
-            str += playType + "|" + $(this).attr("data-cc") + "|";
-            var strNum = "";
-            $(this).find(".jc-list-item-dw.on").each(function (i, val) {
-                if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
-                    strNum += $(this).attr("data-dit").substring(1, 3);
-                } else {
-                    strNum += $(this).attr("data-dit").substring(1, 3) + ",";
-                }
-
-            });
-            str += strNum;
-            arrNum.push(str);
-        });
-        arrNum = arrNum.join(";");
-    }
     return arrNum;
 }
 
@@ -422,6 +404,11 @@ function getMatchInfo(obj,st){
         console.log(matchTime);
         $.each(teamname, function (index, match) {
             var matchName=match.matchName;
+            var oddsSingle=match.oddsSingle;
+            var style="";
+            if(oddsSingle=='1'){
+                style="background-image:url(./img/single.gif);background-repeat:no-repeat;background-position:left top;";
+            }
             matchName = matchName.split("|");
             var oodsCode = match.oddsCode;
             var oodsTag;
@@ -463,7 +450,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="3"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="3" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -492,7 +479,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="3"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="3" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -556,7 +543,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="14"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="14"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="14" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -584,7 +571,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="8"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="8"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="8" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +
@@ -613,7 +600,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="9"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="9"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="9" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +

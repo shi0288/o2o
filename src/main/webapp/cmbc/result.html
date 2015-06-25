@@ -16,30 +16,33 @@
             var body = {
                 'type': 2
             };
-            $.ajax({
-                type: "POST",
-                url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
-                dataType: "json",
-                cache: false,
-                data: {
-                    cmd: 'Q01',
-                    body: JSON.stringify(body)
-                },
-                success: function (result) {
-                    var repCode = result.repCode;
-                    if (repCode == "0000") {
-                        $.each(result.rst, function (key, val) {
-                            $("#showdiv").show();
-                            getResult(val);
-                        });
-                        $("#kaijiang").show();
-                        after();
-                    }
-
-                },
-                error: onError
-            });
+//            $.ajax({
+//                type: "POST",
+//                url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
+//                dataType: "json",
+//                cache: false,
+//                data: {
+//                    cmd: 'Q01',
+//                    body: JSON.stringify(body)
+//                },
+//                success: function (result) {
+//                    var repCode = result.repCode;
+//                    if (repCode == "0000") {
+//                        $.each(result.rst, function (key, val) {
+//                            $("#showdiv").show();
+//                            getResult(val);
+//                        });
+//                        $("#kaijiang").show();
+//                        after();
+//                    }
+//
+//                },
+//                error: onError
+//            });
         });
+
+
+
         function getResult(obj) {
             switch (obj['gameCode']) {
                 //双色球

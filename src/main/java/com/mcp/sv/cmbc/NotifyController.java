@@ -66,17 +66,5 @@ public class NotifyController {
 
     }
 
-    public static void main(String[] args) throws JSONException {
-
-        String str = "{\"head\":{\"digest\":\"9eb15863f81e36efe62e3e9e9e20055a\",\"digestType\":\"md5\",\"cmd\":\"N02\",\"timestamp\":\"2015-06-24 18:09:55\",\"message\":\"cc7a0bac2af74c758dfc82ab5ee46b9a\",\"vsrsion\":\"1.0\"},\"body\":\"{\\\"tickets\\\":[{\\\"id\\\":214,\\\"outerId\\\":\\\"1435132410301rrj11exw29\\\",\\\"customerId\\\":\\\"Q0001\\\",\\\"printId\\\":\\\"C0001\\\",\\\"gameCode\\\":\\\"T01\\\",\\\"termCode\\\":\\\"15072\\\",\\\"auditTermCode\\\":\\\"\\\",\\\"pType\\\":\\\"00\\\",\\\"bType\\\":\\\"00\\\",\\\"createTime\\\":\\\"2015-06-24 16:02:01\\\",\\\"auditTime\\\":\\\"2015-06-24 15:53:30\\\",\\\"printTime\\\":\\\"\\\",\\\"cashAmount\\\":0,\\\"cashTime\\\":\\\"\\\",\\\"cashTerminal\\\":null,\\\"prizeTime\\\":\\\"\\\",\\\"status\\\":1000,\\\"printStatus\\\":1100,\\\"multiple\\\":1,\\\"amount\\\":200,\\\"bonus\\\":0,\\\"bonusDetail\\\":\\\"\\\",\\\"number\\\":\\\"02,03,11,13,19|09,10\\\",\\\"dNumber\\\":\\\"\\\",\\\"rNumber\\\":\\\"\\\",\\\"bonusBeforeTax\\\":0,\\\"bonusStatus\\\":-1,\\\"orderId\\\":197,\\\"province\\\":\\\"\\\",\\\"seq\\\":\\\"\\\",\\\"passw\\\":\\\"\\\",\\\"terminal\\\":\\\"\\\",\\\"presetTerminal\\\":\\\"0000\\\",\\\"version\\\":0,\\\"maxAwardMoney\\\":0,\\\"taxStatus\\\":-1}]}\"}";
-        JSONObject mes = new JSONObject(str);
-        String digest = mes.getJSONObject("head").getString("digest");
-        System.out.println(digest);
-        String body = mes.getString("body");
-        System.out.println(MD5.MD5Encode(body + mes.getJSONObject("head").get("timestamp") + com.mcp.sv.util.CmbcConstant.MCP_KEY));
-
-
-    }
-
 
 }

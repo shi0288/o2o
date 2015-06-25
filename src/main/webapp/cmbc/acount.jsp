@@ -27,6 +27,7 @@
             before();
             getUseData();
         });
+
         function getUseData() {
             //获取账户信息
             $.ajax({
@@ -122,6 +123,7 @@
                             var caizhong = getGame(firTick);
                             var price = toDecimalMoney(order['amount'] / 100);
                             var tip = "";
+
                             var endTime = objectOrder['createTime'];
                             var tztime = endTime.substring(0, 10);
                             endTime = Date.parse(endTime);
@@ -138,20 +140,21 @@
                             }
                             var state = getOrderStatus(objectOrder['status']);
                             var game = caizhong;
+
                             var funstr = "";
                             var termHtml = "";
                             if (game == "竞彩足球") {
-                                funstr = "window.location.href='fanganjc.html#" + order['id'] + "'";
-                                termHtml = order.termCode;
-                                termHtml = firTick.substring(0, 8);
+                                funstr = "window.location.href='fanganjc.html#" +  objectOrder['outerId'] + "'";
+                                termHtml = firTick.termCode;
                             } else {
-                                funstr = "window.location.href='fangan.html#" + objectOrder['outerId'] + "'";
+                                funstr = "window.location.href='fangan.html#" + objectOrder['outerId'] + "#"+objectOrder['status']+"'";
                                 if (objectOrder['status'] == 1000) {
                                     funstr = "window.location.href='confirm.html#" + objectOrder['outerId'] + "'";
                                 }
                                 termHtml = firTick.termCode + '期'; //+ '&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp下单时间：';
                                 //termHtml += objectOrder['createTime'];
                             }
+
                             if (type == 2) {
                                 funstr = "window.location.href='fanganzh.html#" + order['id'] + "'";
                                 state = getZhuhaoStatus(order['status']);
@@ -162,6 +165,7 @@
                             } else {
                                 var stateHtml = '<span class="meizj">' + state + '</span>'
                             }
+
                             var html = '<div class="zhanghu-list  clearfix">' +
                                     tip +
                                     '<div class="zhanghu-list-cot clearfix" onclick="' + funstr + '">' +

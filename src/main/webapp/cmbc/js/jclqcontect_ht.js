@@ -180,7 +180,7 @@ function getJcNums() {
             if(i == 0){
                 strNum = $(self).attr("data-type")+"|"+cc+"|"+ $(self).attr("data-dit").substring(1);
             }else if (i == $(self).parent().find(".jc-list-item-dw.on").length - 1) {
-                strNum += $(self).attr("data-dit").substring(1);
+                strNum += "," +$(self).attr("data-dit").substring(1);
             }else{
                 strNum += "," +$(self).attr("data-dit").substring(1) ;
             }

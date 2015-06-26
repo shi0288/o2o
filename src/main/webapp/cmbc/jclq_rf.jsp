@@ -10,7 +10,7 @@
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 <link type="text/css" rel="stylesheet" href="css/reset.css" />
 <link type="text/css" rel="stylesheet" href="css/common.css" />
-<style type="text/css">.jc-step2{ display:none;}.spf-dd{ display:none;}</style>
+<style type="text/css">.jc-step2{ display:none;}</style>
 <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/jclqcontect.js"></script>

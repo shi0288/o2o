@@ -4,26 +4,25 @@
 <head>
 <meta charset="utf-8">
 <title>竞彩篮球</title>
-<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
-<META HTTP-EQUIV="Expires" CONTENT="0"> 
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 <link type="text/css" rel="stylesheet" href="css/reset.css" />
 <link type="text/css" rel="stylesheet" href="css/common.css" />
 <style type="text/css">.jc-step2{ display:none;}</style>
 <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="js/jclqcontect.js"></script>
-    <jsp:include page="include/login.jsp" flush="true"/>
-
+<script type="text/javascript" src="js/jclqcontect_ht.js"></script>
 </head>
 <body class="jc-bg">
-<div class="page-from-left index">    
-    <div class="top fix">
-    	<div class="top-relative clearfix">
-        	<a href="index.jsp" id="jc-one"  class="go-pre"></a>
+<div class="page-from-left index">
+	<div class="top fix">
+    	<!--<div class="top-add"><img src="img/guanggao_1.png"></div>-->
+    	<div class="top-relative clearfix green-top"><!--<img id="top-lahuan" src="img/qian_top.png">-->
+        	<a href="jczq.jsp" id="jc-one" class="go-pre"></a>
             <a href="javascript:jcone()" id="jc-two" class="go-pre" style="display:none"></a>
-        	<span class="title" style="margin-left:-12px;">竞彩篮球<a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">胜分差<img src="img/down_wite.png"/></a></span>
+        	<span class="title">
+                <span class="pt2">竞彩篮球</span>
+                <a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">混合过关<img src="img/down_wite.png"/></a>
+            </span>
             <a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>
         </div>
     </div>
@@ -33,7 +32,7 @@
 	<!--第一步页面-->
     <div class="content jc-step1" id="jc-match">
     	 <!--<ul class="jc-nav clearfix"><li class="now">购彩</li><li>定制跟单</li><li>合买大厅</li><li>玩法帮助</li></ul>  -->
-         <img src="img/009.gif" id="login-img"/>                                     
+        <!-- <img src="img/009.gif" id="login-img"/>-->
     </div>
     <!--第一步页面结束-->
     <!--第二步页面-->
@@ -55,10 +54,10 @@
     <!--第二步页面结束-->
     <script type="text/javascript" src="js/base.js"></script>
 	<script type="text/javascript" src="js/commontz.js"></script>
-     <script type="text/javascript" src="js/mcn.js"></script>
+    <script type="text/javascript" src="js/mcn.js"></script>
     <script type="text/javascript" src="js/jc.js"></script>
-    <script type="text/javascript" src="js/jclq.js"></script>
-    <div id="game" data-play="03" data-game="T52" style="display:none"></div>
+    <script type="text/javascript" src="js/jclq_ht.js"></script>
+    <div id="game" data-play="05" data-game="T52" style="display:none"></div>
 <!--正文内容结束-->   
 </div>
 <!--底部开始-->
@@ -67,7 +66,7 @@
 	<div class="jc-footer-box">
 		<div class="jc-del"></div>
         <div class="jc-ok"></div>
-        <div class="jc-tz-tip" id="jc-cs">至少选择1场比赛</div>
+        <div class="jc-tz-tip" id="jc-cs">至少选1场比赛</div>
     </div>
 </div>	
 <!--第一步底部结束-->
@@ -78,16 +77,15 @@
     <font id="beishu" class="redtext boq" style="display:none">1</font>
     <font id="qishu" class="redtext boq" style="display:none">1</font>
 </div>
-<div style=" height:10px;"></div>
 <div class="footer-tz green-footer jc-bg jc-step2" style="background-color:transparent;">
      <a href="javascript:void(-1)" id="tz-btn" class="green-footer-btn fr">立即购买</a>
-     <div class="greentext"><span class="green-check" id="check-cb-jc">使用彩币支付</span></div>
+     <div class="text-center greentext"><span class="green-check">我要晒单</span></div>
 </div>
 <!--第二步底部结束-->
 <!-- 弹出层开始-->
 <div class="cover"></div>
 <div class="mt-fix" id="jc-gg-pop">
-    <a href="jclq.jsp">胜负</a><a href="jclq_rf.jsp">让球胜负</a><a href="jclq_dxf.jsp">大小分</a><a href="jclq_sfc.jsp">胜分差</a><a href="jclq_ht.jsp">混合过关</a>
+        <a href="jclq.jsp">胜负</a><a href="jclq_rf.jsp">让球胜负</a><a href="jclq_dxf.jsp">大小分</a><a href="jclq_sfc.jsp">胜分差</a><a href="jclq_ht.jsp">混合过关</a>
         <div class="cb"></div>
 </div>
 <div class="mmt-fix" id="jc-ss-pop">

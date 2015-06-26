@@ -461,7 +461,7 @@ function getMatchInfo(obj){
                     oodsTag +
                     '</tbody>' +
                     '</table>';
-            }else if(playType== '03' && item.wnm){//比分
+            }else if(playType== '03' && item.wnm){//胜分差
                 var spfdata = item.wnm;
                 var classSingle = "";
                 if(item.wnm.single == '1'){

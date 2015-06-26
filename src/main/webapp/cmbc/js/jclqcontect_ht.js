@@ -178,11 +178,11 @@ function getJcNums() {
             var length = $(self).parent().find(".jc-list-item-dw.on").length;
             var test = $(self).attr("data-dit");
             if(i == 0){
-                strNum = $(self).attr("data-type")+"|"+cc+"|"+ $(self).attr("data-dit").substring(1) + ",";
+                strNum = $(self).attr("data-type")+"|"+cc+"|"+ $(self).attr("data-dit").substring(1);
             }else if (i == $(self).parent().find(".jc-list-item-dw.on").length - 1) {
                 strNum += $(self).attr("data-dit").substring(1);
             }else{
-                strNum += $(self).attr("data-dit").substring(1) + ",";
+                strNum += "," +$(self).attr("data-dit").substring(1) ;
             }
         });
         str += strNum;

@@ -10,7 +10,7 @@
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="0">
     <meta http-equiv="cache-control" content="no-cache">
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="telephone=no"/>
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
@@ -57,7 +57,7 @@
                         var name = sessionStorage.getItem("name");
                         var recharge = sessionStorage.getItem("recharge");
                         var prize = sessionStorage.getItem("prize");
-                        $('#user_name').html(name.substr(0,11));
+                        $('#user_name').html(name.substr(0, 11));
                         $('#recharge').html(toDecimalMoney(recharge / 100));
                         $('#bonus').html(toDecimalMoney(prize / 100));
                         var pageSize = 10;	//每页显示条数
@@ -156,29 +156,23 @@
                             } else {
                                 tip = '<span class="zhanghu-list-tit">' + tztime + '</span>';
                             }
-                            var _orderStatus=objectOrder['status'];
-                            _orderStatus=parseInt(_orderStatus);
+                            var _orderStatus = objectOrder['status'];
+                            _orderStatus = parseInt(_orderStatus);
                             var state = getOrderStatus(_orderStatus);
                             var game = caizhong;
-                            var funstr = "";
-                            var termHtml = "";
-                            if (game == "竞彩足球") {
-                                funstr = "window.location.href='fanganjc.html#" +  objectOrder['outerId'] + "'";
-                                termHtml = firTick.termCode;
-                            } else {
-                                funstr = "window.location.href='fangan.html#" + objectOrder['outerId'] + "#"+objectOrder['status']+"'";
-                                if (objectOrder['status'] == 1000) {
-                                    funstr = "window.location.href='confirm.html#" + objectOrder['outerId'] + "'";
-                                }
-                                termHtml = firTick.termCode + '期'; //+ '&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp下单时间：';
-                                //termHtml += objectOrder['createTime'];
+                            //todo
+                            var funstr = "window.location.href='fangan.html#" + objectOrder['outerId'] + "#" + objectOrder['status'] + "'";
+                            if (objectOrder['status'] == 1000) {
+                                funstr = "window.location.href='confirm.html#" + objectOrder['outerId'] + "'";
                             }
-                            var stateHtml="";
-                            if(state==undefined){
+                            var termHtml = firTick.termCode + '期'; //+ '&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp下单时间：';
+                            //termHtml += objectOrder['createTime'];
+                            var stateHtml = "";
+                            if (state == undefined) {
                                 alert(objectOrder['status']);
-                                alert( getOrderStatus(objectOrder['status']));
+                                alert(getOrderStatus(objectOrder['status']));
                             }
-                            if (state=='已中奖') {
+                            if (state == '已中奖') {
                                 stateHtml = '<span class="zhongjiang">中奖啦</span>'
                             } else {
                                 stateHtml = '<span class="meizj">' + state + '</span>'
@@ -267,9 +261,11 @@
             </div>
             <input type="hidden" id="typetogo" value="1"/>
 
-            <div class="tab-content" style="display:block;"><span style="width:100%;height:0px;" class="page"  data-page="0"></span></div>
+            <div class="tab-content" style="display:block;"><span style="width:100%;height:0px;" class="page"
+                                                                  data-page="0"></span></div>
 
-            <div class="tab-content" id="zhuihao"><span style="width:100%;height:0px;" class="page" data-page="1" cur-page="0"></span></div>
+            <div class="tab-content" id="zhuihao"><span style="width:100%;height:0px;" class="page" data-page="1"
+                                                        cur-page="0"></span></div>
 
             <div class="clearfix zhanghu-dian"><span class="tab-dot now"></span><span class="tab-dot"></span></div>
         </div>

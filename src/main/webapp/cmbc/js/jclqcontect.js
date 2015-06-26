@@ -539,9 +539,9 @@ function getMatchInfo(obj){
 //生成3位字符串如022
 function formNumber(num) {
     if (num < 10) {
-        num = "00" + num;
+        num = "30" + num;
     } else if (num >= 10 && num < 100) {
-        num = "0" + num;
+        num = "3" + num;
     }
     return num;
 }

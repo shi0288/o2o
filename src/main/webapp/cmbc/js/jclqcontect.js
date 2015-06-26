@@ -293,7 +293,7 @@ function getMatchInfo(obj){
         if(playType == "02" && item.mnl){
             var rqspfdata = item.mnl;
             if (rqspfdata) {
-                var rqspfdata_one,rqspfdata_two,rqspfdata_three
+                var rqspfdata_one,rqspfdata_two,rqspfdata_three;
                 if(rqspfdata.win == '--'){
                     rqspfdata_one = '<td width="36%" class="false" data-dit="v1" >胜' + rqspfdata.win + '</td>';
                     rqspfdata_two = '<td width="36%" class="false" data-dit="v2" >负' + rqspfdata.lose + '</td>';

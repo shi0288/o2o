@@ -65,9 +65,16 @@
                             if(tickBonus!=undefined){
                                 bonus+=tickBonus;
                             }
+
+                            var ty='';
                             var t1 = tick['pType'];
                             var t2 = tick['bType'];
-                            var ty = getType(t1, t2);
+                            if(gameCode=='T51' || gameCode=='T52'){
+                                ty = getJcType(gameCode,t1, t2);
+                            }else{
+                                ty = getType(t1, t2);
+                            }
+
                             var tickStatus = tick['status'];
                             tickStatus=parseInt(tickStatus);
                             tickStatus = getTicketStatus(tickStatus);
@@ -109,6 +116,21 @@
                 default:
                     return "订单完成";
             }
+        }
+
+        //获取状态
+        function getJcType(gameCode,t1,t2) {
+            var otype1;
+            var otype2;
+            if(gameCode=='T51'){
+                otype1={"01":"让球胜平负","02":"胜平负","03":"比分","04":"总进球数","05":"半全场","06":"混合投注"};
+                otype2='串';
+            }else if(gameCode='T52'){
+                otype1={"01":"让分胜负","02":"胜负","03":"胜分差","04":"大小分差","05":"混合投注"};
+                otype2='串';
+            }
+            var type="["+otype1[t1]+'   '+t2.split('')[0]+otype2+t2.split('')[1]+"]";
+            return type;
         }
 
         //获取状态
@@ -175,6 +197,14 @@
                 case "T05":
                     $("#czimg").attr("src","img/ico_11xuan5.png");
                     $("#czfont").html("11选5");
+                    break;
+                case "T52":
+                    $("#czimg").attr("src", "img/ico_jclq.png");
+                    $("#czfont").html("竞彩篮球");
+                    break;
+                case "T51":
+                    $("#czimg").attr("src", "img/ico_jczq.png");
+                    $("#czfont").html("竞彩足球");
                     break;
             }
         }

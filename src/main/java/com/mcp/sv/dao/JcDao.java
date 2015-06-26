@@ -35,7 +35,6 @@ public class JcDao {
             String st = mhead.getString("st");
             if (st.equals(CmbcConstant.ZJQS)) {
                 String ZJQS = (String) map.get(st);
-                logger.info("ZJQS::::::::::" + ZJQS);
                 if (ZJQS == null) {
                     str = sendGet(CmbcConstant.ZJQS_URL);
                     res = createFormat(st, str);
@@ -53,7 +52,6 @@ public class JcDao {
             } else if (st.equals("1") || st.equals("2")) {
                 st = CmbcConstant.SPF;
                 String cn01 = (String) map.get(st);
-                logger.info("cn01::::::::::" + cn01);
                 if (cn01 == null) {
                     str = sendGet(CmbcConstant.SPF_URL);
                     res = createFormat(st, str);
@@ -70,7 +68,6 @@ public class JcDao {
             }
             else if(st.equals(CmbcConstant.BQCSPF)){
                 String BQCSPF = (String) map.get(st);
-                logger.info("BQCSPF::::::::::"+BQCSPF);
                 if(BQCSPF==null){
                     str = sendGet(CmbcConstant.BQCSPF_URL);
                     res = createFormat(st, str);
@@ -87,7 +84,6 @@ public class JcDao {
 
             }else if(st.equals(CmbcConstant.BF)){
                 String BF = (String) map.get(st);
-                logger.info("BF::::::::::"+BF);
                 if(BF==null){
                     str = sendGet(CmbcConstant.BF_URL);
                     res = createFormat(st, str);
@@ -104,7 +100,6 @@ public class JcDao {
 
             }else if(st.equals(CmbcConstant.HHGG)){
                 String HHGG = (String) map.get(st);
-                logger.info("HHGG::::::::::"+HHGG);
                 if(HHGG==null){
                     str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(CmbcConstant.HHGG_URL);
                     res = createHhggFormat(st, str);
@@ -442,9 +437,7 @@ public class JcDao {
         String rstr = "";
         try {
             String hhgg[] = str.split(";");
-            System.out.println(hhgg[0]);
             String hhgg1[] = hhgg[0].split("=");
-            System.out.println(hhgg1[1]);
 //            JSONArray data = new JSONArray(hhgg1[1]);
             String data = hhgg1[1];
             rhead.put("repCode","0000");

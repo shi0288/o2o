@@ -20,7 +20,7 @@ $(document).ready(function (e) {
                 var body = JSON.parse(objectOrder.body);
                 var order = body.order;
                 var firTick = order.tickets[0];
-                ticketQuan=firTick;
+                console.log(firTick);
                 var termCode = firTick['termCode'];
                 var time = objectOrder['createTime'];
                 var amount = order['amount'];
@@ -39,17 +39,21 @@ $(document).ready(function (e) {
                 var gameCode = firTick['gameCode'];
                 $.each(order.tickets, function (index, val) {
                     var numbers = val['number'];
-
                     var tzhu = val['amount'] / 200;
                     tzhu = tzhu / val['multiple'];
                     var bei = val['multiple'];
                     var zhu = val['amount'];
+                    var ty='';
                     var t1 = val['pType'];
                     var t2 = val['bType'];
-                    var ty = getType(t1, t2);
-                    /*if(val['gameCode']=='T01' && val['playTypeCode']=='05'){
-                     tzhu+="[追加]";
-                     }*/
+                    if(gameCode=='T51' || gameCode=='T52'){
+                        ty = getJcType(gameCode,t1, t2);
+                    }else{
+                        ty = getType(t1, t2);
+                    }
+                    if(gameCode=='T01' && val['pType']=='05'){
+                        tzhu+="[追加]";
+                    }
                     var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '</p></div><p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
                     $("#tzcot").append(cotHtml);
                 });
@@ -111,6 +115,40 @@ $(document).ready(function (e) {
     });
 });
 
+//获取状态
+function getOrderStatus(status) {
+    switch (status) {
+        case 1000:
+            return "等待支付";
+            break;
+        case 4000:
+            return "出票完成";
+            break;
+        case 5000:
+            return "已中奖";
+            break;
+        default:
+            return "订单完成";
+    }
+}
+
+
+//获取状态
+function getJcType(gameCode,t1,t2) {
+    var otype1;
+    var otype2;
+    if(gameCode=='T51'){
+        otype1={"01":"让球胜平负","02":"胜平负","03":"比分","04":"总进球数","05":"半全场","06":"混合投注"};
+        otype2='串';
+    }else if(gameCode='T52'){
+        otype1={"01":"让分胜负","02":"胜负","03":"胜分差","04":"大小分差","05":"混合投注"};
+        otype2='串';
+    }
+    var type="["+otype1[t1]+'   '+t2.split('')[0]+otype2+t2.split('')[1]+"]";
+    return type;
+}
+
+
 function tzSuccess() {
     $.ajax({
         type: "POST",
@@ -164,6 +202,14 @@ function gameD(obj) {
         case "T05":
             $("#czimg").attr("src", "img/ico_11xuan5.png");
             $("#czfont").html("11选5");
+            break;
+        case "T52":
+            $("#czimg").attr("src", "img/ico_jclq.png");
+            $("#czfont").html("竞彩篮球");
+            break;
+        case "T51":
+            $("#czimg").attr("src", "img/ico_jczq.png");
+            $("#czfont").html("竞彩足球");
             break;
     }
 }

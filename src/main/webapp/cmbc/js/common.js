@@ -455,6 +455,10 @@ function getGame(obj){
             caizhong="竞彩足球";
             return caizhong;
             break;
+        case "T52":
+            caizhong="竞彩篮球";
+            return caizhong;
+            break;
     }
 }
 

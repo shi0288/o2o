@@ -26,24 +26,6 @@
         	<span class="title" style="margin-left:-12px;">竞彩足球<a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">半全场胜平负<img src="img/down_wite.png"/></a></span>
             <a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>
         </div>
-        <div class="jc-tz-item" id="jc-one-bqc">
-            <table width="100%" class="jc-table">
-                <tbody>
-                <tr class="jc-table-tbb">
-                    <td width="28%" class="jc-table-rb">赛事</td>
-                    <td width="8%" class="jc-table-rb">胜胜</td>
-                    <td width="8%" class="jc-table-rb">胜平</td>
-                    <td width="8%" class="jc-table-rb">胜负</td>
-                    <td width="8%" class="jc-table-rb">平胜</td>
-                    <td width="8%" class="jc-table-rb">平平</td>
-                    <td width="8%" class="jc-table-rb">平负</td>
-                    <td width="8%" class="jc-table-rb">负胜</td>
-                    <td width="8%" class="jc-table-rb">负平</td>
-                    <td width="8%" class="jc-table-rb">负负</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
     <div class="cb"></div>
 <!--顶部结束-->

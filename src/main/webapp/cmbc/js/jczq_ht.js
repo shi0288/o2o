@@ -1,42 +1,42 @@
 //竞彩足球
 $(document).ready(function() {
 	//筛选联赛
-   $("#jc-ls-ok").click(function(){
+	$("#jc-ls-ok").click(function(){
 		var arrJcl=[];
 		if($("#jc-liansai span.on").length<$("#jc-liansai span").length){
 			$("#jc-liansai span").each(function() {
-                if(!$(this).hasClass("on")){
+				if(!$(this).hasClass("on")){
 					var lshtml=$(this).html();
 					arrJcl.push(lshtml);
 				}
-            });	
-		} 
-	   $(".jc-table").show();
-	   $(".lsname").each(function(index, element) {
-       		var bres=$.inArray($(this).html(),arrJcl);
+			});
+		}
+		$(".jc-table").show();
+		$(".lsname").each(function(index, element) {
+			var bres=$.inArray($(this).html(),arrJcl);
 			if(bres!=-1){
-				$(this).parents(".jc-table").hide();	
-			} 
+				$(this).parents(".jc-table").hide();
+			}
 			$("#jc-ss-pop").hide();
 			$(".cover").hide();
-   	   });	
-   });
-   //点击联赛
-   $("#jc-liansai span").die().live("click",function(){
-		togOn(this);	  
-   });
-   //五大联赛
-   $("#jc-bigls").click(function(){
-   		var arrBigls=["德甲","法甲","意甲","西甲","英超"];
+		});
+	});
+	//点击联赛
+	$("#jc-liansai span").die().live("click",function(){
+		togOn(this);
+	});
+	//五大联赛
+	$("#jc-bigls").click(function(){
+		var arrBigls=["德甲","法甲","意甲","西甲","英超"];
 		$("#jc-liansai span").removeClass("on");
 		$("#jc-liansai span").each(function(index, element) {
-           var bres=$.inArray($(this).html(),arrBigls);
+			var bres=$.inArray($(this).html(),arrBigls);
 			if(bres!=-1){
-				$(this).addClass("on");	
-			} 
-        });
-   });
-   //显示隐藏当天比赛
+				$(this).addClass("on");
+			}
+		});
+	});
+	//显示隐藏当天比赛
 	$(".jc-toggle").die().live("click",function(){
 		var oTable=$(this).parent().siblings("table");
 		if(oTable.hasClass("hide")){
@@ -45,27 +45,27 @@ $(document).ready(function() {
 		}else{
 			oTable.addClass("hide");
 			$(this).addClass("candown");
-		}	
+		}
 	});
 	//设胆
 	$(".jc-list-item-dan").die().live("click",function(){
 		if($(this).hasClass("no")){
-			return false;	
-		}	
+			return false;
+		}
 		var len=maxDan();
 		if($(this).hasClass("on")){
-			$(this).removeClass("on");	
+			$(this).removeClass("on");
 			$(".jc-list-item-dan").removeClass("no");
 		}else{
-			$(this).addClass("on");	
+			$(this).addClass("on");
 			$("#duo-chuan").find(".chuan-item").hide();
 			$("#duo-chuan").append("<p class='chuan-gtip'>胆拖不支持多串投注</p>");
 			if($(".jc-list-item-dan.on").length==len){
 				$(".jc-list-item-dan").each(function(index, element) {
-                    if(!$(this).hasClass("on")){
-						$(this).addClass("no");	
+					if(!$(this).hasClass("on")){
+						$(this).addClass("no");
 					}
-                });
+				});
 			}
 		}
 		jcSum();
@@ -76,15 +76,34 @@ $(document).ready(function() {
 		$(".jc-list").eq(0).html("");
 		$(".jc-table").removeClass("on");
 		$("#zhushu").html(0);
-		$("#qianshu").html(0);	
+		$("#qianshu").html(0);
 		$("#jc-cs").html("至少选2场比赛");
 	});
 	$(".green-check").click(function(){
-		togOn(this);	
+		togOn(this);
 	});
 	$(".mt-cancel").click(function(){
-		$(".chuan-item").removeClass("on");	
+		$(".chuan-item").removeClass("on");
 		$("#xchuan").find(".chuan-item[data-class=on]").addClass("on");
+	});
+	//加减固定单张背书
+	$(".jc-danbei-left").click(function(){
+		var i=$(this).index(".jj-danbei-left");
+		var oInput=$(this).parent().find("input");
+		var iInput=oInput.val();
+		iInput=parseInt(iInput);
+		if(iInput>=2){
+			oInput.val(iInput-1);
+		}
+	});
+	$(".jc-danbei-right").click(function(){
+		var i=$(this).index(".jj-danbei-right");
+		var oInput=$(this).parent().find("input");
+		var iInput=oInput.val();
+		iInput=parseInt(iInput);
+		if(iInput < 99){
+			oInput.val(iInput+1);
+		}
 	});
 	//加减注数
 	$(".jc-k-right").click(function(){
@@ -93,6 +112,11 @@ $(document).ready(function() {
 		var bei=$(this).parent().find("input").val();
 		bei=parseInt(bei);
 		bei=bei+1;
+		if(bei < 99){
+			$('#danzhangbeishu').val(bei);
+		}else{
+			$('#danzhangbeishu').val(99)
+		}
 		$(this).parent().find("input").val(bei);
 		$("#qianshu").html(bei*zhu*2);
 	});
@@ -103,8 +127,13 @@ $(document).ready(function() {
 		bei=parseInt(bei);
 		if(bei>1){
 			bei=bei-1;
+			if(bei < 99){
+				$('#danzhangbeishu').val(bei);
+			}else{
+				$('#danzhangbeishu').val(99)
+			}
 			$(this).parent().find("input").val(bei);
-			$("#qianshu").html(bei*zhu*2);	
+			$("#qianshu").html(bei*zhu*2);
 		}
 	});
 	$("#beishu").blur(function(){
@@ -112,23 +141,40 @@ $(document).ready(function() {
 		zhu=parseInt(zhu);
 		var bei=$(this).parent().find("input").val();
 		bei=parseInt(bei);
+		if(bei < 99){
+			$('#danzhangbeishu').val(bei);
+		}else{
+			$('#danzhangbeishu').val(99)
+		}
 		$(this).parent().find("input").val(bei);
-		$("#qianshu").html(bei*zhu*2);	
+		$("#qianshu").html(bei*zhu*2);
 	});
 	$(".jc-ok").eq(0).click(function(){
-		if($(".jc-table.on").length>=2){
-			jcList();
-			chuanChange();
-			//算注数
-			jcSum();
-			jctwo();	
-		}else{
-			alert("请至少选择2场比赛");	
-		}	
+		var flag = true;
+		if($(".jc-table.on").length == 1){
+			//判断是否支持单关固定
+			$(".jc-table.on").each(function(index) {
+				if($(this).find(".single").length  <= 0 ){
+					flag = false;
+					alert("所选择场次不支持单关");
+					return;
+				}
+			});
+		}
+		if(flag)
+			if($(".jc-table.on").length>=1){
+				jcList();
+				chuanChange();
+				//算注数
+				jcSum();
+				jctwo();
+			}else{
+				alert("请至少选择1场比赛");
+			}
 	});
 	$(".jc-xchuan").click(function(e){
 		$(".cover").eq(0).show();
-		$("#xchuan").show();	
+		$("#xchuan").show();
 		e.stopPropagation();
 	});
 	$(".jc-list-item-close").die().live("click",function(){
@@ -137,42 +183,42 @@ $(document).ready(function() {
 		$(".jc-table[data-cc="+datacc+"]").eq(0).find("td").removeClass("on");
 		$(this).parent().remove();
 		//算注数
-		chuanChange();	
+		chuanChange();
 		jcSum();
-		
+
 	});
 	$(".mt-ok").click(function(){
 		var html="";
 		var data="";
 		if($(".chuan-item.on").length<1){
 			alert("至少选择一种过关方式");
-			return false;	
+			return false;
 		}
 		$("#xchuan").find(".on").each(function(index) {
 			if(index==$("#xchuan").find(".on").length-1){
 				html+=$(this).html();
 				data+=$(this).attr("data-chuan");
 			}else{
-        	 	html+=$(this).html()+",";
+				html+=$(this).html()+",";
 				data+=$(this).attr("data-chuan")+",";
 			}
-        });	
+		});
 		$("#chuanguan").attr("data-chuan",data);
 		$("#chuanguan").html(html);
 		jcSum();
 		$(".chuanguan").hide();
-		$(".cover").hide();	
+		$(".cover").hide();
 		$(".chuan-item").removeAttr("data-class");
 		$(".chuan-item.on").attr("data-class","on");
 		var changs=$(".jc-list-item").length;
 		var len=maxDan();
-		if(changs<=len+1){		
-			$(".jc-list-item-dan").addClass("no");	
+		if(changs<=len+1){
+			$(".jc-list-item-dan").addClass("no");
 		}else{
-			$(".jc-list-item-dan").removeClass("no");		
+			$(".jc-list-item-dan").removeClass("no");
 		}
 		if($("#duo-chuan .chuan-item").hasClass("on")){
-			$(".jc-list-item-dan").addClass("no");		
+			$(".jc-list-item-dan").addClass("no");
 		}
 	});
 	$(".jc-list-item-dw").die().live("click",function(){
@@ -185,47 +231,62 @@ $(document).ready(function() {
 		att.removeClass("on");
 		if($(this).parents(".jc-list-item-cot").find(".jc-list-item-dw.on").length<2){
 			cctable.removeClass("on");
-			$(this).parents(".jc-list-item").remove();	
+			$(this).parents(".jc-list-item").remove();
 			chuanChange();
 		}else{
-			$(this).remove();	
+			$(this).remove();
 			chuanList();
 		}
-		//算注数		
-		jcSum();	
-	});	
+		//算注数
+		jcSum();
+	});
 });
 function seleMatch(evel){
-	if($(evel).parents("table").siblings().find(".on").length>1){
-		alert('一场比赛只能选择一种玩法');
+	var currLen = 1;
+	if($(evel).hasClass("on")){
+		$(evel).removeClass("on");
+		if($(evel).parents(".pType").find(".on").length<1){
+			$(evel).parents(".pType").removeClass("on");
+		}
+		if($(evel).parents(".jc-table").find(".on").length<1){
+			$(evel).parents(".jc-table").removeClass("on");
+			$(evel).parents(".jc-table").parent("div").attr("num","close");
+		}
 	}else{
-		if($(evel).hasClass("on")){
-			$(evel).removeClass("on");
-			if($(evel).parents("table").find(".on").length<1){
-				$(evel).parents("table").removeClass("on");
-				$(evel).parents("table").parent("div").attr("num","close");
-			}
-		}else{
-			$(evel).addClass("on");
-			$(evel).parents("table").addClass("on");
-			$(evel).parents("table").parent("div").attr("num","open");
+		$(evel).addClass("on");
+		$(evel).parents(".pType").addClass("on");
+		$(evel).parents(".jc-table").addClass("on");
+		$(evel).parents(".jc-table").parent("div").attr("num","open");
+	}
+
+	var lentemp = $(evel).parents(".jc-table").find("tr").filter(".on").length ;
+	if(lentemp > 1){
+		$(evel).removeClass("on");
+		if($(evel).parents(".pType").find(".on").length<1){
+			$(evel).parents(".pType").removeClass("on");
 		}
-		var cs=getChangshu();
-		if(cs>=2){
-			$("#jc-cs").html("您选择了"+cs+"场比赛");
-		}else{
-			$("#jc-cs").html("至少选2场比赛");
+		if($(evel).parents(".jc-table").find(".on").length<1){
+			$(evel).parents(".jc-table").removeClass("on");
+			$(evel).parents(".jc-table").parent("div").attr("num","close");
 		}
+		alert("一场比赛只能选择一种玩法");
+		return;
+	}
+	var cs=getChangshu();
+	if(cs>=2){
+		$("#jc-cs").html("您选择了"+cs+"场比赛");
+	}else{
+		$("#jc-cs").html("至少选2场比赛");
 	}
 }
 //显示和隐藏
 function selOpenClose1(evel){
 	var id = "#"+evel;
-		$(id).click(function(){
-			alert("ok");
-			$("#table").css("display","block");
-			alert("ok1111111");
-		});
+	$(id).click(function(){
+		alert("ok");
+		$("#table").css("display","block");
+		alert("ok1111111");
+	});
 }
 function selOpenClose2(evel){
 	var tab=document.getElementById(evel);
@@ -237,15 +298,15 @@ function maxDan(){
 	var srr=[];
 	var crr=$("#chuanguan").attr("data-chuan");
 	if(!crr){
-		return false;	
+		return false;
 	}
 	crr=crr.split(",");
 	$.each(crr,function(i,val){
-		var iit=val.charAt(1);	
+		var iit=val.charAt(1);
 		iit=parseInt(iit);
 		srr.push(iit);
 	});
-	var len= Math.max.apply(Math,srr)-1;	
+	var len= Math.max.apply(Math,srr)-1;
 	return len;
 }
 //列出选择列表
@@ -260,16 +321,18 @@ function jcList(){
 		var table_on = $(this).find(".jc-table.on");
 		var cc = table_on.attr("data-cc");
 		var name = table_on.attr("data-des");
-		htmldiv = htmldiv + '<div class="jc-list-item" id="id_'+cc+'" data-cc="'+cc+'">'+
-		'<div class="jc-list-item-close"></div>'+
-		'<div class="jc-list-item-dan"></div>'+
+		var type = table_on.find("tr.on").attr("pType");
+		htmldiv = htmldiv + '<div class="jc-list-item" id="id_'+cc+'" data-cc="'+cc+'"  data-type="'+type +'">'+
+		'<div class="jc-list-item-close"  onClick="closeClick(this)"></div>'+
+		'<div class="jc-list-item-dan" onClick="danClick(this)"></div>'+
 		'<div class="jc-list-item-cot clearfix">' +
 		'<div class="jc-list-item-ss">'+name+'</div>';
 		$(this).find(".jc-table.on").each(function(index) {
 			htmldiv = htmldiv + '<div class="ht jc-list-xxx" data-wf="ht">';
 			$(this).find("td.on").each(function(aa){
-				var result = $(this).html();
-				htmldiv = htmldiv + '<span class="jc-list-item-dw on">'+ result +'</span>';
+				var result = $(this).html().replace("<p>","").replace("</p>","");
+				var datadit=$(this).attr("data-dit");
+				htmldiv = htmldiv + '<span class="jc-list-item-dw on" data-dit="'+datadit+'">'+ result +'</span>';
 			});
 			htmldiv = htmldiv + '</div>';
 		});
@@ -284,11 +347,11 @@ function jcList(){
 function chuanChange(){
 	var changs=$(".jc-list-item-cot").length;
 	if(changs>8){
-		changs=8;	
+		changs=8;
 	}
 	if(changs>=2){
-		chuanList();	
-		var datachuan="r"+changs+"c1";	
+		chuanList();
+		var datachuan="r"+changs+"c1";
 		var htmlchuan=changs+"串1";
 		$("#chuanguan").attr("data-chuan",datachuan);
 		$("#chuanguan").html(htmlchuan);
@@ -296,17 +359,17 @@ function chuanChange(){
 		$("#xchuan").find(".chuan-item").removeClass("on");
 		$("#xchuan").find(".chuan-item").removeAttr("data-class");
 		thischuan.addClass("on");
-		thischuan.attr("data-class","on");	
+		thischuan.attr("data-class","on");
 	}else{
 		$("#chuanguan").html("过关方式");
 		$("#chuanguan").removeAttr("data-chuan");
-	}	
+	}
 	var len=maxDan();
-	if(changs<=len+1){		
-		$(".jc-list-item-dan").addClass("no");	
+	if(changs<=len+1){
+		$(".jc-list-item-dan").addClass("no");
 		$(".jc-list-item-dan").removeClass("on");
 	}else{
-		$(".jc-list-item-dan").removeClass("no");		
+		$(".jc-list-item-dan").removeClass("no");
 	}
 }
 //列出对应的串关
@@ -326,11 +389,11 @@ function chuanList(){
 				$("#zy-chuan").append(chuanHtml);
 			}else{
 				//多串过关
-				$("#duo-chuan").append(chuanHtml);	
+				$("#duo-chuan").append(chuanHtml);
 			}
-		}	
-	});	
-	
+		}
+	});
+
 }
 //获取选择的场数
 function getChangshu(){
@@ -342,14 +405,14 @@ function jcone(){
 	$("#jc-two").hide();
 	$("#jc-one").show();
 	$(".jc-step2").hide();
-	$(".jc-step1").show();	
+	$(".jc-step1").show();
 }
 //显示第二步
 function jctwo(){
 	$("#jc-one").hide();
 	$("#jc-two").show();
 	$(".jc-step1").hide();
-	$(".jc-step2").show();	
+	$(".jc-step2").show();
 }
 //竞彩算注数
 function jcSum(){
@@ -360,12 +423,12 @@ function jcSum(){
 	if(!type){
 		$("#zhushu").html(0);
 		$("#qianshu").html(0);
-		return false;	
+		return false;
 	}
 	if($(".jc-list-item").length<2){
 		$("#zhushu").html(0);
 		$("#qianshu").html(0);
-		return false;		
+		return false;
 	}
 	type=type.split(",");
 	for(var j=0;j<type.length;j++){
@@ -382,29 +445,29 @@ function jcSum(){
 			$(this).find(".jc-list-xxx").each(function(){
 				var slen=$(this).find(".jc-list-item-dw.on").length;
 				if(slen>0){
-					ssm.push(slen);		
+					ssm.push(slen);
 				}
 				if(this_o.find(".jc-list-item-dan.on").length>0){
 					var danlen=$(this).find(".jc-list-item-dw.on").length;
-					sarrdan.push(danlen);	
+					sarrdan.push(danlen);
 				}else{
 					var tuolen=$(this).find(".jc-list-item-dw.on").length;
-					sarrtuo.push(tuolen);	
+					sarrtuo.push(tuolen);
 				}
 			});
 			if(ssm.length>0){
 				arr.push(ssm);
 			}
 			if(sarrdan.length>0){
-				arrdan.push(sarrdan);	
+				arrdan.push(sarrdan);
 			}
 			if(sarrtuo.length>0){
 				arrtuo.push(sarrtuo);
 			}
-        });
+		});
 		evzhu=sumAll(arrdan,arrtuo,arr,chuan);
 		sumzhu+=evzhu;
 	}
 	$("#zhushu").html(sumzhu);
-	$("#qianshu").html(sumzhu*2*beishu);	
+	$("#qianshu").html(sumzhu*2*beishu);
 }

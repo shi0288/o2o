@@ -104,7 +104,7 @@ function submitJc() {
         'number': numbers,
         'multiple': $("#beishu").val(),
         "presetTerminal":"0000",
-        "outerId":new Date().getTime()+Math.random()*(1000-390)+390,
+        "outerId":new Date().getTime()+Math.random().toString(36).substr(8),
         "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
     }
     tickets.push(ticket);
@@ -112,7 +112,7 @@ function submitJc() {
 
     var order = {
         'amount': amount,
-        'outerId':new Date().getTime()+Math.random()*(1000-390)+390,
+        'outerId':new Date().getTime()+Math.random().toString(36).substr(8),
         'tickets': tickets
     };
 

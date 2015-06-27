@@ -71,19 +71,22 @@ function submitJc() {
     if ($("#check-cb-jc").hasClass("now")) {
         payType = 1;
     }
-    var amount = $("#qianshu").html();
-    amount = parseInt(amount) * 100;
-    if(amount <= 0 ){
-        alert("金额错误");
-        return;
-    }
     var betType = $("#chuanguan").attr("data-chuan");
     console.log(betType);
     betType = betType.replace(/[a-z]/g, "");
     if(betType == undefined){
         alert("错误的玩法");
+        after();
         return;
     }
+    var amount = $("#qianshu").html();
+    amount = parseInt(amount) * 100;
+    if(amount <= 0 ){
+        after();
+        alert("金额错误");
+        return;
+    }
+
     var numbers = getJcNums();
     var playType = $("#game").attr("data-play");
     var tickets = [];

@@ -109,12 +109,13 @@
         -->
         <ul id="caizhong-ul" class="clearfix">
             <li id="jczq"><a class="ico-box" href="jczq.jsp"><img src="img/ico_jczq.png"/>竞彩足球</a></li>
+            <li id="jclq"><a class="ico-box" href="jclq.jsp"><img src="img/ico_jclq.png"/>竞彩足球</a></li>
             <li id="dlt"><a class="ico-box" href="dlt.jsp"><img src="img/ico_dlt.png"/>大乐透</a></li>
             <li id="c11x5"><a class="ico-box" href="c11x5.jsp"><img src="img/ico_11xuan5.png"/>11选5</a></li>
             <li id="pl3"><a class="ico-box" href="pl3.jsp"><img src="img/ico_pl3.png"/>排列三</a></li>
             <li id="pl5"><a class="ico-box" href="pl5.jsp"><img src="img/ico_pl5.png"/>排列五</a></li>
             <li id="qxc"><a class="ico-box" href="qxc.jsp"><img src="img/ico_qxc.png"/>七星彩</a></li>
-            <li><a class="ico-box" href="czadd.html"><img src="img/ico_add.png"/>添加</a></li>
+           <!-- <li><a class="ico-box" href="czadd.html"><img src="img/ico_add.png"/>添加</a></li>  -->
         </ul>
         <ul id="more-ul" class="clearfix">
             <li><a class="ico-box" href="main.jsp"><img src="img/icoy_11.png"/>购彩大厅</a></li>

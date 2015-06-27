@@ -190,10 +190,7 @@ public class LotteryDao {
         JSONObject res = new JSONObject();
         Map param = new HashMap();
         param.put("gameCode", gameCode);
-        System.out.println(gameCode);
         List datas = MongoUtil.queryForPage(MongoConst.MONGO_TERM, param, curPage, pageSize);
-        System.out.println(datas.size());
-
         JSONArray results = new JSONArray();
         for (int i = 0; i < datas.size(); i++) {
             results.put(datas.get(i));
@@ -270,6 +267,62 @@ public class LotteryDao {
         }
         return "彩币更新异常";
     }
+
+
+    public static String reviceRecharge(String userName, int money,String outerId) {
+        //查询库中是否有此记录
+        Map param = new HashMap();
+        param.put("userName", userName);
+        List datas = MongoUtil.query(MongoConst.MONGO_ACOUNT, param);
+        logger.info("用户彩币退款：" + userName + "  " + datas.size() + "金额：" + money);
+        if (datas.size() == 1) {
+            DBObject acount = (DBObject) datas.get(0);
+            int recharge = (int) acount.get("recharge");
+            money += recharge;
+            String acountStr = JSON.serialize(acount);
+            DBObject newAcount = (DBObject) JSON.parse(acountStr);
+            newAcount.put("recharge", money);
+            int res = MongoUtil.update(MongoConst.MONGO_ACOUNT, acount, newAcount);
+            if (res == 1) {
+                    LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, CmbcConstant.RECIVETYPE, userName, recharge, money, money - recharge, outerId);
+                return "";
+            } else {
+                return "彩币更新失败";
+            }
+        }
+        return "彩币更新异常";
+    }
+
+
+    public static String updatePrize(String userName, int money, String outerId) {
+        //查询库中是否有此记录
+        Map param = new HashMap();
+        param.put("userName", userName);
+        List datas = MongoUtil.query(MongoConst.MONGO_ACOUNT, param);
+        logger.info("用户更新奖金：" + userName + "  " + datas.size() + "金额：" + money);
+        if (datas.size() == 1) {
+            DBObject acount = (DBObject) datas.get(0);
+            int prize=0;
+            try{
+                prize = (int) acount.get("prize");
+            }catch (Exception e){
+                prize =0;
+            }
+            money += prize;
+            String acountStr = JSON.serialize(acount);
+            DBObject newAcount = (DBObject) JSON.parse(acountStr);
+            newAcount.put("prize", money);
+            int res = MongoUtil.update(MongoConst.MONGO_ACOUNT, acount, newAcount);
+            if (res == 1) {
+                LotteryDao.insertLog(MongoConst.MONGO_RECHARGE_LOG, CmbcConstant.PRIZETYPE, userName, prize, money, money - prize, outerId);
+                return "";
+            } else {
+                return "奖金更新失败";
+            }
+        }
+        return "彩币奖金异常";
+    }
+
 
 
     public static String updateUser(String userName, String passWord, String address, String mobile) {

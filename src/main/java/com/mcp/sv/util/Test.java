@@ -13,9 +13,9 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 public class Test {
 
     public static void main(String[] args) throws JSONException {
-       String str = sendGet(CmbcConstant.SPF_URL);
+       String str = sendGet(CmbcConstant.HHGG_URL);
         System.out.println(str);
-       String res = createFormat("SPF", str);
+       String res = createFormat("HHGG", str);
         System.out.println(res);
 //        JSONObject jsonObject=new JSONObject();
 //        jsonObject.put("gameCode","T51");

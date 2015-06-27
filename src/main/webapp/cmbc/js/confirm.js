@@ -1,7 +1,6 @@
 $(document).ready(function (e) {
     var outerId = window.location.href;
     outerId = outerId.split("#")[1];
-    var ticketQuan;
     before();
     $.ajax({
         type: "POST",
@@ -20,7 +19,6 @@ $(document).ready(function (e) {
                 var body = JSON.parse(objectOrder.body);
                 var order = body.order;
                 var firTick = order.tickets[0];
-                console.log(firTick);
                 var termCode = firTick['termCode'];
                 var time = objectOrder['createTime'];
                 var amount = order['amount'];
@@ -82,7 +80,7 @@ $(document).ready(function (e) {
         if (!$("#check-cb").hasClass("now")) {
             payType = "2";
         }
-
+        before();
         $.ajax({
             type: "POST",
             url: "/bankServices/LotteryService/commitOrders?timestamp=" + new Date().getTime(),
@@ -98,7 +96,6 @@ $(document).ready(function (e) {
                 console.log(result);
                 var repCode = result.repCode;
                 if (repCode == '0000') {
-                    after();
                     tzSuccess();
                 } else if (repCode == '1007') {
                     alert("账户余额不足，请充值");

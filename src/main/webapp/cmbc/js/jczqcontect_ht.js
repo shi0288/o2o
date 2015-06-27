@@ -60,18 +60,25 @@ $(document).ready(function () {
             alert("每单不能超过2万元");
             return false;
         }
+        var login = sessionStorage.getItem("login");
+        if (login == null) {//尚未登陆，需要处理登陆。
+            alert("您未登录，请登录",function(){
+                window.location.href="login.html";
+            })
+            return false;
+        }
         before();
         submitJc(); //提交订单
     });
 });
 //提交竞彩订单
 function submitJc() {
-    var userName = sessionStorage.getItem("name");
-    var passWord = sessionStorage.getItem("passWord");
-    if(userName == "" || userName == undefined || userName == null){
-        alert("请先登录在进行提交");
-        //return;
-    }
+    //var userName = sessionStorage.getItem("name");
+    //var passWord = sessionStorage.getItem("passWord");
+    //if(userName == "" || userName == undefined || userName == null){
+    //    alert("请先登录在进行提交");
+    //    //return;
+    //}
     var amount = $("#qianshu").html();
     amount = parseInt(amount) * 100;
     var betType = $("#chuanguan").attr("data-chuan");
@@ -222,7 +229,6 @@ function getJcData() {
                 getMatchHhggInfo(obj,st);
             } else {
                 after();
-                alert("请尝试刷新页面！");
             }
         },
         error: onError
@@ -386,10 +392,10 @@ function getMatchHhggInfo(obj,st){
             var spfdata_two2 = '<td data-dit="v11" width="10%" onclick="seleMatch(this)"><p>1:1</p><p>' + bf[14] + '</p></td>';
             var spfdata_three2 = '<td data-dit="v22" width="10%" onclick="seleMatch(this)"><p>2:2</p><p>' + bf[15] + '</p></td>';
             var spfdata_four2 = '<td data-dit="v33" width="10%" onclick="seleMatch(this)"><p>3:3</p><p>' + bf[16] + '</p></td>';
-            var spfdata_five2 = '<td data-dit="v99" width="10%" colspan="2" onclick="seleMatch(this)"><p>平其他</p><p>' + bf[17] + '</p></td>';
+            var spfdata_five2 = '<td data-dit="v99" width="10%" colspan="3" onclick="seleMatch(this)"><p>平其他</p><p>' + bf[17] + '</p></td>';
 
 
-            var oddTag5_2 = '<tr data-wf="ht" class="jc-table-b spf-dd">' +spfdata_one2+spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
+            var oddTag5_2 = '<tr data-wf="ht" class="jc-table-b spf-dd">' +spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
 
             var spfdata_zero3 = '<td data-dit="v21" width="5.14%" >负</td>';
             var spfdata_one3 = '<td data-dit="v01" width="10%" onclick="seleMatch(this)"><p>0:1</p><p>' + bf[18] + '</p></td>';

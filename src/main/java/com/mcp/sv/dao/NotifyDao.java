@@ -29,6 +29,7 @@ public class NotifyDao {
             JSONObject ticket = tickets.getJSONObject(i);
             String outerId = ticket.getString("outerId");
             int status = ticket.getInt("status");
+            int amount = ticket.getInt("amount");
             if (status == 1000) {
                 //出票状态通知
                 int printStatus = ticket.getInt("printStatus");
@@ -39,7 +40,18 @@ public class NotifyDao {
                 }
                 //出票失败
                 else if (status > 1500) {
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4001, 0, null);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null);
+                    Map map=new HashMap();
+                    map.put("outerId",outerId);
+                    List list = MongoUtil.query(MongoConst.MONGO_TICKET,map);
+                    if(list.size()==1){
+                        DBObject dbObjectTicket= (DBObject) list.get(0);
+                        String userName= (String) dbObjectTicket.get("userName");
+                        //退款
+                        String result = LotteryDao.reviceRecharge(userName, amount, outerId);
+                    }else {
+                        logger.error("彩票ID: " + outerId+"  退款出现问题");
+                    }
                 } else {
                     logger.error(outerId + "   未知状态: " + printStatus);
                 }
@@ -54,10 +66,13 @@ public class NotifyDao {
                     List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
+                    String userName = (String) _ticket.get("userName");
                     logger.info("************ 第一步已中奖更新订单");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5000);
-                    logger.info("************ 第一步已中奖更新彩票");
+                    logger.info("************ 第二步已中奖更新彩票");
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5000, bonus, dNumber);
+                    logger.info("************ 第三步返奖");
+                    LotteryDao.updatePrize(userName,bonus,outerId);
                 } else if (status == 1300) {
                     //未中奖
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0, dNumber);

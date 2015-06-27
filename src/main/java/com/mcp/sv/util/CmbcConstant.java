@@ -27,6 +27,7 @@ public class CmbcConstant {
     public static final int TRANSTYPE = 0;  //交易类型
     public static final int RECHARGETYPE = 1;  //充值类型
     public static final int PRIZETYPE = 2;  //奖金类型
+    public static final int RECIVETYPE = 3;  //退款类型
 
 
     //订单状态

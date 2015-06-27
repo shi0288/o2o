@@ -66,8 +66,9 @@
 <div class="jc-footer bottomfix jc-step1">
 	<div class="jc-footer-box">
 		<div class="jc-del"></div>
+        <div class="jj-k-check"><span class="check-org" id="jcdg"></span><span class="fl">单关</span></div>
         <div class="jc-ok"></div>
-        <div class="jc-tz-tip" id="jc-cs">至少选2场比赛</div>
+        <div class="jc-tz-tip" id="jc-cs">至少选1场比赛</div>
     </div>
 </div>	
 <!--第一步底部结束-->

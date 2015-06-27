@@ -612,7 +612,7 @@ function getMatchInfo(obj,st){
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="9"><p>' + changci + '</p><p class="lsname">' + matchName[2] + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
-                    '<td width="72%" colspan="9" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
+                    '<td width="72%" colspan="9" danguan="'+ danguan +'" style="'+ style +'"><span class="teamname">' + matchName[0] + '</span>V S<span class="teamname">' + matchName[1] + '</span></td>' +
                     '</tr>' +
                     oodsTag +
                     '</tbody>' +

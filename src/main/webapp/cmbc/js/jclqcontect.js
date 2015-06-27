@@ -306,12 +306,14 @@ function getMatchInfo(obj){
                 rqspfdata_two = '<td width="36%" class="false" data-dit="v2">负--</td>';
             }
             var classSingle = "";
+            var data_single = "false";
             if(item.mnl.single == '1'){
                 classSingle="single";
+                data_single = "true";
             }
             oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + rqspfdata_one + rqspfdata_two + '</tr>'
             changciHtml =
-                '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
+                '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table" data-single="'+data_single+'">' +
                 '<tbody><tr class="jc-table-tbb">' +
                 '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
                 '<td width="72%" colspan="2" class='+classSingle+'><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
@@ -336,11 +338,13 @@ function getMatchInfo(obj){
                 }
                 oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + '</tr>' ;
                 var classSingle = "";
+                var data_single = "false";
                 if(item.hdc.single == '1'){
                     classSingle="single";
+                    data_single = "true";
                 }
                 changciHtml =
-                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
+                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table" data-single="'+data_single+'">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
                     '<td width="72%" colspan="2" class='+classSingle+'><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
@@ -351,8 +355,10 @@ function getMatchInfo(obj){
             }else if(playType== '03' && item.wnm){//胜分差
                 var spfdata = item.wnm;
                 var classSingle = "";
+                var data_single = "false";
                 if(item.wnm.single == '1'){
                     classSingle="single";
+                    data_single = "true";
                 }
                 if (spfdata) {
                     var home_cn = '<td width="10%" class="false" data-dit="v1">主胜</td>';
@@ -379,7 +385,7 @@ function getMatchInfo(obj){
 
                 }
                 changciHtml =
-                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
+                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table" data-single="'+data_single+'">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="30%" class="jc-table-rb" rowspan="4"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
                     '<td width="70%" colspan="7" class="'+ classSingle+'"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' +item.guest_cn + '</span></td>' +
@@ -390,8 +396,10 @@ function getMatchInfo(obj){
             }else if(playType = '04' && item.hilo){//大小分
                 var spfdata = item.hilo ;
                 var classSingle = "";
+                var data_single = "false";
                 if(item.hilo.single == '1'){
                     classSingle="single";
+                    data_single = "true";
                 }
                 if (spfdata) {
                     var spfdata_one = '<td data-dit="v1" width="24%" onclick="seleMatch(this)">大' + spfdata["big"] + '</td>';
@@ -405,7 +413,7 @@ function getMatchInfo(obj){
                     var spfdata_three = '<td class="false" data-dit="v2">小</td>';
                 }
                 changciHtml =
-                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' +item.guest_cn + '" data-cc="' + item.code + '" class="jc-table">' +
+                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' +item.guest_cn + '" data-cc="' + item.code + '" class="jc-table" data-single="'+data_single+'">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
                     '<td width="72%" colspan="3" class="'+ classSingle+'"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' +item.guest_cn + '</span></td>' +

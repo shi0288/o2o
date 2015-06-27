@@ -274,9 +274,10 @@ function danClick(evel){
 function jcList(){
 	$(".jc-table.on").each(function(index) {
 		var cc=$(this).attr("data-cc");
+		var data_single = $(this).attr("data-single");
 		var sfc=$(this).find(".jc-table-b").find('.on');
 		if($("#id_"+cc).length<1){
-			var html='<div class="jc-list-item" id="id_'+cc+'" data-cc="'+cc+'">'+
+			var html='<div class="jc-list-item" id="id_'+cc+'" data-cc="'+cc+'" data-single="'+data_single+'">'+
 						'<div class="jc-list-item-close" onClick="closeClick(this)"></div>'+
 						'<div class="jc-list-item-dan" onClick="danClick(this)"></div>'+
 						'<div class="jc-list-item-cot clearfix">'+
@@ -335,9 +336,21 @@ function chuanChange(){
 		$("#xchuan").find(".chuan-item").removeAttr("data-class");
 		thischuan.addClass("on");
 		thischuan.attr("data-class","on");
-	}else if(changs == 1){
-		$("#chuanguan").html("单场固定");
-		$("#chuanguan").attr("data-chuan","r"+changs+"c1");
+	}else if(changs == 1 ){
+		var singleflag = true;
+		$(".jc-list-item").each(function(index){
+			if($(this).attr("data-single") == "false"){
+				singleflag = false;
+				return;
+			}
+		});
+		if(singleflag){
+			$("#chuanguan").html("单场固定");
+			$("#chuanguan").attr("data-chuan","r"+changs+"c1");
+		}else{
+			$("#chuanguan").html("过关方式");
+			$("#chuanguan").removeAttr("data-chuan");
+		}
 	}else{
 		$("#chuanguan").html("过关方式");
 		$("#chuanguan").removeAttr("data-chuan");
@@ -355,23 +368,37 @@ function chuanList(){
 	var n=$(".jc-list-item").length;
 	$("#zy-chuan").html("");
 	$("#duo-chuan").html("");
+	var singleflag = true;
+	$(".jc-list-item").each(function(index){
+		if($(this).attr("data-single") == "false"){
+			singleflag = false;
+			return;
+		}
+	});
+
 	$.each(arrT,function(i,item){
 		if(item.charAt(1)<=n){
 			var len=item.length;
 			var chuanm=item.split(/[a-z]/);
 			var chuanstr = "";
-			if(chuanm[1] == "1"){
-				chuanstr = "单场固定";
+			if(chuanm[1] == "1" ){
+				if( singleflag){
+					chuanstr = "单场固定";
+				}else{
+					chuanstr = "";
+				}
 			}else{
 				chuanstr=chuanm[1]+"串"+chuanm[2];
 			}
-			var chuanHtml='<span class="chuan-item" data-chuan="'+item+'" onClick="togOn(this)">'+chuanstr+'</span>';
-			if(chuanm[2]=="1"){
-				//自由过关
-				$("#zy-chuan").append(chuanHtml);
-			}else{
-				//多串过关
-				$("#duo-chuan").append(chuanHtml);	
+			if(chuanstr !="" ){
+				var chuanHtml='<span class="chuan-item" data-chuan="'+item+'" onClick="togOn(this)">'+chuanstr+'</span>';
+				if(chuanm[2]=="1"){
+					//自由过关
+					$("#zy-chuan").append(chuanHtml);
+				}else{
+					//多串过关
+					$("#duo-chuan").append(chuanHtml);
+				}
 			}
 		}	
 	});	

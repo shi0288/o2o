@@ -354,14 +354,18 @@ function chuanList(){
 		if(item.charAt(1)<=n){
 			var len=item.length;
 			var chuanm=item.split(/[a-z]/);
-			var chuanstr=chuanm[1]+"串"+chuanm[2];
-			var chuanHtml='<span class="chuan-item" data-chuan="'+item+'" onClick="togOn(this)">'+chuanstr+'</span>';
-			if(chuanm[2]=="1"){
-				//自由过关
-				$("#zy-chuan").append(chuanHtml);
+			if(chuanm[1] == "1"){
+
 			}else{
-				//多串过关
-				$("#duo-chuan").append(chuanHtml);	
+				var chuanstr=chuanm[1]+"串"+chuanm[2];
+				var chuanHtml='<span class="chuan-item" data-chuan="'+item+'" onClick="togOn(this)">'+chuanstr+'</span>';
+				if(chuanm[2]=="1"){
+					//自由过关
+					$("#zy-chuan").append(chuanHtml);
+				}else{
+					//多串过关
+					$("#duo-chuan").append(chuanHtml);
+				}
 			}
 		}	
 	});	

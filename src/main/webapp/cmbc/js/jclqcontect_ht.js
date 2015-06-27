@@ -82,9 +82,9 @@ function submitJc() {
     var amount = $("#qianshu").html();
     amount = parseInt(amount) * 100;
     var betType = $("#chuanguan").attr("data-chuan");
-    if(betType==undefined){
-        betType='11';
-        amount=200;
+    if(betType == undefined){
+        alert("错误的玩法");
+        return;
     }else{
         betType = betType.replace(/[a-z]/g, "");
     }
@@ -173,6 +173,9 @@ function getJcNums() {
         }
         var cc =  $(this).attr("data-cc");
         var strNum = "";
+        if (index ==  $(".jc-list-item").length - 1) {
+            termCode = $(this).attr("data-cc");
+        }
         $(_this).find(".jc-list-item-dw.on").each(function (i, val) {
             var self = this;
             var length = $(self).parent().find(".jc-list-item-dw.on").length;

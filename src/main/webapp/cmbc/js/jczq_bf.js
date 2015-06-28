@@ -430,7 +430,7 @@ function chuanList(){
 				var len=item.length;
 				var chuanm=item.split(/[a-z]/);
 				var chuanstr="";
-				if(chuanm[1] == "1"){
+				if(chuanm[1] != n){
 					return true;
 				}else{
 					chuanstr=chuanm[1]+"串"+chuanm[2];

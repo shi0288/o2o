@@ -90,6 +90,11 @@ function togOn(evel) {
     if ($(evel).hasClass("on")) {
         $(evel).removeClass("on");
     } else {
+        var xchuan=$(".chuan-item.on").length;
+        if(xchuan>=1){
+            alert("只能选取一种通关模式");
+            return true;
+        }
         $(evel).addClass("on");
     }
 }

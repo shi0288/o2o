@@ -404,7 +404,7 @@ function chuanList(){
 				//}else{
 				//	chuanstr=chuanm[1]+"串"+chuanm[2];
 				//}
-				if(chuanm[1] == "1"){/////////////////////////
+				if(chuanm[1] != n){
 					return true;
 					//chuanstr = "单场固定";
 				}else{

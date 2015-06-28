@@ -291,8 +291,8 @@ function danClick(evel){
 function jcList(){
     $(".jc-table.on").each(function(index) {
         var cc=$(this).attr("data-cc");
-        var sfc=$(this).find(".jc-table-b[data-wf=spf]").eq(0);
-        var rf=$(this).find(".jc-table-b[data-wf=rf]").eq(0);
+        var sfc=$(this).find(".jc-table-b").find('td.on');
+        //var rf=$(this).find(".jc-table-b[data-wf=rf]").eq(0);
         if($("#id_"+cc).length<1){
             var html='<div class="jc-list-item" id="id_'+cc+'" data-cc="'+cc+'">'+
                 '<div class="jc-list-item-close" onClick="closeClick(this)"></div>'+
@@ -326,20 +326,12 @@ function jcList(){
                 '</div>';
             $("#id_"+cc).find(".jc-list-item-cot").eq(0).html(htmls);
         }
-        if(sfc.find(".on").length>0){
-            $(this).find("td.on").each(function(aa){
+        if(sfc.length>0){
+            sfc.each(function(aa){
                 var datadit=$(this).attr("data-dit");
                 $("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).addClass("on");
                 $("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).html($(this).html());
                 $("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-dit",datadit);
-            });
-        }
-        if(rf.find(".on").length>0){
-            $(this).find("td.on").each(function(aa){
-                var datadit=$(this).attr("data-dit");
-                $("#id_"+cc).find(".rf").eq(0).find(".jc-list-item-dw").eq(aa).addClass("on");
-                $("#id_"+cc).find(".rf").eq(0).find(".jc-list-item-dw").eq(aa).html($(this).html());
-                $("#id_"+cc).find(".rf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-dit",datadit);
             });
         }
     });

@@ -289,13 +289,11 @@ function danClick(evel){
 }
 //列出选择列表
 function jcList(){
+	//console.log("1:"+$(".jc-table.on").length);
 	$(".jc-table.on").each(function(index) {
 		var cc=$(this).attr("data-cc");
-		//console.log('cc:'+cc);
-		var sfc=$(this).find(".jc-table-b[data-wf=spf]").eq(0);
-		//console.log('sfc:'+sfc);
-		var rf=$(this).find(".jc-table-b[data-wf=rf]").eq(0);
-		//console.log('rf:'+rf);
+		//var sfc=$(this).find(".jc-table-b[data-wf=spf]");
+		var sfc=$(this).find(".jc-table-b").find('td.on');
 		if($("#id_"+cc).length<1){
 			var html='<div class="jc-list-item" id="id_'+cc+'" data-cc="'+cc+'">'+
 				'<div class="jc-list-item-close" onClick="closeClick(this)"></div>'+
@@ -366,25 +364,17 @@ function jcList(){
 				'</div>';
 			$("#id_"+cc).find(".jc-list-item-cot").eq(0).html(htmls);
 		}
-		if(sfc.find(".on").length>0){
-
-			$(this).find("td.on").each(function(aa) {
-				console.log('ccindex:'+index);
+		if(sfc.length>0){
+			//console.log("2:"+$(this).find("td.on").length);
+			sfc.each(function(aa) {
+				//$(this).find("tr.td.on").each(function(aa) {
+				//console.log('ccindex:'+index);
 				var datadit=$(this).attr("data-dit");
 				$("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).addClass("on");
 				$("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).html($(this).html());
 				$("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-dit",datadit);
 			});
 
-		}
-		if(rf.find(".on").length>0){
-			$(this).find("td.on").each(function(aa) {
-				console.log('ccindex:'+index);
-				var datadit=$(this).attr("data-dit");
-				$("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).addClass("on");
-				$("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).html($(this).html());
-				$("#id_"+cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-dit",datadit);
-			});
 		}
 	});
 	var iheight=$(document).height();
@@ -395,6 +385,7 @@ function jcList(){
 }
 //更新选串信息
 function chuanChange(){
+	//$(".chuanguan").eq(0).empty();
 	var changs=$(".jc-list-item-cot").length;
 	if(changs>8){
 		changs=8;

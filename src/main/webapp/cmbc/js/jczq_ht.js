@@ -241,9 +241,19 @@ $(document).ready(function() {
 		jcSum();
 	});
 });
+var xuanzeMap = {};
+
 function seleMatch(evel){
+	var code = $(evel).parents(".jc-table").attr("data-cc");
+	var ptype = $(evel).parents("tr").attr("pType");
+	var key = code + ptype;
 	var currLen = 1;
 	if($(evel).hasClass("on")){
+		if(xuanzeMap[key] && xuanzeMap[key]== 1){
+			delete xuanzeMap[key];
+		}else{
+			xuanzeMap[key] = xuanzeMap[key] - 1;
+		}
 		$(evel).removeClass("on");
 		if($(evel).parents(".pType").find(".on").length<1){
 			$(evel).parents(".pType").removeClass("on");
@@ -252,13 +262,51 @@ function seleMatch(evel){
 			$(evel).parents(".jc-table").removeClass("on");
 			$(evel).parents(".jc-table").parent("div").attr("num","close");
 		}
-	}else{
-		$(evel).addClass("on");
-		$(evel).parents(".pType").addClass("on");
-		$(evel).parents(".jc-table").addClass("on");
-		$(evel).parents(".jc-table").parent("div").attr("num","open");
+	}else {
+		if (xuanzeMap[key]) {
+			xuanzeMap[key] = xuanzeMap[key] + 1;
+			$(evel).addClass("on");
+			$(evel).parents(".jc-table").addClass("on");
+			$(evel).parents(".jc-table").parent("div").attr("num", "open");
+		} else {
+			var flag = true;
+			var currLen = 1;
+			for (var iterm in xuanzeMap) {
+				var tempCode = iterm.substr(0, 12);
+				var ptype = iterm.substr(12);
+				if((ptype == "05" || ptype == "03") && currLen >=4 ){
+					alert("所选择比赛中包含<比分>或者<半全场>，过关不能超过4场");
+					flag = false;
+					break;
+				}
+				if(ptype == "04" && currLen >=6){
+					alert("所选择比赛中包含<总进球>，过关不能超过6场");
+					flag = false;
+					break;
+				}
+				if(currLen >=8){
+					alert("过关不能超过8场");
+					flag = false;
+					break;
+				}
+				if (code == tempCode) {
+					alert("同一场比赛不允许选择不同的玩法");
+					flag = false;
+					break;
+				}
+				currLen ++;
+			}
+			if (flag) {
+				xuanzeMap[key] = 1;
+				$(evel).addClass("on");
+				$(evel).parents(".jc-table").addClass("on");
+				$(evel).parents(".jc-table").parent("div").attr("num", "open");
+			} else {
+				return;
+			}
+		}
 	}
-
+/*
 	var lentemp = $(evel).parents(".jc-table").find("tr").filter(".on").length ;
 	if(lentemp > 1){
 		$(evel).removeClass("on");
@@ -271,7 +319,7 @@ function seleMatch(evel){
 		}
 		alert("一场比赛只能选择一种玩法");
 		return;
-	}
+	}*/
 	var cs=getChangshu();
 	if(cs>=2){
 		$("#jc-cs").html("您选择了"+cs+"场比赛");

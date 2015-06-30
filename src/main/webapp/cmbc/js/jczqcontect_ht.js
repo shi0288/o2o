@@ -351,7 +351,7 @@ function getMatchHhggInfo(obj,st){
             var spfdata_seven = '<td data-dit="v03" width="11.1%" onclick="seleMatch(this)"><p>负胜</p><p>' + bqc[6] + '</p></td>';
             var spfdata_eight = '<td data-dit="v01" width="11.1%" onclick="seleMatch(this)"><p>负平</p><p>' + bqc[7] + '</p></td>';
             var spfdata_nine = '<td data-dit="v00" width="11.1%" onclick="seleMatch(this)"><p>负负</p><p>' + bqc[8] + '</p></td>';
-            oodsTag3='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + '</tr>' ;
+            oodsTag3='<tr data-wf="ht" class="jc-table-b spf-dd" pType="05">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + '</tr>' ;
         }
         if(zjqs){
             var spfdata_one = '<td data-dit="v0" width="12.5%" onclick="seleMatch(this)"><p>0球</p><p>' + zjqs[0] + '</p></td>';
@@ -363,7 +363,7 @@ function getMatchHhggInfo(obj,st){
             var spfdata_seven = '<td data-dit="v6" width="12.59%" onclick="seleMatch(this)">6球<p></p><p>' + zjqs[6] + '</p></td>';
             var spfdata_eight = '<td data-dit="v7" width="12.5%" onclick="seleMatch(this)">7+球<p></p><p>' + zjqs[7] + '</p></td>';
 
-            oodsTag4='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + '</tr>' ;
+            oodsTag4='<tr data-wf="ht" class="jc-table-b spf-dd" pType="04">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + '</tr>' ;
 
         }
         if(bf){
@@ -382,8 +382,8 @@ function getMatchHhggInfo(obj,st){
             var spfdata_twelve = '<td data-dit="v52" width="10%" onclick="seleMatch(this)"><p>5:2</p><p>' + bf[11] + '</p></td>';
             var spfdata_thirteen = '<td data-dit="v90" width="10%" colspan="2" onclick="seleMatch(this)"><p>胜其他</p><p>' + bf[12] + '</p></td>';
 
-            var tr_one='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + '</tr>' ;
-            var tr_two='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
+            var tr_one='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + '</tr>' ;
+            var tr_two='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
             oodsTag5=tr_one+tr_two;
             //oodsTag5='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_zero + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
 
@@ -395,7 +395,7 @@ function getMatchHhggInfo(obj,st){
             var spfdata_five2 = '<td data-dit="v99" width="10%" colspan="3" onclick="seleMatch(this)"><p>平其他</p><p>' + bf[17] + '</p></td>';
 
 
-            var oddTag5_2 = '<tr data-wf="ht" class="jc-table-b spf-dd">' +spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
+            var oddTag5_2 = '<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' +spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
 
             var spfdata_zero3 = '<td data-dit="v21" width="5.14%" >负</td>';
             var spfdata_one3 = '<td data-dit="v01" width="10%" onclick="seleMatch(this)"><p>0:1</p><p>' + bf[18] + '</p></td>';

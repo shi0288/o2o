@@ -54,6 +54,9 @@
                                 sessionStorage.setItem("prize", result.acount.prize);
                             }
                         }
+                        sessionStorage.setItem("realName", result.user.realName);
+                        sessionStorage.setItem("mobile", result.user.mobile);
+                        sessionStorage.setItem("identityId", result.user.identityId);
                         var name = sessionStorage.getItem("name");
                         var recharge = sessionStorage.getItem("recharge");
                         var prize = sessionStorage.getItem("prize");

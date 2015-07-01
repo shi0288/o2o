@@ -239,7 +239,6 @@ function getData() {
         success: function (result) {
             var termCode = result.termCode;
             if (termCode!=undefined) {
-                var termCode = result.termCode;
                 var lastime = result.closeTime;
                 var endTime = result.closeTime;
                 lastime = lastime.substring(0, 16);

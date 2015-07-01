@@ -23,9 +23,9 @@ $(document).ready(function (e) {
             return false;
         }
         if ($("#beishu").html() > 99) {
-                alert("不能大于99倍");
-                return false;
-         }
+            alert("不能大于99倍");
+            return false;
+        }
         before();//显示弹出层提示
         var order = getOrder();
         doTzhu(order);
@@ -36,7 +36,7 @@ function doTzhu(order) {
     var body = {
         'order': order
     };
-   $.ajax({
+    $.ajax({
         type: "POST",
         url: "/bankServices/LotteryService/confirmOrders?timestamp=" + new Date().getTime(),
         dataType: "json",
@@ -97,7 +97,7 @@ function getTick() {
         zhu = parseInt(zhu);
 
         var ticket = {
-			'gameCode': $("#game").attr("data-game"),
+            'gameCode': $("#game").attr("data-game"),
             'termCode': String($("#termCode").html()),
             'type': 1,
             'amount': multiple * zhu * evprice,
@@ -178,7 +178,7 @@ function InterTime() {
     }
 }
 function getData() {
-   //获取彩种名称
+    //获取彩种名称
     var cai_name = $(".top-relative").eq(0).find(".title").eq(0).html();
     var zhuss = 0;
     cai_name = $.base.noHtml(cai_name);
@@ -196,8 +196,8 @@ function getData() {
             body: JSON.stringify(body)
         },
         success: function (result) {
-            if (result.repCode=="0000") {
-                var termCode = result.termCode;
+            var termCode = result.termCode;
+            if (termCode!=undefined) {
                 var lastime = result.closeTime;
                 var endTime = result.closeTime;
                 lastime = lastime.substring(0, 16);

@@ -237,7 +237,8 @@ function getData() {
             body: JSON.stringify(body)
         },
         success: function (result) {
-            if (result.repCode=="0000") {
+            var termCode = result.termCode;
+            if (termCode!=undefined) {
                 var termCode = result.termCode;
                 var lastime = result.closeTime;
                 var endTime = result.closeTime;

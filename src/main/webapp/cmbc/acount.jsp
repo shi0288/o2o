@@ -124,11 +124,10 @@
                     if (repCode == '0000') {
                         $(".index").show();
                         if (result['rst'].length <= 0) {
-                            //obj.find(".zhanghu-list").remove();
-                            //obj.find(".zhanghu-nodata").remove();
                             obj.find(".page").eq(0).attr("cur-page", curPage);
                             var nohtml = '<div class="zhanghu-nodata">您暂时没有投注记录，快去购彩大厅试试手气吧！</div>';
                             obj.append(nohtml);
+                            after();
                             return false;
                         }
                         //var ind = obj.index(".tab-content");

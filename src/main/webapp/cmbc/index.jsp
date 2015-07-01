@@ -109,7 +109,7 @@
         -->
         <ul id="caizhong-ul" class="clearfix">
             <li id="jczq"><a class="ico-box" href="jczq.jsp"><img src="img/ico_jczq.png"/>竞彩足球</a></li>
-            <li id="jclq"><a class="ico-box" href="jclq.jsp"><img src="img/ico_jclq.png"/>竞彩足球</a></li>
+            <li id="jclq"><a class="ico-box" href="jclq.jsp"><img src="img/ico_jclq.png"/>竞彩篮球</a></li>
             <li id="dlt"><a class="ico-box" href="dlt.jsp"><img src="img/ico_dlt.png"/>大乐透</a></li>
             <li id="c11x5"><a class="ico-box" href="c11x5.jsp"><img src="img/ico_11xuan5.png"/>11选5</a></li>
             <li id="pl3"><a class="ico-box" href="pl3.jsp"><img src="img/ico_pl3.png"/>排列三</a></li>

@@ -81,7 +81,6 @@ public class LotteryDao {
                 //登录成功
                 returnObject = new JSONObject(user.toMap());
                 returnObject.put("repCode", "0000");
-
             } else {
                 returnObject.put("repCode", "1007");
                 returnObject.put("description", "密码错误");
@@ -325,7 +324,7 @@ public class LotteryDao {
 
 
 
-    public static String updateUser(String userName, String passWord, String address, String mobile) {
+    public static String updateUser(String userName, String passWord, String realName, String mobile,String identityId) {
         //查询库中是否有此记录
         Map param = new HashMap();
         param.put("userName", userName);
@@ -335,8 +334,9 @@ public class LotteryDao {
             DBObject user = (DBObject) datas.get(0);
             String userStr = JSON.serialize(user);
             DBObject newUser = (DBObject) JSON.parse(userStr);
-            newUser.put("address", address);
+            newUser.put("realName", realName);
             newUser.put("mobile", mobile);
+            newUser.put("identityId", identityId);
             int res = MongoUtil.update(MongoConst.MONGO_USERS, user, newUser);
             if (res == 1) {
                 return "";

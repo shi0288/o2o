@@ -9,7 +9,6 @@
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="0">
-    <meta http-equiv="cache-control" content="no-cache">
     <meta name="format-detection" content="telephone=no"/>
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>

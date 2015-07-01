@@ -68,7 +68,11 @@ public class NotifyDao {
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     String userName = (String) _ticket.get("userName");
                     logger.info("************ 第一步已中奖更新订单");
-                    LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5000);
+                    String had = LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5000);
+                    if("had".equals(had)){
+                        logger.info("************ 第一步已中奖更新订单ERROE:"+outerId+"  已更新过");
+                        return;
+                    }
                     logger.info("************ 第二步已中奖更新彩票");
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5000, bonus, dNumber);
                     logger.info("************ 第三步返奖");

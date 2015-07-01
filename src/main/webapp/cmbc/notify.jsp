@@ -13,8 +13,6 @@
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/iphone.js"></script>
-    <script type="text/javascript" src="/cmbc/js/platform.js"></script>
 </head>
 <body>
 <%

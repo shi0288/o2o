@@ -2,32 +2,12 @@
  /*彩币支付提交以后，走正常流程。第三方支付提交以后，走支付接口，调用setWebitEvent("11111111", "LT03");
  */
 var thisUrl = window.location.href;
-var browser = {
-    versions: function () {
-        var u = navigator.userAgent, app = navigator.appVersion;
-        return {
-            trident: u.indexOf('Trident') > -1, //IE内核
-            presto: u.indexOf('Presto') > -1, //opera内核
-            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-            mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
-            ios: !!u.match(/(i[^;]+\;(U;)? CPU.+Mac OS X)/), //ios终端
-            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-            iPad: u.indexOf('iPad') > -1, //是否iPad
-            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-        }
-    }(),
-    language: (navigator.browserLanguage || navigator.language).toLowerCase()
-}
 
 
 $(document).ready(function (e) {
     thisUrl = window.location.href;
     //获取期号和截止时间
     getData();
-    //获取账户信息
-    //getUserData();
     //提交订单
     $(".step2").die().live("click", function () {
         zhuss = $("#zhushu").html();
@@ -42,71 +22,15 @@ $(document).ready(function (e) {
             })
             return false;
         }
-
-        var gameCode = $("#game").attr("data-game");
-        if(gameCode=="F01" || gameCode=="F02"|| gameCode=="F03"){
-            if($("#beishu").html()>50){
-                alert("不能大于50倍");
-                return false;
-            }
-        }else {
-            if ($("#beishu").html() > 99) {
+        if ($("#beishu").html() > 99) {
                 alert("不能大于99倍");
                 return false;
-            }
-        }
-
+         }
         before();//显示弹出层提示
-        var iqishu = $(".jj-k").eq(1).find("input").eq(0).val();
-        iqishu = parseInt(iqishu);
-        if (iqishu > 1) {
-            //追号
-            var body = getZhBody(iqishu);
-            doTzhuZh(body, iqishu);
-        } else {
-            //非追号
-            var order = getOrder();
-            doTzhu(order);
-        }
+        var order = getOrder();
+        doTzhu(order);
     });
 });
-//追号
-function doTzhuZh(body, issue) {
-    var payType = 1;
-    var userId = sessionStorage.getItem("UserId");
-    $.ajax({
-        type: "POST",
-        url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
-        dataType: "json",
-        cache: false,
-        data: {
-            cmd: 'S01',
-            Id: sessionStorage.getItem("Id"),
-            St: sessionStorage.getItem("St"),
-            payType: payType,
-            body: JSON.stringify(body)
-        },
-        success: function (result) {
-            var repCode = result.repCode;
-            var cai_name = $(".top-relative").eq(0).find(".title").eq(0).html();
-            if (repCode == '0000') {
-                if (payType == 1) {
-                    tzSuccesszh(cai_name, zhuss, result['scheme']);
-                }
-//                else {
-//                    //银行卡支付
-//                    setWebitEvent(result.envelopeData, "LT03");
-//                }
-            } else if (repCode == '1007') {
-                after();//删除弹出层提示
-                alert("账户余额不足，请充值");
-            } else {
-                after();//删除弹出层提示
-                alert(result.description);
-            }
-        }
-    });
-}
 //非追号
 function doTzhu(order) {
     var body = {
@@ -139,78 +63,6 @@ function doTzhu(order) {
         }
     });
 }
-
-//投注成功非追号
-function tzSuccess(cai_name, order, zhuss, respondOrderId) {
-    $.ajax({
-        type: "POST",
-        url: "success.html",
-        dataType: "html",
-        success: function (result) {
-            var iszhuihao = ""
-            if ($("#zhuijia").length > 0 && $("#zhuijia").hasClass("now")) {
-                iszhuihao = "[追加]";
-            }
-            var zjine = toDecimalMoney(order['amount'] / 100);
-            var href = "fangan.html#" + respondOrderId;
-            sessionStorage.setItem("orderId",respondOrderId);
-            $("body").html(result);
-            $("#caizhong").html(cai_name);
-            $("#qihao").html(order['termCode']);
-            $("#zjine").html(zjine + "元");
-            $("#zhuss").html(zhuss + "注" + iszhuihao);
-            $("#jrwdcp").attr("href", href);
-
-            after();//删除弹出层提示
-        }
-    });
-}
-function tzSuccesszh(cai_name, zhuss, respondOrder) {
-    $.ajax({
-        type: "POST",
-        url: "success.html",
-        dataType: "html",
-        success: function (result) {
-            var iszhuihao = ""
-            if ($("#zhuijia").length > 0 && $("#zhuijia").hasClass("now")) {
-                iszhuihao = "[追加]";
-            }
-            var zjine = toDecimalMoney(respondOrder['amount'] / 100);
-            var href = "fanganzh.html#" + respondOrder['id'];
-            sessionStorage.setItem("orderId",respondOrder['id']);
-            $("body").html(result);
-            $("#caizhong").html(cai_name);
-            $("#qihao").html("追" + respondOrder['orderCount'] + "期");
-            $("#zjine").html(zjine + "元");
-            $("#zhuss").html(zhuss + "注" + iszhuihao);
-            $("#jrwdcp").attr("href", href);
-
-            after();//删除弹出层提示
-        }
-    });
-};
-//获取追号订单信息
-function getZhBody(issue) {
-    var numList = getNumList();
-    var amount = $("#qianshu").html();
-    amount = parseFloat(amount) * 100;
-    var winstop = false;
-    if ($("#zjstop").hasClass("now")) {
-        winstop = true;
-    }
-    var scheme = {
-        'amount': amount,
-        'platform': 'HTML5',
-        'payType': payType,
-        'gameCode': $("#game").attr("data-game"),
-        'startTermCode': $("#termCode").html(),
-        'winStop': winstop,
-        'orderCount': issue,
-        'numList': numList
-    };
-    var body = {"scheme": scheme};
-    return body;
-}
 //获取非追号订单信息
 function getOrder() {
     var tick = getTick();
@@ -222,36 +74,8 @@ function getOrder() {
         'tickets': tick
     };
     return order;
-//获取追号的getNumList
 }
-function getNumList() {
-    var getNumList = "";
-    $(".qiulist").each(function (index, element) {
-        var betTypeCode = $(this).attr("data-type");
-        var numbers = $(this).attr("data-res");
-        var multiple = $("#beishu").html();
-        multiple = parseInt(multiple);
-        var playTypeCode = "";
-        var evprice = 200; //每注价格200
-        if ($("#zhuijia").length > 0 && $("#zhuijia").hasClass("now")) {
-            playTypeCode = "05";
-            var evprice = 300; //每注价格200
-        } else {
-            playTypeCode = $("#game").attr("data-play");
-        }
-        if ($(this).attr("data-play")) {
-            playTypeCode = $(this).attr("data-play");
-        }
-        var zhu = $(this).attr("data-zs");
-        zhu = parseInt(zhu);
-        if (index == $(".qiulist").length - 1) {
-            getNumList += playTypeCode + "~" + betTypeCode + "~" + numbers + "~" + multiple * zhu * evprice + "~" + multiple;
-        } else {
-            getNumList += playTypeCode + "~" + betTypeCode + "~" + numbers + "~" + multiple * zhu * evprice + "~" + multiple + "!";
-        }
-    });
-    return getNumList;
-}
+
 function getTick() {
     var tickets = [];
     $(".qiulist").each(function (index, element) {

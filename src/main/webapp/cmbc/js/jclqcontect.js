@@ -72,7 +72,6 @@ function submitJc() {
         payType = 1;
     }
     var betType = $("#chuanguan").attr("data-chuan");
-    console.log(betType);
     betType = betType.replace(/[a-z]/g, "");
     if(betType == undefined){
         alert("错误的玩法");
@@ -102,10 +101,8 @@ function submitJc() {
         "presetTerminal":"0000",
         "outerId":new Date().getTime()+Math.random().toString(36).substr(8),
         "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
-    }
+    };
     tickets.push(ticket);
-    console.log(tickets.toString());
-
     var order = {
         'amount': amount,
         'outerId':new Date().getTime()+Math.random().toString(36).substr(8),
@@ -115,7 +112,7 @@ function submitJc() {
     var body = {
         'order':order
     };
-    console.log(body);
+    before();
     $.ajax({
         type: "POST",
         url: "/bankServices/LotteryService/confirmOrders?timestamp=" + new Date().getTime(),
@@ -136,24 +133,11 @@ function submitJc() {
                 // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
                 alert("账户余额不足，请充值");
+                after();
             } else {
                 alert("投注失败，请稍后重试。");
+                after();
             }
-            after();
-        }
-    });
-}
-function jcTzSuccess(order, amount) {
-    $.ajax({
-        type: "POST",
-        url: "jczqsucess.html",
-        dataType: "html",
-        success: function (result) {
-            var href = "fanganjc.html#" + order['id'];
-            $(".jc-bg").eq(0).find("div").hide();
-            $(".jc-bg").append(result);
-            $(".succ-amount").html(amount);
-            $(".succ-link").attr("href", href);
 
         }
     });

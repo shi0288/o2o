@@ -446,6 +446,11 @@ public class LotteryDao {
         logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + status + "  " + "outerId：" + outerId);
         if (datas.size() == 1) {
             DBObject order = (DBObject) datas.get(0);
+            int pk_status=(int)order.get("status");
+            if(pk_status==status){
+                logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + status + "已更新过，不在更新  " + "outerId：" + outerId);
+                return "had";
+            }
             String orderStr = JSON.serialize(order);
             DBObject newOrder = (DBObject) JSON.parse(orderStr);
             newOrder.put("status", status);

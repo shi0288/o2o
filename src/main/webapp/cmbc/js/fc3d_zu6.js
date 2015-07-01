@@ -84,7 +84,6 @@ $(document).ready(function() {
 			su=parseInt(su);
 			sumzhu+=su;		
 		}
-		var index=$(this).parent().find(".on").length;
 		var i=$(this).parents(".tab-content").index(".tab-content");
 		$(".meizhushu").eq(i).html(sumzhu);
 		$(".meizhuqian").eq(i).html(sumzhu*2);
@@ -105,7 +104,6 @@ $(document).ready(function() {
 			su=parseInt(su);
 			sumzhu+=su;		
 		}
-		var index=$(this).parent().find(".on").length;
 		var i=$(this).parents(".tab-content").index(".tab-content");
 		$(".meizhushu").eq(i).html(sumzhu);
 		$(".meizhuqian").eq(i).html(sumzhu*2);
@@ -173,21 +171,6 @@ $(document).ready(function() {
 		$("#qianshu").html(qishu*beishu*zhushu*2);
 		checkCbb();
 	});
-	/*$("#jxyz").click(function(){
-		var red=$("#putong").attr("data-red");
-		var zhushu=$("#zhushu").html();
-		var qishu=$("#qishu").html();
-		var beishu=$("#beishu").html();
-		zhushu=parseInt(zhushu);
-		qishu=parseInt(qishu);
-		beishu=parseInt(beishu);
-		red=parseInt(red);	
-		zhushu=zhushu+1;
-		selqiu($("#putong").find(".redball"),red);
-		resFushi(true);
-		$("#zhushu").html(zhushu);
-		$("#qianshu").html(qishu*beishu*zhushu*2);	
-	});	*/
 });
 //列出复式投注结果
 function respFushi(){

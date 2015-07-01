@@ -6,7 +6,6 @@
 function hunSum(dan,tuo,arr,type){
 	var m=type.charAt(1);
 	var chaiArr=[];//场次数组
-	var evlArr=[];
 	var marr=[];
 	var arr_C=mcnArr();
 	var chuan=arr_C[type];	
@@ -35,7 +34,7 @@ function hunSum(dan,tuo,arr,type){
 		});		
 	});
 	var i=allrr.length;
-	var sttrr=""
+	var sttrr="";
 	function arrl(allrr,k,str){
 		if(k>=i){
 			return false;
@@ -90,7 +89,6 @@ function sumAll(dan,tuo,arr,type){
 	}
 	var m=type.charAt(1);
 	var chaiArr=[];
-	var evlArr=[];
 	var marr=[];
 	var arr_C=mcnArr();
 	var chuan=arr_C[type];	
@@ -128,7 +126,6 @@ function sumAll(dan,tuo,arr,type){
 function sumZhu(arr,type){
 	var m=type.charAt(1);
 	var chaiArr=[];
-	var evlArr=[];
 	var marr=[];
 	var arr_C=mcnArr();
 	var chuan=arr_C[type];	

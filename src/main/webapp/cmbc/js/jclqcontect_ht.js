@@ -1,10 +1,8 @@
 /*订单提交，如果选择彩币支付，则投注数据payType为1，第三方投注支付，payType为0.*/
 /*彩币支付提交以后，走正常流程。第三方支付提交以后，走支付接口，调用setWebitEvent("11111111", "LT03");
  */
-var thisUrl = window.location.href;
 var termCode = "";
 $(document).ready(function () {
-    var thisUrl = window.location.href;
     before();
     getJcData();//获取竞彩数据
     // getUserData();
@@ -108,8 +106,6 @@ function submitJc() {
         "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
     }
     tickets.push(ticket);
-    // console.log(tickets.toString());
-
     var order = {
         'amount': amount,
         'outerId':new Date().getTime()+Math.random().toString(36).substr(8),
@@ -119,7 +115,6 @@ function submitJc() {
     var body = {
         'order':order
     };
-    console.log(body);
     $.ajax({
         type: "POST",
         url: "/bankServices/LotteryService/confirmOrders?timestamp=" + new Date().getTime(),
@@ -140,10 +135,11 @@ function submitJc() {
                 // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
                 alert("账户余额不足，请充值");
+                after();
             } else {
                 alert("投注失败，请稍后重试。");
+                after();
             }
-            after();
         }
     });
 }

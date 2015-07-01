@@ -142,7 +142,7 @@
                         var zpage = elem.find(".page").eq(0).attr("data-page");
                         zpage = parseInt(zpage) + 1;
                         elem.find(".page").eq(0).attr("data-page", zpage);
-                        var ssshtml = '<div id="load' + ind + '" class="text-center greentext mt30">点击加载</div>'
+                        var ssshtml = '<div id="load' + ind + '" class="text-center greentext mt30">点击加载</div>';
                         elem.append(ssshtml);
                     } else {
                         alert(result.description);
@@ -160,7 +160,17 @@
                     return type;
                     break;
                 case 2:
+                    type[0] = "奖金";
+                    type[1] = "img/ico_qian.png";
+                    return type;
+                    break;
+                case 1:
                     type[0] = "充值";
+                    type[1] = "img/ico_qian.png";
+                    return type;
+                    break;
+                case 3:
+                    type[0] = "退款";
                     type[1] = "img/ico_qian.png";
                     return type;
                     break;
@@ -220,19 +230,19 @@
             </div>
             <!--彩金-->
             <div class="tab-content" style="display:block;">
-                <span class="page" data-type="0" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="0" data-page="1" style="width:0px; height:0px;"></span>
             </div>
             <!-- 奖金-->
             <div class="tab-content">
-                <span class="page" data-type="2" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="2" data-page="1" style="width:0px; height:0px;"></span>
             </div>
             <!--充值-->
             <div class="tab-content">
-                <span class="page" data-type="1" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="1" data-page="1" style="width:0px; height:0px;"></span>
             </div>
             <!--提款-->
             <div class="tab-content">
-                <span class="page" data-type="3" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="3" data-page="1" style="width:0px; height:0px;"></span>
             </div>
             <!--            <div class="clearfix zhanghu-dian"><span class="tab-dot now"></span><span class="tab-dot"></span><span class="tab-dot"></span><span class="tab-dot"></span></div>
             -->        </div>

@@ -35,26 +35,13 @@ $(document).ready(function (e) {
             return false;
         }
         before();
-        var iqishu = $(".jj-k").eq(1).find("input").eq(0).val();
-        iqishu = parseInt(iqishu);
-        if (iqishu > 1) {
-            //追号
-        } else {
-            //非追号
-            var order = getOrder();
-            doTzhu(order);
-        }
+        var order = getOrder();
+        doTzhu(order);
     });
 });
 
 //非追号
 function doTzhu(order) {
-    var payType = "";
-    if ($("#check-cb").hasClass("now")) {
-        payType = 1;
-    } else {
-        payType = 0;
-    }
     var body = {
         'order': order
     };
@@ -75,7 +62,6 @@ function doTzhu(order) {
             if (repCode == '0000') {
                 window.location.href="confirm.html#"+order.outerId;
                 after();
-                // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
                 alert("账户余额不足，请充值");
             }  else if (repCode == '1008') {

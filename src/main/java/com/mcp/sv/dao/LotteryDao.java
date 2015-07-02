@@ -492,8 +492,26 @@ public class LotteryDao {
             DBObject order = (DBObject) datas.get(0);
             int pk_status = (int) order.get("status");
             if (pk_status == status) {
-                logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + status + "已更新过，不在更新  " + "outerId：" + outerId);
-                return "had";
+                logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + status + "已更新过，不再更新  " + "outerId：" + outerId);
+                return "";
+            }
+            if(pk_status==CmbcConstant.ORDER_4002 && status==CmbcConstant.ORDER_4000){
+                status=CmbcConstant.ORDER_4001;
+            }
+            if(pk_status==CmbcConstant.ORDER_4000 && status==CmbcConstant.ORDER_4002){
+                status=CmbcConstant.ORDER_4001;
+            }
+            if(pk_status==CmbcConstant.ORDER_4001 && status==CmbcConstant.ORDER_4002){
+                logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + status + "部分出票成功，不再更新  " + "outerId：" + outerId);
+                return "";
+            }
+            if(pk_status==CmbcConstant.ORDER_4001 && status==CmbcConstant.ORDER_4000){
+                logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + status + "部分出票成功，不再更新  " + "outerId：" + outerId);
+                return "";
+            }
+            if (pk_status == CmbcConstant.ORDER_5000) {  //已中奖  也不更新
+                logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + pk_status + "中奖状态不更新  " + "outerId：" + outerId);
+                return "";
             }
             String orderStr = JSON.serialize(order);
             DBObject newOrder = (DBObject) JSON.parse(orderStr);

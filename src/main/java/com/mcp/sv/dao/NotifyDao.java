@@ -35,15 +35,24 @@ public class NotifyDao {
                 int printStatus = ticket.getInt("printStatus");
                 //出票成功
                 if (printStatus == 1300) {
+                    Map map = new HashMap();
+                    map.put("outerId", outerId);
+                    List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
+                    DBObject _ticket = (DBObject) list.get(0);
+                    String orderOuterId = (String) _ticket.get("orderOuterId");
+                    LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4000);
                     String rstInfo = LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4000, 0, null);
                     logger.info(rstInfo);
                 }
                 //出票失败
                 else if (status > 1500) {
+                    Map map = new HashMap();
+                    map.put("outerId", outerId);
+                    List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
+                    DBObject _ticket = (DBObject) list.get(0);
+                    String orderOuterId = (String) _ticket.get("orderOuterId");
+                    LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4002);
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null);
-                    Map map=new HashMap();
-                    map.put("outerId",outerId);
-                    List list = MongoUtil.query(MongoConst.MONGO_TICKET,map);
                     if(list.size()==1){
                         DBObject dbObjectTicket= (DBObject) list.get(0);
                         String userName= (String) dbObjectTicket.get("userName");
@@ -68,11 +77,7 @@ public class NotifyDao {
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     String userName = (String) _ticket.get("userName");
                     logger.info("************ 第一步已中奖更新订单");
-                    String had = LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5000);
-                    if("had".equals(had)){
-                        logger.info("************ 第一步已中奖更新订单ERROE:"+outerId+"  已更新过");
-                        return;
-                    }
+                    LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5000);
                     logger.info("************ 第二步已中奖更新彩票");
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5000, bonus, dNumber);
                     logger.info("************ 第三步返奖");
@@ -80,12 +85,21 @@ public class NotifyDao {
                 } else if (status == 1300) {
                     String dNumber = ticket.getString("dNumber");
                     //未中奖
+                    Map map = new HashMap();
+                    map.put("outerId", outerId);
+                    List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
+                    DBObject _ticket = (DBObject) list.get(0);
+                    String orderOuterId = (String) _ticket.get("orderOuterId");
+                    LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5001);
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0, dNumber);
                 } else {
+                    Map map = new HashMap();
+                    map.put("outerId", outerId);
+                    List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
+                    DBObject _ticket = (DBObject) list.get(0);
+                    String orderOuterId = (String) _ticket.get("orderOuterId");
+                    LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4002);
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null);
-                    Map map=new HashMap();
-                    map.put("outerId",outerId);
-                    List list = MongoUtil.query(MongoConst.MONGO_TICKET,map);
                     if(list.size()==1){
                         DBObject dbObjectTicket= (DBObject) list.get(0);
                         String userName= (String) dbObjectTicket.get("userName");

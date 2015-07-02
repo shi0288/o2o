@@ -35,8 +35,8 @@ public class CmbcConstant {
     public static final int ORDER_2000 = 2000;  //下单成功
     public static final int ORDER_3000 = 3000;  //已支付
     public static final int ORDER_4000 = 4000;  //出票成功
-    public static final int ORDER_4001 = 4001;  //出票失败
-    public static final int ORDER_4002 = 4002;  //需退款
+    public static final int ORDER_4001 = 4001;  //部分出票成功
+    public static final int ORDER_4002 = 4002;  //出票失败
     public static final int ORDER_5000 = 5000;  //已中奖
     public static final int ORDER_5001 = 5001;  //未中奖
 

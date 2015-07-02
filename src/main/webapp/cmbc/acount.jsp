@@ -103,10 +103,19 @@
                     return "等待支付";
                     break;
                 case 4000:
-                    return "出票完成";
+                    return "出票成功";
+                    break;
+                case 4001:
+                    return "部分出票成功";
+                    break;
+                case 4002:
+                    return "出票失败";
                     break;
                 case 5000:
                     return "已中奖";
+                    break;
+                case 5001:
+                    return "未中奖";
                     break;
                 default:
                     return "订单完成";

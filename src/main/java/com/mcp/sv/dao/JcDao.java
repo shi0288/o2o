@@ -484,7 +484,7 @@ public class JcDao {
                 }
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error("判断是否需要更新竞彩数据---失败");
             sign = false;
         }
         return sign;

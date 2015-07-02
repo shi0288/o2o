@@ -166,7 +166,6 @@ public class WeiXinController {
         JSONObject jsonObject = JSON.parseObject(result);
         String nickname = jsonObject.get("nickname").toString();
         return nickname;
-
     }
 
 

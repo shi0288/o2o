@@ -270,7 +270,7 @@ function getMatchInfo(obj){
     });
     //获取每场比赛
     $.each(obj, function (key, item) {
-        var code = item.code;
+        var code = item.matchCode;
         code = code.substring(0, 8);
         arrcounti[code] += 1;
         var changci = formNumber(arrcounti[code]);

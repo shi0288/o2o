@@ -213,7 +213,8 @@ function getJcData() {
                 getMatchInfo(obj,st);
             } else {
                 after();
-                alert(result.head.repCode);
+                alert("请尝试刷新！");
+                //alert(result.head.repCode);
             }
         },
         error: onError

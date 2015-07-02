@@ -220,12 +220,31 @@ function seleMatch(evel){
 			$(evel).parents(".jc-table").parent("div").attr("num","open");
 		}else{
 			var flag = true;
-			for(var iterm in xuanzeMap){
-				var tempCode = iterm.substr(0,12);
-				if (code == tempCode ){
+			var currLen = 1;
+			for (var iterm in xuanzeMap) {
+				var tempCode = iterm.substr(0, 12);
+				var ptype = iterm.substr(12);
+				/*if((ptype == "03" || ptype == "04") && currLen >=4 ){
+					alert("所选择比赛中包含<比分>或者<半全场>，过关不能超过4场");
 					flag = false;
-					break;;
+					break;
 				}
+				if(ptype == "04" && currLen >=6){
+					alert("所选择比赛中包含<总进球>，过关不能超过6场");
+					flag = false;
+					break;
+				}*/
+				if(currLen >=8){
+					alert("过关不能超过8场");
+					flag = false;
+					break;
+				}
+				if (code == tempCode) {
+					alert("同一场比赛不允许选择不同的玩法");
+					flag = false;
+					break;
+				}
+				currLen ++;
 			}
 			if(flag){
 				xuanzeMap[key] = 1;
@@ -233,7 +252,6 @@ function seleMatch(evel){
 				$(evel).parents(".jc-table").addClass("on");
 				$(evel).parents(".jc-table").parent("div").attr("num","open");
 			}else{
-				alert("同一场比赛不允许选择不同的玩法");
 				return;
 			}
 		}
@@ -351,7 +369,7 @@ function chuanList(){
 	$("#zy-chuan").html("");
 	$("#duo-chuan").html("");
 	$.each(arrT,function(i,item){
-		if(item.charAt(1)<=n){
+		if(item.charAt(1) == n){
 			var len=item.length;
 			var chuanm=item.split(/[a-z]/);
 			if(chuanm[1] == "1"){

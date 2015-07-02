@@ -329,7 +329,6 @@ public class LotteryService {
         String body = "";
         String head = oldBean.getHead();
         //取期次
-        logger.error(head);
         if (head != null) {
             try {
                 resMessage = JcDao.getFormat(head, body);

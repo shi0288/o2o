@@ -57,8 +57,8 @@ public class NotifyDao {
                 }
             } else {
                 //中奖通知
-                String dNumber = ticket.getString("dNumber");
                 if (status == 1200) {
+                    String dNumber = ticket.getString("dNumber");
                     //已中奖
                     int bonus = ticket.getInt("bonus");
                     Map map = new HashMap();
@@ -78,11 +78,22 @@ public class NotifyDao {
                     logger.info("************ 第三步返奖");
                     LotteryDao.updatePrize(userName,bonus,outerId);
                 } else if (status == 1300) {
+                    String dNumber = ticket.getString("dNumber");
                     //未中奖
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0, dNumber);
                 } else {
-                    //已退款
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, dNumber);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null);
+                    Map map=new HashMap();
+                    map.put("outerId",outerId);
+                    List list = MongoUtil.query(MongoConst.MONGO_TICKET,map);
+                    if(list.size()==1){
+                        DBObject dbObjectTicket= (DBObject) list.get(0);
+                        String userName= (String) dbObjectTicket.get("userName");
+                        //退款
+                        String result = LotteryDao.reviceRecharge(userName, amount, outerId);
+                    }else {
+                        logger.error("彩票ID: " + outerId+"  退款出现问题");
+                    }
                 }
             }
         }

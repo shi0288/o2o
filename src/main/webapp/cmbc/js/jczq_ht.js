@@ -299,6 +299,7 @@ function seleMatch(evel){
 			if (flag) {
 				xuanzeMap[key] = 1;
 				$(evel).addClass("on");
+				$(evel).parents(".pType").addClass("on");
 				$(evel).parents(".jc-table").addClass("on");
 				$(evel).parents(".jc-table").parent("div").attr("num", "open");
 			} else {

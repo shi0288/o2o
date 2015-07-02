@@ -26,7 +26,7 @@
         	<span class="title" style="margin-left:-12px;">
                 竞彩足球<a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">让球胜平负<img src="img/down_wite.png"/></a>
             </span>
-            <a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>
+            <!--<a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>-->
         </div>
     </div>
     <div class="cb"></div>

@@ -25,7 +25,7 @@
         	<a href="index.jsp" id="jc-one"  class="go-pre"></a>
             <a href="javascript:jcone()" id="jc-two" class="go-pre" style="display:none"></a>
         	<span class="title" style="margin-left:-12px;">竞彩足球<a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">胜平负<img src="img/down_wite.png"/></a></span>
-            <a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>
+            <!--<a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>-->
         </div>
     </div>
     <div class="cb"></div>

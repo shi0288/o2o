@@ -4,6 +4,10 @@ import com.mongodb.*;
 import com.mongodb.util.JSON;
 import org.codehaus.jettison.json.JSONException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static com.mcp.sv.dao.JcDao.createFormat;
 import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 
@@ -12,11 +16,19 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
  */
 public class Test {
 
-    public static void main(String[] args) throws JSONException {
+    public static void main(String[] args) throws JSONException, ParseException {
        String str = sendGet(CmbcConstant.HHGG_URL);
-        System.out.println(str);
-       String res = createFormat("HHGG", str);
-        System.out.println(res);
+//        System.out.println(sendGettr);
+//       String res = createFormat("HHGG", str);
+//        System.out.println(res);
+
+        String last_updated = "2015-07-02 15:14:23";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+        Date last = format.parse(last_updated);
+        Date nowt = new Date();
+        long now1 = nowt.getTime();
+        System.out.println(nowt);
+
 //        JSONObject jsonObject=new JSONObject();
 //        jsonObject.put("gameCode","T51");
 //        jsonObject.put("pType","05");

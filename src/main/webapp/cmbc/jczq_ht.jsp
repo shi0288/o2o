@@ -23,7 +23,7 @@
                 <span class="pt2">竞彩足球</span>
                 <a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">混合过关<img src="img/down_wite.png"/></a>
             </span>
-            <a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>
+            <!--<a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>-->
         </div>
     </div>
     <div class="cb"></div>

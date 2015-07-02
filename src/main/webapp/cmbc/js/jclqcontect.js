@@ -250,7 +250,7 @@ function getMatchInfo(obj){
     //var arrls = [];//联赛
     $.each(obj, function (key, item) {
         //console.log(item);
-        var code = item.code;
+        var code = item.matchCode;
         code = code.substring(0, 8);
         Screen.push(code);
        /* var liansai = item.matchInfo;

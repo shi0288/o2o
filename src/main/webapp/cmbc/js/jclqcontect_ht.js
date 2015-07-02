@@ -240,7 +240,7 @@ function getMatchHhggInfo(obj){
         var guest_cn = item.guest_cn;
         var openTime  = item.openTime;
         var closeTime  = item.closeTime;
-        var code = item.code;
+        var code = item.matchCode;
 
         var sf = item.mnl;
         var sf_rf = item.hdc;

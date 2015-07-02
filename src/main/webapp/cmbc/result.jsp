@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>中期彩</title>
+    <title>中心线</title>
     <meta name="viewport"
           content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
     <meta name="format-detection" content="telephone=no" />

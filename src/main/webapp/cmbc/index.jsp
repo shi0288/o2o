@@ -18,7 +18,6 @@
     <script type="text/javascript" src="js/touchslider.dev.js"></script>
     <script type="text/javascript" src="js/banner.js"></script>
     <script type="text/javascript" src="js/fastclick.js"></script>
-
     <jsp:include page="include/login.jsp" flush="true"/>
     <style>
         #wrapper{width:100%;overflow:hidden;background:#fff}
@@ -33,34 +32,17 @@
     <script type="text/javascript">
         //判断是否是ios客户端
         $(document).ready(function(e) {
-
             /*判断登陆  */
             if (top.location != location) {
                 top.location.href = location.href;
                 return;
             }
 
-
-            var browser={
-                versions:function(){
-                    var u = navigator.userAgent, app = navigator.appVersion;
-                    return {
-                        trident: u.indexOf('Trident') > -1, //IE内核
-                        presto: u.indexOf('Presto') > -1, //opera内核
-                        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-                        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-                        mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/), //是否为移动终端
-                        ios: !!u.match(/(i[^;]+\;(U;)? CPU.+Mac OS X)/), //ios终端
-                        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-                        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-                        iPad: u.indexOf('iPad') > -1, //是否iPad
-                        webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-                    }
-                }(),
-                language:(navigator.browserLanguage || navigator.language).toLowerCase()
-            }
-            if (browser.versions.android){
-                //$('#wrapper').css("margin-top","10px");
+            var login =sessionStorage.getItem("login");
+            if(login == null){
+                $("#yes-denglu").show();
+            }else{
+                $("#yes-zhanghu").show();
             }
             $("#my-caipiao").click(function(){
                 var login = sessionStorage.getItem("login");
@@ -80,7 +62,8 @@
     <div class="top fix">
         <div class="top-relative clearfix">
             <!-- <a href="javascript:void(-1)" onClick='setWebitEvent("return", "LT01");' class="go-pre"></a>-->
-            <a class="msyh-login" id="yes-denglu" href="login.html">登录</a>
+            <a class="msyh-login" id="yes-denglu"  style="display:none"  href="login.html">登录</a>
+            <a class="msyh-login" id="yes-zhanghu" style="display:none"  href="acount.jsp">账户信息</a>
             <span class="title"
                   style="float:none; display:block; width:220px; text-align:center; margin:0px auto;">中心线店</span>
         </div>
@@ -93,7 +76,7 @@
         <div class="swipe">
             <ul id="slider">
                 <!--    <li><a href="dlt.jsp"><img src="img/newdltad.jpg" /></a></li>  -->
-                <li><a href="activity.html"><img src="img/ssqad_1.jpg"  /></a></li>
+                <li><a href="#"><img src="img/ssqad_1.jpg"  /></a></li>
                 <li><a href="#"><img src="img/txad_1.jpg" /></a></li>
                 <!--  <li><a href="xb_login.jsp"><img src="img/search.jpg"  /></a></li>-->
 
@@ -115,7 +98,7 @@
             <li id="pl3"><a class="ico-box" href="pl3.jsp"><img src="img/ico_pl3.png"/>排列三</a></li>
             <li id="pl5"><a class="ico-box" href="pl5.jsp"><img src="img/ico_pl5.png"/>排列五</a></li>
             <li id="qxc"><a class="ico-box" href="qxc.jsp"><img src="img/ico_qxc.png"/>七星彩</a></li>
-           <!-- <li><a class="ico-box" href="czadd.html"><img src="img/ico_add.png"/>添加</a></li>  -->
+            <!-- <li><a class="ico-box" href="czadd.html"><img src="img/ico_add.png"/>添加</a></li>  -->
         </ul>
         <ul id="more-ul" class="clearfix">
             <li><a class="ico-box" href="main.jsp"><img src="img/icoy_11.png"/>购彩大厅</a></li>

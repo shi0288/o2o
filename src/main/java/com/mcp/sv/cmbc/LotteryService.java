@@ -502,6 +502,19 @@ public class LotteryService {
 
 
     /**
+     * 奖金转彩金
+     */
+    @RequestMapping(value = "prizeToRecharge", method = RequestMethod.POST)
+    @ResponseBody
+    public String prizeToRecharge(OldBean oldBean) {
+        String userName = oldBean.getUserName();
+        int money = oldBean.getMoney();
+        String description = LotteryDao.prizeToRecharge(userName, money);
+        return toResult(description);
+    }
+
+
+    /**
      * 票据信息
      */
     @RequestMapping(value = "getTickets", method = RequestMethod.POST)
@@ -556,9 +569,5 @@ public class LotteryService {
     }
 
 
-    public static void main(String[] args) throws JSONException {
-
-
-    }
 
 }

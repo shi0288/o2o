@@ -300,7 +300,7 @@ function getMatchInfo(obj){
             }
             oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + rqspfdata_one + rqspfdata_two + '</tr>'
             changciHtml =
-                '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table" data-single="'+data_single+'">' +
+                '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + code + '" class="jc-table" data-single="'+data_single+'">' +
                 '<tbody><tr class="jc-table-tbb">' +
                 '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
                 '<td width="72%" colspan="2" class='+classSingle+'><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
@@ -331,7 +331,7 @@ function getMatchInfo(obj){
                     data_single = "true";
                 }
                 changciHtml =
-                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table" data-single="'+data_single+'">' +
+                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + code + '" class="jc-table" data-single="'+data_single+'">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
                     '<td width="72%" colspan="2" class='+classSingle+'><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' + item.guest_cn + '</span></td>' +
@@ -372,7 +372,7 @@ function getMatchInfo(obj){
 
                 }
                 changciHtml =
-                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + item.code + '" class="jc-table" data-single="'+data_single+'">' +
+                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + item.guest_cn + '" data-cc="' + code + '" class="jc-table" data-single="'+data_single+'">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="30%" class="jc-table-rb" rowspan="4"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
                     '<td width="70%" colspan="7" class="'+ classSingle+'"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' +item.guest_cn + '</span></td>' +
@@ -400,7 +400,7 @@ function getMatchInfo(obj){
                     var spfdata_three = '<td class="false" data-dit="v2">小</td>';
                 }
                 changciHtml =
-                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' +item.guest_cn + '" data-cc="' + item.code + '" class="jc-table" data-single="'+data_single+'">' +
+                    '<table width="100%" data-des="' + item.home_cn + '&nbsp;&nbsp;VS&nbsp;&nbsp;' +item.guest_cn + '" data-cc="' + code + '" class="jc-table" data-single="'+data_single+'">' +
                     '<tbody><tr class="jc-table-tbb">' +
                     '<td width="28%" class="jc-table-rb" rowspan="3"><p>' + changci + '</p><p class="lsname">' + item.l_cn + '</p><p class="time"><img src="img/sclock.png">' + matchTime + '</p></td>' +
                     '<td width="72%" colspan="3" class="'+ classSingle+'"><span class="teamname">' + item.home_cn + '</span>V S<span class="teamname">' +item.guest_cn + '</span></td>' +

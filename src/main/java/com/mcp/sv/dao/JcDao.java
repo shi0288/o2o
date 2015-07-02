@@ -459,11 +459,12 @@ public class JcDao {
     //判断是否需要更新竞彩数据
     public static boolean getTask( String str,String st){
         boolean sign = false;
+        String last_updated="";
         try {
             if(st.equals(CmbcConstant.HHGG)){
                 st = CmbcConstant.SPF;
             }
-            String last_updated = (String) map.get(st);
+            last_updated= (String) map.get(st);
             if(last_updated == null || "".equals(last_updated)){
                 sign = false;
             }else{
@@ -476,7 +477,6 @@ public class JcDao {
                 long day=l/(24*60*60*1000);
                 long hour=(l/(60*60*1000)-day*24);
                 long min=((l/(60*1000))-day*24*60-hour*60);
-
                 if(min <= 30){
                     sign = true;
                 }else {
@@ -484,7 +484,7 @@ public class JcDao {
                 }
             }
         }catch (Exception e) {
-            logger.error("判断是否需要更新竞彩数据---失败");
+            logger.error("判断是否需要更新竞彩数据---失败:"+last_updated);
             sign = false;
         }
         return sign;

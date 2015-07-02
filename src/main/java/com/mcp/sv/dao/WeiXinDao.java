@@ -38,7 +38,7 @@ public class WeiXinDao {
         DBObject tokenObj = new BasicDBObject();
         tokenObj.put("_id", TOKENID);
         tokenObj.put("value", token);
-        tokenObj.put("update", new Date().getTime());
+        tokenObj.put("updateTime", new Date().getTime());
         collection.save(tokenObj);
     }
 

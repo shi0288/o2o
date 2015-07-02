@@ -57,9 +57,12 @@
                         sessionStorage.setItem("mobile", result.user.mobile);
                         sessionStorage.setItem("identityId", result.user.identityId);
                         var name = sessionStorage.getItem("name");
+                        if(result.user.nickName!=undefined){
+                            name=result.user.nickName;
+                        }
                         var recharge = sessionStorage.getItem("recharge");
                         var prize = sessionStorage.getItem("prize");
-                        $('#user_name').html(name.substr(0, 11));
+                        $('#user_name').html(name);
                         $('#recharge').html(toDecimalMoney(recharge / 100));
                         $('#bonus').html(toDecimalMoney(prize / 100));
                         var pageSize = 10;	//每页显示条数

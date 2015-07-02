@@ -1,9 +1,7 @@
 package com.mcp.sv.dao;
 
 
-import com.mcp.sv.cmbc.HttpClientWrapper;
 import com.mcp.sv.util.CmbcConstant;
-import com.mcp.sv.cmbc.LotteryService;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -23,7 +21,7 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
  */
 public class JcDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(LotteryService.class);
+    private static final Logger logger = LoggerFactory.getLogger(JcDao.class);
 
     public static Map<String,Object> map = new HashMap<String,Object>();
 
@@ -164,7 +162,6 @@ public class JcDao {
                 String pType = "01";
                 String matchName = bodys_.getString("h_cn")+"|"+ bodys_.getString("a_cn")+"|"+ bodys_.getString("l_cn");
                 if(type.equals(CmbcConstant.SPF)){
-                    logger.info("CmbcConstant.SPF:"+CmbcConstant.SPF);
                     String fixedodds1 = "";
                     String oddsInfo1 = "";
                     String oddsSingle1 = "";

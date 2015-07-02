@@ -424,7 +424,7 @@ public class LotteryService {
         String realName = oldBean.getRealName();
         String mobile = oldBean.getMobile();
         String identityId = oldBean.getIdentityId();
-        String description = LotteryDao.updateUser(username, passWord, realName, mobile, identityId);
+        String description = LotteryDao.updateUser(username, passWord, realName, mobile, identityId,null);
         JSONObject rst=new JSONObject();
         try {
             if("".equals(description)){

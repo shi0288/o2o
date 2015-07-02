@@ -52,6 +52,7 @@ public class CmbcConstant {
     public static final String BQCSPF_URL = "http://i.sporttery.cn/odds_calculator/get_odds?i_format=json&poolcode%5B%5D=hafu";
     public static final String HHGG_URL = "http://info.sporttery.cn/interface/interface_mixed.php?action=fb_list&pke=0.8295743858907372";
     public static final String QUERY_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + CmbcConstant.APPID + "&secret=" + CmbcConstant.APPSECRET;
+    public static final String QUERY_USEINFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=%ACCESS_TOKEN%&openid=%OPENID%&lang=zh_CN";
 
     //"http://i.sporttery.cn/odds_calculator/get_odds?i_format=json&poolcode%5B%5D=hafu";
 

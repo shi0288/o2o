@@ -12,7 +12,7 @@ import com.mcp.sv.util.HttpClientWrapper;
 public class QueryToken {
 
     private static final String URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&";
-
+    //https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
     public static void main(String[] args){
         String url = URL+"appid=" + CmbcConstant.APPID +"&secret=" + CmbcConstant.APPSECRET;
         String result = HttpClientWrapper.getUrl(url);

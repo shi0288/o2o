@@ -359,7 +359,7 @@ public class LotteryDao {
     }
 
 
-    public static String updateUser(String userName, String passWord, String realName, String mobile, String identityId) {
+    public static String updateUser(String userName, String passWord, String realName, String mobile, String identityId,String nikeName) {
         //查询库中是否有此记录
         Map param = new HashMap();
         param.put("userName", userName);
@@ -369,9 +369,18 @@ public class LotteryDao {
             DBObject user = (DBObject) datas.get(0);
             String userStr = JSON.serialize(user);
             DBObject newUser = (DBObject) JSON.parse(userStr);
-            newUser.put("realName", realName);
-            newUser.put("mobile", mobile);
-            newUser.put("identityId", identityId);
+            if(realName!=null){
+                newUser.put("realName", realName);
+            }
+            if(mobile!=null){
+                newUser.put("mobile", mobile);
+            }
+            if(identityId!=null){
+                newUser.put("identityId", identityId);
+            }
+            if(nikeName!=null){
+                newUser.put("nikeName", nikeName);
+            }
             int res = MongoUtil.update(MongoConst.MONGO_USERS, user, newUser);
             if (res == 1) {
                 return "";

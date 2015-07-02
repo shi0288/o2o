@@ -415,6 +415,34 @@ public class LotteryService {
     }
 
     /**
+     * 更新用户信息
+     */
+    @RequestMapping(value = "updateUser", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateUser(OldBean oldBean) {
+        String username = oldBean.getUserName();
+        String passWord = oldBean.getPassWord();
+        String realName = oldBean.getRealName();
+        String mobile = oldBean.getMobile();
+        String identityId = oldBean.getIdentityId();
+        String description = LotteryDao.updateUser(username, passWord, realName, mobile, identityId);
+        JSONObject rst=new JSONObject();
+        try {
+            if("".equals(description)){
+                rst.put("repCode","0000");
+            }else{
+                rst.put("repCode","9999");
+                rst.put("description",description);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return rst.toString();
+    }
+
+
+
+    /**
      * 订单信息
      */
     @RequestMapping(value = "getOrder", method = RequestMethod.POST)
@@ -491,7 +519,6 @@ public class LotteryService {
             }
             res.put("rst", jsonArray);
             res.put("repCode", CmbcConstant.SUCCESS);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -510,7 +537,6 @@ public class LotteryService {
         int curPage = oldBean.getCurPage();
         int pageSize = oldBean.getPageSize();
         int accountType = oldBean.getAccountType();
-
         String description = null;
         try {
             description = LotteryDao.getLogs(userName, passWord, curPage, pageSize, accountType);

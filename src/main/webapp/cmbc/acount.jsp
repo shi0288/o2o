@@ -9,7 +9,6 @@
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="0">
-    <meta http-equiv="cache-control" content="no-cache">
     <meta name="format-detection" content="telephone=no"/>
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
@@ -54,6 +53,9 @@
                                 sessionStorage.setItem("prize", result.acount.prize);
                             }
                         }
+                        sessionStorage.setItem("realName", result.user.realName);
+                        sessionStorage.setItem("mobile", result.user.mobile);
+                        sessionStorage.setItem("identityId", result.user.identityId);
                         var name = sessionStorage.getItem("name");
                         var recharge = sessionStorage.getItem("recharge");
                         var prize = sessionStorage.getItem("prize");
@@ -124,11 +126,10 @@
                     if (repCode == '0000') {
                         $(".index").show();
                         if (result['rst'].length <= 0) {
-                            //obj.find(".zhanghu-list").remove();
-                            //obj.find(".zhanghu-nodata").remove();
                             obj.find(".page").eq(0).attr("cur-page", curPage);
                             var nohtml = '<div class="zhanghu-nodata">您暂时没有投注记录，快去购彩大厅试试手气吧！</div>';
                             obj.append(nohtml);
+                            after();
                             return false;
                         }
                         //var ind = obj.index(".tab-content");

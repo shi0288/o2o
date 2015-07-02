@@ -1,10 +1,8 @@
 /*订单提交，如果选择彩币支付，则投注数据payType为1，第三方投注支付，payType为0.*/
 /*彩币支付提交以后，走正常流程。第三方支付提交以后，走支付接口，调用setWebitEvent("11111111", "LT03");
  */
-var thisUrl = window.location.href;
 var termCode = "";
 $(document).ready(function () {
-    var thisUrl = window.location.href;
     before();
     getJcData();//获取竞彩数据
     // getUserData();
@@ -108,7 +106,6 @@ function submitJc() {
         "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
     }
     tickets.push(ticket);
-    // console.log(tickets.toString());
 
     var order = {
         'amount': amount,
@@ -140,28 +137,16 @@ function submitJc() {
                 // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
                 alert("账户余额不足，请充值");
+                after();
             } else {
                 alert("投注失败，请稍后重试。");
+                after();
             }
-            after();
-        }
-    });
-}
-function jcTzSuccess(order, amount) {
-    $.ajax({
-        type: "POST",
-        url: "jczqsucess.html",
-        dataType: "html",
-        success: function (result) {
-            var href = "fanganjc.html#" + order['outerId'];
-            $(".jc-bg").eq(0).find("div").hide();
-            $(".jc-bg").append(result);
-            $(".succ-amount").html(amount);
-            $(".succ-link").attr("href", href);
 
         }
     });
 }
+
 //获取投注号码
 function getJcNums() {
     var arrNum = [];
@@ -179,8 +164,6 @@ function getJcNums() {
         var strNum = "";
         $(_this).find(".jc-list-item-dw.on").each(function (i, val) {
             var self = this;
-            var length = $(self).parent().find(".jc-list-item-dw.on").length;
-            var test = $(self).attr("data-dit");
             if (i == $(self).parent().find(".jc-list-item-dw.on").length - 1) {
                 strNum += $(self).attr("data-dit").substring(1);
             } else {
@@ -213,7 +196,6 @@ function getJcData() {
     };
     $.ajax({
         type: "POST",
-        //url: "/bankServices/LotteryService/getInfo?timestamp=" + new Date().getTime(),
         url: "/bankServices/LotteryService/getJcInfo?timestamp=" + new Date().getTime(),
         dataType: "json",
         cache: false,
@@ -225,7 +207,6 @@ function getJcData() {
             var repCode = result.head.repCode;
             if (repCode == '0000') {
                 var obj = eval(result.body);
-                //alert(obj[0].matchInfo[0]._id);
                 getMatchHhggInfo(obj,st);
             } else {
                 after();
@@ -474,39 +455,3 @@ function selOpenClose(id,type){
 }
 
 
-//生成3位字符串如022
-function formNumber(num) {
-    if (num < 10) {
-        num = "00" + num;
-    } else if (num >= 10 && num < 100) {
-        num = "0" + num;
-    }
-    return num;
-}
-function toogle(evel) {
-    if ($(evel).hasClass("on")) {
-        $(evel).removeClass("on");
-    } else {
-        $(evel).addClass("on");
-    }
-}
-
-function loginA04(name, password) {
-    var body = {
-        name: name,
-        password: password
-    };
-    $.ajax({
-        type: "POST",
-        url: "/bankServices/LotteryService/commonTrans?timestamp=?timestamp=" + new Date().getTime(),
-        dataType: "json",
-        cache: false,
-        data: {
-            cmd: 'A04',
-            body: JSON.stringify(body)
-        },
-        success: function (result) {
-
-        }
-    });
-}

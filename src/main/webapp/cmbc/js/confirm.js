@@ -40,7 +40,6 @@ $(document).ready(function (e) {
                     var tzhu = val['amount'] / 200;
                     tzhu = tzhu / val['multiple'];
                     var bei = val['multiple'];
-                    var zhu = val['amount'];
                     var ty='';
                     var t1 = val['pType'];
                     var t2 = val['bType'];
@@ -93,19 +92,21 @@ $(document).ready(function (e) {
                 payType: payType
             },
             success: function (result) {
-                console.log(result);
                 var repCode = result.repCode;
                 if (repCode == '0000') {
                     tzSuccess();
                 } else if (repCode == '1007') {
                     alert("账户余额不足，请充值");
+                    after();
                 } else if (repCode == '1008') {
                     alert("此订单已经支付");
+                    after();
                 }
                 else {
                     alert(result.description);
+                    after();
                 }
-                after();
+
             },
             error: onError
         })
@@ -160,21 +161,6 @@ function tzSuccess() {
 
 function gameD(obj) {
     switch (obj['gameCode']) {
-        //双色球
-        case "F01":
-            $("#czimg").attr("src", "img/ico_ssq.png");
-            $("#czfont").html("双色球");
-            break;
-        //福彩3D
-        case "F02":
-            $("#czimg").attr("src", "img/ico_3d.png");
-            $("#czfont").html("福彩3D");
-            break;
-        //七乐彩
-        case "F03":
-            $("#czimg").attr("src", "img/ico_qlc.png");
-            $("#czfont").html("七乐彩");
-            break;
         //大乐透
         case "T01":
             $("#czimg").attr("src", "img/ico_dlt.png");

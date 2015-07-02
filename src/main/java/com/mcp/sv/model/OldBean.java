@@ -29,7 +29,9 @@ public class OldBean {
 
     private int accountType;
 
-    private String address;
+    private String realName;
+
+    private String identityId;
 
     private String mobile;
 
@@ -44,6 +46,7 @@ public class OldBean {
     public void setCmd(String cmd) {
         this.cmd = cmd;
     }
+
     public String getGameCode() {
         return gameCode;
     }
@@ -148,12 +151,20 @@ public class OldBean {
         this.accountType = accountType;
     }
 
-    public String getAddress() {
-        return address;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getIdentityId() {
+        return identityId;
+    }
+
+    public void setIdentityId(String identityId) {
+        this.identityId = identityId;
     }
 
     public String getMobile() {

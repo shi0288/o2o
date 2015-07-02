@@ -1,4 +1,4 @@
-//竞彩足球
+//竞彩篮球
 $(document).ready(function() {
 	$("#check-cb-jc").click(function(){
 		if($(this).hasClass("now")){
@@ -378,7 +378,6 @@ function chuanList(){
 
 	$.each(arrT,function(i,item){
 		if(item.charAt(1)<=n){
-			var len=item.length;
 			var chuanm=item.split(/[a-z]/);
 			var chuanstr = "";
 			if(chuanm[1] == "1" ){

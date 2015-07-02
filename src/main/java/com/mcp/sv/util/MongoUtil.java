@@ -42,8 +42,6 @@ public class MongoUtil {
         }
         int skip = (curPage - 1) * pageSize;
         DBCursor cur = collection.find(query).skip(skip).limit(pageSize).sort(new BasicDBObject("createTime", -1));
-        System.out.println(cur);
-
         if(cur.count()==0){
             return new ArrayList<>();
         }

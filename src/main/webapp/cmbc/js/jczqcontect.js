@@ -1,118 +1,8 @@
 /*订单提交，如果选择彩币支付，则投注数据payType为1，第三方投注支付，payType为0.*/
 /*彩币支付提交以后，走正常流程。第三方支付提交以后，走支付接口，调用setWebitEvent("11111111", "LT03");
  */
-var thisUrl = window.location.href;
 var termCode = "";
-var browser = {
-    versions: function () {
-        var u = navigator.userAgent, app = navigator.appVersion;
-        return {
-            trident: u.indexOf('Trident') > -1, //IE内核
-            presto: u.indexOf('Presto') > -1, //opera内核
-            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-            mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
-            ios: !!u.match(/(i[^;]+\;(U;)? CPU.+Mac OS X)/), //ios终端
-            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-            iPad: u.indexOf('iPad') > -1, //是否iPad
-            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-        }
-    }(),
-    language: (navigator.browserLanguage || navigator.language).toLowerCase()
-}
 
-var eventName = "";
-var eventCode = "0";
-var session = {};
-var _locked = false;
-function lock() {
-    if (_locked) {
-        return true;
-    }
-    _locked = true;
-    return false;
-}
-function unlock() {
-    _locked = false;
-}
-function getWebkitEventCode() {
-    return eventCode;
-}
-function getWebkitEvent() {
-    return eventName;
-}
-function getWebkitValues() {
-    return "";
-}
-function setWebkitValues(a) {
-}
-function clearEvent() {
-    eventCode = "0";
-    eventName = "";
-}
-function initWebkitTitleBar() {
-    clearEvent();
-    return {"title": "\u7cfb\u7edf\u6807\u9898", "leftButton": {"exist": false}, "rightButton": {"exist": true, "name": "", "func": "touchRightButton();"}};
-}
-function setWebkitSession(a) {
-    session = a;
-    clearEvent();
-}
-var _session_timeout = false;
-function showTimeOut() {
-    if (!_session_timeout) {
-        _session_timeout = true;
-        setWebitEvent("clearEvent()", "11");
-    }
-}
-var _mevents = new Array();
-function setWebitEvent(b, a) {
-
-    if (b == "") {
-        return;
-    }
-    if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
-        _mevents.push(JsonToStr({code: a, name: b}));
-    } else if (browser.versions.android) {
-        setAndroidWebitEvent(b, a);
-    } else {// other client
-    }
-}
-function getWebkitEventCode() {
-    return _mevents.length > 0 ? _mevents.shift() : "0";
-}
-function getWebkitEvent() {
-    return "";
-}
-function JsonToStr(o) {
-    var arr = [];
-    var fmt = function (s) {
-        if (typeof s == 'object' && s != null) return JsonToStr(s);
-        return /^(string|number)$/.test(typeof s) ? '"' + s + '"' : s;
-    }
-    for (var i in o)
-        arr.push('"' + i + '":' + fmt(o[i]));
-    return "{" + arr.join(',') + "}";
-}
-// ---------------android js调用------------------
-function setAndroidWebitEvent(param, evtCode) {
-//	if(evtName.indexOf("()")==-1){
-//		evtName += "()";
-//	}
-
-    switch (evtCode) {
-        case "LT01":
-            window.SysClientJs.goBack();
-            break;
-        case "LT02":  //code : "HY01":调用客户端登录接口,HY03:返回9宫格接口
-            window.SysClientJs.toLoginJGCP(param)
-            break;
-        case "LT03":// 瀚银调支付接口
-            window.SysClientJs.submitOrderJGCP(param)
-            break;
-    }
-}
 $(document).ready(function () {
     var thisUrl = window.location.href;
     getJcData();//获取竞彩数据
@@ -187,18 +77,13 @@ function submitJc() {
     var amount = $("#qianshu").html();
     amount = parseInt(amount) * 100;
     var betType = $("#chuanguan").attr("data-chuan");
-    //console.log(betType);
     if(betType==undefined){
         betType='11';
         amount=200;
     }else{
         betType = betType.replace(/[a-z]/g, "");
     }
-
-    //console.log(betType);
     var numbers = getJcNums();
-    //console.log(numbers);
-
     var playType = $("#game").attr("data-play");
 
     var tickets = [];
@@ -216,18 +101,14 @@ function submitJc() {
         "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
     }
     tickets.push(ticket);
-    // console.log(tickets.toString());
-
     var order = {
         'amount': amount,
         'outerId':new Date().getTime()+Math.random().toString(36).substr(8),
         'tickets': tickets
     };
-
     var body = {
         'order':order
     };
-    //console.log(body);
     $.ajax({
         type: "POST",
         url: "/bankServices/LotteryService/confirmOrders?timestamp=" + new Date().getTime(),
@@ -248,28 +129,16 @@ function submitJc() {
                 // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
                 alert("账户余额不足，请充值");
+                after();
             } else {
                 alert("投注失败，请稍后重试。");
+                after();
             }
-            after();
-        }
-    });
-}
-function jcTzSuccess(order, amount) {
-    $.ajax({
-        type: "POST",
-        url: "jczqsucess.html",
-        dataType: "html",
-        success: function (result) {
-            var href = "fanganjc.html#" + order['id'];
-            $(".jc-bg").eq(0).find("div").hide();
-            $(".jc-bg").append(result);
-            $(".succ-amount").html(amount);
-            $(".succ-link").attr("href", href);
 
         }
     });
 }
+
 //获取投注号码
 function getJcNums() {
     var playType = $("#game").attr("data-play");
@@ -302,7 +171,6 @@ function getJcNums() {
 //获取竞彩数据
 function getJcData() {
     var pathName= window.location.pathname;
-    //console.log(pathName);
     var st=1;
     if('/cmbc/jczq.jsp'==pathName){
         st=2;
@@ -330,7 +198,6 @@ function getJcData() {
     };
     $.ajax({
         type: "POST",
-        //url: "/bankServices/LotteryService/getInfo?timestamp=" + new Date().getTime(),
         url: "/bankServices/LotteryService/getJcInfo?timestamp=" + new Date().getTime(),
         dataType: "json",
         cache: false,
@@ -343,7 +210,6 @@ function getJcData() {
             var repCode = result.head.repCode;
             if (repCode == '0000') {
                 var obj = eval(result.body);
-                //alert(obj[0].matchInfo[0]._id);
                 getMatchInfo(obj,st);
             } else {
                 after();
@@ -357,7 +223,6 @@ function getMatchInfo(obj,st){
     var Screen = [];//场次
     var arrls = [];//联赛
     $.each(obj, function (key, item) {
-        //console.log(item);
         var code = item.code;
         code = code.substring(0, 8);
         Screen.push(code);
@@ -401,7 +266,6 @@ function getMatchInfo(obj,st){
         var teamname = item.matchInfo;
         var matchTime = item.closeTime;
         matchTime = matchTime.substring(0, 10);
-        console.log(matchTime);
         $.each(teamname, function (index, match) {
             var matchName=match.matchName;
             var oddsSingle=match.oddsSingle;
@@ -427,7 +291,6 @@ function getMatchInfo(obj,st){
 
             }
             var changciHtml = "";
-            //console.log("oodsCode:"+oodsCode);
             if(oodsCode=='cn01'){
                 var rqspfdata = match.oddsInfo;
                 if (rqspfdata) {
@@ -644,25 +507,5 @@ function toogle(evel) {
     } else {
         $(evel).addClass("on");
     }
-}
-
-function loginA04(name, password) {
-    var body = {
-        name: name,
-        password: password
-    };
-    $.ajax({
-        type: "POST",
-        url: "/bankServices/LotteryService/commonTrans?timestamp=?timestamp=" + new Date().getTime(),
-        dataType: "json",
-        cache: false,
-        data: {
-            cmd: 'A04',
-            body: JSON.stringify(body)
-        },
-        success: function (result) {
-
-        }
-    });
 }
 

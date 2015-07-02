@@ -14,8 +14,6 @@
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/iphone.js"></script>
-    <jsp:include page="include/login.jsp" flush="true"/>
 </head>
 <body>
 <div class="page-from-left index">

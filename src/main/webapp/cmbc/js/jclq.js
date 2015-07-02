@@ -377,7 +377,7 @@ function chuanList(){
 	});
 
 	$.each(arrT,function(i,item){
-		if(item.charAt(1) == n){
+		if(item.charAt(1) == n || (singleflag && item.charAt(1) == 1)){
 			var chuanm=item.split(/[a-z]/);
 			var chuanstr = "";
 			if(chuanm[1] == "1" ){

@@ -41,17 +41,9 @@
                         $("#cztime").html(time);
                         $("#orderId").html(outerId);
                         var gameCode = firTick['gameCode'];
-                        var kjnum =firTick['dNumber']
-                        if (kjnum == null) {
-                            $(".kj-num").html("等待开奖");
-                        } else {
-                            var ntype = 1;
-                            if (gameCode == "F02" || gameCode == "T02" || gameCode == "T03" || gameCode == "T04") {
-                                ntype = 2;
-                            }
-                            var kjhtml = getKJnum(kjnum, ntype);//开奖号码解析在common.js
-                            $(".kj-num").html(kjhtml);
-                        }
+
+
+                        var kjnum;
                         var amount=0;
                         var bonus=0;
                         $.each(result.rst, function (index, val) {
@@ -66,7 +58,9 @@
                             if(tickBonus!=undefined){
                                 bonus+=tickBonus;
                             }
-
+                            if(kjnum==null){
+                                kjnum =tick['dNumber'];
+                            }
                             var ty='';
                             var t1 = tick['pType'];
                             var t2 = tick['bType'];
@@ -82,6 +76,16 @@
                             var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '<font color="red">'+tickStatus+'</font></p></div><p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
                             $("#tzcot").append(cotHtml);
                         });
+                        if (kjnum == null) {
+                            $(".kj-num").html("等待开奖");
+                        } else {
+                            var ntype = 1;
+                            if (gameCode == "F02" || gameCode == "T02" || gameCode == "T03" || gameCode == "T04") {
+                                ntype = 2;
+                            }
+                            var kjhtml = getKJnum(kjnum, ntype);//开奖号码解析在common.js
+                            $(".kj-num").html(kjhtml);
+                        }
                         amount = toDecimalMoney(amount / 100);
                         $("#amount").html(amount);
                         if (bonus > 0) {
@@ -109,10 +113,19 @@
                     return "等待支付";
                     break;
                 case 4000:
-                    return "出票完成";
+                    return "出票成功";
+                    break;
+                case 4001:
+                    return "部分出票成功";
+                    break;
+                case 4002:
+                    return "出票失败";
                     break;
                 case 5000:
                     return "已中奖";
+                    break;
+                case 5001:
+                    return "未中奖";
                     break;
                 default:
                     return "订单完成";
@@ -139,9 +152,6 @@
             switch (status) {
                 case 4000:
                     return "出票成功";
-                    break;
-                case 4001:
-                    return "出票失败";
                     break;
                 case 4002:
                     return "已经退款";

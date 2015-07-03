@@ -529,7 +529,7 @@ public class LotteryDao {
     }
 
     //更改彩票状态
-    public static String updateTicketStatus(String outerId, int status, int bonus, String dNumber) {
+    public static String updateTicketStatus(String outerId, int status, int bonus, String dNumber,String printTime) {
         //查询库中是否有此记录
         Map param = new HashMap();
         param.put("outerId", outerId);
@@ -545,6 +545,9 @@ public class LotteryDao {
             }
             if (dNumber != null) {
                 newOrder.put("dNumber", dNumber);
+            }
+            if (printTime != null) {
+                newOrder.put("printTime", printTime);
             }
             int res = MongoUtil.update(MongoConst.MONGO_TICKET, order, newOrder);
             if (res == 1) {

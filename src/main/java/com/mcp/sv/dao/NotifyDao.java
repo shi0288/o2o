@@ -35,13 +35,14 @@ public class NotifyDao {
                 int printStatus = ticket.getInt("printStatus");
                 //出票成功
                 if (printStatus == 1300) {
+                    String printTime = ticket.getString("printTime");
                     Map map = new HashMap();
                     map.put("outerId", outerId);
                     List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4000);
-                    String rstInfo = LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4000, 0, null);
+                    String rstInfo = LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4000, 0, null , printTime);
                     logger.info(rstInfo);
                 }
                 //出票失败
@@ -52,7 +53,7 @@ public class NotifyDao {
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4002);
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null, null);
                     if(list.size()==1){
                         DBObject dbObjectTicket= (DBObject) list.get(0);
                         String userName= (String) dbObjectTicket.get("userName");
@@ -79,7 +80,7 @@ public class NotifyDao {
                     logger.info("************ 第一步已中奖更新订单");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5000);
                     logger.info("************ 第二步已中奖更新彩票");
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5000, bonus, dNumber);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5000, bonus, dNumber, null);
                     logger.info("************ 第三步返奖");
                     LotteryDao.updatePrize(userName,bonus,outerId);
                 } else if (status == 1300) {
@@ -91,7 +92,7 @@ public class NotifyDao {
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5001);
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0, dNumber);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0, dNumber, null);
                 } else {
                     Map map = new HashMap();
                     map.put("outerId", outerId);
@@ -99,7 +100,7 @@ public class NotifyDao {
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4002);
-                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null);
+                    LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null, null);
                     if(list.size()==1){
                         DBObject dbObjectTicket= (DBObject) list.get(0);
                         String userName= (String) dbObjectTicket.get("userName");

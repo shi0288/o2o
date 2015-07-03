@@ -20,71 +20,61 @@
             getMoneyData(userName,passWord);
             //登录END
             var pageSize = 8;
-            //点击加载
-            $("#load0").die().live("click", function () {
-                var aPage = $(".tab-content").eq(0).find(".page");
-                var ipage = aPage.attr("data-page");
-                var actype = aPage.attr("data-type");
-                ipage = parseInt(ipage);
-                cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(0));
-            });
-            $("#load1").die().live("click", function () {
-                var aPage = $(".tab-content").eq(1).find(".page");
-                var ipage = aPage.attr("data-page");
-                var actype = aPage.attr("data-type");
-                ipage = parseInt(ipage);
-                cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(1));
-            });
-            $("#load2").die().live("click", function () {
-                var aPage = $(".tab-content").eq(2).find(".page");
-                var ipage = aPage.attr("data-page");
-                var actype = aPage.attr("data-type");
-                ipage = parseInt(ipage);
-                cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(2));
-            });
-            $("#load3").die().live("click", function () {
-                var aPage = $(".tab-content").eq(3).find(".page");
-                var ipage = aPage.attr("data-page");
-                var actype = aPage.attr("data-type");
-                ipage = parseInt(ipage);
-                cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(4));
-            });
+
             /*滚动加载*/
-            /*$(window).scroll(function(){
-             var dheight=$(document).height();
-             var wheight=$(window).height();
-             var sctop=$(window).scrollTop();
-             if(sctop>=dheight-wheight){
-             if($(".tab-navv").eq(0).hasClass("now")){
-             var aPage=$(".tab-content").eq(0).find(".page");
-             var ipage=aPage.attr("data-page");
-             var actype=aPage.attr("data-type");
-             ipage=parseInt(ipage);
-             cjAjax(entityIds,ipage,pagesize,actype,$(".tab-content").eq(0));
-             }
-             if($(".tab-navv").eq(1).hasClass("now")){
-             var aPage=$(".tab-content").eq(1).find(".page");
-             var ipage=aPage.attr("data-page");
-             var actype=aPage.attr("data-type");
-             ipage=parseInt(ipage);
-             cjAjax(entityIds,ipage,pagesize,actype,$(".tab-content").eq(1));
-             }
-             if($(".tab-navv").eq(2).hasClass("now")){
-             var aPage=$(".tab-content").eq(2).find(".page");
-             var ipage=aPage.attr("data-page");
-             var actype=aPage.attr("data-type");
-             ipage=parseInt(ipage);
-             cjAjax(entityIds,ipage,pagesize,actype,$(".tab-content").eq(2));
-             }
-             if($(".tab-navv").eq(3).hasClass("now")){
-             var aPage=$(".tab-content").eq(3).find(".page");
-             var ipage=aPage.attr("data-page");
-             var actype=aPage.attr("data-type");
-             ipage=parseInt(ipage);
-             cjAjax(entityIds,ipage,pagesize,actype,$(".tab-content").eq(3));
-             }
-             }
-             });*/
+            $(window).scroll(function(){
+                var dheight=$(document).height();
+                var wheight=$(window).height();
+                var sctop=$(window).scrollTop();
+                if(sctop>=dheight-wheight){
+                    if($(".tab-navv").eq(0).hasClass("now")){
+                        var aPage=$(".tab-content").eq(0).find(".page");
+                        var ipage=aPage.attr("data-page");
+                        var actype=aPage.attr("data-type");
+                        var historyPage = parseInt(aPage.attr("cur-page"));
+                        ipage=parseInt(ipage);
+                        if (ipage == historyPage) {
+                            return false;
+                        }
+                        cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(0));
+
+                    }
+                    if($(".tab-navv").eq(1).hasClass("now")){
+                        var aPage=$(".tab-content").eq(1).find(".page");
+                        var ipage=aPage.attr("data-page");
+                        var actype=aPage.attr("data-type");
+                        var historyPage = parseInt(aPage.attr("cur-page"));
+                        ipage=parseInt(ipage);
+                        if (ipage == historyPage) {
+                            return false;
+                        }
+                        cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(1));
+                    }
+                    if($(".tab-navv").eq(2).hasClass("now")){
+                        var aPage=$(".tab-content").eq(2).find(".page");
+                        var ipage=aPage.attr("data-page");
+                        var actype=aPage.attr("data-type");
+                        var historyPage = parseInt(aPage.attr("cur-page"));
+                        ipage=parseInt(ipage);
+                        if (ipage == historyPage) {
+                            return false;
+                        }
+
+                        cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(2));
+                    }
+                    if($(".tab-navv").eq(3).hasClass("now")){
+                        var aPage=$(".tab-content").eq(3).find(".page");
+                        var ipage=aPage.attr("data-page");
+                        var actype=aPage.attr("data-type");
+                        var historyPage = parseInt(aPage.attr("cur-page"));
+                        ipage=parseInt(ipage);
+                        if (ipage == historyPage) {
+                            return false;
+                        }
+                        cjAjax(userName, passWord, ipage, pageSize, actype, $(".tab-content").eq(3));
+                    }
+                }
+            });
         });
         function getMoneyData(userName,passWord) {
             var pageSize = 8;
@@ -107,9 +97,6 @@
             });
         }
         function cjAjax(userName, passWord, curPage, pageSize, accountType, elem) {
-//    var nohtml = '<div class="acdetail-nodata">暂不支持查询</div>';
-//    elem.html(nohtml);
-//    return false;
             $.ajax({
                 type: "POST",
                 url: "/bankServices/LotteryService/getLogs?timestamp=" + new Date().getTime(),
@@ -125,25 +112,23 @@
                 success: function (result) {
                     var repCode = result.repCode;
                     if (repCode == "0000") {
-                        console.log(result['rst'].length);
                         if (result['rst'].length <= 0) {
-                            var ind = elem.index(".tab-content");
-                            elem.find("#load" + ind).remove();
+                            elem.find(".page").eq(0).attr("cur-page", curPage);
                             var nohtml = '<div class="acdetail-nodata">暂无记录</div>';
+                            var show = elem.find(".acdetail-nodata").eq(0).html();
+                            if(show=="暂无记录"){
+                                return false;
+                            }
                             elem.append(nohtml);
                             return false;
                             //到这了
                         }
-                        var ind = elem.index(".tab-content");
-                        elem.find("#load" + ind).remove();
                         $.each(result['rst'], function (key, val) {
                             getCaijin(val, elem, curPage, pageSize);
                         });
                         var zpage = elem.find(".page").eq(0).attr("data-page");
                         zpage = parseInt(zpage) + 1;
                         elem.find(".page").eq(0).attr("data-page", zpage);
-                        var ssshtml = '<div id="load' + ind + '" class="text-center greentext mt30">点击加载</div>';
-                        elem.append(ssshtml);
                     } else {
                         alert(result.description);
                     }
@@ -244,8 +229,7 @@
             <div class="tab-content">
                 <span class="page" data-type="3" data-page="1" style="width:0px; height:0px;"></span>
             </div>
-            <!--            <div class="clearfix zhanghu-dian"><span class="tab-dot now"></span><span class="tab-dot"></span><span class="tab-dot"></span><span class="tab-dot"></span></div>
-            -->        </div>
+        </div>
     </div>
     <!--正文内容结束-->
     <!--底部开始-->

@@ -16,6 +16,8 @@
     <script type="text/javascript" src="js/common.js"></script>
     <jsp:include page="include/login.jsp" flush="true"/>
     <script type="text/javascript">
+        var pageSize = 10;	//每页显示条数
+
         $(document).ready(function () {
             //判断是否一级页面
             /*判断登陆  */
@@ -65,8 +67,8 @@
                         $('#user_name').html(name);
                         $('#recharge').html(toDecimalMoney(recharge / 100));
                         $('#bonus').html(toDecimalMoney(prize / 100));
-                        var pageSize = 10;	//每页显示条数
-                        getCaipiao($(".tab-content").eq(0), 1, pageSize, 1);
+
+                        getCaipiao($(".tab-content").eq(0), 1, pageSize);
                     } else {
                         alert("获取用户信息失败");
                     }
@@ -88,7 +90,7 @@
                             if (curPage == historyPage) {
                                 return false;
                             }
-                            getCaipiao($(".tab-content").eq(0), curPage, pageSize, 1);
+                            getCaipiao($(".tab-content").eq(0), curPage, pageSize);
                         }
                     }
                 }
@@ -121,7 +123,7 @@
                     return "订单完成";
             }
         }
-        function getCaipiao(obj, curPage, pageSize, type) {
+        function getCaipiao(obj, curPage, pageSize) {
             $.ajax({
                 type: "POST",
                 url: "/bankServices/LotteryService/getOrder?timestamp=" + new Date().getTime(),
@@ -139,7 +141,11 @@
                         $(".index").show();
                         if (result['rst'].length <= 0) {
                             obj.find(".page").eq(0).attr("cur-page", curPage);
-                            var nohtml = '<div class="zhanghu-nodata">您暂时没有投注记录，快去购彩大厅试试手气吧！</div>';
+                            var nohtml = '<div class="zhanghu-nodata">暂无记录</div>';
+                            var show = obj.find(".zhanghu-nodata").eq(0).html();
+                            if(show=="暂无记录"){
+                                return false;
+                            }
                             obj.append(nohtml);
                             after();
                             return false;
@@ -273,11 +279,8 @@
             </div>
             <input type="hidden" id="typetogo" value="1"/>
 
-            <div class="tab-content" style="display:block;"><span style="width:100%;height:0px;" class="page"
-                                                                  data-page="0"></span></div>
+            <div class="tab-content" style="display:block;"><span style="width:100%;height:0px;" class="page" data-page="1"></span></div>
 
-            <div class="tab-content" id="zhuihao"><span style="width:100%;height:0px;" class="page" data-page="1"
-                                                        cur-page="0"></span></div>
 
             <div class="clearfix zhanghu-dian"><span class="tab-dot now"></span><span class="tab-dot"></span></div>
         </div>

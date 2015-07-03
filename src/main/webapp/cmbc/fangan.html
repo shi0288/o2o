@@ -61,6 +61,11 @@
                             if(kjnum==null){
                                 kjnum =tick['dNumber'];
                             }
+                            var printTime='';
+                            if(tick['printTime']!=undefined){
+                                printTime=tick['printTime'];
+                                printTime='<p>出票时间：'+printTime+'</p>';
+                            }
                             var ty='';
                             var t1 = tick['pType'];
                             var t2 = tick['bType'];
@@ -73,7 +78,7 @@
                             var tickStatus = tick['status'];
                             tickStatus=parseInt(tickStatus);
                             tickStatus = getTicketStatus(tickStatus);
-                            var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '<font color="red">'+tickStatus+'</font></p></div><p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
+                            var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '<font color="red">'+tickStatus+'</font>'+'</p></div>'+printTime+'<p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
                             $("#tzcot").append(cotHtml);
                         });
                         if (kjnum == null) {

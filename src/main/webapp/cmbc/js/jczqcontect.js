@@ -147,7 +147,7 @@ function getJcNums() {
     $(".jc-list-item").each(function (index, element) {
         var str = "";
         var matchname="";
-        matchname=$(_this).find(".jc-list-item-ss").html().replace(/&nbsp;/ig, "");
+        matchname=$(this).find(".jc-list-item-ss").html().replace(/&nbsp;/ig, "");
         if ($(this).find(".jc-list-item-dan").hasClass("on")) {
             str += "$";
         }

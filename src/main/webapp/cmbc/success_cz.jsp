@@ -76,7 +76,7 @@
 <div class="page-from-left index">
     <div class="top fix">
         <div class="top-relative clearfix">
-            <a href="main.html" class="go-pre"></a>
+            <a href="main.jsp" class="go-pre"></a>
             <a href="javascript:xuanqiuShow()" class="go-pre" style="display:none"></a>
             <span class="title"><span class="pt2">充值成功</span></span>
         </div>
@@ -94,7 +94,7 @@
         <p class="text-center tz-success">状态<font class="orgtext ml5"><%=rstInfo %></font></p>
 
         <a href="index.jsp" class=" m-bigbtn-org mt30">试试手气</a>
-        <a href="acount.html" class=" m-bigbtn-org mt15">返回账户</a>
+        <a href="acount.jsp" class=" m-bigbtn-org mt15">返回账户</a>
 
     </div>
     <!--正文内容结束-->

@@ -15,13 +15,13 @@ $(document).ready(function (e) {
             return false;
         }
         var gameCode = $("#game").attr("data-game");
-        if(gameCode=="F01" || gameCode=="F02" || gameCode=="F03"){
-            if($("#beishu").html()>50){
+        if (gameCode == "F01" || gameCode == "F02" || gameCode == "F03") {
+            if ($("#beishu").html() > 50) {
                 alert("不能大于50倍");
                 return false;
             }
-        }else{
-            if($("#beishu").html()>99){
+        } else {
+            if ($("#beishu").html() > 99) {
                 alert("不能大于99倍");
                 return false;
             }
@@ -29,32 +29,19 @@ $(document).ready(function (e) {
         }
         var login = sessionStorage.getItem("login");
         if (login == null) {//尚未登陆，需要处理登陆。
-            alert("您未登录，请登录",function(){
-                window.location.href="login.html";
+            alert("您未登录，请登录", function () {
+                window.location.href = "login.html";
             })
             return false;
         }
         before();
-        var iqishu = $(".jj-k").eq(1).find("input").eq(0).val();
-        iqishu = parseInt(iqishu);
-        if (iqishu > 1) {
-            //追号
-        } else {
-            //非追号
-            var order = getOrder();
-            doTzhu(order);
-        }
+        var order = getOrder();
+        doTzhu(order);
     });
 });
 
 //非追号
 function doTzhu(order) {
-    var payType = "";
-    if ($("#check-cb").hasClass("now")) {
-        payType = 1;
-    } else {
-        payType = 0;
-    }
     var body = {
         'order': order
     };
@@ -66,18 +53,19 @@ function doTzhu(order) {
         data: {
             userName: sessionStorage.getItem("name"),
             passWord: sessionStorage.getItem("passWord"),
-            amount:order.amount,
-            outerId:order.outerId,
+            amount: order.amount,
+            outerId: order.outerId,
             body: JSON.stringify(body)
         },
         success: function (result) {
             var repCode = result.repCode;
             if (repCode == '0000') {
-                window.location.href="confirm.html#"+order.outerId;
+                window.location.href = "confirm.html#" + order.outerId;
                 after();
-                // tzSuccess(cai_name, order, zhuss, result.outerId);
             } else if (repCode == '1007') {
                 alert("账户余额不足，请充值");
+            } else if (repCode == '1008') {
+                alert("此订单已经支付");
             } else if (repCode == '1001') {
                 alert("用户权限校验未通过");
             }
@@ -101,7 +89,7 @@ function tzSuccess(cai_name, order, zhuss, respondOrderId) {
             }
             var zjine = toDecimalMoney(order['amount'] / 100);
             var href = "fangan.html#" + respondOrderId;
-            sessionStorage.setItem("orderId",respondOrderId);
+            sessionStorage.setItem("orderId", respondOrderId);
             $("body").html(result);
             $("#caizhong").html(cai_name);
             $("#qihao").html(order['termCode']);
@@ -125,7 +113,7 @@ function getOrder() {
     amount = parseFloat(amount) * 100;
     var order = {
         'amount': amount,
-        'outerId':new Date().getTime()+Math.random()*(1000-390)+390,
+        'outerId': new Date().getTime() + Math.random().toString(36).substr(8),
         'tickets': tick
     };
     return order;
@@ -158,9 +146,9 @@ function getTick() {
             'pType': playTypeCode,
             'number': numbers,
             'multiple': multiple,
-            "presetTerminal":"0000",
-            "outerId":new Date().getTime()+Math.random()*(1000-390)+390,
-            "auditTime":new Date().format("yyyy-MM-dd hh:mm:ss")
+            "presetTerminal": "0000",
+            "outerId": new Date().getTime() + Math.random().toString(36).substr(8),
+            "auditTime": new Date().format("yyyy-MM-dd hh:mm:ss")
         }
         tickets.push(ticket);
     });
@@ -185,9 +173,7 @@ function getLastTime(endTime, now) {
         endTime = stampTime(endTime);
         var date3 = endTime - now;
         //计算出相差天数
-        var days = Math.floor(date3 / (24 * 3600 * 1000));
         var leave1 = date3 % (24 * 3600 * 1000);    //计算天数后剩余的毫秒数
-        var hours = Math.floor(leave1 / (3600 * 1000));
         //计算相差分钟数
         var leave2 = leave1 % (3600 * 1000);        //计算小时数后剩余的毫秒数
         var minutes = Math.floor(leave2 / (60 * 1000));
@@ -238,38 +224,36 @@ function getData() {
     //显示期号和截止日期
     var gameCode = $("#game").attr("data-game");
     var body = {
-        'gameCode':gameCode
+        'gameCode': gameCode
     };
     $.ajax({
-        type: "POST",
-        url: "/bankServices/LotteryService/getTerms?timestamp=" + new Date().getTime(),
-        dataType: "json",
+        type: 'POST',
+        url: '/bankServices/LotteryService/getTerms?timestamp=' + new Date().getTime(),
+        dataType: 'json',
         cache: false,
         data: {
             body: JSON.stringify(body)
         },
         success: function (result) {
-            if (result.repCode=="0000") {
-                var termCode = result.termCode;
-                var lastime = result.closeTime;
+            var termCode = result.termCode;
+            if (termCode != undefined) {
+                var lasTime = result.closeTime;
                 var endTime = result.closeTime;
-                lastime = lastime.substring(0, 16);
-                lastime = lastime.replace("T", " ");
+                lasTime = lasTime.substring(0, 16);
+                lasTime = lasTime.replace("T", " ");
                 // var now = result.nowTime;
                 // now = stampTime(now);
-                var now=new Date(endTime).getTime();
+                var now = new Date(endTime).getTime();
                 getLastTime(endTime, now);
                 $("#termCode").html(termCode);
-                $("#lastime").html(lastime);
+                $("#lastime").html(lasTime);
                 $("#termCode").show();
                 $("#lastime").show();
                 //11选5倒计时
                 if ($("#x115").length > 0) {
                     $("#x115").show();
-                    var timer = null;
-                    timer = setInterval(InterTime, 1000);
                 }
-            } else if(result.repCode=="-1"){
+            } else if (result.repCode == "9999") {
                 alert(result.description);
             }
             else {

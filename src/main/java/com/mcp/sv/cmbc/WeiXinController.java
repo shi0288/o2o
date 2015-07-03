@@ -53,15 +53,30 @@ public class WeiXinController {
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
         request.setCharacterEncoding("UTF-8");  //微信服务器POST消息时用的是UTF-8编码，在接收时也要用同样的编码，否则中文会乱码；
         response.setCharacterEncoding("UTF-8"); //在响应消息（回复消息给用户）时，也将编码方式设置为UTF-8，原理同上；
+        logger.info("微信消息推送");
         //判断token的缓存情况 ， 更新缓存
-        Map token = WeiXinDao.findToken();
-        long updateTime = (Long)token.get("updateTime");
-        if (new Date().getTime() - updateTime > 1000*60*100 ){//大于1小时40分钟 更新token
-            String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
-            JSONObject jsonObject = JSON.parseObject(result);
-            String access_token =  jsonObject.get("access_token").toString();
-            String expires_in =   jsonObject.get("expires_in").toString();
-            WeiXinDao.updateToken(access_token);
+        try {
+            Map token = WeiXinDao.findToken();
+            if (token.containsKey("updateTime")) {
+                long updateTime = (Long) token.get("updateTime");
+                if (new Date().getTime() - updateTime > 1000 * 60 * 100) {//大于1小时40分钟 更新token
+                    String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
+                    logger.info("查询到的token，并更新" + result);
+                    JSONObject jsonObject = JSON.parseObject(result);
+                    String access_token = jsonObject.get("access_token").toString();
+                    String expires_in = jsonObject.get("expires_in").toString();
+                    WeiXinDao.updateToken(access_token);
+                }
+            } else {
+                String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
+                logger.info("查询到的token，并更新" + result);
+                JSONObject jsonObject = JSON.parseObject(result);
+                String access_token = jsonObject.get("access_token").toString();
+                String expires_in = jsonObject.get("expires_in").toString();
+                WeiXinDao.saveToken(access_token);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         //初始化配置文件
         String respMessage = CoreService.processRequest(request);//调用CoreService类的processRequest方法接收、处理消息，并得到处理结果；
@@ -80,39 +95,77 @@ public class WeiXinController {
         logger.info("webCode:" + webcode);
         logger.info("state:" + state);
         //根据 webCode 获webtoken  并获取用户的 openId
-        String webTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + com.mcp.sv.util.CmbcConstant.APPID + "&secret=" + CmbcConstant.APPSECRET+ "&code="+webcode+"&grant_type=authorization_code";
+        String webTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + com.mcp.sv.util.CmbcConstant.APPID + "&secret=" + CmbcConstant.APPSECRET + "&code=" + webcode + "&grant_type=authorization_code";
         String result = com.mcp.sv.util.HttpClientWrapper.getUrl(webTokenUrl);
         JSONObject jsonObject = JSON.parseObject(result);
         String username = jsonObject.getString("openid");
         String passWord = username + CmbcConstant.CMBC_SIGN_KEY;
         org.codehaus.jettison.json.JSONObject userJson = null;
-        try{
-             userJson = LotteryDao.login2(username, passWord);
-
-        }catch (Exception e){
+        try {
+            userJson = LotteryDao.login2(username, passWord);
+        } catch (Exception e) {
             e.printStackTrace();
             result = com.mcp.sv.util.HttpClientWrapper.getUrl(webTokenUrl);
             jsonObject = JSON.parseObject(result);
             username = jsonObject.getString("openid");
             passWord = username + CmbcConstant.CMBC_SIGN_KEY;
-            logger.info(passWord);
-            userJson =  LotteryDao.login2(username, passWord);
+            userJson = LotteryDao.login2(username, passWord);
         }
-        if(userJson.get("repCode").equals("0000"))
-        {
+        if (userJson.get("repCode").equals("0000")) {
             logger.info("session存放登陆状态");
             request.getSession().setAttribute("userInfo", userJson.toString());
             request.setAttribute("userInfo", userJson.toString());
-        }else if(userJson.get("repCode").equals("1009")){
-            LotteryDao.register(username, username+ CmbcConstant.CMBC_SIGN_KEY,  username+CmbcConstant.CMBC_SIGN_KEY);
+        } else if (userJson.get("repCode").equals("1009")) {
+            LotteryDao.register(username, username + CmbcConstant.CMBC_SIGN_KEY, username + CmbcConstant.CMBC_SIGN_KEY);
             userJson = LotteryDao.login2(username, passWord);
             logger.info("session存放登陆状态");
             request.getSession().setAttribute("userInfo", userJson.toString());
             request.setAttribute("userInfo", userJson.toString());
         }
+
         logger.info("微信打开的链接。登陆用户信息是： " + userJson.toString());
+        String nickName = "";
+        try {
+            nickName = (String) userJson.get("nickName");
+        } catch (Exception e) {
+            logger.error("用户无nickName，本次获取并保存 ：" + username);
+            nickName = this.getUserNickName(username);
+            logger.error("nickName: " + nickName);
+            LotteryDao.updateUser(username, username + CmbcConstant.CMBC_SIGN_KEY, null, null, null, nickName);
+        }
         //根据参数 state 可以跳转到不同菜单的页面
         return "redirect:/cmbc/" + state + ".jsp";
+    }
+
+    public String getUserNickName(String openId) {
+        Map token = WeiXinDao.findToken();
+        String tempToken = "";
+        try {
+            if (token.containsKey("updateTime")) {
+                long updateTime = (Long) token.get("updateTime");
+                if (new Date().getTime() - updateTime > 1000 * 60 * 100) {//大于1小时40分钟 更新token
+                    String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
+                    JSONObject jsonObject = JSON.parseObject(result);
+                    tempToken = jsonObject.get("access_token").toString();
+                    WeiXinDao.updateToken(tempToken);
+                }
+            } else {
+                String result = com.mcp.sv.util.HttpClientWrapper.getUrl(CmbcConstant.QUERY_TOKEN_URL);
+                JSONObject jsonObject = JSON.parseObject(result);
+                tempToken = jsonObject.get("access_token").toString();
+                WeiXinDao.saveToken(tempToken);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ("".equals(tempToken)) {
+            tempToken = (String) token.get("value");
+        }
+        String webForUserUrl = CmbcConstant.QUERY_USEINFO_URL.replace("%ACCESS_TOKEN%", tempToken).replace("%OPENID%", openId);
+        String result = com.mcp.sv.util.HttpClientWrapper.getUrl(webForUserUrl);
+        JSONObject jsonObject = JSON.parseObject(result);
+        String nickname = jsonObject.get("nickname").toString();
+        return nickname;
     }
 
 

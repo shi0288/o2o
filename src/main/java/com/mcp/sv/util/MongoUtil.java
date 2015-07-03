@@ -2,6 +2,7 @@ package com.mcp.sv.util;
 
 import com.mongodb.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,10 +42,17 @@ public class MongoUtil {
         }
         int skip = (curPage - 1) * pageSize;
         DBCursor cur = collection.find(query).skip(skip).limit(pageSize).sort(new BasicDBObject("createTime", -1));
+        if(cur.count()==0){
+            return new ArrayList<>();
+        }
+
         return cur.toArray();
     }
 
-
+    public static int insert(String table,DBObject dbObject){
+        DBCollection collection = MongoUtil.getDb().getCollection(table);
+        return collection.save(dbObject).getN();
+    }
 
 
     public static int save(String table,Map<String,Object> map){

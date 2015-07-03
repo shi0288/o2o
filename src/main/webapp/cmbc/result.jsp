@@ -1,36 +1,33 @@
+<%@ page language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>中期彩</title>
+    <title>中心线</title>
     <meta name="viewport"
           content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="format-detection" content="telephone=no" />
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="/cmbc/js/platform.js"></script>
+    <jsp:include page="include/login.jsp" flush="true"/>
     <script type="text/javascript">
         $(document).ready(function () {
             before();
-            var body = {
-                'type': 2
-            };
             $.ajax({
                 type: "POST",
-                url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
+                url: "/bankServices/LotteryService/getWinNum?timestamp=" + new Date().getTime(),
                 dataType: "json",
                 cache: false,
-                data: {
-                    cmd: 'Q01',
-                    body: JSON.stringify(body)
-                },
+                data: {},
                 success: function (result) {
                     var repCode = result.repCode;
                     if (repCode == "0000") {
                         $.each(result.rst, function (key, val) {
+                            var winObj=JSON.parse(val);
                             $("#showdiv").show();
-                            getResult(val);
+                            getResult(winObj);
                         });
                         $("#kaijiang").show();
                         after();
@@ -40,6 +37,9 @@
                 error: onError
             });
         });
+
+
+
         function getResult(obj) {
             switch (obj['gameCode']) {
                 //双色球
@@ -82,14 +82,13 @@
                     var oQiu = $("#x115");
                     doRes(obj, oQiu, 1);
                     break;
-
             }
         }
 
         function doRes(obj, oQiu, type) {
-            var schar = obj.winningNumber;
-            var qi = "第" + obj.code + "期";
-            var date = obj.endTime;
+            var schar = obj.wNum;
+            var qi = "第" + obj.termCode + "期";
+            var date = obj.createTime;
             var html = getKJnum(schar, type);//开奖号码解析在common.js
             date = date.substring(0, 10);
             oQiu.find(".kj-rq").html(date);
@@ -222,16 +221,6 @@
     </a>-->
 
 
-    </div>
-    <div id="showdiv" style=" height:0px;"></div>
-    <!--正文内容结束-->
-    <!--底部开始-->
-    <div class="footer">
-        <a class="footer-nav nav-gc" href="main.html">购彩</a> <a class="footer-nav nav-zh" href="acount.html">账户</a><a
-            class="footer-nav nav-kj now" href="result.html">开奖</a>
-        <a class="footer-nav nav-xx" href="caiyuan.html">财园</a><a class="footer-nav nav-sz" href="more.html">更多</a>
-
-        <div class="cb"></div>
     </div>
 </div>
 </body>

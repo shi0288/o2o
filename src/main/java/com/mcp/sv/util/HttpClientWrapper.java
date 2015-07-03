@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.CodingErrorAction;
@@ -143,80 +144,6 @@ public class HttpClientWrapper {
         return res;
     }
 
-    public static String post(HttpServletRequest userRequest, HttpServletResponse httpResponse, String cmd, String body, String st, String id) {
-        String cookie = (String) userRequest.getSession().getAttribute("MCP8");
-        try {
-            JSONObject cvRequest = new JSONObject();
-            String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-            SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-            String msgId = UUID.randomUUID().toString().replace("-", "");
-            logger.info("id = " + msgId + "\r\nCookie : " + cookie + "\r\ncmd : " + cmd + "\r\nbody : " + body);
-            JSONObject head = new JSONObject();
-            head.put("timestamp", format.format(new Date()));
-            head.put("cmd", cmd);
-            head.put("ver", "s.1.01");
-            head.put("id", msgId);
-            head.put("userId", id); //TODO 加上userID  ，如果渠道的话，userID设为空。
-            head.put("channelCode", CmbcConstant.CMBC_CODE);  //民生银行客户端。
-            head.put("digestType", "md5");
-            head.put("digest", com.mcp.sv.util.MD5.MD5Encode(body + head.get("timestamp") + st));//st
-            cvRequest.put("head", head);
-            cvRequest.put("body", body);
-
-            HttpPost request = new HttpPost(mcp8Url);
-            try {
-                if (cookie != null && !"".equals(cookie)) {
-                    request.setHeader("Cookie", cookie);
-                }
-                List<NameValuePair> reqParams = new ArrayList<NameValuePair>();
-                reqParams.add(new BasicNameValuePair("message", cvRequest.toString()));
-
-                request.setEntity(new UrlEncodedFormEntity(reqParams, Consts.UTF_8));
-                HttpContext context = HttpClientContext.create();
-                CloseableHttpResponse response=null;
-                try {
-                    response = getHttpClient().execute(request, context);
-                    if (cmd.equals("A04") || cmd.equals("A03") || cmd.equals("A01")) {
-                        StringBuilder cookieValue = new StringBuilder();
-                        Header[] headers = response.getHeaders("Set-Cookie");
-                        for (Header header : headers) {
-                            String cookie_temp = header.getValue();
-                            if (cookieValue.length() > 0) cookieValue.append(",");
-                            cookieValue.append(cookie_temp);
-                        }
-                        //addCookie(httpResponse,cookieValue.toString());
-                        userRequest.getSession().setAttribute("MCP8", cookieValue.toString());
-                    }
-                    String retString = EntityUtils.toString(response.getEntity());
-                 //   retString = new String(retString.getBytes("ISO-8859-1"), "utf-8");
-                    JSONObject obj = new JSONObject(retString);
-
-                    JSONObject retBody = new JSONObject(obj.getString("body"));
-                    retBody.put("nowTime", obj.getJSONObject("head").getString("timestamp"));
-//                  retBody.put("password","123456");//TODO 自动注册的用户密码统一为这一个。可以改写一下这个密码生成算法。
-//	            	logger.info("Response : "+ JsonUtil.formatJson(retBody.toString(), "\t"));
-                    return retBody.toString();
-                } finally {
-                    if(response!=null){
-                        response.close();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                try {
-                    JSONObject obj = new JSONObject();
-                    obj.put("repCode", "-1");
-                    obj.put("description", "远程请求失败");
-                    return obj.toString();
-                } catch (Exception ex) {
-                    return null;
-                }
-            }
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
 
     public static String mcpPost( String cmd, String body) {
         try {
@@ -252,11 +179,11 @@ public class HttpClientWrapper {
                     logger.error("==================");
                     JSONObject obj = new JSONObject(retString);
                     JSONObject rstHead=obj.getJSONObject("head");
-
                     String bodyStr=obj.getString("body");
                     if(!"".equals(bodyStr)){
                         JSONObject retBody = new JSONObject(obj.getString("body"));
                         retBody.put("repCode", rstHead.get("repCode"));
+                        retBody.put("description", rstHead.get("description"));
                         retBody.put("nowTime", obj.getJSONObject("head").getString("timestamp"));
                         return retBody.toString();
                     }else{
@@ -321,7 +248,27 @@ public class HttpClientWrapper {
                 result += line;
             }
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
+            result = "";
+            String urlNameString = url.trim();
+            URL realUrl = null;
+            try {
+                realUrl = new URL(urlNameString);
+                URLConnection connection = realUrl.openConnection();
+                connection.setRequestProperty("accept", "*/*");
+                connection.setRequestProperty("connection", "Keep-Alive");
+                connection.setRequestProperty("user-agent",
+                        "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+                connection.connect();
+                Map<String, List<String>> map = connection.getHeaderFields();
+                in = new BufferedReader(new InputStreamReader(
+                        connection.getInputStream()));
+                String line;
+                while ((line = in.readLine()) != null) {
+                    result += line;
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         // 使用finally块来关闭输入流
@@ -335,6 +282,23 @@ public class HttpClientWrapper {
             }
         }
         return result;
+    }
+
+    public static String getGbkUrl(String url){
+        HttpGet request = new HttpGet(url);
+        //添加timeout属性
+        RequestConfig.Builder rcBuilder = RequestConfig.copy(RequestConfig.DEFAULT);
+        rcBuilder.setConnectTimeout(90000);
+        rcBuilder.setSocketTimeout(90000);
+        request.setConfig(rcBuilder.build());
+        String res = "";
+        try {
+            CloseableHttpResponse response = getHttpClient().execute(request);
+            res = EntityUtils.toString(response.getEntity());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
 }

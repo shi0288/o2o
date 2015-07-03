@@ -2,7 +2,6 @@ package com.mcp.sv.dao;
 
 
 import com.mcp.sv.util.CmbcConstant;
-import com.mcp.sv.cmbc.LotteryService;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -22,7 +21,7 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
  */
 public class JcDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(LotteryService.class);
+    private static final Logger logger = LoggerFactory.getLogger(JcDao.class);
 
     public static Map<String,Object> map = new HashMap<String,Object>();
 
@@ -34,7 +33,6 @@ public class JcDao {
             String st = mhead.getString("st");
             if (st.equals(CmbcConstant.ZJQS)) {
                 String ZJQS = (String) map.get(st);
-                logger.info("ZJQS::::::::::" + ZJQS);
                 if (ZJQS == null) {
                     str = sendGet(CmbcConstant.ZJQS_URL);
                     res = createFormat(st, str);
@@ -52,7 +50,6 @@ public class JcDao {
             } else if (st.equals("1") || st.equals("2")) {
                 st = CmbcConstant.SPF;
                 String cn01 = (String) map.get(st);
-                logger.info("cn01::::::::::" + cn01);
                 if (cn01 == null) {
                     str = sendGet(CmbcConstant.SPF_URL);
                     res = createFormat(st, str);
@@ -69,7 +66,6 @@ public class JcDao {
             }
             else if(st.equals(CmbcConstant.BQCSPF)){
                 String BQCSPF = (String) map.get(st);
-                logger.info("BQCSPF::::::::::"+BQCSPF);
                 if(BQCSPF==null){
                     str = sendGet(CmbcConstant.BQCSPF_URL);
                     res = createFormat(st, str);
@@ -86,7 +82,6 @@ public class JcDao {
 
             }else if(st.equals(CmbcConstant.BF)){
                 String BF = (String) map.get(st);
-                logger.info("BF::::::::::"+BF);
                 if(BF==null){
                     str = sendGet(CmbcConstant.BF_URL);
                     res = createFormat(st, str);
@@ -103,9 +98,8 @@ public class JcDao {
 
             }else if(st.equals(CmbcConstant.HHGG)){
                 String HHGG = (String) map.get(st);
-                logger.info("HHGG::::::::::"+HHGG);
                 if(HHGG==null){
-                    str = sendGet(CmbcConstant.HHGG_URL);
+                    str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(CmbcConstant.HHGG_URL);
                     res = createHhggFormat(st, str);
                 }else{
                     boolean update = getTask(HHGG,st);
@@ -168,7 +162,6 @@ public class JcDao {
                 String pType = "01";
                 String matchName = bodys_.getString("h_cn")+"|"+ bodys_.getString("a_cn")+"|"+ bodys_.getString("l_cn");
                 if(type.equals(CmbcConstant.SPF)){
-                    logger.info("CmbcConstant.SPF:"+CmbcConstant.SPF);
                     String fixedodds1 = "";
                     String oddsInfo1 = "";
                     String oddsSingle1 = "";
@@ -441,9 +434,7 @@ public class JcDao {
         String rstr = "";
         try {
             String hhgg[] = str.split(";");
-            System.out.println(hhgg[0]);
             String hhgg1[] = hhgg[0].split("=");
-            System.out.println(hhgg1[1]);
 //            JSONArray data = new JSONArray(hhgg1[1]);
             String data = hhgg1[1];
             rhead.put("repCode","0000");
@@ -473,23 +464,27 @@ public class JcDao {
                 st = CmbcConstant.SPF;
             }
             String last_updated = (String) map.get(st);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-            Date last = format.parse(last_updated);
-            Date nowt = new Date();
-            long now1 = nowt.getTime();
-            long last1 = last.getTime();
-            long l = now1 - last1;
-            long day=l/(24*60*60*1000);
-            long hour=(l/(60*60*1000)-day*24);
-            long min=((l/(60*1000))-day*24*60-hour*60);
-
-            if(min <= 30){
-                sign = true;
-            }else {
+            if(last_updated == null || "".equals(last_updated)){
                 sign = false;
+            }else{
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+                Date last = format.parse(last_updated);
+                Date nowt = new Date();
+                long now1 = nowt.getTime();
+                long last1 = last.getTime();
+                long l = now1 - last1;
+                long day=l/(24*60*60*1000);
+                long hour=(l/(60*60*1000)-day*24);
+                long min=((l/(60*1000))-day*24*60-hour*60);
+
+                if(min <= 30){
+                    sign = true;
+                }else {
+                    sign = false;
+                }
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error("竞彩数据更新失败");
             sign = false;
         }
         return sign;

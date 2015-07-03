@@ -1,3 +1,4 @@
+<%@ page language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html>
 <head>
@@ -8,11 +9,12 @@
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="0">
-    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="format-detection" content="telephone=no"/>
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
+    <jsp:include page="include/login.jsp" flush="true"/>
     <script type="text/javascript">
         $(document).ready(function () {
             //判断是否一级页面
@@ -25,6 +27,7 @@
             before();
             getUseData();
         });
+
         function getUseData() {
             //获取账户信息
             $.ajax({
@@ -50,20 +53,26 @@
                                 sessionStorage.setItem("prize", result.acount.prize);
                             }
                         }
+                        sessionStorage.setItem("realName", result.user.realName);
+                        sessionStorage.setItem("mobile", result.user.mobile);
+                        sessionStorage.setItem("identityId", result.user.identityId);
                         var name = sessionStorage.getItem("name");
+                        if(result.user.nickName!=undefined){
+                            name=result.user.nickName;
+                        }
                         var recharge = sessionStorage.getItem("recharge");
                         var prize = sessionStorage.getItem("prize");
-                        $('#user_name').html(name.substr(0,11));
+                        $('#user_name').html(name);
                         $('#recharge').html(toDecimalMoney(recharge / 100));
                         $('#bonus').html(toDecimalMoney(prize / 100));
-                        after();//删除加载动画
+                        var pageSize = 10;	//每页显示条数
+                        getCaipiao($(".tab-content").eq(0), 1, pageSize, 1);
                     } else {
                         alert("获取用户信息失败");
                     }
                 }
             });
-            var pageSize = 10;	//每页显示条数
-            getCaipiao($(".tab-content").eq(0), 1, pageSize, 1);
+
             /*滚动加载*/
             $(window).scroll(function () {
                 $(".top").css("position", "fixed");
@@ -86,6 +95,32 @@
             });
             /*end 滚动加载*/
         }
+
+        //获取状态
+        function getOrderStatus(status) {
+            switch (status) {
+                case 1000:
+                    return "等待支付";
+                    break;
+                case 4000:
+                    return "出票成功";
+                    break;
+                case 4001:
+                    return "部分出票成功";
+                    break;
+                case 4002:
+                    return "出票失败";
+                    break;
+                case 5000:
+                    return "已中奖";
+                    break;
+                case 5001:
+                    return "未中奖";
+                    break;
+                default:
+                    return "订单完成";
+            }
+        }
         function getCaipiao(obj, curPage, pageSize, type) {
             $.ajax({
                 type: "POST",
@@ -103,11 +138,10 @@
                     if (repCode == '0000') {
                         $(".index").show();
                         if (result['rst'].length <= 0) {
-                            //obj.find(".zhanghu-list").remove();
-                            //obj.find(".zhanghu-nodata").remove();
                             obj.find(".page").eq(0).attr("cur-page", curPage);
                             var nohtml = '<div class="zhanghu-nodata">您暂时没有投注记录，快去购彩大厅试试手气吧！</div>';
                             obj.append(nohtml);
+                            after();
                             return false;
                         }
                         //var ind = obj.index(".tab-content");
@@ -120,6 +154,7 @@
                             var caizhong = getGame(firTick);
                             var price = toDecimalMoney(order['amount'] / 100);
                             var tip = "";
+
                             var endTime = objectOrder['createTime'];
                             var tztime = endTime.substring(0, 10);
                             endTime = Date.parse(endTime);
@@ -134,46 +169,42 @@
                             } else {
                                 tip = '<span class="zhanghu-list-tit">' + tztime + '</span>';
                             }
-                            var state = getOrderStatus(objectOrder['status']);
+                            var _orderStatus = objectOrder['status'];
+                            _orderStatus = parseInt(_orderStatus);
+                            var state = getOrderStatus(_orderStatus);
                             var game = caizhong;
-                            var funstr = "";
-                            var termHtml = "";
-                            if (game == "竞彩足球") {
-                                funstr = "window.location.href='fanganjc.html#" + order['id'] + "'";
-                                termHtml = order.termCode;
-                                termHtml = firTick.substring(0, 8);
+                            //todo
+                            var funstr = "window.location.href='fangan.html#" + objectOrder['outerId'] + "#" + objectOrder['status'] + "'";
+                            if (objectOrder['status'] == 1000) {
+                                funstr = "window.location.href='confirm.html#" + objectOrder['outerId'] + "'";
+                            }
+                            var termHtml = firTick.termCode + '期'; //+ '&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp下单时间：';
+                            //termHtml += objectOrder['createTime'];
+                            var stateHtml = "";
+                            if (state == undefined) {
+                                alert(objectOrder['status']);
+                                alert(getOrderStatus(objectOrder['status']));
+                            }
+                            if (state == '已中奖') {
+                                stateHtml = '<span class="zhongjiang">中奖啦</span>'
                             } else {
-                                funstr = "window.location.href='fangan.html#" + objectOrder['outerId'] + "'";
-                                if (objectOrder['status'] == 1000) {
-                                    funstr = "window.location.href='confirm.html#" + objectOrder['outerId'] + "'";
-                                }
-                                termHtml = firTick.termCode + '期'; //+ '&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp下单时间：';
-                                //termHtml += objectOrder['createTime'];
+                                stateHtml = '<span class="meizj">' + state + '</span>'
                             }
-                            if (type == 2) {
-                                funstr = "window.location.href='fanganzh.html#" + order['id'] + "'";
-                                state = getZhuhaoStatus(order['status']);
-                            }
-                            if (order['bonus'] != 0 && order['bonus'] != undefined) {
-                                var bonus = toDecimalMoney(order['bonus'] / 100);
-                                var stateHtml = '<span class="zhongjiang">' + bonus + '元</span>'
-                            } else {
-                                var stateHtml = '<span class="meizj">' + state + '</span>'
-                            }
+
                             var html = '<div class="zhanghu-list  clearfix">' +
                                     tip +
                                     '<div class="zhanghu-list-cot clearfix" onclick="' + funstr + '">' +
                                     '<span class="fl">' +
-                                    '<h1>' + game + '<span class="acount-qi">' + termHtml + '</span>' + '<span class="acount-zhui">追' + val.orderCount + '期</span>' + '</h1>' +
+                                    '<h1>' + game + '<span class="acount-qi">' + termHtml + '</span>' + '</h1>' +
                                     '<p>' + price + '元</p>' +
-                                    '</span>' +
-                                    ' <a class="litt-go" href="#"></a>' + stateHtml +
+                                    '</span>' + stateHtml +
                                     '</div>' +
                                     '</div>';
                             obj.append(html);
                             obj.find(".zhanghu-list").eq(0).addClass("fist");
                         });
                         obj.find(".page").eq(0).attr("data-page", curPage + 1);
+                        after();
                     } else {
                         //alert(result.description);
                     }
@@ -226,7 +257,6 @@
                     </a>
                 </div>
                 <div class="cb"></div>
-
             </div>
         </div>
         <center>
@@ -237,7 +267,7 @@
         </center>
         <div class="zhanghu-tab">
             <div class="nav-box clearfix">
-                <a class="tab-nav now" href="acount.html" style="width:50%">我的记录</a>
+                <a class="tab-nav now" href="acount.jsp" style="width:50%">我的记录</a>
                 <!-- <a class="tab-nav" href="javascript:void(-1)" style="width:50%" id="my-zhuhao">我的追号</a>-->
                 <!-- <a class="tab-nav" href="javascript:void(-1)">我的合买</a><a class="tab-nav" href="javascript:void(-1)">我的跟单</a>-->
             </div>
@@ -246,8 +276,8 @@
             <div class="tab-content" style="display:block;"><span style="width:100%;height:0px;" class="page"
                                                                   data-page="0"></span></div>
 
-            <div class="tab-content" id="zhuihao"><span style="width:100%;height:0px;" class="page"
-                                                        data-page="1" cur-page="0"></span></div>
+            <div class="tab-content" id="zhuihao"><span style="width:100%;height:0px;" class="page" data-page="1"
+                                                        cur-page="0"></span></div>
 
             <div class="clearfix zhanghu-dian"><span class="tab-dot now"></span><span class="tab-dot"></span></div>
         </div>

@@ -49,7 +49,7 @@ element. -->
 >
 
 <!-- renderer elements allow the user to customize the conversion of  -->
-<!-- message objects to String.                                       -->
+<!-- dataObject objects to String.                                       -->
 
 <!ELEMENT renderer EMPTY>
 <!ATTLIST renderer
@@ -203,7 +203,7 @@ element. -->
 
 
 
-<!ELEMENT log4j:event (log4j:message, log4j:NDC?, log4j:throwable?, 
+<!ELEMENT log4j:event (log4j:dataObject, log4j:NDC?, log4j:throwable?,
                        log4j:locationInfo?, log4j:properties?) >
 
 <!-- The timestamp format is application dependent. -->
@@ -215,7 +215,7 @@ element. -->
     time       CDATA #IMPLIED
 >
 
-<!ELEMENT log4j:message (#PCDATA)>
+<!ELEMENT log4j:dataObject (#PCDATA)>
 <!ELEMENT log4j:NDC (#PCDATA)>
 
 <!ELEMENT log4j:throwable (#PCDATA)>

@@ -142,7 +142,7 @@
                         var zpage = elem.find(".page").eq(0).attr("data-page");
                         zpage = parseInt(zpage) + 1;
                         elem.find(".page").eq(0).attr("data-page", zpage);
-                        var ssshtml = '<div id="load' + ind + '" class="text-center greentext mt30">点击加载</div>'
+                        var ssshtml = '<div id="load' + ind + '" class="text-center greentext mt30">点击加载</div>';
                         elem.append(ssshtml);
                     } else {
                         alert(result.description);
@@ -160,7 +160,17 @@
                     return type;
                     break;
                 case 2:
+                    type[0] = "奖金";
+                    type[1] = "img/ico_qian.png";
+                    return type;
+                    break;
+                case 1:
                     type[0] = "充值";
+                    type[1] = "img/ico_qian.png";
+                    return type;
+                    break;
+                case 3:
+                    type[0] = "退款";
                     type[1] = "img/ico_qian.png";
                     return type;
                     break;
@@ -216,36 +226,29 @@
             <div class="nav-box clearfix">
                 <a class="tab-navv now" href="javascript:void(-1)">彩金</a><a class="tab-navv" href="javascript:void(-1)">奖金</a>
                 <a class="tab-navv" href="javascript:void(-1)">充值</a><a class="tab-navv"
-                                                                        href="javascript:void(-1)">提款</a>
+                                                                        href="javascript:void(-1)">退款</a>
             </div>
             <!--彩金-->
             <div class="tab-content" style="display:block;">
-                <span class="page" data-type="0" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="0" data-page="1" style="width:0px; height:0px;"></span>
             </div>
             <!-- 奖金-->
             <div class="tab-content">
-                <span class="page" data-type="2" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="2" data-page="1" style="width:0px; height:0px;"></span>
             </div>
             <!--充值-->
             <div class="tab-content">
-                <span class="page" data-type="1" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="1" data-page="1" style="width:0px; height:0px;"></span>
             </div>
             <!--提款-->
             <div class="tab-content">
-                <span class="page" data-type="3" data-page="0" style="width:0px; height:0px;"></span>
+                <span class="page" data-type="3" data-page="1" style="width:0px; height:0px;"></span>
             </div>
             <!--            <div class="clearfix zhanghu-dian"><span class="tab-dot now"></span><span class="tab-dot"></span><span class="tab-dot"></span><span class="tab-dot"></span></div>
             -->        </div>
     </div>
     <!--正文内容结束-->
     <!--底部开始-->
-    <div class="footer">
-        <a class="footer-nav nav-gc" href="index.html">购彩</a> <a class="footer-nav nav-zh" href="acount.html">账户</a><a
-            class="footer-nav nav-kj" href="result.html">开奖</a>
-        <a class="footer-nav nav-xx" href="caiyuan.html">财园</a><a class="footer-nav nav-sz" href="more.html">更多</a>
-
-        <div class="cb"></div>
-    </div>
 </div>
 </body>
 </html>

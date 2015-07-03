@@ -1,18 +1,5 @@
 //调用客户端提示框-start
 var res;
-window.alert=function(msg){
-    res=msg;
-    if(browser.versions.android==true){
-        window.MsgJs.setAlertInfo('{"title":"提示","msg":"'+res+'","ok_btn":"false","cancle_text":"确定","cancle_func":null}');
-    }else if(browser.versions.iPhone==true||browser.versions.iPad==true||browser.versions.ios==true){
-        setWebitEvent("iphonealert()","05");
-    }
-}
-//iphone提示框
-function iphonealert(){
-    var s='{"title":"提示","msg":"'+res+'","ok_btn":"false","cancle_text":"确定","cancle_func":null}';
-    return s;
-}
 
 
 Date.prototype.format = function(format){
@@ -39,27 +26,6 @@ Date.prototype.format = function(format){
 }
 
 //侧滑时顶部跟着动
-$(document).ready(function(e) {
-    /*position absolute*/
-    var browser={
-        versions:function(){
-            var u = navigator.userAgent, app = navigator.appVersion;
-            return {
-                trident: u.indexOf('Trident') > -1, //IE内核
-                presto: u.indexOf('Presto') > -1, //opera内核
-                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-                mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/), //是否为移动终端
-                ios: !!u.match(/(i[^;]+\;(U;)? CPU.+Mac OS X)/), //ios终端
-                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-                iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-                iPad: u.indexOf('iPad') > -1, //是否iPad
-                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-            }
-        }(),
-        language:(navigator.browserLanguage || navigator.language).toLowerCase()
-    }
-});
 $(document).ready(function() {
     $('body').bind("selectstart", function() { return false; });
     $("#check-cb").click(function(){
@@ -404,111 +370,8 @@ function getKJnum(schar,type){
         }
     }
 }
-//不跳转显示登陆页面
-function showLogin(){
-    $.ajax({
-        type : "POST",
-        url  : "innerlogin.html",
-        dataType:"html",
-        success : function(result){
-            $(".index").hide();
-            $("body").append(result);
-        }
-    });
-}
-//不跳转显示注册页面
-function showSign(){
-    $.ajax({
-        type : "POST",
-        url  : "innersign.html",
-        dataType:"html",
-        success : function(result){
-            $(".index").hide();
-            if($("#login").length>0){
-                $("#login").hide();
-            }
-            $("body").append(result);
-        }
-    });
-}
-//不跳转显示找回密码
-function showRepass(){
-    $.ajax({
-        type : "POST",
-        url  : "innerepass.html",
-        dataType:"html",
-        success : function(result){
-            $(".index").hide();
-            if($("#login").length>0){
-                $("#login").hide();
-            }
-            if($("#sign").length>0){
-                $("#sign").hide();
-            }
-            $("body").append(result);
-        }
-    });
-}
-//不跳转，当前页面显示实名认证
-function showBid(){
-    if($("#innerbid").length>0){
-        $(".index").hide();
-        $("#innerbid").show();
-        return false;
-    }
-    $.ajax({
-        type : "POST",
-        url  : "innerbid.html",
-        dataType:"html",
-        success : function(result){
-            $(".index").hide();
-            if($("#login").length>0){
-                $("#login").hide();
-            }
-            if($("#sign").length>0){
-                $("#sign").hide();
-            }
-            $("body").append(result);
-        }
-    });
-}
-//不跳转，当前页面显示绑定银行卡
-function showBank(){
-    if($("#innerbbank").length>0){
-        $(".index").hide();
-        $("#innerbbank").show();
-        return false;
-    }
-    $.ajax({
-        type : "POST",
-        url  : "innerbbank.html",
-        dataType:"html",
-        success : function(result){
-            $(".index").hide();
-            if($("#login").length>0){
-                $("#login").hide();
-            }
-            if($("#sign").length>0){
-                $("#sign").hide();
-            }
-            $("body").append(result);
-        }
-    });
-}
-function fanhui(evel){
-    $(".index").eq(0).show();
-    $(evel).parents(".index").hide();
-}
-//不跳转，当前页面注册或者登录成功
-function reMls(){
-    if($("#login").length>0){
-        $("#login").remove();
-    }
-    if($("#sign").length>0){
-        $("#sign").remove();
-    }
-    $(".content").show();
-}
+
+
 function onError(){
     alert("请求失败");
 }
@@ -530,124 +393,11 @@ function toDecimalMoney(x) {
     }
     return s;
 }
-//获取投注方式
-function getBetType(betTypeCode){
-    var type="";
-    switch(betTypeCode){
-        case "00":
-            type="单式";
-            break;
-        case "01":
-            type="复式";
-            break;
-        case "02":
-            type="胆拖";
-            break;
-        case "03":
-            type="和值";
-            break;
-        case "04":
-            type="组合复式";
-            break;
-        case "05":
-            type="组合胆拖";
-            break;
-        case "06":
-            type="跨度复式";
-            break;
-        case "07":
-            type="定位";
-            break;
-    }
-    return type;
-}
-function getZhuhaoStatus(status){
-    switch (status) {
-        case 1010:
-            return "等待支付";
-            break;
-        case 1110:
-            return "进行中";
-            break;
-        case 1210:
-            return "已取消";
-            break;
-        case 1310:
-            return "已退款";
-            break;
-        case 1410:
-            return "已完成";
-            break;
-        case 1510:
-            return "已结算";
-            break;
-        case 1610:
-            return "已完结";
-            break;
-    }
-
-}
-//获取状态
-function getOrderStatus(status) {
-    switch (status) {
-        case 1000:
-            return "等待支付";
-            break;
-        case 2000:
-            return "订单完成";
-            break;
-        case 3000:
-            return "订单完成";
-            break;
-        case 4000:
-            return "出票完成";
-            break;
-        case 1210:
-            return "出票失败";
-            break;
-        case 1220:
-            return "已退款";
-            break;
-        case 1300:
-            return "出票部分成功";
-            break;
-        case 1400:
-            return "交易失败";
-            break;
-        case 1500:
-            return "交易取消";
-            break;
-        case 1800:
-            return "未中奖";
-            break;
-        case 1810:
-            return "已中奖";
-            break;
-        case 1900:
-            return "已返奖";
-            break;
-        case 2100:
-            return "等待返奖";
-            break;
-    }
-}
 
 //获取彩种名称
 function getGame(obj){
     var caizhong="";
     switch(obj['gameCode']){
-        case "F01":
-            caizhong="双色球";
-            return caizhong;
-            break;
-        case "F02":
-            caizhong="福彩3D";
-            return caizhong;
-            break;
-        case "F03":
-            caizhong="七乐彩";
-            return caizhong;
-            break;
         case "T01":
             caizhong="大乐透";
             return caizhong;
@@ -672,96 +422,13 @@ function getGame(obj){
             caizhong="竞彩足球";
             return caizhong;
             break;
-
+        case "T52":
+            caizhong="竞彩篮球";
+            return caizhong;
+            break;
     }
 }
-//base64加密
-function encode64(input) {
-    var keyStr = "ABCDEFGHIJKLMNOP" +
-        "QRSTUVWXYZabcdef" +
-        "ghijklmnopqrstuv" +
-        "wxyz0123456789+/" +
-        "=";
-    input = escape(input);
-    var output = "";
-    var chr1, chr2, chr3 = "";
-    var enc1, enc2, enc3, enc4 = "";
-    var i = 0;
 
-    do {
-        chr1 = input.charCodeAt(i++);
-        chr2 = input.charCodeAt(i++);
-        chr3 = input.charCodeAt(i++);
-
-        enc1 = chr1 >> 2;
-        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-        enc4 = chr3 & 63;
-
-        if (isNaN(chr2)) {
-            enc3 = enc4 = 64;
-        } else if (isNaN(chr3)) {
-            enc4 = 64;
-        }
-
-        output = output +
-            keyStr.charAt(enc1) +
-            keyStr.charAt(enc2) +
-            keyStr.charAt(enc3) +
-            keyStr.charAt(enc4);
-        chr1 = chr2 = chr3 = "";
-        enc1 = enc2 = enc3 = enc4 = "";
-    } while (i < input.length);
-
-    return output;
-}
-//base64解密
-function decode64(input) {
-    var keyStr = "ABCDEFGHIJKLMNOP" +
-        "QRSTUVWXYZabcdef" +
-        "ghijklmnopqrstuv" +
-        "wxyz0123456789+/" +
-        "=";
-    var output = "";
-    var chr1, chr2, chr3 = "";
-    var enc1, enc2, enc3, enc4 = "";
-    var i = 0;
-
-    // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
-    var base64test = /[^A-Za-z0-9\+\/\=]/g;
-    if (base64test.exec(input)) {
-        alert("There were invalid base64 characters in the input text.\n" +
-            "Valid base64 characters are A-Z, a-z, 0-9, '+', '/', and '='\n" +
-            "Expect errors in decoding.");
-    }
-    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-
-    do {
-        enc1 = keyStr.indexOf(input.charAt(i++));
-        enc2 = keyStr.indexOf(input.charAt(i++));
-        enc3 = keyStr.indexOf(input.charAt(i++));
-        enc4 = keyStr.indexOf(input.charAt(i++));
-
-        chr1 = (enc1 << 2) | (enc2 >> 4);
-        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-        chr3 = ((enc3 & 3) << 6) | enc4;
-
-        output = output + String.fromCharCode(chr1);
-
-        if (enc3 != 64) {
-            output = output + String.fromCharCode(chr2);
-        }
-        if (enc4 != 64) {
-            output = output + String.fromCharCode(chr3);
-        }
-
-        chr1 = chr2 = chr3 = "";
-        enc1 = enc2 = enc3 = enc4 = "";
-
-    } while (i < input.length);
-
-    return unescape(output);
-}
 //时间转换成时间戳
 function stampTime(endTime){
     endTime=endTime.substring(0,19);
@@ -837,16 +504,6 @@ function getType(playType,betType){
     return type;
 }
 
-
-/*window.alert = function(mes){
- var html='<div class="cover3"></div><div id="alert"><div class="alert-title">提示</div><div class="alert-message">'+mes+'</div><div onClick="closeAlert()" class="alert-ok">确定</div></div>';
- $("body").eq(0).append(html);
- var iheight=$(document).height();
- if($(window).height()>$(document).height()){
- iheight=$(window).height();
- }
- $(".cover3").height(iheight);
- }*/
 window.alert = function(mes, onClick){
     var html='<div class="cover3"></div><div id="alert"><div class="alert-title">提示</div><div class="alert-message">'+mes+'</div><div class="alert-ok">确定</div></div>';
     $("body").eq(0).append(html);
@@ -869,13 +526,5 @@ function closeAlert(){
     $(".cover3").remove();
     $("#alert").remove();
 }
-/*微信接口 */
-//隐藏微信中网页右上角按钮
-/*document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
- WeixinJSBridge.call('hideOptionMenu');
- });*/
-//隐藏微信中网页底部导航栏
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-    WeixinJSBridge.call('hideToolbar');
-});
+
 

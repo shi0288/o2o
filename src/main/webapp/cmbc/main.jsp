@@ -1,68 +1,17 @@
+<%@ page language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>中期彩</title>
+    <title>中心线</title>
     <meta name="viewport"
           content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            getData();
-        });
-        function InterTime() {
-            var oSec = $("#x115").find(".seconds").eq(0);
-            var oMit = $("#x115").find(".minutes").eq(0);
-            var sec = oSec.html();
-            var mit = oMit.html();
-            sec = parseInt(sec);
-            mit = parseInt(mit);
-            if (sec == 0 & mit == 0) {
-                getData();
-                return false;
-            }
-            if (sec == 0) {
-                mit = mit - 1;
-                oSec.html(59);
-                oMit.html(mit);
-            } else {
-                sec = sec - 1;
-                oSec.html(sec);
-            }
-        }
-        function getData() {
-            $.ajax({
-                type: "POST",
-                url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
-                dataType: "json",
-                cache: false,
-                data: {
-                    cmd: 'Q11',
-                    body: '{}'
-                },
-                success: function (result) {
-                    var repCode = result.repCode;
-                    if (repCode != 0000) {
-                        $(".content").html("<div class='error-tip'>数据加载失败，请刷新</div>");
-                        return false;
-                    }
-                    var now = result.nowTime;
-                    now = stampTime(now);
-                    $.each(result.games, function (key, val) {
-                        getCaipiao(val, now);
-                    });
-                    var timer = null;
-                    //11选5倒计时
-                    //timer=setInterval(InterTime,1000);
-                },
-                error: onError
-            });
-        }
-        function onError(a) {
-            //alert(a.responseText);
-        }
         function getCaipiao(obj, now) {
             switch (obj['code']) {
                 //双色球
@@ -203,7 +152,7 @@
                                                                                      style="display:none">今日开奖</span>
                 </h1>
 
-                <p>3元可中1600万</p>
+                <p>3元可中1800万</p>
 
                 <p><span><img class="time-ico" src="img/sclock.png">
                       距<font class="qi"></font>   <span class="tian"><font class="redtext days"></font>天</span>
@@ -246,53 +195,12 @@
             </div>
             <span class="list-item-go"></span>
         </a>
-        <!--l4-->
-        <!--<a class="list-item clearfix" href="jclq.html">
+        <a class="list-item clearfix" href="jclq.html">
             <img class="list-item-logo" src="img/ico_jclq.png">
             <div class="fl" id="jclq">
                 <h1 class="clearfix"><span>竞彩篮球</span><span class="lanqiu"></span></h1>
                 <p>最近比赛：掘金VS快船</p>
                 <p>返奖率69%只猜胜负 更有趣</p>
-            </div>
-            <span class="list-item-go"></span>
-        </a>-->
-        <!--l5-->
-        <a class="list-item clearfix" href="ssq.jsp">
-            <img class="list-item-logo" src="img/ico_ssq.png">
-
-            <div class="fl" id="ssq">
-                <h1 class="clearfix"><span>双色球</span><span class="hot">火</span><span class="jiajiang"
-                                                                                     style="display:none">今日开奖</span>
-                </h1>
-
-                <p>2元可中1000万</p>
-
-                <p><span><img class="time-ico" src="img/sclock.png">
-                       距<font class="qi"></font> <span class="tian"><font class="redtext days"></font>天</span>
-                       <font class="redtext hours"></font>小时<span class="fen"><font
-                            class="redtext minutes"></font>分</span>
-                   </span>
-                    <!--<span class="span2-margin">奖池<font class="redtext">11,170</font>万</span>-->
-                </p>
-            </div>
-            <span class="list-item-go"></span>
-        </a>
-        <!--l5-->
-        <a class="list-item clearfix" href="fc3d.jsp">
-            <img class="list-item-logo" src="img/ico_3d.png">
-
-            <div class="fl" id="fc3d">
-                <h1 class="clearfix"><span>福彩3D</span><span class="jiajiang" style="display:none">今日开奖</span></h1>
-
-                <p>每天3个数，轻松投一注</p>
-
-                <p><span><img class="time-ico" src="img/sclock.png">
-                       距<font class="qi"></font> <span class="tian"><font class="redtext days"></font>天</span>
-                       <font class="redtext hours"></font>小时<span class="fen"><font
-                            class="redtext minutes"></font>分</span>
-                   </span>
-                    <!--<span class="span2-margin">奖池<font class="redtext">11,170</font>万</span>-->
-                </p>
             </div>
             <span class="list-item-go"></span>
         </a>
@@ -335,25 +243,6 @@
             <span class="list-item-go"></span>
         </a>
         <!--l8-->
-        <a class="list-item clearfix" href="qlc.jsp">
-            <img class="list-item-logo" src="img/ico_qlc.png">
-
-            <div class="fl" id="qlc">
-                <h1 class="clearfix"><span>七乐彩</span><span class="jiajiang" style="display:none">今日开奖</span></h1>
-
-                <p>最高奖金500万</p>
-
-                <p><span><img class="time-ico" src="img/sclock.png">
-                        距<font class="qi"></font> <span class="tian"><font class="redtext days"></font>天</span>
-                        <font class="redtext hours"></font>小时<span class="fen"><font
-                            class="redtext minutes"></font>分</span>
-                   </span>
-                    <!--<span class="span2-margin">奖池<font class="redtext">897</font>万</span>-->
-                </p>
-            </div>
-            <span class="list-item-go"></span>
-        </a>
-        <!--l9-->
         <a class="list-item clearfix" href="qxc.jsp">
             <img class="list-item-logo" src="img/ico_qxc.png">
 
@@ -372,37 +261,8 @@
             </div>
             <span class="list-item-go"></span>
         </a>
-        <!--l10-->
-        <!--<a class="list-item clearfix" href="sfc.html">
-            <img class="list-item-logo" src="img/ico_sfc.png">
-            <div class="fl" id="sfc">
-                <h1 class="clearfix"><span>胜负彩/任九场</span></h1>
-                <p>不定期开奖</p>
-                <p>2元擒1000万</p>
-            </div>
-            <span class="list-item-go"></span>
-        </a>-->
-        <!--l11-->
-        <!--<a class="list-item clearfix lastone" href="jqc.html">
-            <img class="list-item-logo" src="img/ico_jqc.png">
-            <div class="fl" id="jqc">
-                <h1 class="clearfix"><span>四场进球</span></h1>
-                <p>不定期开奖</p>
-                <p></p>
-            </div>
-            <span class="list-item-go"></span>
-        </div>                                                         
-    </a>-->
-        <!--正文内容结束-->
-        <!--底部开始-->
-        <div class="footer">
-            <a class="footer-nav nav-gc now" href="main.html">购彩</a> <a class="footer-nav nav-zh"
-                                                                        href="acount.html">账户</a><a
-                class="footer-nav nav-kj" href="result.html">开奖</a>
-            <a class="footer-nav nav-xx" href="caiyuan.html">财园</a><a class="footer-nav nav-sz" href="more.html">更多</a>
-
-            <div class="cb"></div>
-        </div>
     </div>
+</div>
+
 </body>
 </html>

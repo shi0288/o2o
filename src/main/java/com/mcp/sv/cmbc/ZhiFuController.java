@@ -120,7 +120,7 @@ public class ZhiFuController {
                 if(rst){
                     logger.info(out_trade_no + "  支付成功");
                 }else{
-                    logger.info(out_trade_no + "  已经支付，不再处理");
+                    logger.info(out_trade_no + " 未处理");
                 }
             }
         }else{

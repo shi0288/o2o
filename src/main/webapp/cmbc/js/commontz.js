@@ -1,95 +1,16 @@
-/*登陆及投注公用函数*/
-
-//用户登陆
-function startLogin(name, password) {
-    $.ajax({
-        type: "POST",
-        url: "/bankServices/LotteryService/commonTransA04?timestamp=" + new Date().getTime(),
-        dataType: "json",
-        cache: false,
-        data: {
-            cmd: 'A04',
-            userId: name,
-            password: password
-        },
-        success: function (result) {
-            var repCode = result.repCode;
-            if (repCode == '0000') {
-                //登录成功，缓存客户登陆信息。
-                saveSt(result.customer.name, result.customer.id, result.st);
-                //登录成功，缓存客户信息。
-            } else if (repCode == "1003") {
-                //如果没注册，则自动注册
-                startSign(name, password);
-            }
-        }
-    });
-}
-
-function startSign(name, password) {
-    var body = {
-        'customer': {'name': name,
-            'password': password
-        }
-    };
-    $.ajax({
-        type: "POST",
-        url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
-        dataType: "json",
-        cache: false,
-        data: {
-            cmd: 'A01',
-            body: JSON.stringify(body)
-        },
-        success: function (result) {
-            var repCode = result.repCode;
-//            window.alert(JSON.stringify(result));
-            if (repCode == '0000') {
-                //注册成功
-                var body = {
-                    'name': name,
-                    'password': password
-                };
-                $.ajax({
-                    type: "POST",
-                    url: "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
-                    dataType: "json",
-                    cache: false,
-                    data: {
-                        cmd: 'A04',
-                        body: JSON.stringify(body)
-                    },
-                    success: function (result) {
-                        var repCode = result.repCode;
-                        if (repCode == '0000') {
-                            //登录成功
-                            saveSt(result.customer.name, result.customer.id, result.st);
-                            //isPresent();
-                            //getUserData();
-                        } else {
-                            //登录不成功
-                            window.alert("系统未知异常");
-                        }
-                    }
-                });
-            }
-        }
-    });
-
-}
-
-function saveSt(name, id, st) {
-    sessionStorage.setItem("Name", name);
-    sessionStorage.setItem("Id", id);
-    sessionStorage.setItem("St", st);
-}
-
 
 //添加/去除class=on
 function togOn(evel) {
     if ($(evel).hasClass("on")) {
         $(evel).removeClass("on");
     } else {
+        //var xchuan=$(".chuan-item.on").length;
+        //if(xchuan>=1){
+        //    alert("只能选取一种通关模式");
+        //    return true;
+        //}
+        var xchuan=$(".chuan-item.on");
+        xchuan.removeClass("on");
         $(evel).addClass("on");
     }
 }

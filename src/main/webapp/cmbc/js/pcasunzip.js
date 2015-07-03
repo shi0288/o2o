@@ -1,4 +1,3 @@
-<!--
 /* PCAS (Province City Area Selector 省、市、地区联动选择JS封装类) Ver 2.02 完整版 *\
 
 　制作时间:2005-12-30
@@ -21,6 +20,7 @@
 	注：省、市、地区提示信息选项的值为""(空字符串)
 
 \*** 程序制作/版权所有:崔永祥(333) E-Mail:zhadan007@21cn.com 网址:http://www.popub.net ***/
+
 
 
 SPT="银行开户行所在省份";

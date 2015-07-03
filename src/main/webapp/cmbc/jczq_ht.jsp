@@ -17,13 +17,13 @@
 	<div class="top fix">
     	<!--<div class="top-add"><img src="img/guanggao_1.png"></div>-->
     	<div class="top-relative clearfix green-top"><!--<img id="top-lahuan" src="img/qian_top.png">-->
-        	<a href="jczq.html" id="jc-one" class="go-pre"></a>
+        	<a href="jczq.jsp" id="jc-one" class="go-pre"></a>
             <a href="javascript:jcone()" id="jc-two" class="go-pre" style="display:none"></a>
         	<span class="title">
                 <span class="pt2">竞彩足球</span>
                 <a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">混合过关<img src="img/down_wite.png"/></a>
             </span>
-            <a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>
+            <!--<a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>-->
         </div>
     </div>
     <div class="cb"></div>
@@ -57,7 +57,7 @@
     <script type="text/javascript" src="js/mcn.js"></script>
     <script type="text/javascript" src="js/jc.js"></script>
     <script type="text/javascript" src="js/jczq_ht.js"></script> 
-    <div id="game" data-play="01" data-game="T51" style="display:none"></div>
+    <div id="game" data-play="06" data-game="T51" style="display:none"></div>
 <!--正文内容结束-->   
 </div>
 <!--底部开始-->

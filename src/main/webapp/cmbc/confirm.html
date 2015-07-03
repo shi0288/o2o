@@ -5,6 +5,7 @@
     <title>支付订单</title>
     <meta name="viewport"
           content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="format-detection" content="telephone=no" />
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
@@ -15,7 +16,7 @@
 <div class="page-from-left index">
     <div class="top fix">
         <div class="top-relative clearfix">
-            <a href="acount.html" class="go-pre"></a>
+            <a href="acount.jsp" class="go-pre"></a>
             <span class="title">支付订单</span>
         </div>
     </div>
@@ -46,16 +47,8 @@
             <div id="tzcot"></div>
             <div class="fa-line"></div>
             <p class="fa-tit">支付方式</p>
-            <div id="caibizhifu" class="fl"><span id="check-cb" ></span>彩币支付</div>
-            <div class="jj-k-check" class="fl"><span id="huodao" ></span>支付宝付款</div>
-            <div  id="addressInfo" style="display: none">
-                <div class="fa-line"></div>
-                <div class="box-item clearfix" style="-moz-box-shadow:0px 0px 0px #d1c7a4; -webkit-box-shadow:0px 0px 0px #d1c7a4; box-shadow:0px 0px 0px #d1c7a4;">
-                    <div class="bline ico-ren clearfix"><label style="width:80px;">地址：</label><span>石家庄市长安区广安街--<input id="address" class="no-boder" type="text" placeholder="请输入具体位置"></span></div>
-                    <div class="bline ico-suo clearfix"><label style="width:80px;">手机号：</label><span><input id="mobile"  class="no-boder" type="text" placeholder="请输入手机号"></span></div>
-                    <span><font color="red">提示：第一次录入地址后，我们将为您保存下来，下次将直接显示！</font></span>
-                </div>
-            </div>
+            <div id="caibizhifu" class="fl"><span id="check-cb" class="now" ></span>彩币支付</div>
+           <!-- <div class="jj-k-check" class="fl"><span id="huodao" ></span>支付宝付款</div>  -->
 
             <div style="margin:10px auto;" class="clearfix">
                 <a id="pay_btn"  class=" m-bigbtn-org mt30">确认支付</a>

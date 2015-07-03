@@ -65,6 +65,8 @@
 				success : function(result) {
 					if(result.description.length>10){
 						//登陆成功
+						var userInfo=JSON.parse(result.description);
+						console.log(result.description);
 						sessionStorage.setItem("login", "login");
 						sessionStorage.setItem("name", name);
 						sessionStorage.setItem("passWord", password);

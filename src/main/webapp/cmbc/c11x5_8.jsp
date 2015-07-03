@@ -36,7 +36,7 @@
             </div>
             <div class="tab-content p10" id="putong" style="display:block;" data-red="8" data-blue="0" data-des="任选八">
             	<p class="gerytext pl10">玩法提示：从11个号码中任选8个号码。1/8.25的中奖机会，奖金9元。</p>
-                <span class="tz-tit-left">至少选8个号码</span>
+                <span class="tz-tit-left">只能选8个号码</span>
                 <span class="tz-tit-right1 red" id="jx-hq">8个</span>
                 <span class="tz-tit-right2 red" onClick="selqiu($('#putong').find('.redball'),8)">机选号码</span>
                 <div class="cb"></div>
@@ -107,9 +107,10 @@
             $(".redball").click(function(){
 				if($(this).siblings(".redball.on").length>=8){
 					$(this).removeClass("on");
+                    mathZhushu($(this).parent());
 					alert("最多能选择8个号码");
-					return false;	
-				}	
+					return false;
+				}
 			});
         });
     </script>

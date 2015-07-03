@@ -498,7 +498,7 @@ public class JcDao {
         }
         rbody = data.toString();
         //map.put(type + "_updatetime", new Date().getTime());
-       // map.put(type,rbody);
+        // map.put(type,rbody);
         //map.put(type+"_last_updated",endDate);
         return rbody;
     }
@@ -506,11 +506,11 @@ public class JcDao {
     public static void updateJcInfo (String endDate,String type,String rbody){
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
         DBObject find = new BasicDBObject(); //mongodb bean
-        find.put("_id","JC");
-        find.put("type", type+"_updatetime");
+        find.put("_id",type+"_updatetime");
+        //find.put("type", type+"_updatetime");
         DBObject set = new BasicDBObject(); //mongodb bean
-        set.put("_id", "JC");
-        set.put("type", type+"_updatetime");
+        set.put("_id", type+"_updatetime");
+        //set.put("type", type+"_updatetime");
         set.put("last_updated", endDate);
         set.put("body", rbody);
         set.put("updateTime", new Date().getTime());
@@ -520,8 +520,8 @@ public class JcDao {
     public static void saveJcInfo (String endDate,String type,String rbody){
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
         DBObject tokenObj = new BasicDBObject();
-        tokenObj.put("_id", "JC");
-        tokenObj.put("type", type+"_updatetime");
+        tokenObj.put("_id", type+"_updatetime");
+        //tokenObj.put("type", type+"_updatetime");
         tokenObj.put("updatetime",  new Date().getTime());
         tokenObj.put("last_updated", endDate);
         tokenObj.put("body", rbody);
@@ -531,8 +531,8 @@ public class JcDao {
     public static Map findJcInfo (String type){
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
         DBObject find = new BasicDBObject(); //mongodb bean
-        find.put("_id","JC");
-        find.put("type", type+"_updatetime");
+        find.put("_id",type+"_updatetime");
+        //find.put("type", type+"_updatetime");
         DBObject token = collection.findOne(find);
         if (token != null){
             return  token.toMap();

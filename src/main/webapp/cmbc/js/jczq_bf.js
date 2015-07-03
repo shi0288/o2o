@@ -189,7 +189,8 @@ $(document).ready(function () {
      });	*/
 });
 function seleMatch(evel) {
-    if ($(evel).parents(".jc-table").siblings(".jc-table.on").length >= 8) {
+    var cs=getChangshu();
+    if(cs>8){
         alert("最多能选8场比赛");
         return false;
     }
@@ -211,7 +212,7 @@ function seleMatch(evel) {
         $(evel).addClass("on");
         $(evel).parents("table").addClass("on");
     }
-    var cs = getChangshu();
+    cs = getChangshu();
     if (cs >= 1) {
         $("#jc-cs").html("您选择了" + cs + "场比赛");
     } else {

@@ -23,7 +23,6 @@
             <a href="jczq.jsp" id="jc-one"  class="go-pre"></a>
             <a href="javascript:jcone()" id="jc-two" class="go-pre" style="display:none"></a>
             <span class="title" style="margin-left:-12px;">竞彩足球<a class="selmore" href="javascript:void(-1)" onClick="$('#jc-gg-pop').show();">半全场胜平负<img src="img/down_wite.png"/></a></span>
-            <!--<a href="javascript:void(-1)" class="go-more stopp" onClick="$('.cover').show();$('#jc-ss-pop').show();"></a>-->
         </div>
     </div>
     <div class="cb"></div>
@@ -89,16 +88,6 @@
 <div class="mt-fix" id="jc-gg-pop">
     <a href="jczq.jsp">胜平负</a><a href="jczq_rf.jsp">让球胜平负</a><a href="jczq_bf.jsp">比分</a><a href="jczq_zjqs.jsp">总进球数</a><a href="jczq_bqc.jsp">半全场胜平负</a><a href="jczq_ht.jsp">混合过关</a>
     <div class="cb"></div>
-</div>
-<div class="mmt-fix" id="jc-ss-pop">
-    <div class="mt-xiang clearfix">
-        <a href="javascript:void(-1)" onClick="$(this).parent().parent().find('span').addClass('on');">全选</a>
-        <a href="javascript:void(-1)" class="fanxuan">反选</a><a href="javascript:void(-1)" id="jc-bigls">五大联赛</a>
-    </div>
-    <div id="jc-liansai"></div>
-    <div class="cb"></div>
-    <a class="mt-cancel" href="javascript:void(-1)" onClick="$('.cover').hide();$(this).parent().hide()">取消</a>
-    <a id="jc-ls-ok" class="mt-cancel" href="javascript:void(-1)">确认</a>
 </div>
 <div class="chuanguan" id="xchuan">
     <div class="title">自由过关</div>

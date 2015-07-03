@@ -135,28 +135,6 @@
             </div>
             <span class="list-item-go"></span>
         </a>
-        <!--l5 双色球-->
-        <a class="list-item clearfix" href="resultdet.html#F01">
-            <img class="list-item-logo" src="img/ico_ssq.png">
-
-            <div class="fl" id="ssq">
-                <h1 class="clearfix"><span>双色球</span><span class="kj-qi"></span><span class="kj-rq"></span></h1>
-
-                <p></p>
-            </div>
-            <span class="list-item-go"></span>
-        </a>
-        <!--l5 双色球-->
-        <a class="list-item clearfix" href="resultdet.html#F02">
-            <img class="list-item-logo" src="img/ico_3d.png">
-
-            <div class="fl" id="fc3d">
-                <h1 class="clearfix"><span>福彩3D</span><span class="kj-qi"></span><span class="kj-rq"></span></h1>
-
-                <p></p>
-            </div>
-            <span class="list-item-go"></span>
-        </a>
         <!--l6 排列3-->
         <a class="list-item clearfix" href="resultdet.html#T03">
             <img class="list-item-logo" src="img/ico_pl3.png">
@@ -179,17 +157,6 @@
             </div>
             <span class="list-item-go"></span>
         </a>
-        <!--l8 七乐彩-->
-        <a class="list-item clearfix" href="resultdet.html#F03">
-            <img class="list-item-logo" src="img/ico_qlc.png">
-
-            <div class="fl" id="qlc">
-                <h1 class="clearfix"><span>七乐彩</span><span class="kj-qi"></span><span class="kj-rq"></span></h1>
-
-                <p></p>
-            </div>
-            <span class="list-item-go"></span>
-        </a>
         <!--l9 七星彩-->
         <a class="list-item clearfix" href="resultdet.html#T02">
             <img class="list-item-logo" src="img/ico_qxc.png">
@@ -201,25 +168,6 @@
             </div>
             <span class="list-item-go"></span>
         </a>
-        <!--l10 胜负彩/任九场-->
-        <!--<a class="list-item clearfix" href="resultdet.html">
-            <img class="list-item-logo" src="img/ico_sfc.png">
-            <div class="fl" id="sfc">
-                <h1 class="clearfix"><span>胜负彩/任九场</span><span class="kj-qi">第140011509期</span><span class="kj-rq">2014-01-16</span></h1>
-                <p></p>
-            </div>
-            <span class="list-item-go"></span>
-        </a>-->
-        <!--l11 四场进球-->
-        <!--<a class="list-item clearfix lastone" href="resultdet.html">
-            <img class="list-item-logo" src="img/ico_jqc.png">
-            <div class="fl" id="jqc">
-                <h1 class="clearfix"><span>四场进球</span><span class="kj-qi">第140011509期</span><span class="kj-rq">2014-01-16</span></h1>
-                <p></p>
-            </div>
-            <span class="list-item-go"></span>                                                      
-    </a>-->
-
 
     </div>
 </div>

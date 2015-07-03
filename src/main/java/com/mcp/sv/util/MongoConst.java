@@ -20,6 +20,8 @@ public class MongoConst {
     public static final String MONGO_TICKET="tticket";
     public static final String MONGO_TERM="term";
 
+    public static final String MONGO_JCINFO="jcinfo";
+
 
 
 

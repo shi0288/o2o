@@ -415,14 +415,12 @@ function getChangshu(){
 function jcone(){
     $("#jc-two").hide();
     $("#jc-one").show();
-    $("#jc-one-bqc").show();
     $(".jc-step2").hide();
     $(".jc-step1").show();
 }
 //显示第二步
 function jctwo(){
     $("#jc-one").hide();
-    $("#jc-one-bqc").hide();
     $("#jc-two").show();
     $(".jc-step1").hide();
     $(".jc-step2").show();

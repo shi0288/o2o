@@ -59,11 +59,8 @@
     <script type="text/javascript" src="js/jc.js"></script>
     <script type="text/javascript" src="js/jczq_bf.js"></script>
     <div id="game" data-play="03" data-game="T51" style="display:none"></div>
-<<<<<<< HEAD
-<!--正文内容结束-->   
-=======
+<!--正文内容结束-->
     <!--正文内容结束-->
->>>>>>> eff46870f758e2efc88859da47be8348f27cd9f0
 </div>
 <!--底部开始-->
 <!--第一步底部-->
@@ -86,7 +83,7 @@
 <div style=" height:10px;"></div>
 <div class="footer-tz green-footer jc-bg jc-step2" style="background-color:transparent;">
     <a href="javascript:void(-1)" id="tz-btn" class="green-footer-btn fr">立即购买</a>
-    <div class="greentext"><span class="green-check" id="check-cb-jc">使用彩币支付</span></div>
+    <!--<div class="greentext"><span class="green-check" id="check-cb-jc">使用彩币支付</span></div>-->
 </div>
 <!--第二步底部结束-->
 <!-- 弹出层开始-->

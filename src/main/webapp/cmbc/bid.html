@@ -36,8 +36,9 @@
 			}else{
 				$("#identityId").html('<input id="idcard" class="no-boder sid" type="text" placeholder="一经填写不可修改">')
 			}
+
 			if(mobile!='undefined'&& mobile!=null){
-				$("#mobile").html(mobile);
+				$("#mobile").html(mobile+'   已认证');
 			}else{
 				$("#mobile").html('<input name="cardnum" id="cardnum" class="no-boder" type="text" placeholder="请输入手机号">');
 			}
@@ -172,6 +173,7 @@
 	<div class="top fix">
 		<div class="top-relative clearfix">
 			<a href="javascript:history.go(-1)" class="go-pre"></a>
+			<img style="float:right;" id="refresh" src="img/reflash.png" onClick="window.location.reload();"/>
 			<span class="title">实名认证</span>
 		</div>
 	</div>

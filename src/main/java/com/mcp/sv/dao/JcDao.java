@@ -1,7 +1,13 @@
 package com.mcp.sv.dao;
 
 
+import com.alibaba.fastjson.JSON;
 import com.mcp.sv.util.CmbcConstant;
+import com.mcp.sv.util.MongoConst;
+import com.mcp.sv.util.MongoUtil;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -23,95 +29,165 @@ public class JcDao {
 
     private static final Logger logger = LoggerFactory.getLogger(JcDao.class);
 
-    public static Map<String,Object> map = new HashMap<String,Object>();
+    //public static Map<String,Object> map = new HashMap<String,Object>();
 
     public static String getFormat( String head, String body){
         String str = "";
         String res = "";
+        String url = "";
         try {
             JSONObject mhead = new JSONObject(head);
             String st = mhead.getString("st");
-            if (st.equals(CmbcConstant.ZJQS)) {
-                String ZJQS = (String) map.get(st);
-                if (ZJQS == null) {
-                    str = sendGet(CmbcConstant.ZJQS_URL);
-                    res = createFormat(st, str);
-                } else {
-                    boolean update = getTask(ZJQS,st);
-                    if(update){
-                        str = ZJQS;
-                        res = str;
-                    }else{
-                        str = sendGet(CmbcConstant.ZJQS_URL);
-                        res = createFormat(st, str);
-                    }
-
-                }
-            } else if (st.equals("1") || st.equals("2")) {
+            if (st.equals("1") || st.equals("2")) {
                 st = CmbcConstant.SPF;
-                String cn01 = (String) map.get(st);
-                if (cn01 == null) {
-                    str = sendGet(CmbcConstant.SPF_URL);
-                    res = createFormat(st, str);
-                } else {
-                    boolean update = getTask(cn01,st);
-                    if(update){
-                        str = cn01;
-                        res = str;
-                    }else{
-                        str = sendGet(CmbcConstant.SPF_URL);
-                        res = createFormat(st, str);
-                    }
-                }
             }
-            else if(st.equals(CmbcConstant.BQCSPF)){
-                String BQCSPF = (String) map.get(st);
-                if(BQCSPF==null){
-                    str = sendGet(CmbcConstant.BQCSPF_URL);
-                    res = createFormat(st, str);
-                }else{
-                    boolean update = getTask(BQCSPF,st);
-                    if(update){
-                        str = BQCSPF;
-                        res = str;
-                    }else{
-                        str = sendGet(CmbcConstant.BQCSPF_URL);
-                        res = createFormat(st, str);
-                    }
-                }
-
+            Map info = findJcInfo(st);
+            if(st.equals(CmbcConstant.ZJQS)){
+                url = CmbcConstant.ZJQS_URL;
+            }else if(st.equals(CmbcConstant.SPF)){
+                url = CmbcConstant.SPF_URL;
+            }else if(st.equals(CmbcConstant.BQCSPF)){
+                url = CmbcConstant.BQCSPF_URL;
             }else if(st.equals(CmbcConstant.BF)){
-                String BF = (String) map.get(st);
-                if(BF==null){
-                    str = sendGet(CmbcConstant.BF_URL);
-                    res = createFormat(st, str);
-                }else{
-                    boolean update = getTask(BF,st);
-                    if(update){
-                        str = BF;
-                        res = str;
-                    }else{
-                        str = sendGet(CmbcConstant.BF_URL);
-                        res = createFormat(st, str);
-                    }
-                }
-
+                url = CmbcConstant.BF_URL;
             }else if(st.equals(CmbcConstant.HHGG)){
-                String HHGG = (String) map.get(st);
-                if(HHGG==null){
+                url = CmbcConstant.HHGG_URL;
+            }else{
+                return null;
+            }
+            if (info.containsKey("type")) {
+                long updateTime = (Long) info.get("updatetime");
+                if (new Date().getTime() - updateTime > 1000 * 60 * 5) {//大于5分钟 更新info
+                    String mbody = (String) info.get("body");
+                    JSONObject lastbody = new JSONObject(mbody);
+                    String thead = lastbody.getString("head");
+                    JSONObject mhead_updated = new JSONObject(thead);
+                    String last_updated = mhead_updated.get("last_updated").toString();
+                    if(st.equals(CmbcConstant.HHGG)){
+                        str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(url);
+                        res = createHhggFormat(st, str);
+                        updateJcInfo(String.valueOf(new Date().getTime()), st, res);
+                    }else{
+                        str = sendGet(url);
+                        JSONObject rbody = new JSONObject(str);             //传过来的数据
+                        String status = rbody.getString("status");          //最后更新时间
+                        JSONObject updated = new JSONObject(status);
+                        String r_last_updated = updated.getString("last_updated");
+                        if(r_last_updated.equals(last_updated)){
+                            res = (String)info.get("body");
+                        }else{//update
+                            if(st.equals(CmbcConstant.HHGG)){
+                                res = createHhggFormat(st, str);
+                            }else{
+                                res = createFormat(st, str);
+                            }
+                            updateJcInfo(last_updated, st, res);
+                        }
+                    }
+
+                }else{
+                    res = (String)info.get("body");
+                }
+            }else{//save
+                if(st.equals(CmbcConstant.HHGG)){
                     str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(CmbcConstant.HHGG_URL);
                     res = createHhggFormat(st, str);
+                    saveJcInfo(String.valueOf(new Date().getTime()), st, res);
                 }else{
-                    boolean update = getTask(HHGG,st);
-                    if(update){
-                        str = HHGG;
-                        res = str;
-                    }else{
-                        str = sendGet(CmbcConstant.HHGG_URL);
-                        res = createHhggFormat(st, str);
-                    }
+                    str = sendGet(url);
+                    res = createFormat(st, str);
+                    JSONObject rbody = new JSONObject(str);             //传过来的数据
+                    String status = rbody.getString("status");          //最后更新时间
+                    JSONObject updated = new JSONObject(status);
+                    String r_last_updated = updated.getString("last_updated");
+                    saveJcInfo(r_last_updated, st, res);
                 }
             }
+
+
+
+
+//            if (st.equals(CmbcConstant.ZJQS)) {
+//                String ZJQS = (String) map.get(st);
+//                if (ZJQS == null) {
+//                    str = sendGet(CmbcConstant.ZJQS_URL);
+//                    res = createFormat(st, str);
+//                } else {
+//                    boolean update = getTask(ZJQS,st);
+//                    if(update){
+//                        str = ZJQS;
+//                        res = str;
+//                    }else{
+//                        str = sendGet(CmbcConstant.ZJQS_URL);
+//                        res = createFormat(st, str);
+//                    }
+//
+//                }
+//            } else if (st.equals("1") || st.equals("2")) {
+//                st = CmbcConstant.SPF;
+//                String cn01 = (String) map.get(st);
+//                if (cn01 == null) {
+//                    str = sendGet(CmbcConstant.SPF_URL);
+//                    res = createFormat(st, str);
+//                } else {
+//                    boolean update = getTask(cn01,st);
+//                    if(update){
+//                        str = cn01;
+//                        res = str;
+//                    }else{
+//                        str = sendGet(CmbcConstant.SPF_URL);
+//                        res = createFormat(st, str);
+//                    }
+//                }
+//            }
+//            else if(st.equals(CmbcConstant.BQCSPF)){
+//                String BQCSPF = (String) map.get(st);
+//                if(BQCSPF==null){
+//                    str = sendGet(CmbcConstant.BQCSPF_URL);
+//                    res = createFormat(st, str);
+//                }else{
+//                    boolean update = getTask(BQCSPF,st);
+//                    if(update){
+//                        str = BQCSPF;
+//                        res = str;
+//                    }else{
+//                        str = sendGet(CmbcConstant.BQCSPF_URL);
+//                        res = createFormat(st, str);
+//                    }
+//                }
+//
+//            }else if(st.equals(CmbcConstant.BF)){
+//                String BF = (String) map.get(st);
+//                if(BF==null){
+//                    str = sendGet(CmbcConstant.BF_URL);
+//                    res = createFormat(st, str);
+//                }else{
+//                    boolean update = getTask(BF,st);
+//                    if(update){
+//                        str = BF;
+//                        res = str;
+//                    }else{
+//                        str = sendGet(CmbcConstant.BF_URL);
+//                        res = createFormat(st, str);
+//                    }
+//                }
+//
+//            }else if(st.equals(CmbcConstant.HHGG)){
+//                String HHGG = (String) map.get(st);
+//                if(HHGG==null){
+//                    str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(CmbcConstant.HHGG_URL);
+//                    res = createHhggFormat(st, str);
+//                }else{
+//                    boolean update = getTask(HHGG,st);
+//                    if(update){
+//                        str = HHGG;
+//                        res = str;
+//                    }else{
+//                        str = sendGet(CmbcConstant.HHGG_URL);
+//                        res = createHhggFormat(st, str);
+//                    }
+//                }
+//            }
 
         }catch (Exception e) {
             e.printStackTrace();
@@ -421,9 +497,48 @@ public class JcDao {
             e.printStackTrace();
         }
         rbody = data.toString();
-        map.put(type,rbody);
-        map.put(type+"_last_updated",endDate);
+        //map.put(type + "_updatetime", new Date().getTime());
+       // map.put(type,rbody);
+        //map.put(type+"_last_updated",endDate);
         return rbody;
+    }
+
+    public static void updateJcInfo (String endDate,String type,String rbody){
+        DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
+        DBObject find = new BasicDBObject(); //mongodb bean
+        find.put("_id","JC");
+        find.put("type", type+"_updatetime");
+        DBObject set = new BasicDBObject(); //mongodb bean
+        set.put("_id", "JC");
+        set.put("type", type+"_updatetime");
+        set.put("last_updated", endDate);
+        set.put("body", rbody);
+        set.put("updateTime", new Date().getTime());
+        collection.findAndModify(find, null, null, false, set, true, true);
+    }
+
+    public static void saveJcInfo (String endDate,String type,String rbody){
+        DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
+        DBObject tokenObj = new BasicDBObject();
+        tokenObj.put("_id", "JC");
+        tokenObj.put("type", type+"_updatetime");
+        tokenObj.put("updatetime",  new Date().getTime());
+        tokenObj.put("last_updated", endDate);
+        tokenObj.put("body", rbody);
+        collection.save(tokenObj);
+    }
+
+    public static Map findJcInfo (String type){
+        DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
+        DBObject find = new BasicDBObject(); //mongodb bean
+        find.put("_id","JC");
+        find.put("type", type+"_updatetime");
+        DBObject token = collection.findOne(find);
+        if (token != null){
+            return  token.toMap();
+        }else{
+            return new HashMap<>();
+        }
     }
 
     //混合过关
@@ -457,36 +572,36 @@ public class JcDao {
 
 
     //判断是否需要更新竞彩数据
-    public static boolean getTask( String str,String st){
-        boolean sign = false;
-        try {
-            if(st.equals(CmbcConstant.HHGG)){
-                st = CmbcConstant.SPF;
-            }
-            String last_updated = (String) map.get(st);
-            if(last_updated == null || "".equals(last_updated)){
-                sign = false;
-            }else{
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-                Date last = format.parse(last_updated);
-                Date nowt = new Date();
-                long now1 = nowt.getTime();
-                long last1 = last.getTime();
-                long l = now1 - last1;
-                long day=l/(24*60*60*1000);
-                long hour=(l/(60*60*1000)-day*24);
-                long min=((l/(60*1000))-day*24*60-hour*60);
-
-                if(min <= 30){
-                    sign = true;
-                }else {
-                    sign = false;
-                }
-            }
-        }catch (Exception e) {
-            logger.error("竞彩数据更新失败");
-            sign = false;
-        }
-        return sign;
-    }
+//    public static boolean getTask( String str,String st){
+//        boolean sign = false;
+//        try {
+//            if(st.equals(CmbcConstant.HHGG)){
+//                st = CmbcConstant.SPF;
+//            }
+//            String last_updated = (String) map.get(st);
+//            if(last_updated == null || "".equals(last_updated)){
+//                sign = false;
+//            }else{
+//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+//                Date last = format.parse(last_updated);
+//                Date nowt = new Date();
+//                long now1 = nowt.getTime();
+//                long last1 = last.getTime();
+//                long l = now1 - last1;
+//                long day=l/(24*60*60*1000);
+//                long hour=(l/(60*60*1000)-day*24);
+//                long min=((l/(60*1000))-day*24*60-hour*60);
+//
+//                if(min <= 30){
+//                    sign = true;
+//                }else {
+//                    sign = false;
+//                }
+//            }
+//        }catch (Exception e) {
+//            logger.error("竞彩数据更新失败");
+//            sign = false;
+//        }
+//        return sign;
+//    }
 }

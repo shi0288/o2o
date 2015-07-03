@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.mcp.sv.dao.JcDao.createFormat;
+import static com.mcp.sv.dao.JcDao.getFormat;
 import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 
 /**
@@ -17,18 +18,21 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 public class Test {
 
     public static void main(String[] args) throws JSONException, ParseException {
-       String str = sendGet(CmbcConstant.HHGG_URL);
-//        System.out.println(sendGettr);
+//       String str = sendGet(CmbcConstant.HHGG_URL);
+//        System.out.println(str);
 //       String res = createFormat("HHGG", str);
 //        System.out.println(res);
+        String ss = getFormat("ZJQS","");
+        System.out.println(ss);
+//last_updated":"2015-07-03 10:14:39"}}
 
-        String last_updated = "2015-07-02 15:14:23";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-        Date last = format.parse(last_updated);
-        Date nowt = new Date();
-        long now1 = nowt.getTime();
-        System.out.println(nowt);
-
+//        String last_updated = "2015-07-02 15:14:23";
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+//        Date last = format.parse(last_updated);
+//        Date nowt = new Date();
+//        long now1 = nowt.getTime();
+//        System.out.println(nowt);
+//last_updated":"2015-07-03 10:14:39"}
 //        JSONObject jsonObject=new JSONObject();
 //        jsonObject.put("gameCode","T51");
 //        jsonObject.put("pType","05");

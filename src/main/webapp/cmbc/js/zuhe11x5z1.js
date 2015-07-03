@@ -113,11 +113,11 @@ $(document).ready(function() {
 	});
 	/*机选一注恢复原始数量*/
 	$(".tz-tit-right2.red").click(function(){
-		var nuuu=2;
+		var nuuu='1个';
 		$(this).prev(".tz-tit-right1").html(nuuu);	
 	});
 	$(".tz-tit-right2.blue").click(function(){
-		var nuuu=2;
+		var nuuu='1个';
 		$(this).prev(".tz-tit-right1").html(nuuu);	
 	});
 	

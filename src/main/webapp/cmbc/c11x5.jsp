@@ -44,7 +44,6 @@
                 <span class="tz-tit-left">至少选5个号码</span>
                 <span class="tz-tit-right1 red" id="jx-hq">5个</span>
                 <span class="tz-tit-right2 red" onClick="selqiu($('#putong').find('.redball'),5)">机选号码</span>
-
                 <div class="cb"></div>
                 <span class="redball">01</span><span class="redball">02</span><span class="redball">03</span><span
                     class="redball">04</span><span class="redball">05</span>
@@ -136,6 +135,16 @@
     <script type="text/javascript" src="js/contect11x5.js"></script>
     <div id="game" style="display:none" data-game="T05" data-play="25"></div>
 </div>
+
+<div class="cover"></div>
+
+<div class="pop pop-red-div clearfix">
+    <span class="pop-red">2</span><span class="pop-red">3</span><span class="pop-red">4</span>
+    <span class="pop-red">5</span><span class="pop-red">6</span><span class="pop-red">7</span>
+    <span class="pop-red">8</span><span class="pop-red">9</span>
+    <span class="pop-red">10</span><span class="pop-red">11</span>
+</div>
+
 <div class="pop pop-renxuan-div clearfix">
     <div class="text-center">请选择玩法</div>
     <div class="pop-renxuan-dd">

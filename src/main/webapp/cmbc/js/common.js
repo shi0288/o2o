@@ -244,7 +244,7 @@ $(document).ready(function() {
             $(".boq").eq(i).html(iInput-1);
             //算金额
             var zhushu=$("#zhushu").html();
-            var qishu=$("#qishu").html();
+            var qishu=1;//$("#qishu").html();
             var beishu=$("#beishu").html();
             zhushu=parseInt(zhushu);
             qishu=parseInt(qishu);
@@ -270,7 +270,7 @@ $(document).ready(function() {
         $(".boq").eq(i).html(iInput+1);
         //算金额
         var zhushu=$("#zhushu").html();
-        var qishu=$("#qishu").html();
+        var qishu=1;//$("#qishu").html();
         var beishu=$("#beishu").html();
         zhushu=parseInt(zhushu);
         qishu=parseInt(qishu);
@@ -298,7 +298,7 @@ $(document).ready(function() {
         $(".boq").eq(i).html(iInput);
         //算金额
         var zhushu=$("#zhushu").html();
-        var qishu=$("#qishu").html();
+        var qishu=1;//$("#qishu").html();
         var beishu=$("#beishu").html();
         zhushu=parseInt(zhushu);
         qishu=parseInt(qishu);

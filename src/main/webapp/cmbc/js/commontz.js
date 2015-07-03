@@ -151,7 +151,7 @@ function sumAll() {
             zhushu += parseInt(mn);
         });
     }
-    var qishu = $("#qishu").html();
+    var qishu = 1;//$("#qishu").html();
     var beishu = $("#beishu").html();
     zhushu = parseInt(zhushu);
     qishu = parseInt(qishu);
@@ -304,7 +304,7 @@ function mathDantuo() {
 function zhiyJx() {
     red = 2;
     var zhushu = $("#zhushu").html();
-    var qishu = $("#qishu").html();
+    var qishu = 1;//$("#qishu").html();
     var beishu = $("#beishu").html();
     zhushu = parseInt(zhushu);
     qishu = parseInt(qishu);
@@ -437,7 +437,7 @@ function plXqiu() {
 //删除选中的这行投注
 function delEv(evel) {
     var zhushu = $("#zhushu").html();
-    var qishu = $("#qishu").html();
+    var qishu = 1;//$("#qishu").html();
     var beishu = $("#beishu").html();
     var jzhu = $(evel).parent().attr("data-zs");
     zhushu = parseInt(zhushu);
@@ -721,7 +721,7 @@ function resPailie() {
 function gotSum() {
     var zhushu = $("#zhushu").html();
     var beishu = $("#beishu").html();
-    var qishu = $("#qishu").html();
+    var qishu = 1;//$("#qishu").html();
     zhushu = parseInt(zhushu);
     beishu = parseInt(beishu);
     qishu = parseInt(qishu);

@@ -100,7 +100,7 @@ $(document).ready(function() {
 	$("#jxyz").click(function(){
 		var red=$("#putong").attr("data-red");
 		var zhushu=$("#zhushu").html();
-		var qishu=$("#qishu").html();
+		var qishu=1;//$("#qishu").html();
 		var beishu=$("#beishu").html();
 		zhushu=parseInt(zhushu);
 		qishu=parseInt(qishu);

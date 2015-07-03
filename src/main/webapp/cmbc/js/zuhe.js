@@ -24,7 +24,7 @@ $(document).ready(function() {
 		red=parseInt(red);
 		blue=parseInt(blue);
 		var zhushu=$("#zhushu").html();
-		var qishu=$("#qishu").html();
+		var qishu=1;//$("#qishu").html();
 		var beishu=$("#beishu").html();
 		zhushu=parseInt(zhushu);
 		qishu=parseInt(qishu);

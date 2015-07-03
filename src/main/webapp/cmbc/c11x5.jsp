@@ -99,30 +99,6 @@
                             <span class="jj-k-right"></span>
                         </div>
                         <div class="cb"></div>
-                        <div class="h5"></div>
-                        <div class="jj-k clearfix fl">
-                            <span class="jj-k-left"></span>
-                            <span class="jj-k-font">买</span><span><input type="text" class="no-boder" value="1"/></span><span
-                                class="jj-k-font2">期</span>
-                            <span class="jj-k-right"></span>
-                        </div>
-                        <div id="caibizhifu" class="fl" style="display:none;"><span id="check-cb" class="now"></span>彩币支付
-                        </div>
-                        <div class="jj-k-check"><span class="check-org" id="zjstop"></span><span
-                                class="fl">中奖后停止追号</span></div>
-                        <div class="cb"></div>
-                        <div class="h5"></div>
-                        <div class="tz-more-sel">
-                            <div class="sel-tzz clearfix">
-                                <span class="fl">投注站</span>
-                                <a class="litt-go fr"></a>
-                                <span class="redtext fr">查找投注站</span>
-                            </div>
-                            <div class="sel-zf clearfix" id="show-zfb">
-                                <span class="fl">支付方式</span>
-                                <a class="litt-go fr"></a>
-                                <span class="bluetext fr">支付宝在线支付</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,8 +125,7 @@
         <span id="qi-bei">
         	<span class="fl">共<font class="redtext" id="zhushu">0</font>注
             <font class="redtext boq" id="beishu">1</font>倍
-             <font class="redtext boq" id="qishu">1</font>期，
-            <font class="redtext" id="qianshu">0</font>元</span>    
+            <font class="redtext" id="qianshu">0</font>元</span>
         </span>
 
         <a class="xuanhao-btn step1 fr" href="javascript:void(-1)">选好了</a>

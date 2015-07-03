@@ -164,7 +164,7 @@ $(document).ready(function() {
 				 '<div class="evhao gerytext"><span class="redtext">'+html+'</span>'+zhuHtml+' </div></div>';
 		$("#xh-box").prepend(thtml);
 		var zhushu=$("#zhushu").html();
-		var qishu=$("#qishu").html();
+		var qishu=1;//$("#qishu").html();
 		var beishu=$("#beishu").html();
 		qishu=parseInt(qishu);
 		beishu=parseInt(beishu);
@@ -217,7 +217,7 @@ function jxyzhu(){
 			 '<div class="evhao gerytext"><span class="redtext">'+html+'</span>'+zhuHtml+' </div></div>';
 	$("#xh-box").prepend(thtml);
 	var zhushu=$("#zhushu").html();
-	var qishu=$("#qishu").html();
+	var qishu=1;//$("#qishu").html();
 	var beishu=$("#beishu").html();
 	qishu=parseInt(qishu);
 	beishu=parseInt(beishu);

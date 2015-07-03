@@ -14,8 +14,6 @@
 <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/jczqcontect.js"></script>
-    <jsp:include page="include/login.jsp" flush="true"/>
-
 
 </head>
 <body class="jc-bg">
@@ -83,7 +81,6 @@
 <div style=" height:10px;"></div>
 <div class="footer-tz green-footer jc-bg jc-step2" style="background-color:transparent;">
      <a href="javascript:void(-1)" id="tz-btn" class="green-footer-btn fr">立即购买</a>
-    <!-- <div class="greentext"><span class="green-check" id="check-cb-jc">使用彩币支付</span></div>-->
 </div>
 <!--第二步底部结束-->
 <!-- 弹出层开始-->

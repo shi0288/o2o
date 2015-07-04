@@ -2,6 +2,7 @@
 /*彩币支付提交以后，走正常流程。第三方支付提交以后，走支付接口，调用setWebitEvent("11111111", "LT03");
  */
 var termCode = "";
+var matchinfo = [];
 $(document).ready(function () {
     before();
     getJcData();//获取竞彩数据
@@ -100,6 +101,7 @@ function submitJc() {
         'bType': betType,
         'pType': playType,
         'number': numbers,
+        'matchinfo':matchinfo,
         'multiple': $("#beishu").val(),
         "presetTerminal":"0000",
         "outerId":new Date().getTime()+Math.random().toString(36).substr(8),
@@ -163,7 +165,9 @@ function getJcNums() {
     var arrNum = [];
     $(".jc-list-item").each(function (index, element) {
         var str = "";
+        var matchname="";
         var _this = this;
+        matchname=$(_this).find(".jc-list-item-ss").html().replace(/&nbsp;/ig, "");
         if ($(_this).find(".jc-list-item-dan").hasClass("on")) {
             str += "$";
         }
@@ -186,8 +190,10 @@ function getJcNums() {
         });
         str += strNum;
         arrNum.push(str);
+        matchinfo.push(matchname);
     });
     arrNum = arrNum.join(";");
+    matchinfo = matchinfo.join(";");
     return arrNum;
 }
 

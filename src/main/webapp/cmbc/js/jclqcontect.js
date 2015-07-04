@@ -1,5 +1,5 @@
 var termCode = "";
-
+var matchinfo = [];
 
 $(document).ready(function () {
     getJcData();//获取竞彩数据
@@ -97,6 +97,7 @@ function submitJc() {
         'bType': betType,
         'pType': playType,
         'number': numbers,
+        'matchinfo':matchinfo,
         'multiple': $("#beishu").val(),
         "presetTerminal":"0000",
         "outerId":new Date().getTime()+Math.random().toString(36).substr(8),
@@ -146,9 +147,11 @@ function submitJc() {
 function getJcNums() {
     var playType = $("#game").attr("data-play");
     var arrNum = [];
+    var matchname="";
     if(playType == '01'||playType == '02'){//让球胜平负（01）胜平负（02）
         $(".jc-list-item").each(function (index, element) {
             var str = "";
+            matchname=$(this).find(".jc-list-item-ss").html().replace(/&nbsp;/ig, "");
             if ($(this).find(".jc-list-item-dan").hasClass("on")) {
                 str += "$";
             }
@@ -167,11 +170,14 @@ function getJcNums() {
             });
             str += strNum;
             arrNum.push(str);
+            matchinfo.push(matchname);
         });
         arrNum = arrNum.join(";");
+        matchinfo = matchinfo.join(";");
     }else{
         $(".jc-list-item").each(function (index, element) {
             var str = "";
+            matchname=$(this).find(".jc-list-item-ss").html().replace(/&nbsp;/ig, "");
             if ($(this).find(".jc-list-item-dan").hasClass("on")) {
                 str += "$";
             }
@@ -187,8 +193,10 @@ function getJcNums() {
             });
             str += strNum;
             arrNum.push(str);
+            matchinfo.push(matchname);
         });
         arrNum = arrNum.join(";");
+        matchinfo = matchinfo.join(";");
     }
     return arrNum;
 }

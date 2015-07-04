@@ -429,8 +429,13 @@ function chuanList(){
 	$("#duo-chuan").html("");
 	$.each(arrT,function(i,item){
 		if(item.charAt(1)<=n){
+			var chuanstr="";
 			var chuanm=item.split(/[a-z]/);
-			var chuanstr=chuanm[1]+"串"+chuanm[2];
+			if (chuanm[1] != n) {
+				return true;
+			} else {
+				chuanstr = chuanm[1] + "串" + chuanm[2];
+			}
 			var chuanHtml='<span class="chuan-item" data-chuan="'+item+'" onClick="togOn(this)">'+chuanstr+'</span>';
 			if(chuanm[2]=="1"){
 				//自由过关

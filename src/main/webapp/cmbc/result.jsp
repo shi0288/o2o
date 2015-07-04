@@ -42,21 +42,6 @@
 
         function getResult(obj) {
             switch (obj['gameCode']) {
-                //双色球
-                case "F01":
-                    var oQiu = $("#ssq");
-                    doRes(obj, oQiu, 1);
-                    break;
-                //福彩3D
-                case "F02":
-                    var oQiu = $("#fc3d");
-                    doRes(obj, oQiu, 2);
-                    break;
-                //七乐彩
-                case "F03":
-                    var oQiu = $("#qlc");
-                    doRes(obj, oQiu, 1);
-                    break;
                 //大乐透
                 case "T01":
                     var oQiu = $("#dlt");
@@ -84,7 +69,6 @@
                     break;
             }
         }
-
         function doRes(obj, oQiu, type) {
             var schar = obj.wNum;
             var qi = "第" + obj.termCode + "期";

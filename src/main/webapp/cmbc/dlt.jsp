@@ -33,7 +33,7 @@
         <div class="xuanqiu">
             <div class="bar-tip nav2 mb5 clearfix">
             	<a class="tab-nav now" onClick='$("#dtmeizhu").hide();$("#ptmeizhu").show();'>普通投注</a>
-                <%--<a class="tab-nav" onClick='$("#ptmeizhu").hide();$("#dtmeizhu").show();'>胆拖投注</a>--%>
+                <a class="tab-nav" onClick='$("#ptmeizhu").hide();$("#dtmeizhu").show();'>胆拖投注</a>
             </div>
             <div class="tab-content p10" id="putong" style="display:block" data-red="5" data-blue="2">
                 <span class="tz-tit-left"><font class="redtext">前区</font>至少选5个</span>

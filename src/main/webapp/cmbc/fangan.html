@@ -41,8 +41,6 @@
                         $("#cztime").html(time);
                         $("#orderId").html(outerId);
                         var gameCode = firTick['gameCode'];
-
-
                         var kjnum;
                         var amount=0;
                         var bonus=0;
@@ -61,6 +59,11 @@
                             if(kjnum==null){
                                 kjnum =tick['dNumber'];
                             }
+                            var matchInfo='';
+                            if(gameCode=="T51" || gameCode =="T52"){
+                                matchInfo=tick['matchinfo'];
+                                matchInfo='<p>对阵信息：'+matchInfo+'</p>';
+                            }
                             var printTime='';
                             if(tick['printTime']!=undefined){
                                 printTime=tick['printTime'];
@@ -78,7 +81,7 @@
                             var tickStatus = tick['status'];
                             tickStatus=parseInt(tickStatus);
                             tickStatus = getTicketStatus(tickStatus);
-                            var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '<font color="red">'+tickStatus+'</font>'+'</p></div>'+printTime+'<p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
+                            var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '<font color="red">'+tickStatus+'</font>'+'</p></div>'+printTime+matchInfo+'<p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
                             $("#tzcot").append(cotHtml);
                         });
                         if (kjnum == null) {
@@ -174,21 +177,6 @@
 
         function gameD(obj){
             switch (obj['gameCode']){
-                //双色球
-                case "F01":
-                    $("#czimg").attr("src","img/ico_ssq.png");
-                    $("#czfont").html("双色球");
-                    break;
-                //福彩3D
-                case "F02":
-                    $("#czimg").attr("src","img/ico_3d.png");
-                    $("#czfont").html("福彩3D");
-                    break;
-                //七乐彩
-                case "F03":
-                    $("#czimg").attr("src","img/ico_qlc.png");
-                    $("#czfont").html("七乐彩");
-                    break;
                 //大乐透
                 case "T01":
                     $("#czimg").attr("src","img/ico_dlt.png");

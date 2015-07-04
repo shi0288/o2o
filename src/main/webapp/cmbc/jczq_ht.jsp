@@ -33,6 +33,7 @@
     	 <!--<ul class="jc-nav clearfix"><li class="now">购彩</li><li>定制跟单</li><li>合买大厅</li><li>玩法帮助</li></ul>  -->
         <!-- <img src="img/009.gif" id="login-img"/>-->
     </div>
+    <div style="height:5px;"></div>
     <!--第一步页面结束-->
     <!--第二步页面-->
     <div class="content jc-step2">
@@ -50,6 +51,7 @@
         </span>
         <div class="cb"></div>     
     </div>
+    <div style="height:5px;"></div>
     <!--第二步页面结束-->
     <script type="text/javascript" src="js/base.js"></script>
 	<script type="text/javascript" src="js/commontz.js"></script>

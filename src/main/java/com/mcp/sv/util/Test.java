@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.mcp.sv.dao.JcDao.createFormat;
+import static com.mcp.sv.dao.JcDao.createHhggFormat;
 import static com.mcp.sv.dao.JcDao.getFormat;
 import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 
@@ -19,10 +20,12 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 public class Test {
 
     public static void main(String[] args) throws JSONException, ParseException {
-//       String str = sendGet(CmbcConstant.BF_URL);
-//        System.out.println(str);
-//       String res = createFormat("BF", str);
-//        System.out.println(res);
+       String str = sendGet(CmbcConstant.HHGG_URL);
+        System.out.println(str);
+//       String res = createFormat("HHGG", str);
+        String res = createHhggFormat("HHGG", str);
+
+        System.out.println(res);
 //        System.out.println(new Date());
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
 //        Date nowt = new Date();
@@ -33,8 +36,8 @@ public class Test {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        String tablename=dateFormat.format(now);
 //        System.out.println(tablename);
-        String str = OtherServiceDao.getScore("123456");
-        System.out.println(str);
+//        String str = OtherServiceDao.getScore("123456");
+//        System.out.println(str);
 //        String ss = getFormat("ZJQS","");
 //        System.out.println(ss);
 //last_updated":"2015-07-03 10:14:39"}}

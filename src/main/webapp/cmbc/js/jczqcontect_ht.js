@@ -283,17 +283,17 @@ function getMatchHhggInfo(obj,st){
         var open13 = "";
         if(spf){
             rqspfdata_spf = '<td width="10%" data-dit="v2" style="background-color: #999999"><p>让球</p><p>0</p></td>';
-            if(spf[0] == ""){
+            if(spf[0] == ""||spf[3] == "2"){
                 rqspfdata_one = '<td width="10.2%" data-dit="v3" style="background-color: #838383"><p>胜</p><p>' + spf[0] + '</p></td>';
             }else{
                 rqspfdata_one = '<td width="10.2%" data-dit="v3" onclick="seleMatch(this)"><p>胜</p><p>' + spf[0] + '</p></td>';
             }
-            if(spf[1] == ""){
+            if(spf[1] == ""||spf[3] == "2"){
                 rqspfdata_two = '<td width="10.2%" data-dit="v1" style="background-color: #838383"><p>平</p><p>' + spf[1] + '</p></td>';
             }else{
                 rqspfdata_two = '<td width="10.2%" data-dit="v1" onclick="seleMatch(this)"><p>平</p><p>' + spf[1] + '</p></td>';
             }
-            if(spf[2] == ""){
+            if(spf[2] == ""||spf[3] == "2"){
                 rqspfdata_three = '<td width="10.2%" data-dit="v0" style="background-color: #838383"><p>负</p><p>' + spf[2] + '</p></td>';
             }else{
                 rqspfdata_three = '<td width="10.2%" data-dit="v0" onclick="seleMatch(this)"><p>负</p><p>' + spf[2] + '</p></td>';
@@ -307,17 +307,17 @@ function getMatchHhggInfo(obj,st){
 
         if(rqspf){
             rqspfdata_rqspf = '<td width="10%" data-dit="v2" style="background-color: #999999"><p>让球</p><p>'+ rq +'</p></td>';
-            if(rqspf[0] == ""){
+            if(rqspf[0] == ""||spf[3] == "2"){
                 rqspf_one = '<td width="10.2%" data-dit="v3" style="background-color: #838383"><p>胜</p><p>' + rqspf[0] + '</p></td>';
             }else{
                 rqspf_one = '<td width="10.2%" data-dit="v3" onclick="seleMatch(this)"><p>胜</p><p>' + rqspf[0] + '</p></td>';
             }
-            if(rqspf[1] == ""){
+            if(rqspf[1] == ""||spf[3] == "2"){
                 rqspf_two = '<td width="10.2%" data-dit="v1" style="background-color: #838383"><p>平</p><p>' + rqspf[1] + '</p></td>';
             }else{
                 rqspf_two = '<td width="10.2%" data-dit="v1" onclick="seleMatch(this)"><p>平</p><p>' + rqspf[1] + '</p></td>';
             }
-            if(rqspf[2] == ""){
+            if(rqspf[2] == ""||spf[3] == "2"){
                 rqspf_three = '<td width="10.2%" data-dit="v0" style="background-color: #838383"><p>负</p><p>' + rqspf[2] + '</p></td>';
 
             }else{
@@ -328,88 +328,159 @@ function getMatchHhggInfo(obj,st){
         oodsTag2='<tr data-wf="ht" class="jc-table-b rf-dd pType" pType="01">' + rqspfdata_rqspf + rqspf_one + rqspf_two + rqspf_three  +'</tr>';
 
         if(bqc){
-            var spfdata_one = '<td data-dit="v33" width="11.1%" onclick="seleMatch(this)"><p>胜胜</p><p>' + bqc[0] + '</p></td>';
-            var spfdata_two = '<td data-dit="v31" width="11.1%" onclick="seleMatch(this)"><p>胜平</p><p>' + bqc[1] + '</p></td>';
-            var spfdata_three = '<td data-dit="v30" width="11.1%" onclick="seleMatch(this)"><p>胜负</p><p>' + bqc[2] + '</p></td>';
-            var spfdata_four = '<td data-dit="v13" width="11.1%" onclick="seleMatch(this)"><p>平胜</p><p>' + bqc[3] + '</p></td>';
-            var spfdata_five = '<td data-dit="v11" width="11.1%" onclick="seleMatch(this)"><p>平平</p><p>' + bqc[4] + '</p></td>';
-            var spfdata_six = '<td data-dit="v10" width="11.1%" onclick="seleMatch(this)"><p>平负</p><p>' + bqc[5] + '</p></td>';
-            var spfdata_seven = '<td data-dit="v03" width="11.1%" onclick="seleMatch(this)"><p>负胜</p><p>' + bqc[6] + '</p></td>';
-            var spfdata_eight = '<td data-dit="v01" width="11.1%" onclick="seleMatch(this)"><p>负平</p><p>' + bqc[7] + '</p></td>';
-            var spfdata_nine = '<td data-dit="v00" width="11.1%" onclick="seleMatch(this)"><p>负负</p><p>' + bqc[8] + '</p></td>';
+            var spfdata_one,spfdata_two,spfdata_three,spfdata_four,spfdata_five,spfdata_six,spfdata_seven,spfdata_eight,spfdata_nine
+            if(bqc[9] == "1"){
+                spfdata_one = '<td data-dit="v33" width="11.1%" onclick="seleMatch(this)"><p>胜胜</p><p>' + bqc[0] + '</p></td>';
+                spfdata_two = '<td data-dit="v31" width="11.1%" onclick="seleMatch(this)"><p>胜平</p><p>' + bqc[1] + '</p></td>';
+                spfdata_three = '<td data-dit="v30" width="11.1%" onclick="seleMatch(this)"><p>胜负</p><p>' + bqc[2] + '</p></td>';
+                spfdata_four = '<td data-dit="v13" width="11.1%" onclick="seleMatch(this)"><p>平胜</p><p>' + bqc[3] + '</p></td>';
+                spfdata_five = '<td data-dit="v11" width="11.1%" onclick="seleMatch(this)"><p>平平</p><p>' + bqc[4] + '</p></td>';
+                spfdata_six = '<td data-dit="v10" width="11.1%" onclick="seleMatch(this)"><p>平负</p><p>' + bqc[5] + '</p></td>';
+                spfdata_seven = '<td data-dit="v03" width="11.1%" onclick="seleMatch(this)"><p>负胜</p><p>' + bqc[6] + '</p></td>';
+                spfdata_eight = '<td data-dit="v01" width="11.1%" onclick="seleMatch(this)"><p>负平</p><p>' + bqc[7] + '</p></td>';
+                spfdata_nine = '<td data-dit="v00" width="11.1%" onclick="seleMatch(this)"><p>负负</p><p>' + bqc[8] + '</p></td>';
+            }else{
+                spfdata_one = '<td data-dit="v33" width="11.1%" style="background-color: #838383"><p>胜胜</p><p>' + bqc[0] + '</p></td>';
+                spfdata_two = '<td data-dit="v31" width="11.1%" style="background-color: #838383"><p>胜平</p><p>' + bqc[1] + '</p></td>';
+                spfdata_three = '<td data-dit="v30" width="11.1%" style="background-color: #838383"><p>胜负</p><p>' + bqc[2] + '</p></td>';
+                spfdata_four = '<td data-dit="v13" width="11.1%" style="background-color: #838383"><p>平胜</p><p>' + bqc[3] + '</p></td>';
+                spfdata_five = '<td data-dit="v11" width="11.1%" style="background-color: #838383"><p>平平</p><p>' + bqc[4] + '</p></td>';
+                spfdata_six = '<td data-dit="v10" width="11.1%" style="background-color: #838383"><p>平负</p><p>' + bqc[5] + '</p></td>';
+                spfdata_seven = '<td data-dit="v03" width="11.1%" style="background-color: #838383"><p>负胜</p><p>' + bqc[6] + '</p></td>';
+                spfdata_eight = '<td data-dit="v01" width="11.1%" style="background-color: #838383"><p>负平</p><p>' + bqc[7] + '</p></td>';
+                spfdata_nine = '<td data-dit="v00" width="11.1%" style="background-color: #838383"><p>负负</p><p>' + bqc[8] + '</p></td>';
+            }
             oodsTag3='<tr data-wf="ht" class="jc-table-b spf-dd" pType="05">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + '</tr>' ;
         }
         if(zjqs){
-            var spfdata_one = '<td data-dit="v0" width="12.5%" onclick="seleMatch(this)"><p>0球</p><p>' + zjqs[0] + '</p></td>';
-            var spfdata_two = '<td data-dit="v1" width="12.5%" onclick="seleMatch(this)"><p>1球</p><p>' + zjqs[1] + '</p></td>';
-            var spfdata_three = '<td data-dit="v2" width="12.5%" onclick="seleMatch(this)"><p>2球</p><p>' + zjqs[2] + '</p></td>';
-            var spfdata_four = '<td data-dit="v3" width="12.5%" onclick="seleMatch(this)"><p>3球</p><p>' + zjqs[3] + '</p></td>';
-            var spfdata_five = '<td data-dit="v4" width="12.5%" onclick="seleMatch(this)"><p>4球</p><p>' + zjqs[4] + '</p></td>';
-            var spfdata_six = '<td data-dit="v5" width="12.5%" onclick="seleMatch(this)"><p>5球</p><p>' + zjqs[5] + '</p></td>';
-            var spfdata_seven = '<td data-dit="v6" width="12.59%" onclick="seleMatch(this)">6球<p></p><p>' + zjqs[6] + '</p></td>';
-            var spfdata_eight = '<td data-dit="v7" width="12.5%" onclick="seleMatch(this)">7+球<p></p><p>' + zjqs[7] + '</p></td>';
-
+            var spfdata_one,spfdata_two,spfdata_three,spfdata_four,spfdata_five,spfdata_six,spfdata_seven,spfdata_eight
+            if(zjqs[0]=="1"){
+                spfdata_one = '<td data-dit="v0" width="12.5%" onclick="seleMatch(this)"><p>0球</p><p>' + zjqs[0] + '</p></td>';
+                spfdata_two = '<td data-dit="v1" width="12.5%" onclick="seleMatch(this)"><p>1球</p><p>' + zjqs[1] + '</p></td>';
+                spfdata_three = '<td data-dit="v2" width="12.5%" onclick="seleMatch(this)"><p>2球</p><p>' + zjqs[2] + '</p></td>';
+                spfdata_four = '<td data-dit="v3" width="12.5%" onclick="seleMatch(this)"><p>3球</p><p>' + zjqs[3] + '</p></td>';
+                spfdata_five = '<td data-dit="v4" width="12.5%" onclick="seleMatch(this)"><p>4球</p><p>' + zjqs[4] + '</p></td>';
+                spfdata_six = '<td data-dit="v5" width="12.5%" onclick="seleMatch(this)"><p>5球</p><p>' + zjqs[5] + '</p></td>';
+                spfdata_seven = '<td data-dit="v6" width="12.59%" onclick="seleMatch(this)">6球<p></p><p>' + zjqs[6] + '</p></td>';
+                spfdata_eight = '<td data-dit="v7" width="12.5%" onclick="seleMatch(this)">7+球<p></p><p>' + zjqs[7] + '</p></td>';
+            }else{
+                spfdata_one = '<td data-dit="v0" width="12.5%" style="background-color: #838383"><p>0球</p><p>' + zjqs[0] + '</p></td>';
+                spfdata_two = '<td data-dit="v1" width="12.5%" style="background-color: #838383"><p>1球</p><p>' + zjqs[1] + '</p></td>';
+                spfdata_three = '<td data-dit="v2" width="12.5%" style="background-color: #838383"><p>2球</p><p>' + zjqs[2] + '</p></td>';
+                spfdata_four = '<td data-dit="v3" width="12.5%" style="background-color: #838383"><p>3球</p><p>' + zjqs[3] + '</p></td>';
+                spfdata_five = '<td data-dit="v4" width="12.5%" style="background-color: #838383"><p>4球</p><p>' + zjqs[4] + '</p></td>';
+                spfdata_six = '<td data-dit="v5" width="12.5%" style="background-color: #838383"><p>5球</p><p>' + zjqs[5] + '</p></td>';
+                spfdata_seven = '<td data-dit="v6" width="12.59%" style="background-color: #838383">6球<p></p><p>' + zjqs[6] + '</p></td>';
+                spfdata_eight = '<td data-dit="v7" width="12.5%" style="background-color: #838383">7+球<p></p><p>' + zjqs[7] + '</p></td>';
+            }
             oodsTag4='<tr data-wf="ht" class="jc-table-b spf-dd" pType="04">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + '</tr>' ;
-
         }
         if(bf){
-            var spfdata_zero = '<td data-dit="v01" width="5.14%" style="background-color: #999999">胜</td>';
-            var spfdata_one = '<td data-dit="v10" width="10%" onclick="seleMatch(this)"><p>1:0</p><p>' + bf[0] + '</p></td>';
-            var spfdata_two = '<td data-dit="v20" width="10%" onclick="seleMatch(this)"><p>2:0</p><p>' + bf[1] + '</p></td>';
-            var spfdata_three = '<td data-dit="v21" width="10%" onclick="seleMatch(this)"><p>2:1</p><p>' + bf[2] + '</p></td>';
-            var spfdata_four = '<td data-dit="v30" width="10%" onclick="seleMatch(this)"><p>3:0</p><p>' + bf[3] + '</p></td>';
-            var spfdata_five = '<td data-dit="v31" width="10%" onclick="seleMatch(this)"><p>3:1</p><p>' + bf[4] + '</p></td>';
-            var spfdata_six = '<td data-dit="v32" width="10%" onclick="seleMatch(this)"><p>3:2</p><p>' + bf[5] + '</td>';
-            var spfdata_seven = '<td data-dit="v40" width="10%" onclick="seleMatch(this)"><p>4:0</p><p>' + bf[6] + '</p></td>';
-            var spfdata_eight = '<td data-dit="v41" width="10%" onclick="seleMatch(this)"><p>4:1</p><p>' + bf[7] + '</p></td>';
-            var spfdata_nine = '<td data-dit="v42" width="10%" onclick="seleMatch(this)"><p>4:2</p><p>' + bf[8] + '</p></td>';
-            var spfdata_ten = '<td data-dit="v50" width="10%" onclick="seleMatch(this)"><p>5:0</p><p>' + bf[9] + '</p></td>';
-            var spfdata_eleven = '<td data-dit="v51" width="10%" onclick="seleMatch(this)"><p>5:1</p><p>' + bf[10] + '</p></td>';
-            var spfdata_twelve = '<td data-dit="v52" width="10%" onclick="seleMatch(this)"><p>5:2</p><p>' + bf[11] + '</p></td>';
-            var spfdata_thirteen = '<td data-dit="v90" width="10%" colspan="2" onclick="seleMatch(this)"><p>胜其他</p><p>' + bf[12] + '</p></td>';
+            if(bf[31]=="1"){
+                var spfdata_zero = '<td data-dit="v01" width="5.14%" style="background-color: #999999">胜</td>';
+                var spfdata_one = '<td data-dit="v10" width="10%" onclick="seleMatch(this)"><p>1:0</p><p>' + bf[0] + '</p></td>';
+                var spfdata_two = '<td data-dit="v20" width="10%" onclick="seleMatch(this)"><p>2:0</p><p>' + bf[1] + '</p></td>';
+                var spfdata_three = '<td data-dit="v21" width="10%" onclick="seleMatch(this)"><p>2:1</p><p>' + bf[2] + '</p></td>';
+                var spfdata_four = '<td data-dit="v30" width="10%" onclick="seleMatch(this)"><p>3:0</p><p>' + bf[3] + '</p></td>';
+                var spfdata_five = '<td data-dit="v31" width="10%" onclick="seleMatch(this)"><p>3:1</p><p>' + bf[4] + '</p></td>';
+                var spfdata_six = '<td data-dit="v32" width="10%" onclick="seleMatch(this)"><p>3:2</p><p>' + bf[5] + '</td>';
+                var spfdata_seven = '<td data-dit="v40" width="10%" onclick="seleMatch(this)"><p>4:0</p><p>' + bf[6] + '</p></td>';
+                var spfdata_eight = '<td data-dit="v41" width="10%" onclick="seleMatch(this)"><p>4:1</p><p>' + bf[7] + '</p></td>';
+                var spfdata_nine = '<td data-dit="v42" width="10%" onclick="seleMatch(this)"><p>4:2</p><p>' + bf[8] + '</p></td>';
+                var spfdata_ten = '<td data-dit="v50" width="10%" onclick="seleMatch(this)"><p>5:0</p><p>' + bf[9] + '</p></td>';
+                var spfdata_eleven = '<td data-dit="v51" width="10%" onclick="seleMatch(this)"><p>5:1</p><p>' + bf[10] + '</p></td>';
+                var spfdata_twelve = '<td data-dit="v52" width="10%" onclick="seleMatch(this)"><p>5:2</p><p>' + bf[11] + '</p></td>';
+                var spfdata_thirteen = '<td data-dit="v90" width="10%" colspan="2" onclick="seleMatch(this)"><p>胜其他</p><p>' + bf[12] + '</p></td>';
 
-            var tr_one='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + '</tr>' ;
-            var tr_two='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
-            oodsTag5=tr_one+tr_two;
-            //oodsTag5='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_zero + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
+                var tr_one='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + '</tr>' ;
+                var tr_two='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
+                oodsTag5=tr_one+tr_two;
+                //oodsTag5='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_zero + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
 
-            var spfdata_zero2 = '<td data-dit="v11" width="5.14%" style="background-color: #999999">平</td>';
-            var spfdata_one2 = '<td data-dit="v00" width="10%" onclick="seleMatch(this)"><p>0:0</p><p>' + bf[13] + '</p></td>';
-            var spfdata_two2 = '<td data-dit="v11" width="10%" onclick="seleMatch(this)"><p>1:1</p><p>' + bf[14] + '</p></td>';
-            var spfdata_three2 = '<td data-dit="v22" width="10%" onclick="seleMatch(this)"><p>2:2</p><p>' + bf[15] + '</p></td>';
-            var spfdata_four2 = '<td data-dit="v33" width="10%" onclick="seleMatch(this)"><p>3:3</p><p>' + bf[16] + '</p></td>';
-            var spfdata_five2 = '<td data-dit="v99" width="10%" colspan="3" onclick="seleMatch(this)"><p>平其他</p><p>' + bf[17] + '</p></td>';
+                var spfdata_zero2 = '<td data-dit="v11" width="5.14%" style="background-color: #999999">平</td>';
+                var spfdata_one2 = '<td data-dit="v00" width="10%" onclick="seleMatch(this)"><p>0:0</p><p>' + bf[13] + '</p></td>';
+                var spfdata_two2 = '<td data-dit="v11" width="10%" onclick="seleMatch(this)"><p>1:1</p><p>' + bf[14] + '</p></td>';
+                var spfdata_three2 = '<td data-dit="v22" width="10%" onclick="seleMatch(this)"><p>2:2</p><p>' + bf[15] + '</p></td>';
+                var spfdata_four2 = '<td data-dit="v33" width="10%" onclick="seleMatch(this)"><p>3:3</p><p>' + bf[16] + '</p></td>';
+                var spfdata_five2 = '<td data-dit="v99" width="10%" colspan="3" onclick="seleMatch(this)"><p>平其他</p><p>' + bf[17] + '</p></td>';
 
 
-            var oddTag5_2 = '<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' +spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
+                var oddTag5_2 = '<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' +spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
 
-            var spfdata_zero3 = '<td data-dit="v21" width="5.14%" >负</td>';
-            var spfdata_one3 = '<td data-dit="v01" width="10%" onclick="seleMatch(this)"><p>0:1</p><p>' + bf[18] + '</p></td>';
-            var spfdata_two3 = '<td data-dit="v02" width="10%" onclick="seleMatch(this)"><p>0:2</p><p>' + bf[19] + '</p></td>';
-            var spfdata_three3 = '<td data-dit="v12" width="10%" onclick="seleMatch(this)"><p>1:2</p><p>' + bf[20] + '</p></td>';
-            var spfdata_four3 = '<td data-dit="v03" width="10%" onclick="seleMatch(this)"><p>0:3</p><p>' + bf[21] + '</p></td>';
-            var spfdata_five3 = '<td data-dit="v13" width="10%" onclick="seleMatch(this)"><p>1:3</p><p>' + bf[22] + '</p></td>';
-            var spfdata_six3 = '<td data-dit="v23" width="10%" onclick="seleMatch(this)"><p>2:3</p><p>' + bf[23] + '</p></td>';
-            var spfdata_seven3 = '<td data-dit="v04" width="10%" onclick="seleMatch(this)"><p>0:4</p><p>' + bf[24] + '</p></td>';
-            var spfdata_eight3 = '<td data-dit="v14" width="10%" onclick="seleMatch(this)"><p>1:4</p><p>' + bf[25] + '</p></td>';
-            var spfdata_nine3 = '<td data-dit="v24" width="10%" onclick="seleMatch(this)"><p>2:4</p><p>' + bf[26] + '</p></td>';
-            var spfdata_ten3 = '<td data-dit="v05" width="10%" onclick="seleMatch(this)"><p>0:5</p><p>' + bf[27] + '</p></td>';
-            var spfdata_eleven3 = '<td data-dit="v15" width="10%" onclick="seleMatch(this)"><p>1:5</p><p>' + bf[28] + '</p></td>';
-            var spfdata_twelve3 = '<td data-dit="v25" width="10%" onclick="seleMatch(this)"><p>2:5</p><p>' + bf[29] + '</p></td>';
-            var spfdata_thirteen3 = '<td data-dit="v09" width="10%" colspan="2" onclick="seleMatch(this)"><p>负其他</p><p>' + bf[30] + '</p></td>';
+                var spfdata_zero3 = '<td data-dit="v21" width="5.14%" >负</td>';
+                var spfdata_one3 = '<td data-dit="v01" width="10%" onclick="seleMatch(this)"><p>0:1</p><p>' + bf[18] + '</p></td>';
+                var spfdata_two3 = '<td data-dit="v02" width="10%" onclick="seleMatch(this)"><p>0:2</p><p>' + bf[19] + '</p></td>';
+                var spfdata_three3 = '<td data-dit="v12" width="10%" onclick="seleMatch(this)"><p>1:2</p><p>' + bf[20] + '</p></td>';
+                var spfdata_four3 = '<td data-dit="v03" width="10%" onclick="seleMatch(this)"><p>0:3</p><p>' + bf[21] + '</p></td>';
+                var spfdata_five3 = '<td data-dit="v13" width="10%" onclick="seleMatch(this)"><p>1:3</p><p>' + bf[22] + '</p></td>';
+                var spfdata_six3 = '<td data-dit="v23" width="10%" onclick="seleMatch(this)"><p>2:3</p><p>' + bf[23] + '</p></td>';
+                var spfdata_seven3 = '<td data-dit="v04" width="10%" onclick="seleMatch(this)"><p>0:4</p><p>' + bf[24] + '</p></td>';
+                var spfdata_eight3 = '<td data-dit="v14" width="10%" onclick="seleMatch(this)"><p>1:4</p><p>' + bf[25] + '</p></td>';
+                var spfdata_nine3 = '<td data-dit="v24" width="10%" onclick="seleMatch(this)"><p>2:4</p><p>' + bf[26] + '</p></td>';
+                var spfdata_ten3 = '<td data-dit="v05" width="10%" onclick="seleMatch(this)"><p>0:5</p><p>' + bf[27] + '</p></td>';
+                var spfdata_eleven3 = '<td data-dit="v15" width="10%" onclick="seleMatch(this)"><p>1:5</p><p>' + bf[28] + '</p></td>';
+                var spfdata_twelve3 = '<td data-dit="v25" width="10%" onclick="seleMatch(this)"><p>2:5</p><p>' + bf[29] + '</p></td>';
+                var spfdata_thirteen3 = '<td data-dit="v09" width="10%" colspan="2" onclick="seleMatch(this)"><p>负其他</p><p>' + bf[30] + '</p></td>';
 
-            var tr_three='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one3 + spfdata_two3 + spfdata_three3 + spfdata_four3 + spfdata_five3 + spfdata_six3 + spfdata_seven3 + '</tr>' ;
-            var tr_four='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight3 + spfdata_nine3 + spfdata_ten3 + spfdata_eleven3 + spfdata_twelve3 + spfdata_thirteen3 +'</tr>' ;
+                var tr_three='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one3 + spfdata_two3 + spfdata_three3 + spfdata_four3 + spfdata_five3 + spfdata_six3 + spfdata_seven3 + '</tr>' ;
+                var tr_four='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight3 + spfdata_nine3 + spfdata_ten3 + spfdata_eleven3 + spfdata_twelve3 + spfdata_thirteen3 +'</tr>' ;
 
-            var oddTag5_3 = tr_three+tr_four;
+                var oddTag5_3 = tr_three+tr_four;
+                oodsTag5 = oodsTag5 + oddTag5_2 + oddTag5_3;
+            }else{
+                var spfdata_zero = '<td data-dit="v01" width="5.14%" style="background-color: #999999">胜</td>';
+                var spfdata_one = '<td data-dit="v10" width="10%" style="background-color: #838383"><p>1:0</p><p>' + bf[0] + '</p></td>';
+                var spfdata_two = '<td data-dit="v20" width="10%" style="background-color: #838383"><p>2:0</p><p>' + bf[1] + '</p></td>';
+                var spfdata_three = '<td data-dit="v21" width="10%" style="background-color: #838383"><p>2:1</p><p>' + bf[2] + '</p></td>';
+                var spfdata_four = '<td data-dit="v30" width="10%" style="background-color: #838383"><p>3:0</p><p>' + bf[3] + '</p></td>';
+                var spfdata_five = '<td data-dit="v31" width="10%" style="background-color: #838383"><p>3:1</p><p>' + bf[4] + '</p></td>';
+                var spfdata_six = '<td data-dit="v32" width="10%" style="background-color: #838383"><p>3:2</p><p>' + bf[5] + '</td>';
+                var spfdata_seven = '<td data-dit="v40" width="10%" style="background-color: #838383"><p>4:0</p><p>' + bf[6] + '</p></td>';
+                var spfdata_eight = '<td data-dit="v41" width="10%" style="background-color: #838383"><p>4:1</p><p>' + bf[7] + '</p></td>';
+                var spfdata_nine = '<td data-dit="v42" width="10%" style="background-color: #838383"><p>4:2</p><p>' + bf[8] + '</p></td>';
+                var spfdata_ten = '<td data-dit="v50" width="10%" style="background-color: #838383"><p>5:0</p><p>' + bf[9] + '</p></td>';
+                var spfdata_eleven = '<td data-dit="v51" width="10%" style="background-color: #838383"><p>5:1</p><p>' + bf[10] + '</p></td>';
+                var spfdata_twelve = '<td data-dit="v52" width="10%" style="background-color: #838383"><p>5:2</p><p>' + bf[11] + '</p></td>';
+                var spfdata_thirteen = '<td data-dit="v90" width="10%" colspan="2" style="background-color: #838383"><p>胜其他</p><p>' + bf[12] + '</p></td>';
 
+                var tr_one='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + '</tr>' ;
+                var tr_two='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
+                oodsTag5=tr_one+tr_two;
+                //oodsTag5='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_zero + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
+
+                var spfdata_zero2 = '<td data-dit="v11" width="5.14%" style="background-color: #999999">平</td>';
+                var spfdata_one2 = '<td data-dit="v00" width="10%" style="background-color: #838383"><p>0:0</p><p>' + bf[13] + '</p></td>';
+                var spfdata_two2 = '<td data-dit="v11" width="10%" style="background-color: #838383"><p>1:1</p><p>' + bf[14] + '</p></td>';
+                var spfdata_three2 = '<td data-dit="v22" width="10%" style="background-color: #838383"><p>2:2</p><p>' + bf[15] + '</p></td>';
+                var spfdata_four2 = '<td data-dit="v33" width="10%" style="background-color: #838383"><p>3:3</p><p>' + bf[16] + '</p></td>';
+                var spfdata_five2 = '<td data-dit="v99" width="10%" colspan="3" style="background-color: #838383"><p>平其他</p><p>' + bf[17] + '</p></td>';
+
+
+                var oddTag5_2 = '<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' +spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
+
+                var spfdata_zero3 = '<td data-dit="v21" width="5.14%" >负</td>';
+                var spfdata_one3 = '<td data-dit="v01" width="10%" style="background-color: #838383"><p>0:1</p><p>' + bf[18] + '</p></td>';
+                var spfdata_two3 = '<td data-dit="v02" width="10%" style="background-color: #838383"><p>0:2</p><p>' + bf[19] + '</p></td>';
+                var spfdata_three3 = '<td data-dit="v12" width="10%" style="background-color: #838383"><p>1:2</p><p>' + bf[20] + '</p></td>';
+                var spfdata_four3 = '<td data-dit="v03" width="10%" style="background-color: #838383"><p>0:3</p><p>' + bf[21] + '</p></td>';
+                var spfdata_five3 = '<td data-dit="v13" width="10%" style="background-color: #838383"><p>1:3</p><p>' + bf[22] + '</p></td>';
+                var spfdata_six3 = '<td data-dit="v23" width="10%" style="background-color: #838383"><p>2:3</p><p>' + bf[23] + '</p></td>';
+                var spfdata_seven3 = '<td data-dit="v04" width="10%" style="background-color: #838383"><p>0:4</p><p>' + bf[24] + '</p></td>';
+                var spfdata_eight3 = '<td data-dit="v14" width="10%" style="background-color: #838383"><p>1:4</p><p>' + bf[25] + '</p></td>';
+                var spfdata_nine3 = '<td data-dit="v24" width="10%" style="background-color: #838383"><p>2:4</p><p>' + bf[26] + '</p></td>';
+                var spfdata_ten3 = '<td data-dit="v05" width="10%" style="background-color: #838383"><p>0:5</p><p>' + bf[27] + '</p></td>';
+                var spfdata_eleven3 = '<td data-dit="v15" width="10%" style="background-color: #838383"><p>1:5</p><p>' + bf[28] + '</p></td>';
+                var spfdata_twelve3 = '<td data-dit="v25" width="10%" style="background-color: #838383"><p>2:5</p><p>' + bf[29] + '</p></td>';
+                var spfdata_thirteen3 = '<td data-dit="v09" width="10%" colspan="2" style="background-color: #838383""><p>负其他</p><p>' + bf[30] + '</p></td>';
+
+                var tr_three='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one3 + spfdata_two3 + spfdata_three3 + spfdata_four3 + spfdata_five3 + spfdata_six3 + spfdata_seven3 + '</tr>' ;
+                var tr_four='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight3 + spfdata_nine3 + spfdata_ten3 + spfdata_eleven3 + spfdata_twelve3 + spfdata_thirteen3 +'</tr>' ;
+
+                var oddTag5_3 = tr_three+tr_four;
+                oodsTag5 = oodsTag5 + oddTag5_2 + oddTag5_3;
+            }
             //var oddTag5_3 = '<tr data-wf="ht" class="jc-table-b rf-dd">' + spfdata_zero3 + spfdata_one3 + spfdata_two3 + spfdata_three3 + spfdata_four3 + spfdata_five3 + spfdata_six3 + spfdata_seven3 + spfdata_eight3 + spfdata_nine3 + spfdata_ten3 + spfdata_eleven3 + spfdata_twelve3 + spfdata_thirteen3 +'</tr>' ;
-
-            oodsTag5 = oodsTag5 + oddTag5_2 + oddTag5_3;
         }
-
-
-
         changciHtml =
             '<table width="100%" data-des="' + teamname1 + '&nbsp;&nbsp;VS&nbsp;&nbsp;' +teamname2 + '" data-cc="' + code + '" class="jc-table">' +
             '<tbody>' +
@@ -448,7 +519,7 @@ function getMatchHhggInfo(obj,st){
     after();
 }
 
-function selOpenClose(id,type){
+function selOpenClose(id){
     var tableObj=$("#"+id);
     if(tableObj.is(":hidden")){
         tableObj.show();

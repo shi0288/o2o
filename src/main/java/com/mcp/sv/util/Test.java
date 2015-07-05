@@ -1,5 +1,6 @@
 package com.mcp.sv.util;
 
+import com.mcp.sv.dao.OtherServiceDao;
 import com.mongodb.*;
 import com.mongodb.util.JSON;
 import org.codehaus.jettison.json.JSONException;
@@ -18,10 +19,22 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 public class Test {
 
     public static void main(String[] args) throws JSONException, ParseException {
-       String str = sendGet(CmbcConstant.BF_URL);
+//       String str = sendGet(CmbcConstant.BF_URL);
+//        System.out.println(str);
+//       String res = createFormat("BF", str);
+//        System.out.println(res);
+//        System.out.println(new Date());
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+//        Date nowt = new Date();
+//        String dateStr=new SimpleDateFormat("YYYY-MM-DD").format(new Date());
+//        System.out.println(dateStr);
+//
+//        Date now=new Date();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String tablename=dateFormat.format(now);
+//        System.out.println(tablename);
+        String str = OtherServiceDao.getScore("123456");
         System.out.println(str);
-       String res = createFormat("BF", str);
-        System.out.println(res);
 //        String ss = getFormat("ZJQS","");
 //        System.out.println(ss);
 //last_updated":"2015-07-03 10:14:39"}}

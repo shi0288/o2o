@@ -18,12 +18,12 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 public class Test {
 
     public static void main(String[] args) throws JSONException, ParseException {
-//       String str = sendGet(CmbcConstant.HHGG_URL);
-//        System.out.println(str);
-//       String res = createFormat("HHGG", str);
-//        System.out.println(res);
-        String ss = getFormat("ZJQS","");
-        System.out.println(ss);
+       String str = sendGet(CmbcConstant.BF_URL);
+        System.out.println(str);
+       String res = createFormat("BF", str);
+        System.out.println(res);
+//        String ss = getFormat("ZJQS","");
+//        System.out.println(ss);
 //last_updated":"2015-07-03 10:14:39"}}
 
 //        String last_updated = "2015-07-02 15:14:23";

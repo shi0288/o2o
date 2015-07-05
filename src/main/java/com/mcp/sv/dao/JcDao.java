@@ -234,6 +234,7 @@ public class JcDao {
                 String closeTime =  bodys_.getString("date")+" "+ bodys_.getString("time");
                 String id = gameCode+"_"+code;
                 String _id = id;
+                String selling = bodys_.getString("status");
                 String matchCode = code;
                 String pType = "01";
                 String matchName = bodys_.getString("h_cn")+"|"+ bodys_.getString("a_cn")+"|"+ bodys_.getString("l_cn");
@@ -306,6 +307,7 @@ public class JcDao {
                     JSONObject body_ = new JSONObject();
                     body_.put("gameCode",gameCode);
                     body_.put("code",code);
+                    body_.put("selling",selling);
                     body_.put("openTime",openTime);
                     body_.put("closeTime",closeTime);
                     body_.put("id",id);
@@ -377,6 +379,7 @@ public class JcDao {
                     JSONObject body_ = new JSONObject();
                     body_.put("gameCode",gameCode);
                     body_.put("code",code);
+                    body_.put("selling",selling);
                     body_.put("openTime",openTime);
                     body_.put("closeTime",closeTime);
                     body_.put("id",id);
@@ -420,6 +423,7 @@ public class JcDao {
                     JSONObject body_ = new JSONObject();
                     body_.put("gameCode",gameCode);
                     body_.put("code",code);
+                    body_.put("selling",selling);
                     body_.put("openTime",openTime);
                     body_.put("closeTime",closeTime);
                     body_.put("id",id);
@@ -467,6 +471,7 @@ public class JcDao {
                         JSONObject body_ = new JSONObject();
                         body_.put("gameCode",gameCode);
                         body_.put("code",code);
+                        body_.put("selling",selling);
                         body_.put("openTime",openTime);
                         body_.put("closeTime",closeTime);
                         body_.put("id",id);

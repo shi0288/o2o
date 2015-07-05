@@ -18,7 +18,7 @@
 <body class="jc-bg">
 <div class="page-from-left index">
 	<div class="top fix">
-    	<div class="top-relative clearfix">
+        <div class="top-relative clearfix green-top">
         	<a href="jczq.jsp" id="jc-one" class="go-pre"></a>
             <a href="javascript:jcone()" id="jc-two" class="go-pre" style="display:none"></a>
         	<span class="title" style="margin-left:-12px;">

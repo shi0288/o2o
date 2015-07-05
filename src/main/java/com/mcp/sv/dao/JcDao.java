@@ -62,12 +62,12 @@ public class JcDao {
                     JSONObject lastbody = new JSONObject(mbody);
                     String thead = lastbody.getString("head");
                     JSONObject mhead_updated = new JSONObject(thead);
-                    String last_updated = mhead_updated.get("last_updated").toString();
                     if(st.equals(CmbcConstant.HHGG)){
                         str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(url);
                         res = createHhggFormat(st, str);
                         updateJcInfo(String.valueOf(new Date().getTime()), st, res);
                     }else{
+                        String last_updated = mhead_updated.get("last_updated").toString();
                         str = sendGet(url);
                         JSONObject rbody = new JSONObject(str);             //传过来的数据
                         String status = rbody.getString("status");          //最后更新时间

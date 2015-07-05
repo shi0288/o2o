@@ -354,7 +354,7 @@ function getMatchHhggInfo(obj,st){
         }
         if(zjqs){
             var spfdata_one,spfdata_two,spfdata_three,spfdata_four,spfdata_five,spfdata_six,spfdata_seven,spfdata_eight
-            if(zjqs[0]=="1"){
+            if(zjqs[8]=="1"){
                 spfdata_one = '<td data-dit="v0" width="12.5%" onclick="seleMatch(this)"><p>0球</p><p>' + zjqs[0] + '</p></td>';
                 spfdata_two = '<td data-dit="v1" width="12.5%" onclick="seleMatch(this)"><p>1球</p><p>' + zjqs[1] + '</p></td>';
                 spfdata_three = '<td data-dit="v2" width="12.5%" onclick="seleMatch(this)"><p>2球</p><p>' + zjqs[2] + '</p></td>';

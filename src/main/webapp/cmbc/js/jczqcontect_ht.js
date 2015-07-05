@@ -398,8 +398,8 @@ function getMatchHhggInfo(obj,st){
             var spfdata_twelve3 = '<td data-dit="v25" width="10%" onclick="seleMatch(this)"><p>2:5</p><p>' + bf[29] + '</p></td>';
             var spfdata_thirteen3 = '<td data-dit="v09" width="10%" colspan="2" onclick="seleMatch(this)"><p>负其他</p><p>' + bf[30] + '</p></td>';
 
-            var tr_three='<tr data-wf="ht" class="jc-table-b rf-dd">' + spfdata_one3 + spfdata_two3 + spfdata_three3 + spfdata_four3 + spfdata_five3 + spfdata_six3 + spfdata_seven3 + '</tr>' ;
-            var tr_four='<tr data-wf="ht" class="jc-table-b rf-dd">' + spfdata_eight3 + spfdata_nine3 + spfdata_ten3 + spfdata_eleven3 + spfdata_twelve3 + spfdata_thirteen3 +'</tr>' ;
+            var tr_three='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one3 + spfdata_two3 + spfdata_three3 + spfdata_four3 + spfdata_five3 + spfdata_six3 + spfdata_seven3 + '</tr>' ;
+            var tr_four='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight3 + spfdata_nine3 + spfdata_ten3 + spfdata_eleven3 + spfdata_twelve3 + spfdata_thirteen3 +'</tr>' ;
 
             var oddTag5_3 = tr_three+tr_four;
 

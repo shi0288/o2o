@@ -29,7 +29,7 @@
 <!--顶部结束-->
 <!--正文内容开始-->
 	<div class="content">
-    	<div class="bar-tip"><span>第<font class="redtext" id="termCode">14197</font>期</span><span>截止时间：<font class="redtext" id="lastime">12-29 16:00</font></span></div>	
+    	<div class="bar-tip"><span>第<font class="redtext" id="termCode">14197</font>期</span><span>截止时间：<font class="redtext" id="lastime"></font></span></div>
         <!--选球-->
         <div class="xuanqiu">
             <div class="bar-tip nav2 mb5 clearfix">

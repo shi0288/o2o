@@ -8,7 +8,7 @@ $(document).ready(function () {
     }
     $("#qiandao").click(function(){
         if(!login){
-            alert("ÇëµÇÂ¼",function(){
+            alert("è¯·ç™»å½•",function(){
                 window.location.href="login.html";
             })
         }else{
@@ -39,23 +39,23 @@ function submitQd() {
             if (repCode == '0000') {
                 var score = result.score;
                 $("#jifen").show();
-                alert("µÚÒ»´ÎÇ©µ½£¡");
-                $("#jifen").html("<p>×Ü»ı·Ö:</p><p>"+score+"</p>");
+                alert("ç¬¬ä¸€æ¬¡ç­¾åˆ°ï¼");
+                $("#jifen").html("<p>æ€»ç§¯åˆ†:</p><p>"+score+"</p>");
                 after();
             } else if(repCode == '0001'){
                 $("#jifen").show();
                 var score = result.score;
-                alert("Ç©µ½³É¹¦£¡");
-                $("#jifen").html("<p>×Ü»ı·Ö:</p><p>"+score+"</p>");
+                alert("ç­¾åˆ°æˆåŠŸï¼");
+                $("#jifen").html("<p>æ€»ç§¯åˆ†:</p><p>"+score+"</p>");
             }else if(repCode == '0002'){
                 var score = result.score;
                 $("#jifen").show();
-                alert("½ñÌìÒÑ¾­Ç©µ½£¡");
-                $("#jifen").html("<p>×Ü»ı·Ö:</p><p>"+score+"</p>");
+                alert("ä»Šå¤©å·²ç»ç­¾åˆ°ï¼");
+                $("#jifen").html("<p>æ€»ç§¯åˆ†:</p><p>"+score+"</p>");
             }else{
                 $("#jifen").show();
                 after();
-                alert("Ç©µ½Ê§°Ü");
+                alert("ç­¾åˆ°å¤±è´¥");
             }
 
         }
@@ -81,20 +81,20 @@ function check() {
             if (repCode == '0000') {
                 var score = result.score;
                 $("#jifen").show();
-                $("#jifen").html("<p>×Ü»ı·Ö:</p><p>"+score+"</p>");
+                $("#jifen").html("<p>æ€»ç§¯åˆ†:</p><p>"+score+"</p>");
                 after();
             } else if(repCode == '0001'){
                 var score = result.score;
                 $("#qiandao").show();
-                $("#qiandao").html("<p>×Ü»ı·Ö:</p><p>"+score+"</p>");
+                $("#qiandao").html("<p>æ€»ç§¯åˆ†:</p><p>"+score+"</p>");
             }else if(repCode == '0002'){
                 var score = result.score;
                 $("#qiandao").show();
-                alert("½ñÌìÒÑ¾­Ç©µ½£¡");
-                $("#qiandao").html("<p>×Ü»ı·Ö:</p><p>"+score+"</p>");
+                alert("ä»Šå¤©å·²ç»ç­¾åˆ°ï¼");
+                $("#qiandao").html("<p>æ€»ç§¯åˆ†:</p><p>"+score+"</p>");
             }else{
                 after();
-                alert("Ç©µ½Ê§°Ü");
+                alert("ç­¾åˆ°å¤±è´¥");
             }
 
         }

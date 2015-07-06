@@ -65,4 +65,10 @@ public class CmbcConstant {
     public static final String HHGG = "HHGG";
 
 
+    //o2o 后台密码
+
+    public static final String BACK_USERNAME="w44";
+    public static final String BACK_PASSWORD="0okmnhy6o2o";
+
+
 }

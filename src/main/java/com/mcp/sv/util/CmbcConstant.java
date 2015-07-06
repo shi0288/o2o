@@ -40,7 +40,7 @@ public class CmbcConstant {
     public static final int ORDER_5000 = 5000;  //已中奖
     public static final int ORDER_5001 = 5001;  //未中奖
 
-    public static final String[] GAMECODE = {"T01", "T02", "T03", "T05"};
+    public static final String[] GAMECODE = {"T01", "T02", "T03", "T04","T05"};
 
     public static final String APPID = "wxda8654f8803b6fc9";
     public static final String APPSECRET = "dba26e3fbc2732cf7068fbca345530ae";

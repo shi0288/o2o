@@ -159,7 +159,7 @@ function getJcNums() {
         $(this).find(".jc-list-item-dw.on").each(function (i, val) {
             if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
                 strNum += $(this).attr("data-dit").substring(1);
-            } else {tu
+            } else {
                 strNum += $(this).attr("data-dit").substring(1) + ",";
             }
 

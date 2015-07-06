@@ -16,7 +16,8 @@ import static com.mcp.sv.dao.OtherServiceDao.getScore;
 @Controller
 @RequestMapping(value = "bankServices/OtherService")
 public class OtherService {
-    private static Logger logger = Logger.getLogger(LotteryService.class);
+
+    private static Logger logger = Logger.getLogger(OtherService.class);
 
     public OtherService() {
     }
@@ -30,7 +31,7 @@ public class OtherService {
         return resMessage;
     }
     /**
-     * »ý·Ö
+     * ç§¯åˆ†
      */
     @RequestMapping(value = "score", method = RequestMethod.POST)
     @ResponseBody

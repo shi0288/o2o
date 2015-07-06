@@ -17,9 +17,7 @@ public class OtherService {
 
     public OtherService() {
     }
-    /**
-     * »ý·Ö
-     */
+
     @RequestMapping(value = "score", method = RequestMethod.POST)
     @ResponseBody
     public String score(OldBean oldBean) {

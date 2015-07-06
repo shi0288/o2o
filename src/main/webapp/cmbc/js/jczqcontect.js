@@ -267,6 +267,7 @@ function getMatchInfo(obj,st){
     $.each(obj, function (key, item) {
         var code = item.code;
         var selling = item.selling;
+        console.log("selling:"+selling);
         code = code.substring(0, 8);
         arrcounti[code] += 1;
         var changci = formNumber(arrcounti[code]);

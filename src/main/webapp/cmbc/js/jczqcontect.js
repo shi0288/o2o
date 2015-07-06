@@ -159,7 +159,7 @@ function getJcNums() {
         $(this).find(".jc-list-item-dw.on").each(function (i, val) {
             if (i == $(this).parent().find(".jc-list-item-dw.on").length - 1) {
                 strNum += $(this).attr("data-dit").substring(1);
-            } else {tu
+            } else {
                 strNum += $(this).attr("data-dit").substring(1) + ",";
             }
 
@@ -267,6 +267,7 @@ function getMatchInfo(obj,st){
     $.each(obj, function (key, item) {
         var code = item.code;
         var selling = item.selling;
+        console.log("selling:"+selling);
         code = code.substring(0, 8);
         arrcounti[code] += 1;
         var changci = formNumber(arrcounti[code]);

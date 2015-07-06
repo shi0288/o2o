@@ -55,8 +55,8 @@ public class JcDao {
             }else{
                 return null;
             }
-            if (info.containsKey("updatetime")) {
-                long updateTime = (Long) info.get("updatetime");
+            if (info.containsKey("updateTime")) {
+                long updateTime = (Long) info.get("updateTime");
                 if (new Date().getTime() - updateTime > 1000 * 60 * 5) {//大于5分钟 更新info
                     String mbody = (String) info.get("body");
                     JSONObject lastbody = new JSONObject(mbody);

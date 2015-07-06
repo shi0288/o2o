@@ -18,6 +18,7 @@
     <script type="text/javascript" src="js/touchslider.dev.js"></script>
     <script type="text/javascript" src="js/banner.js"></script>
     <script type="text/javascript" src="js/fastclick.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
     <jsp:include page="include/login.jsp" flush="true"/>
     <style>
         #wrapper{width:100%;overflow:hidden;background:#fff}
@@ -64,6 +65,8 @@
             <!-- <a href="javascript:void(-1)" onClick='setWebitEvent("return", "LT01");' class="go-pre"></a>-->
             <a class="msyh-login" id="yes-denglu"  style="display:none"  href="login.html">登录</a>
             <a class="msyh-login" id="yes-zhanghu" style="display:none"  href="acount.jsp">账户信息</a>
+			<a class="msyh-login" id="qiandao" style="display:none">签到</a>
+            <a class="msyh-login" id="jifen" style="display:none">积分</a>
             <span class="title"
                   style="float:none; display:block; width:220px; text-align:center; margin:0px auto;">中心线店</span>
         </div>

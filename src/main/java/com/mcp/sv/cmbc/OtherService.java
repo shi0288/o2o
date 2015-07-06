@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static com.mcp.sv.dao.OtherServiceDao.checkScore;
+import static com.mcp.sv.dao.OtherServiceDao.getScore;
+
 /**
  * Created by forest on 2015/7/5.
  */
@@ -23,6 +26,18 @@ public class OtherService {
     public String score(OldBean oldBean) {
         String resMessage = "";
         String body = oldBean.getBody();
+        resMessage = getScore(body);
+        return resMessage;
+    }
+    /**
+     * »ý·Ö
+     */
+    @RequestMapping(value = "score", method = RequestMethod.POST)
+    @ResponseBody
+    public String check(OldBean oldBean) {
+        String resMessage = "";
+        String body = oldBean.getBody();
+        resMessage = checkScore(body);
         return resMessage;
     }
 }

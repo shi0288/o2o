@@ -55,6 +55,7 @@ public class JcDao {
             }else{
                 return null;
             }
+            url += "?timestamp=" + new Date().getTime();
             if (info.containsKey("updateTime")) {
                 long updateTime = (Long) info.get("updateTime");
                 if (new Date().getTime() - updateTime > 1000 * 60 * 5) {//大于5分钟 更新info
@@ -512,10 +513,8 @@ public class JcDao {
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
         DBObject find = new BasicDBObject(); //mongodb bean
         find.put("_id",type+"_updatetime");
-        //find.put("type", type+"_updatetime");
         DBObject set = new BasicDBObject(); //mongodb bean
         set.put("_id", type+"_updatetime");
-        //set.put("type", type+"_updatetime");
         set.put("last_updated", endDate);
         set.put("body", rbody);
         set.put("updateTime", new Date().getTime());
@@ -526,8 +525,7 @@ public class JcDao {
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
         DBObject tokenObj = new BasicDBObject();
         tokenObj.put("_id", type+"_updatetime");
-        //tokenObj.put("type", type+"_updatetime");
-        tokenObj.put("updatetime",  new Date().getTime());
+        tokenObj.put("updateTime",  new Date().getTime());
         tokenObj.put("last_updated", endDate);
         tokenObj.put("body", rbody);
         collection.save(tokenObj);
@@ -537,7 +535,6 @@ public class JcDao {
         DBCollection collection = MongoUtil.getDb().getCollection(MongoConst.MONGO_JCINFO);
         DBObject find = new BasicDBObject(); //mongodb bean
         find.put("_id",type+"_updatetime");
-        //find.put("type", type+"_updatetime");
         DBObject token = collection.findOne(find);
         if (token != null){
             return  token.toMap();

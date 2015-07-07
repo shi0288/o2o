@@ -18,7 +18,7 @@
     <script type="text/javascript" src="js/touchslider.dev.js"></script>
     <script type="text/javascript" src="js/banner.js"></script>
     <script type="text/javascript" src="js/fastclick.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
+	<!--<script type="text/javascript" src="js/index.js"></script>-->
     <jsp:include page="include/login.jsp" flush="true"/>
     <style>
         #wrapper{width:100%;overflow:hidden;background:#fff}

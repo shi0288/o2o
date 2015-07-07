@@ -267,10 +267,11 @@ function getMatchInfo(obj,st){
     $.each(obj, function (key, item) {
         var code = item.code;
         var selling = item.selling;
-        console.log("selling:"+selling);
+        //console.log("selling:"+selling);
         code = code.substring(0, 8);
         arrcounti[code] += 1;
-        var changci = formNumber(arrcounti[code]);
+        //var changci = formNumber(arrcounti[code]);
+        var changci = item.code.substring(9, 12);
         var teamname = item.matchInfo;
         var matchTime = item.closeTime;
         matchTime = matchTime.substring(0, 10);

@@ -222,6 +222,13 @@ $(document).ready(function() {
 		}
 	});
 	$(".jc-list-item-dw").die().live("click",function(){
+		var jcList =  $(".jc-list-item").length;
+		if(jcList<=2){
+			if ($(this).parents(".jc-list-item-cot").find(".jc-list-item-dw.on").length <= 1){
+				alert("最少选两场");
+				return;
+			}
+		}
 		var datacc=$(this).parents(".jc-list-item").attr("data-cc");
 		var cctable=$(".jc-step1").eq(0).find(".jc-table[data-cc="+datacc+"]");
 		var datawf=$(this).parent().attr("data-wf");

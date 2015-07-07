@@ -257,6 +257,22 @@ function closeClick(evel) {
 }
 //删除某项
 function delClick(evel) {
+    var jcList =  $(".jc-list-item").length;
+    if(!$("#jcdg").hasClass("check-org now")){
+        if(jcList<=2){
+            if ($(evel).parents(".jc-list-item-cot").find(".jc-list-item-dw.on").length <= 1){
+                alert("最少选两场");
+                return;
+            }
+        }
+    }else{
+        if(jcList<=1){
+            if ($(evel).parents(".jc-list-item-cot").find(".jc-list-item-dw.on").length <= 1){
+                alert("最少选一场");
+                return;
+            }
+        }
+    }
     var datacc = $(evel).parents(".jc-list-item").attr("data-cc");
     var cctable = $(".jc-step1").eq(0).find(".jc-table[data-cc=" + datacc + "]");
     var datawf = $(evel).parent().attr("data-wf");

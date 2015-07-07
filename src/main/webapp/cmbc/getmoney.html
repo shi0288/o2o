@@ -22,18 +22,29 @@
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript">
         $(document).ready(function (e) {
-            var recharge = sessionStorage.getItem("recharge");//彩金
-            var prize = sessionStorage.getItem("prize");//奖金
+            var recharge = sessionStorage.getItem("recharge");
+            var prize = sessionStorage.getItem("prize");
             var jiangjin = prize / 100;
             var prizehtml = "￥" + toDecimalMoney(prize / 100);
             $("#price").html(prizehtml);
-            var realName = sessionStorage.getItem("realName");//奖金
+            var realName = sessionStorage.getItem("realName");
             if (realName != "undefined" && realName != null) {
                 $("#realName").html(realName);
             } else {
                 $("#realName").html("未填写");
             }
-            var identityId = sessionStorage.getItem("identityId");//奖金
+
+
+            var mobile=sessionStorage.getItem("mobile");
+            if (mobile != "undefined" && mobile != null) {
+                $("#mobile").html(mobile);
+            } else {
+                $("#mobile").html("未填写");
+            }
+
+
+
+            var identityId = sessionStorage.getItem("identityId");
             if (identityId != "undefined" && identityId != null) {
                 var len = identityId.length;
                 var sidentityId = identityId.substring(0, 3);
@@ -42,13 +53,6 @@
                 $("#identityId").html(sidentityId);
             } else {
                 $("#identityId").html("未填写");
-            }
-            var cardNumber = sessionStorage.getItem("identityId");//奖金
-
-            if (cardNumber != "undefined" && cardNumber != null) {
-                $("#cardNumber").html(cardNumber);
-            } else {
-                $("#cardNumber").html("未填写");
             }
             //点击提现按钮
             $("#ttbbb").click(function () {
@@ -83,7 +87,9 @@
                     data: {
                         userName: sessionStorage.getItem("name"),
                         passWord: sessionStorage.getItem("passWord"),
-                        amount:txjin*100
+                        amount:txjin*100,
+                        mobile:mobile,
+                        identityId:identityId
                     },
                     success: function (result) {
                         var repCode = result.repCode;
@@ -125,10 +131,8 @@
                              onkeyup="this.value=this.value.replace(/\D/g,'')" placeholder="请输入提款金额"/></span>
             </div>
             <div class="bline clearfix"><label>真实姓名：</label><span id="realName" style="margin-left:6px;"></span></div>
-            <div class="bline clearfix"><label>身份证号：</label><span id="identityId" style="margin-left:6px;"></span></div>
-            <div class="bline clearfix" style="border-bottom:0px;"><label>支付宝：</label><span id="cardNumber"
-                                                                                             style="margin-left:6px;"></span>
-            </div>
+            <div class="bline clearfix"><label>支付宝：</label><span id="identityId" style="margin-left:6px;"></span></div>
+            <div class="bline clearfix"><label>手机号：</label><span id="mobile" style="margin-left:6px;"></span></div>
         </div>
         <!--如果用户没有实名认证和绑定银行卡 -->
         <span>

@@ -395,6 +395,27 @@ public class LotteryDao {
     }
 
 
+    public static String updateTiXian(String outerId) {
+        //查询库中是否有此记录
+        Map param = new HashMap();
+        param.put("outerId", outerId);
+        List datas = MongoUtil.query(MongoConst.MONGO_TIXIAN, param);
+        if (datas.size() == 1) {
+            DBObject obj = (DBObject) datas.get(0);
+            String objStr = JSON.serialize(obj);
+            DBObject newObj = (DBObject) JSON.parse(objStr);
+            newObj.put("status", 2000);  //成功
+            int res = MongoUtil.update(MongoConst.MONGO_TIXIAN, obj, newObj);
+            if (res == 1) {
+                return "";
+            } else {
+                return "提现状态更新失败";
+            }
+        }
+        return "提现状态更新异常";
+    }
+
+
     //存储记录
     public static boolean insertLog(String tableName, int type, String userName, int beforeMoney, int afterMoney, int money, String outerId) {
         //查询库中是否有此记录

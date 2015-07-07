@@ -20,7 +20,7 @@
 <div class="page-from-left index">
     <div class="top fix">
         <div class="top-relative clearfix">
-            <a href="pl3.jsp" class="go-pre"></a>
+            <a href="index.jsp" class="go-pre"></a>
             <a href="javascript:xuanqiuShow()" class="go-pre" style="display:none"></a>
             <span class="title"><span class="pt2">排列三</span><a class="selmore" href="javascript:void(-1)">组选<img
                     src="img/down_yellow.png"/></a></span>

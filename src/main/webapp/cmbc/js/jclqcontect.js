@@ -443,23 +443,4 @@ function toogle(evel) {
     }
 }
 
-function loginA04(name, password) {
-    var body = {
-        name: name,
-        password: password
-    };
-    $.ajax({
-        type: "POST",
-        url: "/bankServices/LotteryService/commonTrans?timestamp=?timestamp=" + new Date().getTime(),
-        dataType: "json",
-        cache: false,
-        data: {
-            cmd: 'A04',
-            body: JSON.stringify(body)
-        },
-        success: function (result) {
-
-        }
-    });
-}
 

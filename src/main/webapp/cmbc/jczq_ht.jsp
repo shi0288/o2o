@@ -17,7 +17,7 @@
 	<div class="top fix">
     	<!--<div class="top-add"><img src="img/guanggao_1.png"></div>-->
     	<div class="top-relative clearfix green-top"><!--<img id="top-lahuan" src="img/qian_top.png">-->
-        	<a href="jczq.jsp" id="jc-one" class="go-pre"></a>
+        	<a href="index.jsp" id="jc-one" class="go-pre"></a>
             <a href="javascript:jcone()" id="jc-two" class="go-pre" style="display:none"></a>
         	<span class="title">
                 <span class="pt2">竞彩足球</span>

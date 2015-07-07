@@ -1,5 +1,6 @@
 package com.mcp.sv.cmbc;
 
+import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.OldBean;
 import com.mcp.sv.util.*;
 import com.mcp.sv.util.CmbcConstant;
@@ -79,6 +80,41 @@ public class OtherService {
     }
 
 
+    @RequestMapping(value = "updateTiXian", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateTiXian(OldBean oldBean) {
+        String backUserName = oldBean.getBackUserName();
+        String passWord = oldBean.getPassWord();
+        String outerId = oldBean.getOuterId();
+        boolean is = this.isBackAdmin(backUserName, passWord);
+        JSONObject rst = new JSONObject();
+        if(is){
+            String description = LotteryDao.updateTiXian(outerId);
+            try {
+                if("".equals(description)){
+                    rst.put("repCode","0000");
+                }else{
+                    rst.put("repCode","9999");
+                    rst.put("description",description);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else {
+            try {
+                rst.put("repCode","9999");
+                rst.put("description","权限不足，已记录本次越权操作");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return rst.toString();
+
+
+
+    }
+
+
     @RequestMapping(value = "backTickets", method = RequestMethod.POST)
     @ResponseBody
     public String backTickets(OldBean oldBean) {
@@ -87,33 +123,35 @@ public class OtherService {
         String passWord = oldBean.getPassWord();
         String userName = oldBean.getUserName();
         String outerId = oldBean.getOuterId();
+        String mobile = oldBean.getMobile();
         Map param = new HashMap();
         List rstList = null;
         //accountType作为表名
         int accountType = oldBean.getAccountType();
         String tableName = MongoConst.MONGO_TICKET;
-        if(accountType==2){
+        if (accountType == 2) {
             tableName = MongoConst.MONGO_TIXIAN;
         }
         //状态
         int status = oldBean.getStatus();
-        logger.info("status:"+status);
-
-        if (status == 0) {
-            param.put("status", 1000);
+        if (status != 0) {
+            param.put("status", status);
+        }
+        if (status == 1000 && accountType!=2) {
+            param.put("status", null);
         }
         //用户
-        if (userName != null) {
+        if (userName != null && !"".equals(userName)) {
             param.put("userName", userName);
         }
-        logger.info("userName:"+userName);
-
         //ticketID
-        if (outerId != null) {
+        if (outerId != null && !"".equals(outerId)) {
             param.put("outerId", outerId);
         }
-        logger.info("outerId:"+outerId);
-
+        //mobile
+        if (mobile != null && !"".equals(mobile)) {
+            param.put("mobile", mobile);
+        }
         boolean is = this.isBackAdmin(backUserName, passWord);
         if (is) {
             //正常逻辑

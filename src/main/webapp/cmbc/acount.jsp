@@ -245,7 +245,6 @@
                         <span id="user_name" class="cott-touxiang" onClick="return false;"></span>
                         <span class="yellow-text">实名认证更安全</span><span class="list-item-go"></span>
                     </a>
-
                     <div class="sline-dark mb10"></div>
                     <a href="acdetail.html" style=" display:block;position:relative; padding-left:15px;">
                         <P class="clearfix"><span class="cott-touxiang">
@@ -253,7 +252,6 @@
                             </span>
                             <span class="yellow-text"> 彩金购彩更方便</span>
                         </P>
-
                         <p class="clearfix"><span class="cott-touxiang">
                         	奖金：<font class="orgtext" id="bonus"></font> 元
                             </span>

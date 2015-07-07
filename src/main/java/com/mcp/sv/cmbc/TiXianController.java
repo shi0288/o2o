@@ -35,6 +35,8 @@ public class TiXianController {
     public String confirmOrders(OldBean oldBean) throws JSONException {
         String userName = oldBean.getUserName();
         String passWord = oldBean.getPassWord();
+        String identityId = oldBean.getIdentityId();
+        String mobile = oldBean.getMobile();
         int amount = oldBean.getAmount();
         int prize = 0;
         org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
@@ -75,11 +77,13 @@ public class TiXianController {
             DBObject tiXianObject = new BasicDBObject();
             tiXianObject.put("outerId",outerId);
             tiXianObject.put("amount",amount);
+            tiXianObject.put("mobile",mobile);
+            tiXianObject.put("identityId",identityId);
             tiXianObject.put("userName",userName);
             tiXianObject.put("status",1000); //未处理
             tiXianObject.put("createTime",LotteryDao.getTime());
             MongoUtil.insert(MongoConst.MONGO_TIXIAN, tiXianObject);
-            res.put("repCode", "0000");  //奖金不够提现
+            res.put("repCode", "0000");
         }
         return res.toString();
     }

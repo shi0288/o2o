@@ -1,27 +1,23 @@
-
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>票据队列</title>
 
-    <!-- paste this code into your webpage -->
     <link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen"/>
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript">
         var backUserName = sessionStorage.getItem("backUserName");
         var passWord = sessionStorage.getItem("passWord");
-        if(backUserName==null){
-            window.location.href="backLogin.html";
-        }
         $(document).ready(function () {
             var curPage = 1;
-            getPageInfo(0, curPage);
+            getPageInfo(2, curPage);
             $("#query").click(function () {
                 var size = 10;
                 var userName = $("#userName").val();
-                var outerId = $("#outerId").val();
+                var mobile = $("#mobile").val();
+                console.log(mobile);
                 var status = $("#status").val();
-                var accountType = 1;
+                var accountType = 2;
                 $.ajax({
                     type: "POST",
                     url: "/otherControl/backTickets?timestamp=" + new Date().getTime(),
@@ -30,7 +26,7 @@
                     data: {
                         backUserName: backUserName,
                         userName: userName,
-                        outerId: outerId,
+                        mobile: mobile,
                         status: status,
                         passWord: passWord,
                         accountType: accountType,
@@ -40,7 +36,7 @@
                     success: function (result) {
                         var repCode = result.repCode;
                         if (repCode == "0000") {
-                            dealResult(result,curPage,size);
+                            dealResult(result, curPage, size);
                         } else {
                             alert('查询请求出错');
                         }
@@ -49,19 +45,13 @@
                         alert('请求出错');
                     }
                 });
-
             })
-
-
-
-
         });
         function getPageInfo(accountType, curPage) {
             var size = 10;
             var userName = $("#userName").val();
-            var outerId = $("#outerId").val();
+            var mobile = $("#mobile").val();
             var status = $("#status").val();
-            console.log(curPage);
             $.ajax({
                 type: "POST",
                 url: "/otherControl/backTickets?timestamp=" + new Date().getTime(),
@@ -70,7 +60,7 @@
                 data: {
                     backUserName: backUserName,
                     userName: userName,
-                    outerId: outerId,
+                    mobile: mobile,
                     status: status,
                     passWord: passWord,
                     accountType: accountType,
@@ -80,7 +70,7 @@
                 success: function (result) {
                     var repCode = result.repCode;
                     if (repCode == "0000") {
-                        dealResult(result,curPage,size);
+                        dealResult(result, curPage, size);
                     } else {
                         alert('用户名或密码错误');
                     }
@@ -96,49 +86,66 @@
         function transStatus(status) {
             switch (status) {
                 case 1000:
-                    return "等待支付";
+                    return "等待提现";
                     break;
-                case 4000:
-                    return "出票成功";
+                case 2000:
+                    return "提现成功";
                     break;
-                case 4001:
-                    return "部分出票成功";
-                    break;
-                case 4002:
-                    return "出票失败";
-                    break;
-                case 5000:
-                    return "已中奖";
-                    break;
-                case 5001:
-                    return "未中奖";
-                    break;
-                default:
-                    return "等待出票";
             }
         }
 
-        function dealResult(result,curPage,size){
-            var tabElem=$("#infos");
+        function updateStatus(outerId) {
+
+
+            $.ajax({
+                type: "POST",
+                url: "/otherControl/updateTiXian?timestamp=" + new Date().getTime(),
+                dataType: "json",
+                cache: false,
+                data: {
+                    backUserName: backUserName,
+                    passWord: passWord,
+                    outerId: outerId
+                },
+                success: function (result) {
+                    var repCode = result.repCode;
+                    if (repCode == "0000") {
+                        window.location.reload();
+                    } else {
+                        alert(result.description);
+                    }
+
+                },
+                error: function () {
+                    alert('请求出错');
+                }
+            });
+
+
+        }
+
+        function dealResult(result, curPage, size) {
+            var tabElem = $("#infos");
             tabElem.find(".one").remove();
             $.each(result['rst'], function (key, val) {
-                var tickObj=JSON.parse(val);
-                var statusHtml=transStatus(tickObj.status);
-                var htmlStr= "<tr class='one'><td>"+(key+1)+"</td> <td>"+tickObj.outerId+"</td> <td>"+tickObj.userName+"</td> <td>"+tickObj.gameCode+"</td>  <td>"+tickObj.termCode+"</td>  <td>"+tickObj.auditTime+"</td>  <td>"+statusHtml+"</td>  <td>"+''+"</td></tr>";
+                var tickObj = JSON.parse(val);
+                var statusHtml = transStatus(tickObj.status);
+                var aHtml="<a href='#' onclick='updateStatus(\""+tickObj.outerId+"\")'> 修改成功</a>";
+                var htmlStr = "<tr class='one'><td>" + (key + 1) + "</td> <td>" + tickObj.outerId + "</td> <td>" + tickObj.userName + "</td> <td>" + tickObj.mobile + "</td><td>" + tickObj.identityId + "</td>  <td>" + tickObj.amount / 100 + "</td>  <td>" + tickObj.createTime + "</td>  <td>" + statusHtml + "</td>  <td>" + aHtml + "</td></tr>";
                 tabElem.append(htmlStr);
             })
             //页数
-            var count=result.count;
-            var pageCount=0;//总页数
-            pageCount=count%size===0?count/size:parseInt(count/size)+1;//总页数
-            var countStr='<span class="one">共'+count+'条记录,共'+pageCount+'页</span>';
-            var pageElem=$(".page");
+            var count = result.count;
+            var pageCount = 0;//总页数
+            pageCount = count % size === 0 ? count / size : parseInt(count / size) + 1;//总页数
+            var countStr = '<span class="one">共' + count + '条记录,共' + pageCount + '页</span>';
+            var pageElem = $(".page");
             pageElem.find(".one").remove();
             pageElem.append(countStr);
-            for(var i=1;i<=pageCount;i++){
-                var pageNum='<a href="#" onclick="getPageInfo(1,'+i+')" class="one">'+i+'</a>';
-                if(i==curPage){
-                    pageNum='<span class="one" >'+i+'</span>';
+            for (var i = 1; i <= pageCount; i++) {
+                var pageNum = '<a href="#" onclick="getPageInfo(2,' + i + ')" class="one">' + i + '</a>';
+                if (i == curPage) {
+                    pageNum = '<span class="one" >' + i + '</span>';
                 }
                 pageElem.append(pageNum);
             }
@@ -156,6 +163,7 @@
             line-height: 150%;
             text-align: left;
         }
+
         a {
             text-decoration: none;
             color: #057fac;
@@ -175,10 +183,16 @@
             list-style: none;
             padding-left: 100px;
         }
-        .page > a,span{
+
+        .page > a, span {
             padding-left: 8px;
         }
-        #infos  tbody tr:hover{ background:#FFF; color:#FFF; font-weight:bold;}
+
+        #infos tbody tr:hover {
+            background: #FFF;
+            color: #FFF;
+            font-weight: bold;
+        }
 
     </style>
 
@@ -187,14 +201,15 @@
 <body>
 
 <div id="container">
-    <h1>票据信息</h1>
+    <h1>提现信息</h1>
+
     <div class="head">
         <ul class="head_ul">
-            <li  class="now">
-                <a> 票据信息 </a>
-            <li/>
             <li>
-                <a href="backTiXian.html"> 提现</a>
+                <a href="backMain.html"> 票据信息 </a>
+            <li/>
+            <li class="now">
+                <a> 提现</a>
             <li/>
         </ul>
     </div>
@@ -203,14 +218,10 @@
         <table>
             <tr>
                 <td>用户名：<input id="userName" type="text"/></td>
-                <td>彩票ID：<input id="outerId" type="text"/></td>
+                <td>手机：<input id="mobile" type="text"/></td>
                 <td>状态：<select id="status">
                     <option value="1000"> 等待出票</option>
-                    <option value="4000"> 出票成功</option>
-                    <option value="4001"> 部分出票成功</option>
-                    <option value="4002"> 出票失败</option>
-                    <option value="5000"> 已中奖</option>
-                    <option value="5001"> 未中奖</option>
+                    <option value="2000"> 提现成功</option>
                 </select></td>
             </tr>
         </table>
@@ -229,17 +240,18 @@
         <table id="infos" cellspacing="0" cellpadding="0">
             <tr>
                 <th>序号</th>
-                <th>彩票ID</th>
+                <th>ID</th>
                 <th>用户名</th>
-                <th>游戏名称</th>
-                <th>期次</th>
-                <th>时间</th>
-                <th>彩票状态</th>
+                <th>手机号</th>
+                <th>支付宝</th>
+                <th>金额</th>
+                <th>创建时间</th>
+                <th>状态</th>
                 <th>操作</th>
             </tr>
         </table>
 
-        <input  id="curPage"  type="hidden"  value="1"  />
+        <input id="curPage" type="hidden" value="1"/>
     </div>
 </div>
 

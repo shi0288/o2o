@@ -10,6 +10,11 @@ $(document).ready(function (e) {
     getData();
     //提交订单
     $(".step2").die().live("click", function () {
+        var lastime=$("#lastime").html();
+        if(lastime==""||lastime==undefined){
+            alert("本期未开售");
+            return false;
+        }
         zhuss = $("#zhushu").html();
         if ($("#zhushu").html() == 0) {
             alert("至少选择1注");

@@ -24,7 +24,7 @@ function submitQd() {
     };
     $.ajax({
         type: "POST",
-        url: "/bankServices/OtherService/score?timestamp=" + new Date().getTime(),
+        url: "/otherControl/score?timestamp=" + new Date().getTime(),
         dataType: "json",
         cache: false,
         data: {
@@ -38,22 +38,25 @@ function submitQd() {
             console.log(repCode);
             if (repCode == '0000') {
                 var score = result.score;
+                $("#qiandao").hide();
                 $("#jifen").show();
                 alert("第一次签到！");
-                $("#jifen").html("<p>总积分:</p><p>"+score+"</p>");
+                $("#jifen").html("总积分:"+score);
                 after();
             } else if(repCode == '0001'){
+                $("#qiandao").hide();
                 $("#jifen").show();
                 var score = result.score;
                 alert("签到成功！");
-                $("#jifen").html("<p>总积分:</p><p>"+score+"</p>");
+                $("#jifen").html("总积分:"+score);
             }else if(repCode == '0002'){
                 var score = result.score;
+                $("#qiandao").hide();
                 $("#jifen").show();
                 alert("今天已经签到！");
-                $("#jifen").html("<p>总积分:</p><p>"+score+"</p>");
+                $("#jifen").html("总积分:"+score);
             }else{
-                $("#jifen").show();
+                $("#qiandao").show();
                 after();
                 alert("签到失败");
             }
@@ -68,7 +71,7 @@ function check() {
     };
     $.ajax({
         type: "POST",
-        url: "/bankServices/OtherService/check?timestamp=" + new Date().getTime(),
+        url: "/otherControl/check?timestamp=" + new Date().getTime(),
         dataType: "json",
         cache: false,
         data: {
@@ -81,17 +84,16 @@ function check() {
             if (repCode == '0000') {
                 var score = result.score;
                 $("#jifen").show();
-                $("#jifen").html("<p>总积分:</p><p>"+score+"</p>");
+                $("#jifen").html("总积分:"+score);
                 after();
             } else if(repCode == '0001'){
                 var score = result.score;
                 $("#qiandao").show();
-                $("#qiandao").html("<p>总积分:</p><p>"+score+"</p>");
+                $("#qiandao").html("总积分:"+score);
             }else if(repCode == '0002'){
                 var score = result.score;
                 $("#qiandao").show();
-                alert("今天已经签到！");
-                $("#qiandao").html("<p>总积分:</p><p>"+score+"</p>");
+                alert("从未签到！");
             }else{
                 after();
                 alert("签到失败");

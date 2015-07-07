@@ -30,7 +30,7 @@
 <!--正文内容开始-->
 	
 	<div class="content">
-    	<div class="bar-tip"><span>第<font class="redtext" id="termCode">14197</font>期</span><span>截止时间：<font class="redtext" id="lastime">12-29 16:00</font></span></div>	
+    	<div class="bar-tip"><span>第<font class="redtext" id="termCode">14197</font>期</span><span>截止时间：<font class="redtext" id="lastime"></font></span></div>
         <!--选球-->
         <div class="xuanqiu">
             <div class="tab-content p10" id="putong" style="display:block" data-red="5" data-blue="0">

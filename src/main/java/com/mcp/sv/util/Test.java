@@ -8,10 +8,13 @@ import org.codehaus.jettison.json.JSONException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import static com.mcp.sv.dao.JcDao.createFormat;
 import static com.mcp.sv.dao.JcDao.createHhggFormat;
 import static com.mcp.sv.dao.JcDao.getFormat;
+import static com.mcp.sv.dao.OtherServiceDao.findJfInfo;
+import static com.mcp.sv.dao.OtherServiceDao.updateJfInfo;
 import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 
 /**
@@ -20,12 +23,16 @@ import static com.mcp.sv.util.HttpClientWrapper.sendGet;
 public class Test {
 
     public static void main(String[] args) throws JSONException, ParseException {
-       String str = sendGet(CmbcConstant.HHGG_URL);
-        System.out.println(str);
+        //String username,int score,int orderId,String updateTime
+        updateJfInfo("111111",500,7,"2015-07-06");
+        Map info = findJfInfo("111111");
+        System.out.println(info.toString());
+//       String str = sendGet(CmbcConstant.HHGG_URL);
+//        System.out.println(str);
 //       String res = createFormat("HHGG", str);
-        String res = createHhggFormat("HHGG", str);
-
-        System.out.println(res);
+//        String res = createHhggFormat("HHGG", str);
+//
+//        System.out.println(res);
 //        System.out.println(new Date());
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
 //        Date nowt = new Date();

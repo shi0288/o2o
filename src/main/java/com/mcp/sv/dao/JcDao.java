@@ -55,7 +55,7 @@ public class JcDao {
             }else{
                 return null;
             }
-            url += "?timestamp=" + new Date().getTime();
+           //url += "?timestamp=" + new Date().getTime();
             if (info.containsKey("updateTime")) {
                 long updateTime = (Long) info.get("updateTime");
                 if (new Date().getTime() - updateTime > 1000 * 60 * 5) {//大于5分钟 更新info
@@ -85,7 +85,6 @@ public class JcDao {
                             updateJcInfo(last_updated, st, res);
                         }
                     }
-
                 }else{
                     res = (String)info.get("body");
                 }
@@ -193,6 +192,7 @@ public class JcDao {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        logger.info("res:"+res);
         return res;
     }
 

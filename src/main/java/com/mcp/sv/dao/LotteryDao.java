@@ -173,6 +173,9 @@ public class LotteryDao {
     }
 
 
+
+
+
     //获取最新开奖信息
     public static List getWinNum(int curPage, int pageSize, String gameCode) {
         //查询库中是否有此记录

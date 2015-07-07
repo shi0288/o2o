@@ -1,0 +1,195 @@
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>票据队列</title>
+
+	<!-- paste this code into your webpage -->
+	<link href="tablecloth/tablecloth.css" rel="stylesheet" type="text/css" media="screen" />
+	<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript">
+		var  backUserName = sessionStorage.getItem("backUserName");
+		var  passWord = sessionStorage.getItem("passWord");
+		$(document).ready(function () {
+			var size=10;
+			var curPage=1;
+			gePageInfo(0,curPage,size);
+
+			$("#query").click(function(){
+				var data={};
+				var userName=$("#userName").val();
+				if(userName!=''){
+					data.userName=userName;
+				}
+
+				var outerId=$("#outerId").val();
+				if(outerId!=''){
+					data.outerId=outerId;
+				}
+
+				var status=$("#status").val();
+				if(status!=''){
+					data.status=status;
+				}
+
+				$.ajax({
+					type: "POST",
+					url: "/otherControl/backTickets?timestamp=" + new Date().getTime(),
+					dataType: "json",
+					cache: false,
+					data,
+					success: function (result) {
+						console.log(result);
+						return;
+						var repCode = result.repCode;
+						if (repCode == "0000") {
+
+
+						}else{
+							alert('用户名或密码错误');
+						}
+
+					},
+					error: function(){
+						alert('请求出错');
+					}
+				});
+
+
+
+			})
+		});
+		function  gePageInfo(accountType,curPage,size){
+			$.ajax({
+				type: "POST",
+				url: "/otherControl/backTickets?timestamp=" + new Date().getTime(),
+				dataType: "json",
+				cache: false,
+				data: {
+					backUserName: backUserName,
+					passWord: passWord,
+					accountType:accountType,
+					curPage:curPage,
+					size:size
+				},
+				success: function (result) {
+					console.log(result);
+					return;
+					var repCode = result.repCode;
+					if (repCode == "0000") {
+
+
+					}else{
+						alert('用户名或密码错误');
+					}
+
+				},
+				error: function(){
+					alert('请求出错');
+				}
+			});
+		}
+	</script>
+
+	<style>
+		body{
+			margin-top:20px;
+			padding:0;
+			background:#f1f1f1;
+			font:70% Arial, Helvetica, sans-serif;
+			color:#555;
+			line-height:150%;
+			text-align:left;
+		}
+		a{
+			text-decoration:none;
+			color:#057fac;
+		}
+		a:hover{
+			text-decoration:none;
+			color:#999;
+		}
+
+		.head_ul{
+			float:left;
+		}
+
+		.head_ul > li{
+			float:left;
+			list-style:none;
+			padding-left:100px;
+		}
+	</style>
+
+</head>
+
+<body>
+
+<div id="container">
+	<h1>票据信息</h1>
+
+	<div class="head">
+		<ul  class ="head_ul">
+			<li   class ="now">
+				<a> 票据信息  </a>
+			<li/>
+			<li>
+				<a>    提现</a>
+			<li/>
+		</ul>
+	</div>
+
+	<div>
+		<table>
+			<tr> <td>用户名：<input id="userName" type="text" /></td><td>彩票ID：<input id="outerId"   type="text"   /></td><td>状态：<select id="status" > <option  value="1000"> 等待出票 </option> <option  value="4000"> 出票成功 </option> </select></td>  </tr>
+		</table>
+		<table>
+			<tr> <td> <input id="query"  type="button"   value="查询" /> </td><tr/>
+		</table>
+
+	</div>
+
+	<div id="content">
+		<h2>Table with top headings</h2>
+
+		<table cellspacing="0" cellpadding="0">
+			<tr>
+				<th>彩票ID</th>
+				<th>用户名</th>
+				<th>彩票状态</th>
+				<th>操作</th>
+			</tr>
+			<tr>
+				<td>Data</td>
+				<td>Data</td>
+				<td>Data</td>
+				<td>Data</td>
+			</tr>
+			<tr>
+				<td>Data</td>
+				<td>Data</td>
+				<td>Data</td>
+				<td>Data</td>
+			</tr>
+			<tr>
+				<td>Data</td>
+				<td>Data</td>
+				<td>Data</td>
+				<td>Data</td>
+			</tr>
+			<tr>
+				<td>Data</td>
+				<td>Data</td>
+				<td>Data</td>
+				<td>Data</td>
+			</tr>
+		</table>
+
+		<div   class="page">  </div>
+
+	</div>
+</div>
+
+
+</body>
+</html>

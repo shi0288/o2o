@@ -31,6 +31,21 @@ public class MongoUtil {
         return cur.toArray();
     }
 
+
+    public static int queryCount(String table,Map<String,String> map){
+        DBCollection collection = MongoUtil.getDb().getCollection(table);
+        BasicDBObject query=new BasicDBObject();
+        if(map==null){
+            return 0;
+        }
+        for(String key:map.keySet()){
+            query.append(key,map.get(key));
+        }
+        int cur = collection.find(query).count();
+        return cur;
+    }
+
+
     public static List<DBObject> queryForPage(String table,Map<String,String> map,int curPage,int pageSize){
         DBCollection collection = MongoUtil.getDb().getCollection(table);
         BasicDBObject query=new BasicDBObject();

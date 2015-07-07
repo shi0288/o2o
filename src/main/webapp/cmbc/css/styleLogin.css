@@ -1,0 +1,323 @@
+/*----
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+---*/
+/* reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ol,ul{list-style:none;margin:0px;padding:0px;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/* start editing from here */
+a{text-decoration:none;}
+.txt-rt{text-align:right;}/* text align right */
+.txt-lt{text-align:left;}/* text align left */
+.txt-center{text-align:center;}/* text align center */
+.float-rt{float:right;}/* float right */
+.float-lt{float:left;}/* float left */
+.clear{clear:both;}/* clear float */
+.pos-relative{position:relative;}/* Position Relative */
+.pos-absolute{position:absolute;}/* Position Absolute */
+.vertical-base{	vertical-align:baseline;}/* vertical align baseline */
+.vertical-top{	vertical-align:top;}/* vertical align top */
+.underline{	padding-bottom:5px;	border-bottom: 1px solid #eee; margin:0 0 20px 0;}/* Add 5px bottom padding and a underline */
+nav.vertical ul li{	display:block;}/* vertical menu */
+nav.horizontal ul li{	display: inline-block;}/* horizontal menu */
+img{max-width:100%;}
+/* reset */
+body
+{
+	background:#1a3e58;
+	font-family: 'Open Sans', sans-serif;
+	font-weight:300;
+	position: relative;
+}
+/*--- login-form ----*/
+.login-form
+{
+  width: 100%;
+  margin: 0% auto 0 auto;
+}
+.login-form h1 {
+  font-size: 2.5em;
+  text-align: center;
+  padding: 2em 0;
+  color: #fff;
+}
+/*--- form-left ----*/
+.form-left 
+{
+  position: relative;
+  background: #fff;
+  padding: 5em;
+  width: 32%;
+  margin: 0 auto;
+}
+.form-left span
+{
+	width: 17%;
+	float:left;
+	margin-top: 0;
+	text-align:right;
+}
+.form-left  input[type="text"],.form-left  input[type="password"]
+{
+	   width: 66%;
+	float:right;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 1px;
+}
+.form-left  form
+{
+	line-height:2.6em;
+}
+.form-left form span
+{
+	color:#999;
+	font-size:18px;
+}
+.form-left form input[type="text"] 
+{
+  padding: 3% 12% 3% 3%;
+  background: #fafafa;
+  color: #999;
+    border: rgba(181, 181, 181, 0.21) solid 1px;
+  outline: none;
+  font-size: 14px;
+  border-radius: 5px;
+}
+.form-left form input[type="text"]:hover
+{
+	border:1px solid #0399C7;
+}
+
+.password 
+{
+	margin-top: 1.5%;
+}
+.form-left form input[type="password"]:hover
+{
+	border:1px solid #0399C7;
+}
+.form-left  form input[type="password"] 
+{
+	  padding: 3% 12% 3% 3%;
+  background: #fafafa;
+  color: #999;
+  border: 1px solid #2B2B2B;
+	outline: none;
+	border: rgba(181, 181, 181, 0.21) solid 1px;
+	border-radius: 5px;
+}
+.form-left p {
+  margin-left: 19%;
+}
+.form-left form p a
+{
+	color:#999;
+	font-size: 16px;
+}
+.form-left  p a:hover
+{
+	color:#B5B5B5;
+}
+.clear
+{
+	clear:both;
+}	
+/*--- copy-right ----*/
+.copy-right
+{
+  text-align: center;
+  position: absolute;
+  bottom: -274px;
+    right: 720px;
+  padding-bottom: 3em;
+}
+.copy-right p
+{
+	color:#fff;	
+}
+.copy-right p a
+{
+	color:#fff;
+}
+.copy-right p a:hover
+{
+	color:#999;
+	transition:0.5s;
+	-webkit-transition:0.5s;
+	-moz-transition:0.5s;
+	-o-transition:0.5s;
+	-ms-transition:	0.5s;
+}
+.form-control:focus {  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102, 175, 233, 0.83);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102, 175, 233, 0.75);
+}
+
+.login_btn{
+  background: url(../images/submit-btn1.png)  0px 0px #282828;
+  width:35px;
+  height:30px;
+  float:right;
+
+}
+
+/*----- responsive-design ------*/
+@media (max-width:1440px){
+	.copy-right {
+	  margin: 24% 0 0 0;
+	}
+}
+@media (max-width:1366px){
+	.login-form
+	{
+		width:38%;
+	}
+}
+@media (max-width:1280px){
+	.login-form
+	{
+		width:40%;
+	}
+}
+@media (max-width:1024px){
+	.login-form
+	{
+		width:100%;
+		  margin: 0% auto 0 auto;
+	}
+	.form-left {
+	  width: 49%;
+	}
+	}
+	.copy-right {
+	  right: 425px;
+	    padding-bottom: 0em;
+	      margin: 0 0 0 0;
+	        top: 648px;
+	}
+}
+@media (max-width:768px){
+	.login-form {
+	  width: 100%;
+	  margin: 15% auto 0 auto;
+	}
+	.form-left {
+	  width: 60%;
+	}
+	.copy-right {
+	  right: 325px;
+	}
+}
+@media (max-width:640px){
+	.login-form
+	{
+		width:75%;
+		margin:20% auto 0 auto;	
+	}
+}
+@media (max-width:568px){
+	.login-form {
+	  width: 100%;
+	}
+	.form-left {
+	  width: 82%;
+	  padding: 2em;
+	}
+
+}
+@media (max-width:480px){
+	.login-form
+	{
+		width:75%;
+		margin: 15% auto 0 8%;
+	}
+	.form-left form span {
+		font-size: 14px;
+	}
+	.form-left form p a {
+		font-size: 14px;
+	}
+	.login-form input[type="text"],.login-form input[type="text"]{
+		-webkit-appearance: none;
+	}
+	.copy-right p {
+		font-size: 14px;
+	}
+	.copy-right{
+		margin:5% 0 0 3em;
+	}
+}
+@media (max-width:375px){
+	.login-form h1 {
+	  font-size: 2em;
+	}
+	.login-form {
+	  width: 100%;
+	    margin: 0;
+	}
+	.form-left {
+	  width: 63%;
+	  padding: 2em;
+	}
+
+}
+@media (max-width:320px){
+	.login-form {
+	  width: 100%;
+	   margin: 24% auto 0 0;
+	}
+	.form-left {
+  width: 82%;
+    padding: 1em;
+}
+	.form-left form span {
+		font-size: 14px;
+	}
+	.form-left form p a {
+		font-size: 14px;
+		  margin: 40% 0 0;
+	}
+
+	.login-form input[type="text"],.login-form input[type="text"]{
+		-webkit-appearance: none;
+	}
+	.copy-right p {
+		font-size: 14px;
+	}
+	.copy-right {
+	  margin: 0;
+	}
+	.form-left span {
+		width: 25%;
+	}
+	.copy-right {
+	right: 74px;
+	  top: 349px;
+	    bottom: 0;
+	}
+	
+	.form-left form input[type="text"],.form-left form input[type="password"] {
+	    width: 50%;
+	  font-size: 11px;
+	  padding: 3% 18% 3% 3%;
+	}
+	.password {
+	  margin-top: 0;
+	}
+	.login-form h1 {
+	  font-size: 1.8em;
+	  padding: 1em 0;
+	    margin-left: 0;
+	}
+	.form-left p {
+	  text-align: center;
+	  margin-left: 40px;
+	}
+}

@@ -75,27 +75,26 @@
                     alert("提现金额不正确");
                     return false;
                 }
-//		$.ajax({
-//			type : "POST",
-//			url  : "/bankServices/LotteryService/commonTrans?timestamp=" + new Date().getTime(),
-//			dataType: "json",
-//			cache : false,
-//			data: {
-//				cmd: 'C03',
-//                Id: sessionStorage.getItem("Id"),
-//                St: sessionStorage.getItem("St"),
-//				body: JSON.stringify(body)
-//			},
-//			success : function(result) {
-//				var repCode = result.repCode;
-//				if(repCode=='0000'){
-//					//提现申请成功
-//					window.location.href="success_tx.html";
-//				}else{
-//					alert(result.description);
-//				}
-//			}
-//		});
+                $.ajax({
+                    type: "POST",
+                    url: "/moneyControl/confirmMoney?timestamp=" + new Date().getTime(),
+                    dataType: "json",
+                    cache: false,
+                    data: {
+                        userName: sessionStorage.getItem("name"),
+                        passWord: sessionStorage.getItem("passWord"),
+                        amount:txjin*100
+                    },
+                    success: function (result) {
+                        var repCode = result.repCode;
+                        if (repCode == '0000') {
+                            //提现申请成功
+                            window.location.href = "success_tx.html";
+                        } else {
+                            alert('网络错误，请稍候重试。');
+                        }
+                    }
+                });
             });
 
             $("#jzc").click(function () {
@@ -127,7 +126,7 @@
             </div>
             <div class="bline clearfix"><label>真实姓名：</label><span id="realName" style="margin-left:6px;"></span></div>
             <div class="bline clearfix"><label>身份证号：</label><span id="identityId" style="margin-left:6px;"></span></div>
-            <div class="bline clearfix" style="border-bottom:0px;"><label>银行卡号：</label><span id="cardNumber"
+            <div class="bline clearfix" style="border-bottom:0px;"><label>支付宝：</label><span id="cardNumber"
                                                                                              style="margin-left:6px;"></span>
             </div>
         </div>
@@ -135,8 +134,8 @@
         <span>
 		<br/>
 		备注 ：<br/>
-		1.奖金提现到银行卡，不收取任何手续费。<br/>
-		2.建议直接将奖金转为彩金，可使用彩金购买。
+		1.奖金提现到支付宝，不收取任何手续费。<br/>
+		2.建议直接将奖金转为彩金，可使用彩金投注。
 		</span>
         <a href="javascript:void(-1)" id="ttbbb" class="m-bigbtn-org mt15">确认提款到银行卡</a>
         <a href="javascript:void(-1)" id="jzc" class="m-bigbtn-org mt15">奖金转彩金</a>

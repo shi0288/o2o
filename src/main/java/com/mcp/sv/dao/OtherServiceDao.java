@@ -26,32 +26,28 @@ public class OtherServiceDao {
         try {
             JSONObject mbody = new JSONObject(body);
             username = mbody.getString("userName");
-           // username = body;
             Map info = findJfInfo(username);
             Date now=new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String updateTime=dateFormat.format(now);
-            //updateTime = "2015-07-07";
-           // System.out.println("updateTime11111:"+updateTime);
             if(info.containsKey("score")){
                 String time = (String)info.get("updateTime");
                 //System.out.println("time11111:"+time);
                 if(time.equals(updateTime)){
                     score = (int)info.get("score");
-                    rbody.put("userName",username);
-                    rbody.put("repCode","0001");
-                    rbody.put("score",score);
+                    rbody.put("repCode","0002");
                 }else {
                     score = (int) info.get("score")+100;
                     orderId = (int) info.get("orderId")+1;
                     updateJfInfo(username,score,orderId,updateTime);
+                    rbody.put("repCode", "0001");
                 }
             }else{
                 score = 100;
                 saveJfInfo(username,score,updateTime);
+                rbody.put("repCode","0000");
             }
             rbody.put("userName",username);
-            rbody.put("repCode","0000");
             rbody.put("score",score);
         } catch (JSONException e) {
             try {
@@ -60,6 +56,40 @@ public class OtherServiceDao {
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
+            e.printStackTrace();
+        }
+        rstr = rbody.toString();
+        return rstr;
+    }
+    public static String checkScore(String body){
+        JSONObject rbody = new JSONObject();
+        String rstr = "";
+        String username = "";
+        int score = 0;
+        try {
+            JSONObject mbody  = new JSONObject(body);
+            username = mbody.getString("userName");
+            Map info = findJfInfo(username);
+            Date now=new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String updateTime=dateFormat.format(now);
+            if(info.containsKey("score")){
+                String time = (String)info.get("updateTime");
+                score = (int)info.get("score");
+                if(time.equals(updateTime)){
+                    rbody.put("repCode","0000");
+                    rbody.put("score",score);
+                    rbody.put("repDes","yi_qian_dao");
+                }else{
+                    rbody.put("repCode","0001");
+                    rbody.put("score",score);
+                    rbody.put("repDes","wei_qian_dao");
+                }
+            }else{
+                rbody.put("repCode","0002");
+                rbody.put("repDes","mei_qian_dao");
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         rstr = rbody.toString();

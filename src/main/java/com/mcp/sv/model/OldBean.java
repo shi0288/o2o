@@ -13,6 +13,8 @@ public class OldBean {
 
     private int amount;
 
+    private String backUserName;
+
     private String outerId;
 
     private String userName;
@@ -38,6 +40,25 @@ public class OldBean {
     private String gameCode;
 
     private String cmd;
+
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getBackUserName() {
+        return backUserName;
+    }
+
+    public void setBackUserName(String backUserName) {
+        this.backUserName = backUserName;
+    }
+
 
     public String getCmd() {
         return cmd;

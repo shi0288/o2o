@@ -39,6 +39,17 @@ public class OtherService {
         resMessage = getScore(body);
         return resMessage;
     }
+    /**
+     *
+     */
+    @RequestMapping(value = "check", method = RequestMethod.POST)
+    @ResponseBody
+    public String check(OldBean oldBean) {
+        String resMessage = "";
+        String body = oldBean.getBody();
+        resMessage = checkScore(body);
+        return resMessage;
+    }
 
     @RequestMapping(value = "backLogin", method = RequestMethod.POST)
     @ResponseBody

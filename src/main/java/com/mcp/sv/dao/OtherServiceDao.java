@@ -26,10 +26,13 @@ public class OtherServiceDao {
         try {
             JSONObject mbody = new JSONObject(body);
             username = mbody.getString("userName");
+            // username = body;
             Map info = findJfInfo(username);
             Date now=new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String updateTime=dateFormat.format(now);
+            //updateTime = "2015-07-07";
+            //System.out.println("updateTime11111:" + updateTime);
             if(info.containsKey("score")){
                 String time = (String)info.get("updateTime");
                 //System.out.println("time11111:"+time);
@@ -79,15 +82,15 @@ public class OtherServiceDao {
                 if(time.equals(updateTime)){
                     rbody.put("repCode","0000");
                     rbody.put("score",score);
-                    rbody.put("repDes","yi_qian_dao");
+                    rbody.put("repDes","已经签到");
                 }else{
                     rbody.put("repCode","0001");
                     rbody.put("score",score);
-                    rbody.put("repDes","wei_qian_dao");
+                    rbody.put("repDes","今天未签到");
                 }
             }else{
                 rbody.put("repCode","0002");
-                rbody.put("repDes","mei_qian_dao");
+                rbody.put("repDes","还未签到过");
             }
         } catch (JSONException e) {
             e.printStackTrace();

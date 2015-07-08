@@ -15,7 +15,15 @@ $(document).ready(function (e) {
             alert("本期未开售");
             return false;
         }
-        zhuss = $("#zhushu").html();
+
+        var now = new Date().getTime();
+        lastime=lastime.replace(new RegExp("-","gm"),"/");
+        var tempTime = new Date(lastime).getTime();
+        if(now-tempTime>0){
+            alert("本期正在开奖中，请稍后投注");
+            return false;
+        }
+
         if ($("#zhushu").html() == 0) {
             alert("至少选择1注");
             return false;
@@ -24,7 +32,7 @@ $(document).ready(function (e) {
         if (login == null) {
             alert("您未登录，请登录",function(){
                 window.location.href="login.html";
-            })
+            });
             return false;
         }
         if ($("#beishu").html() > 99) {
@@ -119,74 +127,8 @@ function getTick() {
     });
     return tickets;
 }
-//弹出层
-function popTick() {
-    var html = '<div class="cover2"></div>' +
-        '<div class="ticpop bluetext">数据正在传输，请稍等...</div>';
-    $("body").append(html);
-    $(".cover2").height($(document).height());
-}
-//删除弹出层
-function removeTick() {
-    $(".cover2").remove();
-    $(".ticpop").remove();
-}
-//计算11选5剩余时间
-function getLastTime(endTime, now) {
-    if ($(".seconds").length > 0) {
-        $("#x115").html('<span id="x115">距本期截止<font class="redtext minutes"></font>分<font class="redtext seconds"></font>秒</span>');
-        endTime = stampTime(endTime);
-        var date3 = endTime - now;
-        //计算出相差天数
-        var days = Math.floor(date3 / (24 * 3600 * 1000));
-        var leave1 = date3 % (24 * 3600 * 1000);    //计算天数后剩余的毫秒数
-        var hours = Math.floor(leave1 / (3600 * 1000));
-        //计算相差分钟数
-        var leave2 = leave1 % (3600 * 1000);        //计算小时数后剩余的毫秒数
-        var minutes = Math.floor(leave2 / (60 * 1000));
-        //计算相差秒数
-        var leave3 = leave2 % (60 * 1000);      //计算分钟数后剩余的毫秒数
-        var seconds = Math.round(leave3 / 1000);
-        if (minutes < 0 || seconds < 0) {
-            $("#x115").html("已截止销售");
-        } else {
-            $("#x115").find(".minutes").html(minutes);
-            $("#x115").find(".seconds").html(seconds);
-        }
 
-    }
-}
-//11选5倒计时
-function InterTime() {
-    if ($("#x115").find(".seconds").length <= 0) {
-        $("#x115").html("已截止销售");
-        getData();
-    } else {
-        var oSec = $("#x115").find(".seconds").eq(0);
-        var oMit = $("#x115").find(".minutes").eq(0);
-        var sec = oSec.html();
-        var mit = oMit.html();
-        sec = parseInt(sec);
-        mit = parseInt(mit);
-        if (sec == 0 & mit == 0) {
-            $("#x115").html("已截止销售");
-            getData();
-        }
-        if (sec == 0) {
-            mit = mit - 1;
-            oSec.html(59);
-            oMit.html(mit);
-        } else {
-            sec = sec - 1;
-            oSec.html(sec);
-        }
-    }
-}
 function getData() {
-    //获取彩种名称
-    var cai_name = $(".top-relative").eq(0).find(".title").eq(0).html();
-    var zhuss = 0;
-    cai_name = $.base.noHtml(cai_name);
     //显示期号和截止日期
     var gameCode = $("#game").attr("data-game");
     var body = {
@@ -204,23 +146,13 @@ function getData() {
             var termCode = result.termCode;
             if (termCode!=undefined) {
                 var lastime = result.closeTime;
-                var endTime = result.closeTime;
-                lastime = lastime.substring(0, 16);
-                lastime = lastime.replace("T", " ");
-                // var now = result.nowTime;
-                // now = stampTime(now);
-                var now=new Date(endTime).getTime();
-                getLastTime(endTime, now);
+                lastime=lastime.replace(new RegExp("-","gm"),"/");
+                var endTime =new Date(lastime).getTime();
+                var showTime = new Date(endTime - 10*6000);
                 $("#termCode").html(termCode);
-                $("#lastime").html(lastime);
+                $("#lastime").html(showTime.format("yyyy-MM-dd hh:mm:ss"));
                 $("#termCode").show();
                 $("#lastime").show();
-                //11选5倒计时
-                if ($("#x115").length > 0) {
-                    $("#x115").show();
-                    var timer = null;
-                    timer = setInterval(InterTime, 1000);
-                }
             } else if(result.repCode=="-1"){
                 alert(result.description);
             }

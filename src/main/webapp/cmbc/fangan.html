@@ -11,10 +11,10 @@
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript">
+        var str = window.location.href;
+        var outerId = str.split("#")[1];
+        var orderStatus= str.split("#")[2];
         $(document).ready(function (e) {
-            var str = window.location.href;
-            var outerId = str.split("#")[1];
-            var orderStatus= str.split("#")[2];
             orderStatus=parseInt(orderStatus);
             before();
             $.ajax({
@@ -121,7 +121,7 @@
             if(window.confirm('您确定要取票吗？')){
                 var tempOuterId = outerId;
                 var body={
-                   outerId:tempOuterId
+                    outerId:tempOuterId
                 };
                 before();
                 $.ajax({
@@ -140,18 +140,17 @@
                         if (repCode == '0000') {
                             after();
                             alert('操作成功，方便时请来店取票',function(){
-                                window.location.reload();
+                                window.location.href="acount.jsp";
                             });
                         } else {
+                            alert('操作失败，请稍后重试');
                             after();
-                            alert('操作失败，请重试',function(){
-                                window.location.reload();
-                            });
                         }
                     },
                     error: onError
                 });
             }else{
+                //after();
             }
         }
 
@@ -284,8 +283,12 @@
                     <span>投注：￥<font id="amount"></font></span>
                     <span id="state" style="float:right;min-width:65px;"></span>
                 </p>
+                <p style="display:block; font-size:15px; color:#8B8B8B; padding-bottom:10px;" class="clearfix">
+                    <a style="display: none" id="catchButton" href="#" onclick="catchOrder()"  class="center-org ">取票</a>
+
+                </p>
             </div>
-            <a style="display: none" id="catchButton" href="#" onclick="catchOrder()"  class="center-org ">取票</a>
+
         </div>
         <div class="comm-box clearfix mt10 pb10">
             <p class="fa-tit">投注内容</p>

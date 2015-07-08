@@ -17,6 +17,7 @@ $(document).ready(function (e) {
         }
 
         var now = new Date().getTime();
+        lastime=lastime.replace(new RegExp("-","gm"),"/");
         var tempTime = new Date(lastime).getTime();
         if(now-tempTime>0){
             alert("本期正在开奖中，请稍后投注");

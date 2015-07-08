@@ -112,7 +112,48 @@
                 },
                 error: onError
             });
+            if(orderStatus==4000){
+                $("#catchButton").show();
+            }
         });
+
+        function catchOrder(){
+            if(window.confirm('您确定要取票吗？')){
+                var tempOuterId = outerId;
+                var body={
+                   outerId:tempOuterId
+                };
+                before();
+                $.ajax({
+                    type: "POST",
+                    url: "/otherControl/catchOrder?timestamp=" + new Date().getTime(),
+                    dataType: "json",
+                    cache: false,
+                    data: {
+                        userName:sessionStorage.getItem("name"),
+                        passWord:sessionStorage.getItem("passWord"),
+                        body: JSON.stringify(body),
+                        outerId:tempOuterId
+                    },
+                    success: function (result) {
+                        var repCode = result.repCode;
+                        if (repCode == '0000') {
+                            after();
+                            alert('操作成功，方便时请来店取票',function(){
+                                window.location.reload();
+                            });
+                        } else {
+                            after();
+                            alert('操作失败，请重试',function(){
+                                window.location.reload();
+                            });
+                        }
+                    },
+                    error: onError
+                });
+            }else{
+            }
+        }
 
         //获取状态
         function getOrderStatus(status) {
@@ -134,6 +175,9 @@
                     break;
                 case 5001:
                     return "未中奖";
+                    break;
+                case 6000:
+                    return "到店取票";
                     break;
                 default:
                     return "订单完成";
@@ -212,7 +256,6 @@
                     break;
             }
         }
-
     </script>
 </head>
 <body>
@@ -237,12 +280,12 @@
                 <p style="display:block; font-size:15px; color:#8B8B8B;">
                     订单号：<font id="orderId"></font>
                 </p>
-
                 <p style="display:block; font-size:15px; color:#8B8B8B; padding-bottom:10px;" class="clearfix">
                     <span>投注：￥<font id="amount"></font></span>
                     <span id="state" style="float:right;min-width:65px;"></span>
                 </p>
             </div>
+            <a style="display: none" id="catchButton" href="#" onclick="catchOrder()"  class="center-org ">取票</a>
         </div>
         <div class="comm-box clearfix mt10 pb10">
             <p class="fa-tit">投注内容</p>

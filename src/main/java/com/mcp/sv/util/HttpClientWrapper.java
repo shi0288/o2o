@@ -167,7 +167,6 @@ public class HttpClientWrapper {
             try {
                 List<NameValuePair> reqParams = new ArrayList<NameValuePair>();
                 reqParams.add(new BasicNameValuePair("message", cvRequest.toString()));
-
                 request.setEntity(new UrlEncodedFormEntity(reqParams, Consts.UTF_8));
                 HttpContext context = HttpClientContext.create();
                 CloseableHttpResponse response=null;

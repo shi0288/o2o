@@ -4,20 +4,19 @@ package com.mcp.sv.util;
  * Created by yeeson on 14-3-16.
  */
 public class CmbcConstant {
-    public static final String CMBC_CODE = "Q0001";
-    public static final String CMBC_KEY = "135790";
     public static final String CMBC_SIGN_KEY = "!@#$%^&*()";
 
     public static final String MCP_VERSION = "1.0.00";
     public static final String MCP_CODE = "Q0001";
-    public static final String MCP_KEY = "135790";
+    public static final String MCP_KEY = "ee19521658d64a0583c9bb51264b2a3f";
     public static final String MCP_INTERFACE_URL = "http://101.200.232.194:9088/mcp-filter/main/interface.htm";
 
     //命令
     public static final String MCP_CQ01 = "CQ01";  //查询期次
+    public static final String MCP_CQ22 = "CQ22";  //查询期次
     public static final String MCP_CT03 = "CT03";  //普通投注
 
-    public static final String MCP_CQ22 = "CQ22";  //查询
+    public static final String MCP_P04 = "P04";  //查询
 
     //执行状态
     public static final String ERROR = "9999";
@@ -39,6 +38,8 @@ public class CmbcConstant {
     public static final int ORDER_4002 = 4002;  //出票失败
     public static final int ORDER_5000 = 5000;  //已中奖
     public static final int ORDER_5001 = 5001;  //未中奖
+    public static final int ORDER_6000 = 6000;  //领取票
+
 
     public static final String[] GAMECODE = {"T01", "T02", "T03", "T04","T05"};
 

@@ -537,6 +537,10 @@ public class LotteryDao {
                 logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + pk_status + "中奖状态不更新  " + "outerId：" + outerId);
                 return "";
             }
+            if (pk_status == CmbcConstant.ORDER_6000) {  //已领取  也不更新
+                logger.info("用户订单状态更新：" + datas.size() + "  " + "状态：" + pk_status + "已领取不更新  " + "outerId：" + outerId);
+                return "";
+            }
             String orderStr = JSON.serialize(order);
             DBObject newOrder = (DBObject) JSON.parse(orderStr);
             newOrder.put("status", status);

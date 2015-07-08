@@ -56,7 +56,12 @@ public class MongoUtil {
             query.append(key,map.get(key));
         }
         int skip = (curPage - 1) * pageSize;
-        DBCursor cur = collection.find(query).skip(skip).limit(pageSize).sort(new BasicDBObject("createTime", -1));
+        String sortStr ="createTime";
+        if(table.equals(MongoConst.MONGO_TICKET)){
+            sortStr="auditTime";
+        }
+        DBCursor cur = collection.find(query).skip(skip).limit(pageSize).sort(new BasicDBObject(sortStr, -1));
+
         if(cur.count()==0){
             return new ArrayList<>();
         }

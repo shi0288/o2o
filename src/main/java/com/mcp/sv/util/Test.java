@@ -29,8 +29,8 @@ public class Test {
         //{_id=SPF_updatetime, last_updated=2015-07-07 20:13:04, body={"head":{"repCode":"-1","last_updated":" "},"body":"[]"}, updateTime=1436272007843}
         //{_id=HHGG_updatetime, last_updated=1436272104166,
         System.out.println(jcinfo.toString());
-       String str = sendGet(CmbcConstant.SPF_URL);
-        System.out.println(str);
+//       String str = sendGet(CmbcConstant.SPF_URL);
+//        System.out.println(str);
 //       String res = createFormat("HHGG", str);
 //        String res = createHhggFormat("HHGG", str);
 //

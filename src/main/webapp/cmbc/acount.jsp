@@ -265,8 +265,10 @@
         </div>
         <center>
             <div class=" pb10 pl5 pr5 mt5 clearfix">
-                <a href="getmoney.html" class="center-org ">提款</a><a href="ylzhifu.html" class="center-org ">充值</a>
-                <a href="index.jsp" class="center-org ">去购彩</a>
+                <a href="getprice.html" class="center-org ">奖金转彩金</a>
+                <a href="getmoney.html" class="center-org ">提款</a>
+                <a href="ylzhifu.html" class="center-org ">充值</a>
+                <!--<a href="index.jsp" class="center-org ">去购彩</a>-->
             </div>
         </center>
         <div class="zhanghu-tab">

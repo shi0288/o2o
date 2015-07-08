@@ -204,15 +204,12 @@ function getData() {
             var termCode = result.termCode;
             if (termCode!=undefined) {
                 var lastime = result.closeTime;
-                var endTime = result.closeTime;
-                lastime = lastime.substring(0, 16);
-                lastime = lastime.replace("T", " ");
-                // var now = result.nowTime;
-                // now = stampTime(now);
-                var now=new Date(endTime).getTime();
-                getLastTime(endTime, now);
+                lastime=lastime.replace(new RegExp("-","gm"),"/");
+                var endTime =new Date(lastime).getTime();
+                var showTime = new Date(endTime - 10*6000);
+
                 $("#termCode").html(termCode);
-                $("#lastime").html(lastime);
+                $("#lastime").html(showTime.format("yyyy-MM-dd hh:mm:ss"));
                 $("#termCode").show();
                 $("#lastime").show();
                 //11选5倒计时

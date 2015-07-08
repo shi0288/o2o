@@ -33,17 +33,12 @@
             } else {
                 $("#realName").html("未填写");
             }
-
-
             var mobile=sessionStorage.getItem("mobile");
             if (mobile != "undefined" && mobile != null) {
-                $("#mobile").html(mobile);
+                $("#mobile").html(mobile+'   已认证');
             } else {
                 $("#mobile").html("未填写");
             }
-
-
-
             var identityId = sessionStorage.getItem("identityId");
             if (identityId != "undefined" && identityId != null) {
                 var len = identityId.length;

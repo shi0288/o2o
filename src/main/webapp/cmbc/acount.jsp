@@ -25,6 +25,12 @@
                 top.location.href = location.href;
                 return;
             }
+
+            var userNameStr=sessionStorage.getItem("name");
+            if(userNameStr==null){
+                window.location.href="index.jsp";
+                return;
+            }
             /*判断登陆  end */
             before();
             getUseData();

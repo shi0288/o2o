@@ -4,6 +4,7 @@ import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.OldBean;
 import com.mcp.sv.util.*;
 import com.mcp.sv.util.CmbcConstant;
+import com.mongodb.DBObject;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -167,7 +168,17 @@ public class OtherService {
             int count = MongoUtil.queryCount(tableName, param);
             JSONArray results = new JSONArray();
             for (int i = 0; i < rstList.size(); i++) {
-                results.put(rstList.get(i));
+                DBObject obj= (DBObject) rstList.get(i);
+                String openId= (String) obj.get("userName");
+                String openIdPaw = openId + CmbcConstant.CMBC_SIGN_KEY;
+                String strUser="";
+                try {
+                    strUser=LotteryDao.getUser(openId,openIdPaw);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                obj.put("user", strUser);
+                results.put(obj);
             }
             try {
                 rst.put("repCode", CmbcConstant.SUCCESS);

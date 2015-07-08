@@ -79,8 +79,8 @@
         <div class="swipe">
             <ul id="slider">
                 <!--    <li><a href="dlt.jsp"><img src="img/newdltad.jpg" /></a></li>  -->
-                <li><a href="#"><img src="img/ssqad_1.jpg"  /></a></li>
-                <li><a href="#"><img src="img/txad_1.jpg" /></a></li>
+                <li><a href="#"><img src="img/1_ad.jpg"  /></a></li>
+                <li><a href="#"><img src="img/2_ad.jpg" /></a></li>
                 <!--  <li><a href="xb_login.jsp"><img src="img/search.jpg"  /></a></li>-->
 
             </ul>

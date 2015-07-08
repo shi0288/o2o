@@ -268,6 +268,12 @@ function getMatchInfo(obj,st){
         var code = item.code;
         var selling = item.selling;
         //console.log("selling:"+selling);
+        var closeTime = item.closeTime;
+        closeTime = stampTime(closeTime);
+        var now=new Date().getTime();
+        if(now-closeTime>=0){
+            return;
+        }
         code = code.substring(0, 8);
         arrcounti[code] += 1;
         //var changci = formNumber(arrcounti[code]);

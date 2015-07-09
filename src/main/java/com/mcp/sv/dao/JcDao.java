@@ -192,7 +192,7 @@ public class JcDao {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        logger.info("res:"+res);
+        //logger.info("res:"+res);
         return res;
     }
 

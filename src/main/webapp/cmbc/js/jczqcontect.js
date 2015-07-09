@@ -267,7 +267,6 @@ function getMatchInfo(obj,st){
     $.each(obj, function (key, item) {
         var code = item.code;
         var selling = item.selling;
-        //console.log("selling:"+selling);
         var closeTime = item.closeTime;
         closeTime = stampTime(closeTime)-1000*60*10;
         var now=new Date().getTime();

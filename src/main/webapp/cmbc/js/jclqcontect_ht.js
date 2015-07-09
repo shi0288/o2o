@@ -242,6 +242,11 @@ function getMatchHhggInfo(obj){
         var guest_cn = item.guest_cn;
         var openTime  = item.openTime;
         var closeTime  = item.closeTime;
+        var mcloseTime = stampTime(closeTime)-1000*60*10;
+        var now=new Date().getTime();
+        if(now-mcloseTime>=0){
+            return;
+        }
         var code = item.matchCode;
 
         var sf = item.mnl;

@@ -283,8 +283,13 @@ function getMatchInfo(obj){
         arrcounti[code] += 1;
         var changci = formNumber(arrcounti[code]);
         var matchTime = item.closeTime;
-        matchTime = matchTime.substring(0, 10);
-        console.log(matchTime);
+        var closeTime = stampTime(matchTime)-1000*60*10;
+        var now=new Date().getTime();
+        if(now-closeTime>=0){
+            return;
+        }
+        //matchTime = matchTime.substring(0, 10);
+        //console.log(matchTime);
         if(playType == "02" && item.mnl){
             var rqspfdata = item.mnl;
             if (rqspfdata) {

@@ -33,17 +33,12 @@
             } else {
                 $("#realName").html("未填写");
             }
-
-
             var mobile=sessionStorage.getItem("mobile");
             if (mobile != "undefined" && mobile != null) {
-                $("#mobile").html(mobile);
+                $("#mobile").html(mobile+'   已认证');
             } else {
                 $("#mobile").html("未填写");
             }
-
-
-
             var identityId = sessionStorage.getItem("identityId");
             if (identityId != "undefined" && identityId != null) {
                 var len = identityId.length;
@@ -141,7 +136,7 @@
 		1.奖金提现到支付宝，不收取任何手续费。<br/>
 		2.建议直接将奖金转为彩金，可使用彩金投注。
 		</span>
-        <a href="javascript:void(-1)" id="ttbbb" class="m-bigbtn-org mt15">确认提款到银行卡</a>
+        <a href="javascript:void(-1)" id="ttbbb" class="m-bigbtn-org mt15">确认提款卡</a>
         <a href="javascript:void(-1)" id="jzc" class="m-bigbtn-org mt15">奖金转彩金</a>
         <!--正文内容结束-->
     </div>

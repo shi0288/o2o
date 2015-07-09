@@ -25,6 +25,12 @@
                 top.location.href = location.href;
                 return;
             }
+
+            var userNameStr=sessionStorage.getItem("name");
+            if(userNameStr==null){
+                window.location.href="index.jsp";
+                return;
+            }
             /*判断登陆  end */
             before();
             getUseData();
@@ -118,6 +124,9 @@
                     break;
                 case 5001:
                     return "未中奖";
+                    break;
+                case 6000:
+                    return "到店取票";
                     break;
                 default:
                     return "订单完成";

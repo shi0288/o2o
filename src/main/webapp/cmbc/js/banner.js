@@ -10,19 +10,11 @@ $(document).ready(function(e) {
    
 	  $("div.nav").animate({left:'-160px'},"fast");
 	  $("div.zhezhao").fadeOut("fast",function(){return false});		
-		
   });
-	
   $("a#list").on("tap",function(e) {
- 
-	 
 	 $("div.nav").animate({left:'0px'},"fast");
      $("div.zhezhao").fadeIn("fast");
-	 
-		
   });
-  
-
 });
 
 

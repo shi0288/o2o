@@ -97,7 +97,6 @@ public class LotteryService {
         String resMessage = "";
         int recharge = 0;
         org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
-
         //彩币支付
         if ("1".equals(payType)) {
             //校验用户权限
@@ -242,16 +241,15 @@ public class LotteryService {
     }
 
 
-    //非投注请求 之姐发送向平台
+    //非投注请求 直接发送向平台
     @RequestMapping(value = "commonTransQuery", method = RequestMethod.POST)
     @ResponseBody
     public String commonTransQuery(OldBean oldBean) {
-        String cmd = oldBean.getCmd();
         String body = oldBean.getBody();
         String resMessage = "";
         //先调用投注接口。
         try {
-            resMessage = HttpClientWrapper.mcpPost(cmd, body);
+            resMessage = HttpClientWrapper.mcpPost(CmbcConstant.MCP_CQ22, body);
             logger.info(resMessage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -285,17 +283,17 @@ public class LotteryService {
         return toResult(description);
     }
 
-    /**
-     * 用户充值
-     */
-    @RequestMapping(value = "recharge", method = RequestMethod.POST)
-    @ResponseBody
-    public String recharge(OldBean oldBean) {
-        int money = oldBean.getMoney();
-        String username = oldBean.getUserName();
-        String description = LotteryDao.recharge(username, money, false, null);
-        return toResult(description);
-    }
+//    /**
+//     * 用户充值
+//     */
+//    @RequestMapping(value = "recharge", method = RequestMethod.POST)
+//    @ResponseBody
+//    public String recharge(OldBean oldBean) {
+//        int money = oldBean.getMoney();
+//        String username = oldBean.getUserName();
+//        String description = LotteryDao.recharge(username, money, false, null);
+//        return toResult(description);
+//    }
 
     /**
      * 用户信息

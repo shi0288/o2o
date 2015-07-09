@@ -4,6 +4,8 @@ import com.mcp.sv.dao.LotteryDao;
 import com.mcp.sv.model.OldBean;
 import com.mcp.sv.util.*;
 import com.mcp.sv.util.CmbcConstant;
+import com.mcp.sv.util.HttpClientWrapper;
+import com.mongodb.DBObject;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -40,6 +42,7 @@ public class OtherService {
         resMessage = getScore(body);
         return resMessage;
     }
+
     /**
      *
      */
@@ -88,30 +91,83 @@ public class OtherService {
         String outerId = oldBean.getOuterId();
         boolean is = this.isBackAdmin(backUserName, passWord);
         JSONObject rst = new JSONObject();
-        if(is){
+        if (is) {
             String description = LotteryDao.updateTiXian(outerId);
             try {
-                if("".equals(description)){
-                    rst.put("repCode","0000");
-                }else{
-                    rst.put("repCode","9999");
-                    rst.put("description",description);
+                if ("".equals(description)) {
+                    rst.put("repCode", "0000");
+                } else {
+                    rst.put("repCode", "9999");
+                    rst.put("description", description);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             try {
-                rst.put("repCode","9999");
-                rst.put("description","权限不足，已记录本次越权操作");
+                rst.put("repCode", "9999");
+                rst.put("description", "权限不足，已记录本次越权操作");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         return rst.toString();
+    }
 
 
-
+    @RequestMapping(value = "catchOrder", method = RequestMethod.POST)
+    @ResponseBody
+    public String catchOrder(OldBean oldBean) {
+        String userName = oldBean.getUserName();
+        String passWord = oldBean.getPassWord();
+        String outerId = oldBean.getOuterId();
+        String body = oldBean.getBody();
+        //判断用户权限
+        JSONObject res = new JSONObject();
+        try {
+            JSONObject userInfo = new JSONObject(LotteryDao.getUser(userName, passWord));
+            if (userInfo == null) {
+                res.put("repCode", "1001"); //用户权限校验未通过
+                return res.toString();
+            }
+            logger.info("领取彩票 " + userName + "   " + body);
+        } catch (JSONException e) {
+            try {
+                e.printStackTrace();
+                res.put("repCode", "9999");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            return res.toString();
+        }
+        //修改订单状态
+        String resMessage = "";
+        //取期次
+        if (body != null) {
+            try {
+                resMessage = HttpClientWrapper.mcpPost(CmbcConstant.MCP_P04, body);
+                if (!"".equals(resMessage)) {
+                    JSONObject rst = new JSONObject(resMessage);
+                    String repCode = rst.getString("repCode");
+                    if (repCode.equals(CmbcConstant.SUCCESS)) {
+                        //通知平台成功
+                        String dbRst = LotteryDao.updateOrderStatus(outerId, CmbcConstant.ORDER_6000);
+                        if (dbRst.equals("")) {
+                            res.put("repCode", "0000"); //成功
+                            return res.toString();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            res.put("repCode", "9999"); //失败
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return res.toString();
     }
 
 
@@ -137,7 +193,7 @@ public class OtherService {
         if (status != 0) {
             param.put("status", status);
         }
-        if (status == 1000 && accountType!=2) {
+        if (status == 1000 && accountType != 2) {
             param.put("status", null);
         }
         //用户
@@ -167,7 +223,17 @@ public class OtherService {
             int count = MongoUtil.queryCount(tableName, param);
             JSONArray results = new JSONArray();
             for (int i = 0; i < rstList.size(); i++) {
-                results.put(rstList.get(i));
+                DBObject obj = (DBObject) rstList.get(i);
+                String openId = (String) obj.get("userName");
+                String openIdPaw = openId + CmbcConstant.CMBC_SIGN_KEY;
+                String strUser = "";
+                try {
+                    strUser = LotteryDao.getUser(openId, openIdPaw);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                obj.put("user", strUser);
+                results.put(obj);
             }
             try {
                 rst.put("repCode", CmbcConstant.SUCCESS);

@@ -61,7 +61,6 @@
             var userName = $("#userName").val();
             var outerId = $("#outerId").val();
             var status = $("#status").val();
-            console.log(curPage);
             $.ajax({
                 type: "POST",
                 url: "/otherControl/backTickets?timestamp=" + new Date().getTime(),
@@ -123,8 +122,13 @@
             tabElem.find(".one").remove();
             $.each(result['rst'], function (key, val) {
                 var tickObj=JSON.parse(val);
+                var userObj=JSON.parse(tickObj.user);
+                var nickName='';
+                if(userObj.repCode=='0000'){
+                    nickName= userObj.user.nickName;
+                }
                 var statusHtml=transStatus(tickObj.status);
-                var htmlStr= "<tr class='one'><td>"+(key+1)+"</td> <td>"+tickObj.outerId+"</td> <td>"+tickObj.userName+"</td> <td>"+tickObj.gameCode+"</td>  <td>"+tickObj.termCode+"</td>  <td>"+tickObj.auditTime+"</td>  <td>"+statusHtml+"</td>  <td>"+''+"</td></tr>";
+                var htmlStr= "<tr class='one'><td>"+(key+1)+"</td> <td>"+tickObj.outerId+"</td> <td>"+tickObj.userName+"</td><td>"+nickName+"</td> <td>"+tickObj.gameCode+"</td>  <td>"+tickObj.termCode+"</td>  <td>"+tickObj.auditTime+"</td>  <td>"+statusHtml+"</td>  <td>"+''+"</td></tr>";
                 tabElem.append(htmlStr);
             })
             //页数
@@ -231,6 +235,7 @@
                 <th>序号</th>
                 <th>彩票ID</th>
                 <th>用户名</th>
+                <th>微信名</th>
                 <th>游戏名称</th>
                 <th>期次</th>
                 <th>时间</th>

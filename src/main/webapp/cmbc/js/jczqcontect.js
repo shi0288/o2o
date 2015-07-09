@@ -269,18 +269,18 @@ function getMatchInfo(obj,st){
         var selling = item.selling;
         //console.log("selling:"+selling);
         var closeTime = item.closeTime;
-        closeTime = stampTime(closeTime);
+        closeTime = stampTime(closeTime)-1000*60*10;
         var now=new Date().getTime();
-        //if(now-closeTime>=0){
-        //    return;
-        //}
+        if(now-closeTime>=0){
+            return;
+        }
         code = code.substring(0, 8);
         arrcounti[code] += 1;
         //var changci = formNumber(arrcounti[code]);
         var changci = item.code.substring(9, 12);
         var teamname = item.matchInfo;
         var matchTime = item.closeTime;
-        matchTime = matchTime.substring(0, 10);
+       // matchTime = matchTime.substring(0, 10);
         $.each(teamname, function (index, match) {
             var matchName=match.matchName;
             var oddsSingle=match.oddsSingle;
@@ -311,7 +311,7 @@ function getMatchInfo(obj,st){
                 if (rqspfdata) {
                     rqspfdata = rqspfdata.split("|");
                     var rqspfdata_one,rqspfdata_two,rqspfdata_three
-                    if(selling=="Selling"&&(closeTime-now>0)){
+                    if(selling=="Selling"&&(closeTime-now>0)&&rqspfdata[0]!="--"){
                         rqspfdata_one = '<td width="24%" data-dit="v3" onclick="seleMatch(this)">胜' + rqspfdata[0] + '</td>';
                         rqspfdata_two = '<td width="24%" data-dit="v1" onclick="seleMatch(this)">平' + rqspfdata[1] + '</td>';
                         rqspfdata_three = '<td width="24%" data-dit="v0" onclick="seleMatch(this)">负' + rqspfdata[2] + '</td>';
@@ -340,7 +340,7 @@ function getMatchInfo(obj,st){
                 if (spfdata) {
                     spfdata = spfdata.split("|");
                     var spfdata_one,spfdata_two,spfdata_three;
-                    if(selling=="Selling"&&(closeTime-now>0)){
+                    if(selling=="Selling"&&(closeTime-now>0)&&spfdata[0]!="--"){
                         spfdata_one = '<td width="24%" data-dit="v3" onclick="seleMatch(this)">胜' + spfdata[0] + '</td>';
                         spfdata_two = '<td width="24%" data-dit="v1" onclick="seleMatch(this)">平' + spfdata[1] + '</td>';
                         spfdata_three = '<td width="24%" data-dit="v0" onclick="seleMatch(this)">负' + spfdata[2] + '</td>';
@@ -369,7 +369,7 @@ function getMatchInfo(obj,st){
                 if (spfdata) {
                     spfdata = spfdata.split("|");
                     var spfdata_zero = '<td data-dit="v01" width="5.14%" >胜</td>';
-                    if(selling=="Selling"&&(closeTime-now>0)){
+                    if(selling=="Selling"&&(closeTime-now>0)&&spfdata[0]!=""){
                         var spfdata_one = '<td data-dit="v10" width="10%" onclick="seleMatch(this)"><p>1:0</p><p>' + spfdata[0] + '</p></td>';
                         var spfdata_two = '<td data-dit="v20" width="10%" onclick="seleMatch(this)"><p>2:0</p><p>' + spfdata[1] + '</p></td>';
                         var spfdata_three = '<td data-dit="v21" width="10%" onclick="seleMatch(this)"><p>2:1</p><p>' + spfdata[2] + '</p></td>';
@@ -481,7 +481,7 @@ function getMatchInfo(obj,st){
                 var spfdata = match.oddsInfo;
                 if (spfdata) {
                     spfdata = spfdata.split("|");
-                    if(selling=="Selling"&&(closeTime-now>0)){
+                    if(selling=="Selling"&&(closeTime-now>0)&&spfdata[0]!=""){
                         var spfdata_one = '<td data-dit="v0" width="18%" onclick="seleMatch(this)"><p>0球</p><p>' + spfdata[0] + '</p></td>';
                         var spfdata_two = '<td data-dit="v1" width="18%" onclick="seleMatch(this)"><p>1球</p><p>' + spfdata[1] + '</p></td>';
                         var spfdata_three = '<td data-dit="v2" width="18%" onclick="seleMatch(this)"><p>2球</p><p>' + spfdata[2] + '</p></td>';
@@ -527,7 +527,7 @@ function getMatchInfo(obj,st){
                 var spfdata = match.oddsInfo;
                 if (spfdata) {
                     spfdata = spfdata.split("|");
-                    if(selling=="Selling"&&(closeTime-now>0)){
+                    if(selling=="Selling"&&(closeTime-now>0)&&spfdata[0]!=""){
                         var spfdata_one = '<td data-dit="v33" width="14%" onclick="seleMatch(this)"><p>胜胜</p><p>' + spfdata[0] + '</p></td>';
                         var spfdata_two = '<td data-dit="v31" width="14%" onclick="seleMatch(this)"><p>胜平</p><p>' + spfdata[1] + '</p></td>';
                         var spfdata_three = '<td data-dit="v30" width="14%" onclick="seleMatch(this)"><p>胜负</p><p>' + spfdata[2] + '</p></td>';

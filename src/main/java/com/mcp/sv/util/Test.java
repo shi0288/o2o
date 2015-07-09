@@ -25,16 +25,16 @@ public class Test {
 //        updateJfInfo("111111",500,7,"2015-07-06");
 //        Map info = findJfInfo("111111");
 //        System.out.println(info.toString());
-        Map jcinfo = findJcInfo("SPF");
+//        Map jcinfo = findJcInfo("HHGG");
         //{_id=SPF_updatetime, last_updated=2015-07-07 20:13:04, body={"head":{"repCode":"-1","last_updated":" "},"body":"[]"}, updateTime=1436272007843}
         //{_id=HHGG_updatetime, last_updated=1436272104166,
-        System.out.println(jcinfo.toString());
-//       String str = sendGet(CmbcConstant.SPF_URL);
-//        System.out.println(str);
+//        System.out.println(jcinfo.toString());
+       String str = sendGet(CmbcConstant.HHGG_URL);
+        System.out.println(str);
 //       String res = createFormat("HHGG", str);
-//        String res = createHhggFormat("HHGG", str);
+        String res = createHhggFormat("HHGG", str);
 //
-//        System.out.println(res);
+        System.out.println(res);
 //        System.out.println(new Date());
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
 //        Date nowt = new Date();

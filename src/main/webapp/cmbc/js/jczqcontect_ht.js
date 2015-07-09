@@ -240,7 +240,12 @@ function getMatchHhggInfo(obj,st){
         var lsname = team[1];
         var teamname = team[2];
         var teamtime = team[3];
+        var closeTime = stampTime("20"+teamtime)-1000*60*10;
         var data = new Date();
+        var now=data.getTime();
+        if(now-closeTime>=0){
+            return;
+        }
         var week = [ "周一", "周二", "周三", "周四", "周五", "周六","周日"];
         var weekday = [ 1, 2, 3, 4, 5, 6,7];
         var tempCode = saishi;
@@ -283,17 +288,17 @@ function getMatchHhggInfo(obj,st){
         var open13 = "";
         if(spf){
             rqspfdata_spf = '<td width="10%" data-dit="v2" style="background-color: #999999"><p>让球</p><p>0</p></td>';
-            if(spf[0] == ""||spf[3] == "2"){
+            if(spf[0] == ""){
                 rqspfdata_one = '<td width="10.2%" data-dit="v3" style="background-color: #838383"><p>胜</p><p>' + spf[0] + '</p></td>';
             }else{
                 rqspfdata_one = '<td width="10.2%" data-dit="v3" onclick="seleMatch(this)"><p>胜</p><p>' + spf[0] + '</p></td>';
             }
-            if(spf[1] == ""||spf[3] == "2"){
+            if(spf[1] == ""){
                 rqspfdata_two = '<td width="10.2%" data-dit="v1" style="background-color: #838383"><p>平</p><p>' + spf[1] + '</p></td>';
             }else{
                 rqspfdata_two = '<td width="10.2%" data-dit="v1" onclick="seleMatch(this)"><p>平</p><p>' + spf[1] + '</p></td>';
             }
-            if(spf[2] == ""||spf[3] == "2"){
+            if(spf[2] == ""){
                 rqspfdata_three = '<td width="10.2%" data-dit="v0" style="background-color: #838383"><p>负</p><p>' + spf[2] + '</p></td>';
             }else{
                 rqspfdata_three = '<td width="10.2%" data-dit="v0" onclick="seleMatch(this)"><p>负</p><p>' + spf[2] + '</p></td>';
@@ -307,17 +312,17 @@ function getMatchHhggInfo(obj,st){
 
         if(rqspf){
             rqspfdata_rqspf = '<td width="10%" data-dit="v2" style="background-color: #999999"><p>让球</p><p>'+ rq +'</p></td>';
-            if(rqspf[0] == ""||spf[3] == "2"){
+            if(rqspf[0] == ""){
                 rqspf_one = '<td width="10.2%" data-dit="v3" style="background-color: #838383"><p>胜</p><p>' + rqspf[0] + '</p></td>';
             }else{
                 rqspf_one = '<td width="10.2%" data-dit="v3" onclick="seleMatch(this)"><p>胜</p><p>' + rqspf[0] + '</p></td>';
             }
-            if(rqspf[1] == ""||spf[3] == "2"){
+            if(rqspf[1] == ""){
                 rqspf_two = '<td width="10.2%" data-dit="v1" style="background-color: #838383"><p>平</p><p>' + rqspf[1] + '</p></td>';
             }else{
                 rqspf_two = '<td width="10.2%" data-dit="v1" onclick="seleMatch(this)"><p>平</p><p>' + rqspf[1] + '</p></td>';
             }
-            if(rqspf[2] == ""||spf[3] == "2"){
+            if(rqspf[2] == ""){
                 rqspf_three = '<td width="10.2%" data-dit="v0" style="background-color: #838383"><p>负</p><p>' + rqspf[2] + '</p></td>';
 
             }else{
@@ -329,7 +334,7 @@ function getMatchHhggInfo(obj,st){
 
         if(bqc){
             var spfdata_one,spfdata_two,spfdata_three,spfdata_four,spfdata_five,spfdata_six,spfdata_seven,spfdata_eight,spfdata_nine
-            if(bqc[9] == "1"){
+            if(bqc[0] != ""){
                 spfdata_one = '<td data-dit="v33" width="11.1%" onclick="seleMatch(this)"><p>胜胜</p><p>' + bqc[0] + '</p></td>';
                 spfdata_two = '<td data-dit="v31" width="11.1%" onclick="seleMatch(this)"><p>胜平</p><p>' + bqc[1] + '</p></td>';
                 spfdata_three = '<td data-dit="v30" width="11.1%" onclick="seleMatch(this)"><p>胜负</p><p>' + bqc[2] + '</p></td>';
@@ -354,7 +359,7 @@ function getMatchHhggInfo(obj,st){
         }
         if(zjqs){
             var spfdata_one,spfdata_two,spfdata_three,spfdata_four,spfdata_five,spfdata_six,spfdata_seven,spfdata_eight
-            if(zjqs[8]=="1"){
+            if(zjqs[0]!=""){
                 spfdata_one = '<td data-dit="v0" width="12.5%" onclick="seleMatch(this)"><p>0球</p><p>' + zjqs[0] + '</p></td>';
                 spfdata_two = '<td data-dit="v1" width="12.5%" onclick="seleMatch(this)"><p>1球</p><p>' + zjqs[1] + '</p></td>';
                 spfdata_three = '<td data-dit="v2" width="12.5%" onclick="seleMatch(this)"><p>2球</p><p>' + zjqs[2] + '</p></td>';
@@ -376,7 +381,7 @@ function getMatchHhggInfo(obj,st){
             oodsTag4='<tr data-wf="ht" class="jc-table-b spf-dd" pType="04">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + '</tr>' ;
         }
         if(bf){
-            if(bf[31]=="1"){
+            if(bf[0]!=""){
                 var spfdata_zero = '<td data-dit="v01" width="5.14%" style="background-color: #999999">胜</td>';
                 var spfdata_one = '<td data-dit="v10" width="10%" onclick="seleMatch(this)"><p>1:0</p><p>' + bf[0] + '</p></td>';
                 var spfdata_two = '<td data-dit="v20" width="10%" onclick="seleMatch(this)"><p>2:0</p><p>' + bf[1] + '</p></td>';

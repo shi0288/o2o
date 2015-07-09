@@ -9,6 +9,7 @@ public class CmbcConstant {
     public static final String MCP_VERSION = "1.0.00";
     public static final String MCP_CODE = "Q0001";
     public static final String MCP_KEY = "ee19521658d64a0583c9bb51264b2a3f";
+    public static final String MCP_NOTYKYE = "ee19521658d64a0583c9bb51264b2a3f";
     public static final String MCP_INTERFACE_URL = "http://101.200.232.194:9088/mcp-filter/main/interface.htm";
 
     //命令

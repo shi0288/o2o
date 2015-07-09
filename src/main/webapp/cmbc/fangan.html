@@ -77,10 +77,9 @@
                             }else{
                                 ty = getType(t1, t2);
                             }
-
                             var tickStatus = tick['status'];
-                            tickStatus=parseInt(tickStatus);
-                            tickStatus = getTicketStatus(tickStatus);
+			tickStatus=parseInt(tickStatus);
+			tickStatus = getTicketStatus(tickStatus);
                             var cotHtml = '<div class="faxq-out gerytext"><div><p>' + numbers + ty + '<font color="red">'+tickStatus+'</font>'+'</p></div>'+printTime+matchInfo+'<p>倍数：' + bei + '</p><p>注数：' + tzhu + '</p></div>';
                             $("#tzcot").append(cotHtml);
                         });
@@ -114,6 +113,7 @@
             });
             if(orderStatus==4000){
                 $("#catchButton").show();
+                $("#tishi").show();		
             }
         });
 
@@ -283,9 +283,9 @@
                     <span>投注：￥<font id="amount"></font></span>
                     <span id="state" style="float:right;min-width:65px;"></span>
                 </p>
-                <p style="display:block; font-size:15px; color:#8B8B8B; padding-bottom:10px;" class="clearfix">
-                    <a style="display: none" id="catchButton" href="#" onclick="catchOrder()"  class="center-org ">取票</a>
-
+                <p id="catchButton" style="display:none; font-size:15px; color:#8B8B8B; padding-bottom:10px;" class="clearfix">
+                    <a  href="#" onclick="catchOrder()"  class="center-org ">到店取票</a>
+					<p id="tishi" style="display:none;" ><font color='red'>温馨提醒：选择到店取票后将不能享受我们的兑奖服务，您可凭票在任意彩票店兑奖。(长安区广安大街中心线D区50号彩票店)</font></p>
                 </p>
             </div>
 

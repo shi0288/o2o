@@ -76,7 +76,10 @@ public class ZhiFuController {
         rst = AlipaySubmit.buildRequest(sParaTemp, "get", "确认");
         logger.info("产生充值订单: "+out_trade_no+"  金额："+total_fee);
         //充值暂存
-        LotteryDao.insertCzOrder(oldBean.getUserName(),out_trade_no,total_fee,1100);  //1100  未支付
+        boolean dbCao=LotteryDao.insertCzOrder(oldBean.getUserName(),out_trade_no,total_fee,1100);  //1100  未支付
+        if(dbCao){
+            return rst;
+        }
         return rst;
     }
 

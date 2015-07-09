@@ -91,6 +91,7 @@ public class NotifyDao {
                     List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
+
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5001);
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0, dNumber, null);
                 } else {

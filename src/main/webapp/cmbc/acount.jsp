@@ -16,7 +16,7 @@
     <script type="text/javascript" src="js/common.js"></script>
     <jsp:include page="include/login.jsp" flush="true"/>
     <script type="text/javascript">
-	    var jinRu=true;
+	    var jinRu=false;
         var pageSize = 10;	//每页显示条数
         $(document).ready(function () {
             //判断是否一级页面

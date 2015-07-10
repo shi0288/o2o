@@ -148,7 +148,7 @@ function getData() {
                 var lastime = result.closeTime;
                 lastime=lastime.replace(new RegExp("-","gm"),"/");
                 var endTime =new Date(lastime).getTime();
-                var showTime = new Date(endTime - 10*6000);
+                var showTime = new Date(endTime - 12*6000);
                 $("#termCode").html(termCode);
                 $("#lastime").html(showTime.format("yyyy-MM-dd hh:mm:ss"));
                 $("#termCode").show();

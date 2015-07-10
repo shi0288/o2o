@@ -302,7 +302,6 @@ function getMatchInfo(obj,st){
                 if(oodsCode=='cn01'){
                     return;
                 }
-
             }
             var changciHtml = "";
             if(oodsCode=='cn01'){

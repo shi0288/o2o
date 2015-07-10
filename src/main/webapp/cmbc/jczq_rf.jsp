@@ -58,7 +58,7 @@
      <script type="text/javascript" src="js/mcn.js"></script>
     <script type="text/javascript" src="js/jc.js"></script>
     <script type="text/javascript" src="js/jczq.js"></script> 
-    <div id="game" data-play="01" data-game="T51" style="display:none"></div>
+    <div id="game" data-play="01" data-game="T51" style="display:none" ></div>
 <!--正文内容结束-->   
 </div>
 <!--底部开始-->

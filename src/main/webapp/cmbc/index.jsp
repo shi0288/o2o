@@ -9,6 +9,8 @@
     <META HTTP-EQUIV="Expires" CONTENT="0">
     <meta name="viewport"
           content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="format-detection" content="telephone=no"/>
+
     <link type="text/css" rel="stylesheet" href="css/reset.css"/>
     <link type="text/css" rel="stylesheet" href="css/idangerous.swiper.css"/>
     <link type="text/css" rel="stylesheet" href="css/start.css"/>
@@ -88,8 +90,8 @@
         </div>
     </div>
 
-
-
+    <div> <center><font color="red">石家庄广安大街中心线D区彩票店</font>
+	         <p><font color="red">QQ群：33239116</font></p></center></div>
     <div class="content start-ms clearfix" style="margin-top:0px" id="more">
         <!--    <a href="caiyuan.html" class="start-caiyuan"><img src="img/bangshangyouming.png"/></a>
         -->

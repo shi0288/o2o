@@ -42,7 +42,7 @@ public class NotifyDao {
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4000);
-                    String rstInfo = LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4000, 0, null , printTime);
+                    String rstInfo = LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4000, 0, null, printTime);
                     logger.info(rstInfo);
                 }
                 //出票失败
@@ -54,13 +54,13 @@ public class NotifyDao {
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4002);
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null, null);
-                    if(list.size()==1){
-                        DBObject dbObjectTicket= (DBObject) list.get(0);
-                        String userName= (String) dbObjectTicket.get("userName");
+                    if (list.size() == 1) {
+                        DBObject dbObjectTicket = (DBObject) list.get(0);
+                        String userName = (String) dbObjectTicket.get("userName");
                         //退款
                         String result = LotteryDao.reviceRecharge(userName, amount, outerId);
-                    }else {
-                        logger.error("彩票ID: " + outerId+"  退款出现问题");
+                    } else {
+                        logger.error("彩票ID: " + outerId + "  退款出现问题");
                     }
                 } else {
                     logger.error(outerId + "   未知状态: " + printStatus);
@@ -82,7 +82,10 @@ public class NotifyDao {
                     logger.info("************ 第二步已中奖更新彩票");
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5000, bonus, dNumber, null);
                     logger.info("************ 第三步返奖");
-                    LotteryDao.updatePrize(userName,bonus,outerId);
+                    if(bonus<=1000000){
+                        LotteryDao.updatePrize(userName, bonus, outerId);
+                    }
+
                 } else if (status == 1300) {
                     String dNumber = ticket.getString("dNumber");
                     //未中奖
@@ -91,6 +94,7 @@ public class NotifyDao {
                     List list = MongoUtil.query(MongoConst.MONGO_TICKET, map);
                     DBObject _ticket = (DBObject) list.get(0);
                     String orderOuterId = (String) _ticket.get("orderOuterId");
+
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_5001);
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_5001, 0, dNumber, null);
                 } else {
@@ -101,13 +105,13 @@ public class NotifyDao {
                     String orderOuterId = (String) _ticket.get("orderOuterId");
                     LotteryDao.updateOrderStatus(orderOuterId, CmbcConstant.ORDER_4002);
                     LotteryDao.updateTicketStatus(outerId, CmbcConstant.ORDER_4002, 0, null, null);
-                    if(list.size()==1){
-                        DBObject dbObjectTicket= (DBObject) list.get(0);
-                        String userName= (String) dbObjectTicket.get("userName");
+                    if (list.size() == 1) {
+                        DBObject dbObjectTicket = (DBObject) list.get(0);
+                        String userName = (String) dbObjectTicket.get("userName");
                         //退款
                         String result = LotteryDao.reviceRecharge(userName, amount, outerId);
-                    }else {
-                        logger.error("彩票ID: " + outerId+"  退款出现问题");
+                    } else {
+                        logger.error("彩票ID: " + outerId + "  退款出现问题");
                     }
                 }
             }
@@ -117,13 +121,21 @@ public class NotifyDao {
     public static void dealN07(JSONObject bodyObj) throws JSONException {
         String gameCode = bodyObj.getString("gameCode");
         String termCode = bodyObj.getString("termCode");
-        String wNum = bodyObj.getString("wNum");
-        DBObject termInfo = new BasicDBObject();
-        termInfo.put("gameCode", gameCode);
-        termInfo.put("termCode", termCode);
-        termInfo.put("wNum", wNum);
-        termInfo.put("createTime", LotteryDao.getTime());
-        MongoUtil.insert(MongoConst.MONGO_TERM, termInfo);
+        Map param = new HashMap();
+        param.put("gameCode", gameCode);
+        param.put("termCode", termCode);
+        List datas = MongoUtil.query(MongoConst.MONGO_TERM, param);
+        if (datas.size() == 0) {
+            String wNum = bodyObj.getString("wNum");
+            DBObject termInfo = new BasicDBObject();
+            termInfo.put("gameCode", gameCode);
+            termInfo.put("termCode", termCode);
+            termInfo.put("wNum", wNum);
+            termInfo.put("createTime", LotteryDao.getTime());
+            MongoUtil.insert(MongoConst.MONGO_TERM, termInfo);
+        }
+
+
     }
 
     public static void dealN08(JSONObject bodyObj) throws JSONException {

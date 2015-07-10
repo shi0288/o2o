@@ -103,6 +103,9 @@ $(document).ready(function (e) {
                     after();
                 }
                 else {
+					if(result.description=='游戏不可用'){
+						result.description="今日已经关店，进行系统维护";
+					}
                     alert(result.description);
                     after();
                 }

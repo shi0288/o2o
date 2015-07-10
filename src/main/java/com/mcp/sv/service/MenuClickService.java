@@ -46,10 +46,9 @@ public class MenuClickService {
 				if (user!= null && user.containsKey("acount")){
 					JSONObject account = user.getJSONObject("acount");
 					long recharge = account.getLong("recharge");
-					long count = LotteryDao.getWealthList(recharge);
 					List<Article> messageList = new ArrayList<Article>();
 					Article article = new Article();
-					article.setTitle("财富榜："+ count + "余额："+ (recharge /100) +"元");
+					article.setTitle("余额："+ (recharge /100) +"元");
 					article.setDescription("查看余额明细和充值");
 					article.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CmbcConstant.APPID + "&redirect_uri=http://www.mcp8.net/weixin/callback&response_type=code&scope=snsapi_base&state=acount#wechat_redirect");
 					messageList.add(article);

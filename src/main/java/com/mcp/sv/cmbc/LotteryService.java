@@ -188,7 +188,6 @@ public class LotteryService {
                         logger.error(errRst.toString());
                         return errRst.toString();
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

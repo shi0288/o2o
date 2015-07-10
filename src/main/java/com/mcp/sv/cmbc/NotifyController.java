@@ -52,19 +52,19 @@ public class NotifyController {
             logger.error("====== 出错  ======");
             e.printStackTrace();
         }
-
     }
 
     public boolean verityMessage(JSONObject headObj, JSONObject bodyObj) throws JSONException {
         String digest = headObj.getString("digest");
         String timestamp = headObj.getString("timestamp");
-        String localDigest = MD5.MD5Encode(bodyObj.toString() + timestamp + com.mcp.sv.util.CmbcConstant.MCP_KEY);
+        String localDigest = MD5.MD5Encode(bodyObj.toString() + timestamp + com.mcp.sv.util.CmbcConstant.MCP_NOTYKYE);
         if (digest.equals(localDigest)) {
             return true;
         }
         return false;
 
     }
+
 
 
 }

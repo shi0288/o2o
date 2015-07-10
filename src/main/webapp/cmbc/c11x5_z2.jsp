@@ -31,12 +31,12 @@
         <!--选球-->
         <div class="xuanqiu">
             <div class="bar-tip nav2 mb5 clearfix">
-            	<a class="tab-nav more-tou now" style="width:50%;">定位投注</a>
-                <a class="tab-nav more-tou" style="width:50%;">复式</a>
+            	  <!--<a class="tab-nav more-tou now" style="width:50%;">定位投注</a>--> 
+                <a class="tab-nav more-tou now" style="width:50%;">复式</a>
                 <!--<a class="tab-nav more-tou" style="width:25%;">和值</a>
                 <a class="tab-nav more-tou" style="width:25%;">跨度</a>-->
             </div>
-            <div class="tab-content p10" id="dpailei" style="display:block;" data-type="1">
+            <div class="tab-content p10" id="dpailei"  data-type="1">
             	<p class="gerytext pl10">玩法提示：每位各选1个号码。1/110的中奖机会，奖金130元。</p>
             	<div class="clearfix pailei">
                     <div class="fl wei">一位</div>
@@ -56,7 +56,7 @@
                  </div>  
                    
             </div>
-            <div class="tab-content p10" id="putong"  data-red="2" data-blue="0" data-type="2" data-des="前二直选">
+            <div class="tab-content p10" id="putong" style="display:block;"  data-red="2" data-blue="0" data-type="2" data-des="前二直选">
             	<p class="gerytext pl10">玩法提示：所选号码与开奖号码前两位一致即中奖，奖金130元。</p>
                 <span class="tz-tit-left"><font class="redtext"></font>至少选2个号码</span>
                 <!--<span class="tz-tit-right1 red" id="jx-hq">2个</span>

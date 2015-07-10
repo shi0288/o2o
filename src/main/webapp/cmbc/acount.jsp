@@ -16,8 +16,8 @@
     <script type="text/javascript" src="js/common.js"></script>
     <jsp:include page="include/login.jsp" flush="true"/>
     <script type="text/javascript">
+	    var jinRu=false;
         var pageSize = 10;	//每页显示条数
-
         $(document).ready(function () {
             //判断是否一级页面
             /*判断登陆  */
@@ -73,10 +73,11 @@
                         $('#user_name').html(name);
                         $('#recharge').html(toDecimalMoney(recharge / 100));
                         $('#bonus').html(toDecimalMoney(prize / 100));
-
                         getCaipiao($(".tab-content").eq(0), 1, pageSize);
                     } else {
+						after();
                         alert("获取用户信息失败");
+						
                     }
                 }
             });
@@ -91,11 +92,16 @@
                     var aPage = $(".tab-content").eq(0).find(".page");
                     if (aPage.attr("data-page") != false) {
                         if (sctop >= dheight - wheight) {
+							if(!jinRu){
+								return false;
+							}
+							jinRu=false;
                             var curPage = parseInt(aPage.attr("data-page"));
                             var historyPage = parseInt(aPage.attr("cur-page"));
                             if (curPage == historyPage) {
                                 return false;
                             }
+							before();
                             getCaipiao($(".tab-content").eq(0), curPage, pageSize);
                         }
                     }
@@ -153,10 +159,13 @@
                             var nohtml = '<div class="zhanghu-nodata">暂无记录</div>';
                             var show = obj.find(".zhanghu-nodata").eq(0).html();
                             if(show=="暂无记录"){
+                                after();
+								jinRu=true;
                                 return false;
                             }
                             obj.append(nohtml);
                             after();
+							jinRu=true;
                             return false;
                         }
                         //var ind = obj.index(".tab-content");
@@ -220,8 +229,10 @@
                         });
                         obj.find(".page").eq(0).attr("data-page", curPage + 1);
                         after();
+						jinRu=true;
                     } else {
-                        //alert(result.description);
+                        after();
+						jinRu=true;
                     }
                 },
                 error: onError
@@ -274,7 +285,7 @@
         </div>
         <center>
             <div class=" pb10 pl5 pr5 mt5 clearfix">
-                <a href="getprice.html" class="center-org ">奖金转彩金</a>
+                <a href="getprice.html" class="center-org ">奖金转换</a>
                 <a href="getmoney.html" class="center-org ">提款</a>
                 <a href="ylzhifu.html" class="center-org ">充值</a>
                 <!--<a href="index.jsp" class="center-org ">去购彩</a>-->

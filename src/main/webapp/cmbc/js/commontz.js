@@ -58,7 +58,7 @@ function xqllShow() {
     $(".xuanqiu").hide();
     $(".xqll").show();
     $(".step1").remove();
-    var hhml = '<a class="xuanhao-btn fr step2"  href="javascript:void(-1)">确认支付</a>';
+    var hhml = '<a class="xuanhao-btn fr step2"  href="javascript:void(-1)">确认订单</a>';
     $(".footer-tz").append(hhml);
     $(".go-pre").hide().eq(1).show();
     $("#qi-bei").show();

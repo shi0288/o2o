@@ -127,8 +127,10 @@
                 if(userObj.repCode=='0000'){
                     nickName= userObj.user.nickName;
                 }
+                var acountObj=userObj.acount;
+                var recharge=acountObj.recharge/100;
                 var statusHtml=transStatus(tickObj.status);
-                var htmlStr= "<tr class='one'><td>"+(key+1)+"</td> <td>"+tickObj.outerId+"</td> <td>"+tickObj.userName+"</td><td>"+nickName+"</td> <td>"+tickObj.gameCode+"</td>  <td>"+tickObj.termCode+"</td>  <td>"+tickObj.auditTime+"</td>  <td>"+statusHtml+"</td>  <td>"+''+"</td></tr>";
+                var htmlStr= "<tr class='one'><td>"+(key+1)+"</td> <td>"+tickObj.outerId+"</td> <td>"+tickObj.userName+"</td><td>"+nickName+"</td><td>"+recharge+"</td> <td>"+tickObj.gameCode+"</td>  <td>"+tickObj.termCode+"</td>  <td>"+tickObj.auditTime+"</td>  <td>"+statusHtml+"</td>  <td>"+''+"</td></tr>";
                 tabElem.append(htmlStr);
             })
             //页数
@@ -209,6 +211,7 @@
                 <td>用户名：<input id="userName" type="text"/></td>
                 <td>彩票ID：<input id="outerId" type="text"/></td>
                 <td>状态：<select id="status">
+                    <option value="0"> 所有状态</option>
                     <option value="1000"> 等待出票</option>
                     <option value="4000"> 出票成功</option>
                     <option value="4001"> 部分出票成功</option>
@@ -236,6 +239,7 @@
                 <th>彩票ID</th>
                 <th>用户名</th>
                 <th>微信名</th>
+                <th>余额</th>
                 <th>游戏名称</th>
                 <th>期次</th>
                 <th>时间</th>

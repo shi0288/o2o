@@ -283,14 +283,14 @@ function delClick(evel) {
     if(!$("#jcdg").hasClass("check-org now")){
         if(jcList<=2){
             if ($(evel).parents(".jc-list-item-cot").find(".jc-list-item-dw.on").length <= 1){
-                alert("最少选两场");
+                alert("最少串2场比赛");
                 return;
             }
         }
     }else{
         if(jcList<=1){
             if ($(evel).parents(".jc-list-item-cot").find(".jc-list-item-dw.on").length <= 1){
-                alert("最少选一场");
+                alert("单关最少选1场比赛");
                 return;
             }
         }

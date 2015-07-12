@@ -188,13 +188,15 @@ $(document).ready(function () {
      jcSum();
      });	*/
 });
+var xuanzeMap = {};
 function seleMatch(evel) {
-    var cs=getChangshu();
-    if(cs>8){
-        alert("最多能选8场比赛");
-        return false;
-    }
+    var key = $(evel).parents(".jc-table").attr("data-cc");
     if ($(evel).hasClass("on")) {
+        if(xuanzeMap[key] && xuanzeMap[key]== 1){
+            delete xuanzeMap[key];
+        }else{
+            xuanzeMap[key] = xuanzeMap[key] - 1;
+        }
         var datacc = $(evel).parents('table').attr("data-cc");
         var datawf = $(evel).parent().attr("data-wf");
         var datadit = $(evel).attr("data-dit");
@@ -205,14 +207,30 @@ function seleMatch(evel) {
             $("#id_" + datacc).remove();
         }
     } else {
-        if ($(evel).parents(".jc-table").siblings(".jc-table.on").length >= 8) {
-            alert("最多能选8场比赛");
-            return false;
+        if (xuanzeMap[key]) {
+            xuanzeMap[key] = xuanzeMap[key] + 1;
+        }else{
+            var tableLength = Object.keys(xuanzeMap).length;
+            if($("#jcdg").hasClass("check-org now")){
+                if(tableLength>=8){
+                    alert("单关最多能选8场比赛");
+                    return false;
+                }else{
+                    xuanzeMap[key]=1;
+                }
+            }else{
+                if(tableLength>=4){
+                    alert("比分最多能串4场比赛");
+                    return false;
+                }else{
+                    xuanzeMap[key]=1;
+                }
+            }
         }
         $(evel).addClass("on");
         $(evel).parents("table").addClass("on");
     }
-    cs = getChangshu();
+    var cs=getChangshu();
     if (cs >= 1) {
         $("#jc-cs").html("您选择了" + cs + "场比赛");
     } else {
@@ -237,6 +255,18 @@ function maxDan() {
 }
 //删除该行选项
 function closeClick(evel) {
+    var changci=getChangshu();
+    if($("#jcdg").hasClass("check-org now")){
+        if(changci<=1){
+            alert("单关最少选1场比赛");
+            return;
+        }
+    }else{
+        if(changci<=2){
+            alert("最少串2场比赛");
+            return;
+        }
+    }
     var datacc = $(evel).parent().attr("data-cc");
     $(".jc-table[data-cc=" + datacc + "]").eq(0).removeClass("on");
     $(".jc-table[data-cc=" + datacc + "]").eq(0).find("td").removeClass("on");
@@ -244,6 +274,8 @@ function closeClick(evel) {
     //算注数
     chuanChange();
     jcSum();
+    changci=getChangshu();
+    $("#jc-cs").html("您选择了" + changci + "场比赛");
 }
 //删除某项
 function delClick(evel) {
@@ -268,7 +300,8 @@ function delClick(evel) {
     var datawf = $(evel).parent().attr("data-wf");
     var datadit = $(evel).attr("data-dit");
     var wf = cctable.find(".jc-table-b[data-wf=" + datawf + "]").eq(0);
-    var att = wf.find("td[data-dit=" + datadit + "]").eq(0);
+    //var att = wf.find("td[data-dit=" + datadit + "]").eq(0);
+    var att=cctable.find("td[data-dit="+datadit+"]");
     att.removeClass("on");
     if ($(evel).parents(".jc-list-item-cot").find(".jc-list-item-dw.on").length < 2) {
         cctable.removeClass("on");
@@ -280,6 +313,8 @@ function delClick(evel) {
     }
     //算注数
     jcSum();
+    var changci=getChangshu();
+    $("#jc-cs").html("您选择了" + changci + "场比赛");
 }
 //点击胆
 function danClick(evel) {

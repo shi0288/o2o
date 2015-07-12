@@ -342,27 +342,26 @@ function getMatchInfo(obj,st){
                 var spfdata = match.oddsInfo;
                 if (spfdata) {
                     spfdata = spfdata.split("|");
-                    var spfdata_zero,spfdata_one,spfdata_two,spfdata_three,rang;
-                    rang=matchName[3];
-                    if(rang!='未开售'){
-                        rang='让'+matchName[3];
-                    }
-                    spfdata_zero = '<td width="18%" data-dit="v4" style="background-color: #999999">' + rang + '</td>';
+                    var spfdata_one,spfdata_two,spfdata_three;
+                    //rang=matchName[3];
+                   // if(rang!='未开售'){
+                   //     rang='让';
+                   // }
                     if(selling=="Selling"&&(closeTime-now>0)&&spfdata[0]!="--"){
-                        spfdata_one = '<td width="18%" data-dit="v3" onclick="seleMatch(this)">胜' + spfdata[0] + '</td>';
-                        spfdata_two = '<td width="18%" data-dit="v1" onclick="seleMatch(this)">平' + spfdata[1] + '</td>';
-                        spfdata_three = '<td width="18%" data-dit="v0" onclick="seleMatch(this)">负' + spfdata[2] + '</td>';
+                        spfdata_one = '<td width="24%" data-dit="v3" onclick="seleMatch(this)">胜' + spfdata[0] + '</td>';
+                        spfdata_two = '<td width="24%" data-dit="v1" onclick="seleMatch(this)">平' + spfdata[1] + '</td>';
+                        spfdata_three = '<td width="24%" data-dit="v0" onclick="seleMatch(this)">负' + spfdata[2] + '</td>';
                     }else{
-                        spfdata_one = '<td width="18%" class="false" data-dit="v3" style="background-color: #838383">胜' + spfdata[0] + '</td>';
-                        spfdata_two = '<td width="18%" class="false"  data-dit="v1" style="background-color: #838383">平' + spfdata[1] + '</td>';
-                        spfdata_three = '<td width="18%" class="false" data-dit="v0" style="background-color: #838383">负' + spfdata[2] + '</td>';
+                        spfdata_one = '<td width="24%" class="false" data-dit="v3" style="background-color: #838383">胜' + spfdata[0] + '</td>';
+                        spfdata_two = '<td width="24%" class="false"  data-dit="v1" style="background-color: #838383">平' + spfdata[1] + '</td>';
+                        spfdata_three = '<td width="24%" class="false" data-dit="v0" style="background-color: #838383">负' + spfdata[2] + '</td>';
                     }
                 } else {
-                    spfdata_one = '<td width="18%" class="false" data-dit="v3">胜--</td>';
-                    spfdata_two = '<td width="18%" class="false" data-dit="v1">平--</td>';
-                    spfdata_three = '<td width="18%" class="false" data-dit="v0">负--</td>';
+                    spfdata_one = '<td width="24%" class="false" data-dit="v3">胜--</td>';
+                    spfdata_two = '<td width="24%" class="false" data-dit="v1">平--</td>';
+                    spfdata_three = '<td width="24%" class="false" data-dit="v0">负--</td>';
                 }
-                oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">' + spfdata_zero + spfdata_one + spfdata_two + spfdata_three + '</tr>' ;
+                oodsTag='<tr data-wf="spf" class="jc-table-b spf-dd">'  + spfdata_one + spfdata_two + spfdata_three + '</tr>' ;
                 changciHtml =
                     '<table width="100%" data-des="' + matchName[0] + '&nbsp;&nbsp;VS&nbsp;&nbsp;' + matchName[1] + '" data-cc="' + item.code + '" class="jc-table">' +
                     '<tbody><tr class="jc-table-tbb">' +

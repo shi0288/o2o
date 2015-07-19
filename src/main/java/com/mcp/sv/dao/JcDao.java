@@ -29,8 +29,6 @@ public class JcDao {
 
     private static final Logger logger = LoggerFactory.getLogger(JcDao.class);
 
-    //public static Map<String,Object> map = new HashMap<String,Object>();
-
     public static String getFormat( String head, String body){
         String str = "";
         String res = "";
@@ -55,7 +53,6 @@ public class JcDao {
             }else{
                 return null;
             }
-           //url += "?timestamp=" + new Date().getTime();
             if (info.containsKey("updateTime")) {
                 long updateTime = (Long) info.get("updateTime");
                 if (new Date().getTime() - updateTime > 1000 * 60 * 5) {//大于5分钟 更新info
@@ -86,7 +83,24 @@ public class JcDao {
                         }
                     }
                 }else{
-                    res = (String)info.get("body");
+                    String mbody = (String) info.get("body");
+                    if(mbody == null || "".equals(mbody)){
+                        if(st.equals(CmbcConstant.HHGG)){
+                            str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(url);
+                            res = createHhggFormat(st, str);
+                            updateJcInfo(String.valueOf(new Date().getTime()), st, res);
+                        }else{
+                            str = sendGet(url);
+                            JSONObject rbody = new JSONObject(str);             //传过来的数据
+                            String status = rbody.getString("status");          //最后更新时间
+                            JSONObject updated = new JSONObject(status);
+                            String r_last_updated = updated.getString("last_updated");
+                            res = createFormat(st, str);
+                            updateJcInfo(r_last_updated, st, res);
+                        }
+                    }else{
+                        res = (String)info.get("body");
+                    }
                 }
             }else{//save
                 if(st.equals(CmbcConstant.HHGG)){
@@ -103,96 +117,9 @@ public class JcDao {
                     saveJcInfo(r_last_updated, st, res);
                 }
             }
-
-
-
-
-//            if (st.equals(CmbcConstant.ZJQS)) {
-//                String ZJQS = (String) map.get(st);
-//                if (ZJQS == null) {
-//                    str = sendGet(CmbcConstant.ZJQS_URL);
-//                    res = createFormat(st, str);
-//                } else {
-//                    boolean update = getTask(ZJQS,st);
-//                    if(update){
-//                        str = ZJQS;
-//                        res = str;
-//                    }else{
-//                        str = sendGet(CmbcConstant.ZJQS_URL);
-//                        res = createFormat(st, str);
-//                    }
-//
-//                }
-//            } else if (st.equals("1") || st.equals("2")) {
-//                st = CmbcConstant.SPF;
-//                String cn01 = (String) map.get(st);
-//                if (cn01 == null) {
-//                    str = sendGet(CmbcConstant.SPF_URL);
-//                    res = createFormat(st, str);
-//                } else {
-//                    boolean update = getTask(cn01,st);
-//                    if(update){
-//                        str = cn01;
-//                        res = str;
-//                    }else{
-//                        str = sendGet(CmbcConstant.SPF_URL);
-//                        res = createFormat(st, str);
-//                    }
-//                }
-//            }
-//            else if(st.equals(CmbcConstant.BQCSPF)){
-//                String BQCSPF = (String) map.get(st);
-//                if(BQCSPF==null){
-//                    str = sendGet(CmbcConstant.BQCSPF_URL);
-//                    res = createFormat(st, str);
-//                }else{
-//                    boolean update = getTask(BQCSPF,st);
-//                    if(update){
-//                        str = BQCSPF;
-//                        res = str;
-//                    }else{
-//                        str = sendGet(CmbcConstant.BQCSPF_URL);
-//                        res = createFormat(st, str);
-//                    }
-//                }
-//
-//            }else if(st.equals(CmbcConstant.BF)){
-//                String BF = (String) map.get(st);
-//                if(BF==null){
-//                    str = sendGet(CmbcConstant.BF_URL);
-//                    res = createFormat(st, str);
-//                }else{
-//                    boolean update = getTask(BF,st);
-//                    if(update){
-//                        str = BF;
-//                        res = str;
-//                    }else{
-//                        str = sendGet(CmbcConstant.BF_URL);
-//                        res = createFormat(st, str);
-//                    }
-//                }
-//
-//            }else if(st.equals(CmbcConstant.HHGG)){
-//                String HHGG = (String) map.get(st);
-//                if(HHGG==null){
-//                    str = com.mcp.sv.util.HttpClientWrapper.getGbkUrl(CmbcConstant.HHGG_URL);
-//                    res = createHhggFormat(st, str);
-//                }else{
-//                    boolean update = getTask(HHGG,st);
-//                    if(update){
-//                        str = HHGG;
-//                        res = str;
-//                    }else{
-//                        str = sendGet(CmbcConstant.HHGG_URL);
-//                        res = createHhggFormat(st, str);
-//                    }
-//                }
-//            }
-
         }catch (Exception e) {
             e.printStackTrace();
         }
-        //logger.info("res:"+res);
         return res;
     }
 
@@ -373,7 +300,7 @@ public class JcDao {
                     bodys_bf.put("oddsCode","BF");
                     bodys_bf.put("oddsName","比分");
                     bodys_bf.put("oddsSingle",oddsSingle);
-//
+
                     JSONArray matchInfo = new JSONArray();
                     matchInfo.put(0,bodys_bf);
 
@@ -417,7 +344,7 @@ public class JcDao {
                     bodys_zjqs.put("oddsCode","ZJQS");
                     bodys_zjqs.put("oddsName","总进球数");
                     bodys_zjqs.put("oddsSingle",oddsSingle);
-//
+
                     JSONArray matchInfo = new JSONArray();
                     matchInfo.put(0,bodys_zjqs);
 
@@ -481,10 +408,6 @@ public class JcDao {
                         body.put(i,body_);
                         i = i+1;
                     }
-                }else if(type.equals(CmbcConstant.HHGG)){
-
-                }else{
-
                 }
             }
             head.put("repCode","0000");
@@ -503,9 +426,6 @@ public class JcDao {
             e.printStackTrace();
         }
         rbody = data.toString();
-        //map.put(type + "_updatetime", new Date().getTime());
-        // map.put(type,rbody);
-        //map.put(type+"_last_updated",endDate);
         return rbody;
     }
 
@@ -552,7 +472,6 @@ public class JcDao {
         try {
             String hhgg[] = str.split(";");
             String hhgg1[] = hhgg[0].split("=");
-//            JSONArray data = new JSONArray(hhgg1[1]);
             String data = hhgg1[1];
             rhead.put("repCode","0000");
             rdata.put("head",rhead);
@@ -571,39 +490,4 @@ public class JcDao {
         }
         return rstr;
     }
-
-
-    //判断是否需要更新竞彩数据
-//    public static boolean getTask( String str,String st){
-//        boolean sign = false;
-//        try {
-//            if(st.equals(CmbcConstant.HHGG)){
-//                st = CmbcConstant.SPF;
-//            }
-//            String last_updated = (String) map.get(st);
-//            if(last_updated == null || "".equals(last_updated)){
-//                sign = false;
-//            }else{
-//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-//                Date last = format.parse(last_updated);
-//                Date nowt = new Date();
-//                long now1 = nowt.getTime();
-//                long last1 = last.getTime();
-//                long l = now1 - last1;
-//                long day=l/(24*60*60*1000);
-//                long hour=(l/(60*60*1000)-day*24);
-//                long min=((l/(60*1000))-day*24*60-hour*60);
-//
-//                if(min <= 30){
-//                    sign = true;
-//                }else {
-//                    sign = false;
-//                }
-//            }
-//        }catch (Exception e) {
-//            logger.error("竞彩数据更新失败");
-//            sign = false;
-//        }
-//        return sign;
-//    }
 }

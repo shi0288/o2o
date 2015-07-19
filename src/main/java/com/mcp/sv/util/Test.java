@@ -29,12 +29,12 @@ public class Test {
         //{_id=SPF_updatetime, last_updated=2015-07-07 20:13:04, body={"head":{"repCode":"-1","last_updated":" "},"body":"[]"}, updateTime=1436272007843}
         //{_id=HHGG_updatetime, last_updated=1436272104166,
 //        System.out.println(jcinfo.toString());
-       String str = sendGet(CmbcConstant.SPF_URL);
-        System.out.println(str);
-       String res = createFormat("SPF", str);
-//        String res = createHhggFormat("HHGG", str);
-//
-        System.out.println(res);
+//       String str = sendGet(CmbcConstant.SPF_URL);
+//        System.out.println(str);
+//       String res = createFormat("SPF", str);
+////        String res = createHhggFormat("HHGG", str);
+////
+//        System.out.println(res);
 //        System.out.println(new Date());
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
 //        Date nowt = new Date();

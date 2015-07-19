@@ -168,9 +168,9 @@ function getJcNums() {
         $(_this).find(".jc-list-item-dw.on").each(function (i, val) {
             var self = this;
             if (i == $(self).parent().find(".jc-list-item-dw.on").length - 1) {
-                strNum += $(self).attr("data-dit").substring(1);
+                strNum += $(self).attr("data-dit").substring(1)+'@'+$(self).attr("data-odds");
             } else {
-                strNum += $(self).attr("data-dit").substring(1) + ",";
+                strNum += $(self).attr("data-dit").substring(1)+'@'+$(self).attr("data-odds") + ",";
             }
 
         });
@@ -287,21 +287,21 @@ function getMatchHhggInfo(obj,st){
         var open12 = "";
         var open13 = "";
         if(spf){
-            rqspfdata_spf = '<td width="10%" data-dit="v2" style="background-color: #999999"><p>让球</p><p>0</p></td>';
+            rqspfdata_spf = '<td width="10%" data-dit="v7" style="background-color: #999999"><p>让球</p><p>0</p></td>';
             if(spf[0] == ""){
                 rqspfdata_one = '<td width="10.2%" data-dit="v3" style="background-color: #838383"><p>胜</p><p>' + spf[0] + '</p></td>';
             }else{
-                rqspfdata_one = '<td width="10.2%" data-dit="v3" onclick="seleMatch(this)"><p>胜</p><p>' + spf[0] + '</p></td>';
+                rqspfdata_one = '<td width="10.2%" data-dit="v3" data-odds="'+ spf[0] +'" onclick="seleMatch(this)"><p>胜</p><p>' + spf[0] + '</p></td>';
             }
             if(spf[1] == ""){
                 rqspfdata_two = '<td width="10.2%" data-dit="v1" style="background-color: #838383"><p>平</p><p>' + spf[1] + '</p></td>';
             }else{
-                rqspfdata_two = '<td width="10.2%" data-dit="v1" onclick="seleMatch(this)"><p>平</p><p>' + spf[1] + '</p></td>';
+                rqspfdata_two = '<td width="10.2%" data-dit="v1" data-odds="'+ spf[1] +'" onclick="seleMatch(this)"><p>平</p><p>' + spf[1] + '</p></td>';
             }
             if(spf[2] == ""){
                 rqspfdata_three = '<td width="10.2%" data-dit="v0" style="background-color: #838383"><p>负</p><p>' + spf[2] + '</p></td>';
             }else{
-                rqspfdata_three = '<td width="10.2%" data-dit="v0" onclick="seleMatch(this)"><p>负</p><p>' + spf[2] + '</p></td>';
+                rqspfdata_three = '<td width="10.2%" data-dit="v0" data-odds="'+ spf[2] +'" onclick="seleMatch(this)"><p>负</p><p>' + spf[2] + '</p></td>';
             }
             rqspfdata_four = '<td rowspan="2" width="10.2%" data-dit="v4" onclick="selOpenClose(\''+open1+'\')"><p>显示</p><p>半全场</p></td>';
             rqspfdata_five = '<td rowspan="2" width="10.2%" data-dit="v5" onclick="selOpenClose(\''+open2+'\')"><p>显示</p><p>总进球</p></td>';
@@ -311,22 +311,22 @@ function getMatchHhggInfo(obj,st){
         var rqspfdata_rqspf,rqspf_one,rqspf_two,rqspf_two,rqspf_three;
 
         if(rqspf){
-            rqspfdata_rqspf = '<td width="10%" data-dit="v2" style="background-color: #999999"><p>让球</p><p>'+ rq +'</p></td>';
+            rqspfdata_rqspf = '<td width="10%" data-dit="v8" style="background-color: #999999"><p>让球</p><p>'+ rq +'</p></td>';
             if(rqspf[0] == ""){
                 rqspf_one = '<td width="10.2%" data-dit="v3" style="background-color: #838383"><p>胜</p><p>' + rqspf[0] + '</p></td>';
             }else{
-                rqspf_one = '<td width="10.2%" data-dit="v3" onclick="seleMatch(this)"><p>胜</p><p>' + rqspf[0] + '</p></td>';
+                rqspf_one = '<td width="10.2%" data-dit="v3" data-odds="'+ rqspf[0] +'" onclick="seleMatch(this)"><p>胜</p><p>' + rqspf[0] + '</p></td>';
             }
             if(rqspf[1] == ""){
                 rqspf_two = '<td width="10.2%" data-dit="v1" style="background-color: #838383"><p>平</p><p>' + rqspf[1] + '</p></td>';
             }else{
-                rqspf_two = '<td width="10.2%" data-dit="v1" onclick="seleMatch(this)"><p>平</p><p>' + rqspf[1] + '</p></td>';
+                rqspf_two = '<td width="10.2%" data-dit="v1" data-odds="'+ rqspf[1] +'" onclick="seleMatch(this)"><p>平</p><p>' + rqspf[1] + '</p></td>';
             }
             if(rqspf[2] == ""){
                 rqspf_three = '<td width="10.2%" data-dit="v0" style="background-color: #838383"><p>负</p><p>' + rqspf[2] + '</p></td>';
 
             }else{
-                rqspf_three = '<td width="10.2%" data-dit="v0" onclick="seleMatch(this)"><p>负</p><p>' + rqspf[2] + '</p></td>';
+                rqspf_three = '<td width="10.2%" data-dit="v0" data-odds="'+ rqspf[2] +'" onclick="seleMatch(this)"><p>负</p><p>' + rqspf[2] + '</p></td>';
             }
 
         }
@@ -335,15 +335,15 @@ function getMatchHhggInfo(obj,st){
         if(bqc){
             var spfdata_one,spfdata_two,spfdata_three,spfdata_four,spfdata_five,spfdata_six,spfdata_seven,spfdata_eight,spfdata_nine
             if(bqc[0] != ""){
-                spfdata_one = '<td data-dit="v33" width="11.1%" onclick="seleMatch(this)"><p>胜胜</p><p>' + bqc[0] + '</p></td>';
-                spfdata_two = '<td data-dit="v31" width="11.1%" onclick="seleMatch(this)"><p>胜平</p><p>' + bqc[1] + '</p></td>';
-                spfdata_three = '<td data-dit="v30" width="11.1%" onclick="seleMatch(this)"><p>胜负</p><p>' + bqc[2] + '</p></td>';
-                spfdata_four = '<td data-dit="v13" width="11.1%" onclick="seleMatch(this)"><p>平胜</p><p>' + bqc[3] + '</p></td>';
-                spfdata_five = '<td data-dit="v11" width="11.1%" onclick="seleMatch(this)"><p>平平</p><p>' + bqc[4] + '</p></td>';
-                spfdata_six = '<td data-dit="v10" width="11.1%" onclick="seleMatch(this)"><p>平负</p><p>' + bqc[5] + '</p></td>';
-                spfdata_seven = '<td data-dit="v03" width="11.1%" onclick="seleMatch(this)"><p>负胜</p><p>' + bqc[6] + '</p></td>';
-                spfdata_eight = '<td data-dit="v01" width="11.1%" onclick="seleMatch(this)"><p>负平</p><p>' + bqc[7] + '</p></td>';
-                spfdata_nine = '<td data-dit="v00" width="11.1%" onclick="seleMatch(this)"><p>负负</p><p>' + bqc[8] + '</p></td>';
+                spfdata_one = '<td data-dit="v33" data-odds="'+ bqc[0] +'" width="11.1%" onclick="seleMatch(this)"><p>胜胜</p><p>' + bqc[0] + '</p></td>';
+                spfdata_two = '<td data-dit="v31" data-odds="'+ bqc[1] +'" width="11.1%" onclick="seleMatch(this)"><p>胜平</p><p>' + bqc[1] + '</p></td>';
+                spfdata_three = '<td data-dit="v30" data-odds="'+ bqc[2] +'" width="11.1%" onclick="seleMatch(this)"><p>胜负</p><p>' + bqc[2] + '</p></td>';
+                spfdata_four = '<td data-dit="v13" data-odds="'+ bqc[3] +'" width="11.1%" onclick="seleMatch(this)"><p>平胜</p><p>' + bqc[3] + '</p></td>';
+                spfdata_five = '<td data-dit="v11" data-odds="'+ bqc[4] +'" width="11.1%" onclick="seleMatch(this)"><p>平平</p><p>' + bqc[4] + '</p></td>';
+                spfdata_six = '<td data-dit="v10" data-odds="'+ bqc[5] +'" width="11.1%" onclick="seleMatch(this)"><p>平负</p><p>' + bqc[5] + '</p></td>';
+                spfdata_seven = '<td data-dit="v03" data-odds="'+ bqc[6] +'" width="11.1%" onclick="seleMatch(this)"><p>负胜</p><p>' + bqc[6] + '</p></td>';
+                spfdata_eight = '<td data-dit="v01" data-odds="'+ bqc[7] +'" width="11.1%" onclick="seleMatch(this)"><p>负平</p><p>' + bqc[7] + '</p></td>';
+                spfdata_nine = '<td data-dit="v00" data-odds="'+ bqc[8] +'" width="11.1%" onclick="seleMatch(this)"><p>负负</p><p>' + bqc[8] + '</p></td>';
             }else{
                 spfdata_one = '<td data-dit="v33" width="11.1%" style="background-color: #838383"><p>胜胜</p><p>' + bqc[0] + '</p></td>';
                 spfdata_two = '<td data-dit="v31" width="11.1%" style="background-color: #838383"><p>胜平</p><p>' + bqc[1] + '</p></td>';
@@ -360,14 +360,14 @@ function getMatchHhggInfo(obj,st){
         if(zjqs){
             var spfdata_one,spfdata_two,spfdata_three,spfdata_four,spfdata_five,spfdata_six,spfdata_seven,spfdata_eight
             if(zjqs[0]!=""){
-                spfdata_one = '<td data-dit="v0" width="12.5%" onclick="seleMatch(this)"><p>0球</p><p>' + zjqs[0] + '</p></td>';
-                spfdata_two = '<td data-dit="v1" width="12.5%" onclick="seleMatch(this)"><p>1球</p><p>' + zjqs[1] + '</p></td>';
-                spfdata_three = '<td data-dit="v2" width="12.5%" onclick="seleMatch(this)"><p>2球</p><p>' + zjqs[2] + '</p></td>';
-                spfdata_four = '<td data-dit="v3" width="12.5%" onclick="seleMatch(this)"><p>3球</p><p>' + zjqs[3] + '</p></td>';
-                spfdata_five = '<td data-dit="v4" width="12.5%" onclick="seleMatch(this)"><p>4球</p><p>' + zjqs[4] + '</p></td>';
-                spfdata_six = '<td data-dit="v5" width="12.5%" onclick="seleMatch(this)"><p>5球</p><p>' + zjqs[5] + '</p></td>';
-                spfdata_seven = '<td data-dit="v6" width="12.59%" onclick="seleMatch(this)">6球<p></p><p>' + zjqs[6] + '</p></td>';
-                spfdata_eight = '<td data-dit="v7" width="12.5%" onclick="seleMatch(this)">7+球<p></p><p>' + zjqs[7] + '</p></td>';
+                spfdata_one = '<td data-dit="v0" data-odds="'+ zjqs[0] +'" width="12.5%" onclick="seleMatch(this)"><p>0球</p><p>' + zjqs[0] + '</p></td>';
+                spfdata_two = '<td data-dit="v1" data-odds="'+ zjqs[1] +'" width="12.5%" onclick="seleMatch(this)"><p>1球</p><p>' + zjqs[1] + '</p></td>';
+                spfdata_three = '<td data-dit="v2" data-odds="'+ zjqs[2] +'" width="12.5%" onclick="seleMatch(this)"><p>2球</p><p>' + zjqs[2] + '</p></td>';
+                spfdata_four = '<td data-dit="v3" data-odds="'+ zjqs[3] +'" width="12.5%" onclick="seleMatch(this)"><p>3球</p><p>' + zjqs[3] + '</p></td>';
+                spfdata_five = '<td data-dit="v4" data-odds="'+ zjqs[4] +'" width="12.5%" onclick="seleMatch(this)"><p>4球</p><p>' + zjqs[4] + '</p></td>';
+                spfdata_six = '<td data-dit="v5" data-odds="'+ zjqs[5] +'" width="12.5%" onclick="seleMatch(this)"><p>5球</p><p>' + zjqs[5] + '</p></td>';
+                spfdata_seven = '<td data-dit="v6" data-odds="'+ zjqs[6] +'" width="12.59%" onclick="seleMatch(this)">6球<p></p><p>' + zjqs[6] + '</p></td>';
+                spfdata_eight = '<td data-dit="v7" data-odds="'+ zjqs[7] +'" width="12.5%" onclick="seleMatch(this)">7+球<p></p><p>' + zjqs[7] + '</p></td>';
             }else{
                 spfdata_one = '<td data-dit="v0" width="12.5%" style="background-color: #838383"><p>0球</p><p>' + zjqs[0] + '</p></td>';
                 spfdata_two = '<td data-dit="v1" width="12.5%" style="background-color: #838383"><p>1球</p><p>' + zjqs[1] + '</p></td>';
@@ -383,19 +383,19 @@ function getMatchHhggInfo(obj,st){
         if(bf){
             if(bf[0]!=""){
                 var spfdata_zero = '<td data-dit="v01" width="5.14%" style="background-color: #999999">胜</td>';
-                var spfdata_one = '<td data-dit="v10" width="10%" onclick="seleMatch(this)"><p>1:0</p><p>' + bf[0] + '</p></td>';
-                var spfdata_two = '<td data-dit="v20" width="10%" onclick="seleMatch(this)"><p>2:0</p><p>' + bf[1] + '</p></td>';
-                var spfdata_three = '<td data-dit="v21" width="10%" onclick="seleMatch(this)"><p>2:1</p><p>' + bf[2] + '</p></td>';
-                var spfdata_four = '<td data-dit="v30" width="10%" onclick="seleMatch(this)"><p>3:0</p><p>' + bf[3] + '</p></td>';
-                var spfdata_five = '<td data-dit="v31" width="10%" onclick="seleMatch(this)"><p>3:1</p><p>' + bf[4] + '</p></td>';
-                var spfdata_six = '<td data-dit="v32" width="10%" onclick="seleMatch(this)"><p>3:2</p><p>' + bf[5] + '</td>';
-                var spfdata_seven = '<td data-dit="v40" width="10%" onclick="seleMatch(this)"><p>4:0</p><p>' + bf[6] + '</p></td>';
-                var spfdata_eight = '<td data-dit="v41" width="10%" onclick="seleMatch(this)"><p>4:1</p><p>' + bf[7] + '</p></td>';
-                var spfdata_nine = '<td data-dit="v42" width="10%" onclick="seleMatch(this)"><p>4:2</p><p>' + bf[8] + '</p></td>';
-                var spfdata_ten = '<td data-dit="v50" width="10%" onclick="seleMatch(this)"><p>5:0</p><p>' + bf[9] + '</p></td>';
-                var spfdata_eleven = '<td data-dit="v51" width="10%" onclick="seleMatch(this)"><p>5:1</p><p>' + bf[10] + '</p></td>';
-                var spfdata_twelve = '<td data-dit="v52" width="10%" onclick="seleMatch(this)"><p>5:2</p><p>' + bf[11] + '</p></td>';
-                var spfdata_thirteen = '<td data-dit="v90" width="10%" colspan="2" onclick="seleMatch(this)"><p>胜其他</p><p>' + bf[12] + '</p></td>';
+                var spfdata_one = '<td data-dit="v10" data-odds="'+ bf[0] +'" width="10%" onclick="seleMatch(this)"><p>1:0</p><p>' + bf[0] + '</p></td>';
+                var spfdata_two = '<td data-dit="v20" data-odds="'+ bf[1] +'" width="10%" onclick="seleMatch(this)"><p>2:0</p><p>' + bf[1] + '</p></td>';
+                var spfdata_three = '<td data-dit="v21" data-odds="'+ bf[2] +'" width="10%" onclick="seleMatch(this)"><p>2:1</p><p>' + bf[2] + '</p></td>';
+                var spfdata_four = '<td data-dit="v30" data-odds="'+ bf[3] +'" width="10%" onclick="seleMatch(this)"><p>3:0</p><p>' + bf[3] + '</p></td>';
+                var spfdata_five = '<td data-dit="v31" data-odds="'+ bf[4] +'" width="10%" onclick="seleMatch(this)"><p>3:1</p><p>' + bf[4] + '</p></td>';
+                var spfdata_six = '<td data-dit="v32" data-odds="'+ bf[5] +'" width="10%" onclick="seleMatch(this)"><p>3:2</p><p>' + bf[5] + '</td>';
+                var spfdata_seven = '<td data-dit="v40" data-odds="'+ bf[6] +'" width="10%" onclick="seleMatch(this)"><p>4:0</p><p>' + bf[6] + '</p></td>';
+                var spfdata_eight = '<td data-dit="v41" data-odds="'+ bf[7] +'" width="10%" onclick="seleMatch(this)"><p>4:1</p><p>' + bf[7] + '</p></td>';
+                var spfdata_nine = '<td data-dit="v42" data-odds="'+ bf[8] +'" width="10%" onclick="seleMatch(this)"><p>4:2</p><p>' + bf[8] + '</p></td>';
+                var spfdata_ten = '<td data-dit="v50" data-odds="'+ bf[9] +'" width="10%" onclick="seleMatch(this)"><p>5:0</p><p>' + bf[9] + '</p></td>';
+                var spfdata_eleven = '<td data-dit="v51" data-odds="'+ bf[10] +'" width="10%" onclick="seleMatch(this)"><p>5:1</p><p>' + bf[10] + '</p></td>';
+                var spfdata_twelve = '<td data-dit="v52" data-odds="'+ bf[11] +'" width="10%" onclick="seleMatch(this)"><p>5:2</p><p>' + bf[11] + '</p></td>';
+                var spfdata_thirteen = '<td data-dit="v90" data-odds="'+ bf[12] +'" width="10%" colspan="2" onclick="seleMatch(this)"><p>胜其他</p><p>' + bf[12] + '</p></td>';
 
                 var tr_one='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + '</tr>' ;
                 var tr_two='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
@@ -403,29 +403,29 @@ function getMatchHhggInfo(obj,st){
                 //oodsTag5='<tr data-wf="ht" class="jc-table-b spf-dd">' + spfdata_zero + spfdata_one + spfdata_two + spfdata_three + spfdata_four + spfdata_five + spfdata_six + spfdata_seven + spfdata_eight + spfdata_nine + spfdata_ten + spfdata_eleven + spfdata_twelve + spfdata_thirteen +'</tr>' ;
 
                 var spfdata_zero2 = '<td data-dit="v11" width="5.14%" style="background-color: #999999">平</td>';
-                var spfdata_one2 = '<td data-dit="v00" width="10%" onclick="seleMatch(this)"><p>0:0</p><p>' + bf[13] + '</p></td>';
-                var spfdata_two2 = '<td data-dit="v11" width="10%" onclick="seleMatch(this)"><p>1:1</p><p>' + bf[14] + '</p></td>';
-                var spfdata_three2 = '<td data-dit="v22" width="10%" onclick="seleMatch(this)"><p>2:2</p><p>' + bf[15] + '</p></td>';
-                var spfdata_four2 = '<td data-dit="v33" width="10%" onclick="seleMatch(this)"><p>3:3</p><p>' + bf[16] + '</p></td>';
-                var spfdata_five2 = '<td data-dit="v99" width="10%" colspan="3" onclick="seleMatch(this)"><p>平其他</p><p>' + bf[17] + '</p></td>';
+                var spfdata_one2 = '<td data-dit="v00" data-odds="'+ bf[13] +'" width="10%" onclick="seleMatch(this)"><p>0:0</p><p>' + bf[13] + '</p></td>';
+                var spfdata_two2 = '<td data-dit="v11" data-odds="'+ bf[14] +'" width="10%" onclick="seleMatch(this)"><p>1:1</p><p>' + bf[14] + '</p></td>';
+                var spfdata_three2 = '<td data-dit="v22" data-odds="'+ bf[15] +'" width="10%" onclick="seleMatch(this)"><p>2:2</p><p>' + bf[15] + '</p></td>';
+                var spfdata_four2 = '<td data-dit="v33" data-odds="'+ bf[16] +'" width="10%" onclick="seleMatch(this)"><p>3:3</p><p>' + bf[16] + '</p></td>';
+                var spfdata_five2 = '<td data-dit="v99" data-odds="'+ bf[17] +'" width="10%" colspan="3" onclick="seleMatch(this)"><p>平其他</p><p>' + bf[17] + '</p></td>';
 
 
                 var oddTag5_2 = '<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' +spfdata_one2+spfdata_two2+spfdata_three2+spfdata_four2+spfdata_five2+'</tr>' ;
 
                 var spfdata_zero3 = '<td data-dit="v21" width="5.14%" >负</td>';
-                var spfdata_one3 = '<td data-dit="v01" width="10%" onclick="seleMatch(this)"><p>0:1</p><p>' + bf[18] + '</p></td>';
-                var spfdata_two3 = '<td data-dit="v02" width="10%" onclick="seleMatch(this)"><p>0:2</p><p>' + bf[19] + '</p></td>';
-                var spfdata_three3 = '<td data-dit="v12" width="10%" onclick="seleMatch(this)"><p>1:2</p><p>' + bf[20] + '</p></td>';
-                var spfdata_four3 = '<td data-dit="v03" width="10%" onclick="seleMatch(this)"><p>0:3</p><p>' + bf[21] + '</p></td>';
-                var spfdata_five3 = '<td data-dit="v13" width="10%" onclick="seleMatch(this)"><p>1:3</p><p>' + bf[22] + '</p></td>';
-                var spfdata_six3 = '<td data-dit="v23" width="10%" onclick="seleMatch(this)"><p>2:3</p><p>' + bf[23] + '</p></td>';
-                var spfdata_seven3 = '<td data-dit="v04" width="10%" onclick="seleMatch(this)"><p>0:4</p><p>' + bf[24] + '</p></td>';
-                var spfdata_eight3 = '<td data-dit="v14" width="10%" onclick="seleMatch(this)"><p>1:4</p><p>' + bf[25] + '</p></td>';
-                var spfdata_nine3 = '<td data-dit="v24" width="10%" onclick="seleMatch(this)"><p>2:4</p><p>' + bf[26] + '</p></td>';
-                var spfdata_ten3 = '<td data-dit="v05" width="10%" onclick="seleMatch(this)"><p>0:5</p><p>' + bf[27] + '</p></td>';
-                var spfdata_eleven3 = '<td data-dit="v15" width="10%" onclick="seleMatch(this)"><p>1:5</p><p>' + bf[28] + '</p></td>';
-                var spfdata_twelve3 = '<td data-dit="v25" width="10%" onclick="seleMatch(this)"><p>2:5</p><p>' + bf[29] + '</p></td>';
-                var spfdata_thirteen3 = '<td data-dit="v09" width="10%" colspan="2" onclick="seleMatch(this)"><p>负其他</p><p>' + bf[30] + '</p></td>';
+                var spfdata_one3 = '<td data-dit="v01" data-odds="'+ bf[18] +'" width="10%" onclick="seleMatch(this)"><p>0:1</p><p>' + bf[18] + '</p></td>';
+                var spfdata_two3 = '<td data-dit="v02" data-odds="'+ bf[19] +'" width="10%" onclick="seleMatch(this)"><p>0:2</p><p>' + bf[19] + '</p></td>';
+                var spfdata_three3 = '<td data-dit="v12" data-odds="'+ bf[20] +'" width="10%" onclick="seleMatch(this)"><p>1:2</p><p>' + bf[20] + '</p></td>';
+                var spfdata_four3 = '<td data-dit="v03" data-odds="'+ bf[21] +'" width="10%" onclick="seleMatch(this)"><p>0:3</p><p>' + bf[21] + '</p></td>';
+                var spfdata_five3 = '<td data-dit="v13" data-odds="'+ bf[22] +'" width="10%" onclick="seleMatch(this)"><p>1:3</p><p>' + bf[22] + '</p></td>';
+                var spfdata_six3 = '<td data-dit="v23" data-odds="'+ bf[23] +'" width="10%" onclick="seleMatch(this)"><p>2:3</p><p>' + bf[23] + '</p></td>';
+                var spfdata_seven3 = '<td data-dit="v04" data-odds="'+ bf[24] +'" width="10%" onclick="seleMatch(this)"><p>0:4</p><p>' + bf[24] + '</p></td>';
+                var spfdata_eight3 = '<td data-dit="v14" data-odds="'+ bf[25] +'" width="10%" onclick="seleMatch(this)"><p>1:4</p><p>' + bf[25] + '</p></td>';
+                var spfdata_nine3 = '<td data-dit="v24" data-odds="'+ bf[26] +'" width="10%" onclick="seleMatch(this)"><p>2:4</p><p>' + bf[26] + '</p></td>';
+                var spfdata_ten3 = '<td data-dit="v05" data-odds="'+ bf[27] +'" width="10%" onclick="seleMatch(this)"><p>0:5</p><p>' + bf[27] + '</p></td>';
+                var spfdata_eleven3 = '<td data-dit="v15" data-odds="'+ bf[28] +'" width="10%" onclick="seleMatch(this)"><p>1:5</p><p>' + bf[28] + '</p></td>';
+                var spfdata_twelve3 = '<td data-dit="v25" data-odds="'+ bf[29] +'" width="10%" onclick="seleMatch(this)"><p>2:5</p><p>' + bf[29] + '</p></td>';
+                var spfdata_thirteen3 = '<td data-dit="v09" data-odds="'+ bf[30] +'" width="10%" colspan="2" onclick="seleMatch(this)"><p>负其他</p><p>' + bf[30] + '</p></td>';
 
                 var tr_three='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_one3 + spfdata_two3 + spfdata_three3 + spfdata_four3 + spfdata_five3 + spfdata_six3 + spfdata_seven3 + '</tr>' ;
                 var tr_four='<tr data-wf="ht" class="jc-table-b spf-dd" pType="03">' + spfdata_eight3 + spfdata_nine3 + spfdata_ten3 + spfdata_eleven3 + spfdata_twelve3 + spfdata_thirteen3 +'</tr>' ;

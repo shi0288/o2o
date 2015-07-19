@@ -422,9 +422,11 @@ function jcList() {
                 //$(this).find("tr.td.on").each(function(aa) {
                 //console.log('ccindex:'+index);
                 var datadit = $(this).attr("data-dit");
+                var dataodds = $(this).attr("data-odds");
                 $("#id_" + cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).addClass("on");
                 $("#id_" + cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).html($(this).html());
                 $("#id_" + cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-dit", datadit);
+                $("#id_" + cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-odds", dataodds);
             });
 
         }

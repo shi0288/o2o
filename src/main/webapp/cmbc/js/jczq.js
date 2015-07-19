@@ -385,17 +385,21 @@ function jcList() {
         if (sfc.find(".on").length > 0) {
             sfc.find(".on").each(function (aa) {
                 var datadit = $(this).attr("data-dit");
+                var dataodds = $(this).attr("data-odds");
                 $("#id_" + cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).addClass("on");
                 $("#id_" + cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).html($(this).html());
                 $("#id_" + cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-dit", datadit);
+                $("#id_" + cc).find(".spf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-odds", dataodds);
             });
         }
         if (rf.find(".on").length > 0) {
             rf.find(".on").each(function (aa) {
                 var datadit = $(this).attr("data-dit");
+                var dataodds = $(this).attr("data-odds");
                 $("#id_" + cc).find(".rf").eq(0).find(".jc-list-item-dw").eq(aa).addClass("on");
                 $("#id_" + cc).find(".rf").eq(0).find(".jc-list-item-dw").eq(aa).html($(this).html());
                 $("#id_" + cc).find(".rf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-dit", datadit);
+                $("#id_" + cc).find(".rf").eq(0).find(".jc-list-item-dw").eq(aa).attr("data-odds", dataodds);
             });
         }
     });
@@ -509,7 +513,7 @@ function jcSum() {
         $("#qianshu").html(0);
         return false;
     }
-    if ($(".jc-list-item").length < 1) {//////////////////////////////
+    if ($(".jc-list-item").length < 1) {
         $("#zhushu").html(0);
         $("#qianshu").html(0);
         return false;

@@ -388,7 +388,8 @@ function jcList(){
 			$(this).find("td.on").each(function(aa){
 				var result = $(this).html().replace("<p>","").replace("</p>","");
 				var datadit=$(this).attr("data-dit");
-				htmldiv = htmldiv + '<span class="jc-list-item-dw on" data-dit="'+datadit+'">'+ result +'</span>';
+				var dataodds = $(this).attr("data-odds");
+				htmldiv = htmldiv + '<span class="jc-list-item-dw on" data-dit="'+datadit+'" data-odds="'+dataodds+'">'+ result +'</span>';
 			});
 			htmldiv = htmldiv + '</div>';
 		});
